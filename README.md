@@ -1,8 +1,7 @@
 ### ¡Hola! 👋
 
- Kaizeneta, fundador de [Crashell](https://www.crashell.com) y desarrollador de GNet. Adaptable a la inteligencia colectiva. Aficionado del fútbol y el ajedrez.
+ Kaizeneta, fundador de [Crashell](https://www.crashell.com) y desarrollador de [GNet](https://www.crashell.com/gnet). Adaptable a la inteligencia colectiva. Aficionado del fútbol y el ajedrez.
 
-- Desarrollador principal de [GNet](https://www.crashell.com/gnet), un sistema web de gestión de red y servidores GNU/Linux.
 - Tengo 2 canales de YouTube, [Core Stack](https://www.youtube.com/c/gvideosmtutorialesgm/) y [Side Master](https://www.youtube.com/user/sidemastersupremo).
 
 ### Habilidades
