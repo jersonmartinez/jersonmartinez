@@ -1,17 +1,17 @@
-### ¡Hola! 👋
+## ¡Hola! 👋
 
  Kaizeneta, fundador de [Crashell](https://www.crashell.com) y desarrollador de [GNet](https://www.crashell.com/gnet). Adaptable a la inteligencia colectiva. Aficionado del fútbol y el ajedrez.
 
 - Tengo 2 canales de YouTube, [Core Stack](https://www.youtube.com/c/gvideosmtutorialesgm/) y [Side Master](https://www.youtube.com/user/sidemastersupremo).
 
-### Habilidades
+## Habilidades
 - Cloud Computing: AWS y Azure
 - Conocimientos en Tecnologías DevOps
 - Administración de sistemas GNU/Linux y Windows
 - Desarrollo web con lenguajes como: PHP, JS y Python
 - Shell Scripting con Bash, Batch y PowerShell
 
-### Contacto
+## Contacto
 
 💌 jersonmartinezsm@gmail.com
 
