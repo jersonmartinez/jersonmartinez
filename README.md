@@ -12,6 +12,16 @@
 - Desarrollo web con lenguajes como: PHP, JS y Python
 - Shell Scripting con Bash, Batch y PowerShell
 
+## Estadísticas
+
+<a href="https://github.com/jersonmartinez/jersonmartinez/">
+<img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=jersonmartinez&hide=html,css"/>
+</a>
+
+<a href="https://github.com/jersonmartinez/jersonmartinez/">
+<img align="center" src="https://github-readme-stats.vercel.app/api?username=jersonmartinez&show_icons=true&line_height=27&count_private=true" alt="Jerson Martínez Github Stats" />
+</a>
+
 ## Contacto
 
 💌 jersonmartinezsm@gmail.com
