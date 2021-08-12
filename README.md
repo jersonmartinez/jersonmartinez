@@ -15,11 +15,11 @@
 ## Estadísticas
 
 <a href="https://github.com/jersonmartinez/jersonmartinez/">
-<img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=jersonmartinez&hide=html,css"/>
+<img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=jersonmartinez&hide=html,css&locale=es"/>
 </a>
 
 <a href="https://github.com/jersonmartinez/jersonmartinez/">
-<img align="center" src="https://github-readme-stats.vercel.app/api?username=jersonmartinez&show_icons=true&line_height=27&count_private=true" alt="Jerson Martínez Github Stats" />
+<img align="center" src="https://github-readme-stats.vercel.app/api?username=jersonmartinez&show_icons=true&line_height=27&count_private=true&locale=es" alt="Jerson Martínez Github Stats" />
 </a>
 
 ## Contacto
