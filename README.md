@@ -3,7 +3,7 @@
  Kaizeneta, fundador de [Crashell](https://www.crashell.com) y desarrollador de [GNet](https://www.crashell.com/gnet). Adaptable a la inteligencia colectiva. Aficionado del fútbol y el ajedrez.
 
 - Tengo 2 canales de YouTube, [Core Stack](https://www.youtube.com/c/gvideosmtutorialesgm/) y [Side Master](https://www.youtube.com/user/sidemastersupremo).
-- Formador en Udemy, con más de 50k estudiantes [Perfil de Udemy](https://www.udemy.com/user/side-master/)
+- Formador en Udemy, con más de 60k estudiantes [Perfil de Udemy](https://www.udemy.com/user/side-master/)
 
 ## Habilidades
 - Cloud Computing: AWS y Azure
