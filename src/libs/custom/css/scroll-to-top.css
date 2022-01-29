@@ -1,0 +1,57 @@
+/* Scroll To Top */
+#ScrollToTop {
+  z-index: 10;
+  color: #fff;
+  background-color: var(--cs-color-dark);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  overflow: hidden;
+  transition-duration: 0.7s;
+  transition-timing-function: ease-in;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 0 4px white;
+}
+
+#ScrollToTop:hover {
+  background: white;
+  color: var(--cs-color-dark);
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+#ScrollToTop:active {
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+  transform: scale(0.7);
+  border-bottom: 1px solid #000;
+}
+
+/*-------------------------------------------*\
+    Scroll To Top
+\*-------------------------------------------*/
+.go-up {
+  border: 1px solid #fff;
+  opacity: 0.5;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  display: inline-block !important;
+  color: #fff;
+}
+
+.go-up:hover {
+  opacity: 1;
+}
+
+.scroll-top,
+.scroll-top-alt {
+  opacity: 0 !important;
+}
+
+.fa-angle-double-up {
+  animation: beat 0.35s infinite alternate;
+}
+
+/*# sourceMappingURL=scroll-to-top.css.map */

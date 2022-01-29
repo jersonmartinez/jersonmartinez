@@ -1,0 +1,359 @@
+$cs-color-blue: #00375C;
+$cs-color-red: #EF4136;
+$cs-color-orange: #E18A00;
+$cs-color-light: #FBFCFC;
+$cs-color-white: #FFFFFF;
+$cs-color-dark: #2e313d;
+$cs-color-darker: #212529;
+$cs-color-rgba: rgba(255, 255, 255, 0.05);
+
+$cs-gradient-dark: linear-gradient(45deg, $cs-color-dark 0%, $cs-color-blue 100%);
+$cs-gradient-orange: linear-gradient(45deg, $cs-color-orange 0%, $cs-color-blue 100%);
+$cs-gradient-red: linear-gradient(45deg, $cs-color-red 0%, $cs-color-orange 100%);
+$cs-gradient-blue: linear-gradient(45deg, $cs-color-blue 0%, $cs-color-dark 100%);
+
+::selection {
+  	color: #fff;
+  	background: rgba(0,0,0,.4);
+}
+
+body {
+  	background: rgba(52, 58, 64, 0.9);
+}
+
+a.web50-a-effect {
+	font-size: 15px;
+	color: blue;
+	font: bold 3em/1.5 'Fjalla One', sans-serif;
+	text-decoration: none;
+	-webkit-transition: .2s;
+	color: #E18A00;
+}
+
+a.web50-a-effect:hover {
+  	color: hotPink;
+}
+
+@media (-webkit-min-device-pixel-ratio:0) {
+	a.web50-a-effect {
+		font-size: 15px;
+		background-color: #E18A00;
+		background-image: -webkit-linear-gradient(left, hotPink 0%, orange 50%, transparent 50%);
+		background-position: 100% 0;
+		background-size: 200% 200%;
+		color: transparent;
+		-webkit-transition: .1s .2s;
+		-webkit-background-clip: text;
+	}
+	a.web50-a-effect:hover {
+		background-position: 0 0;
+		color: transparent;
+		transition: .4s 0;
+	}
+}
+
+.web50-cardlink {
+	padding: 10px;
+	width: 100%;
+	color: #fff;
+	display: inline-block;
+	border-radius: 4px;
+	text-align: center;
+	font-size: 18px;
+}
+
+#web50-cl-linkedin {
+  	background-color: #3b5998;
+}
+
+.web50-cl-youtube {
+  	background-color: #f44336;
+}
+
+#web50-cl-linkedin:hover {
+  	background-color: #2d4986;
+  	color: #fff;
+}
+
+.web50-cl-youtube:hover {
+  	background-color: #d32b1f;
+  	color: #fff;
+}
+
+.web50-card-dark {
+  	background-color: rgba(0,0,0,.2);
+  	color: #fff;
+}
+
+.web50-card-profile {
+	box-shadow: 0 1px 2px 1px #343434;
+}
+
+.bg-dark{
+	background-color: #212529 !important;
+}
+
+/* Divider */
+
+.elementor-shape-top {
+	top: -1px;
+}
+
+.elementor-shape {
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	line-height: 0;
+	direction: ltr;
+}
+
+.elementor-shape-top {
+    svg {
+	    width: calc(300% + 1.3px);
+	    height: 144px;
+	    transform: translateX(-50%) rotateY(180deg);
+    }
+}
+
+.elementor-shape svg {
+	display: block;
+	width: calc(100% + 1.3px);
+	position: relative;
+	/* left: 50%; */
+	-webkit-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	transform: translateX(-50%);
+
+	transform: rotate(180deg);
+}
+
+/* Styles */
+
+.bg-cs-dark {
+    background: $cs-color-dark !important;
+}
+.bg-cs-darker {
+    background: $cs-color-darker !important;
+}
+.bg-cs-blue {
+    background: $cs-color-blue !important;
+}
+.bg-cs-orange {
+    background: $cs-color-orange !important;
+}
+.bg-cs-red {
+    background: $cs-color-red !important;
+}
+.bg-cs-gradient-orange {
+    background: $cs-gradient-orange !important;
+}
+.bg-cs-gradient-red {
+    background: $cs-gradient-red !important;
+}
+.bg-cs-gradient-dark {
+    background: $cs-gradient-dark !important;
+}
+.bg-cs-gradient-blue {
+    background: $cs-gradient-blue !important;
+}
+.bg-cs-rgba {
+    background: $cs-color-rgba;
+}
+
+/* Colores de texto */
+.text-cs-blue {
+    color: $cs-color-blue !important;
+}
+.text-cs-red {
+    color: $cs-color-red !important;
+}
+.text-cs-orange {
+    color: $cs-color-orange !important;
+}
+.text-cs-dark {
+    color: $cs-color-dark !important;
+}
+.text-cs-darker {
+    color: $cs-color-darker !important;
+}
+.text-cs-light {
+    color: $cs-color-light !important;
+}
+
+/* Boder Colors */
+.border-cs-blue {
+    border-color: $cs-color-blue !important;
+}
+.border-cs-red {
+    border-color: $cs-color-red !important; 
+}
+.border-cs-orange {
+    border-color: $cs-color-orange !important;
+}
+.border-cs-dark {
+    border-color: $cs-color-dark !important;
+}
+.border-cs-light {
+    border-color: $cs-color-light !important;
+}
+
+/* Hipervínculos */
+.cs-link {
+    outline: none !important;
+}
+
+.cs-link:not(.button):not(.navbar-brand):hover {
+    background: linear-gradient(to right, $cs-color-red, $cs-color-orange);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    box-decoration-break: clone;
+    text-shadow: none;
+    text-decoration: none;
+}
+
+.cs-link:hover .cs-icon {
+    color: $cs-color-orange;
+}
+
+.bt svg.bg-divider-blue * {
+    fill: $cs-color-blue;
+}
+.bt svg.bg-divider-orange * {
+    fill: $cs-color-orange;
+}
+.bt svg.bg-divider-red * {
+    fill: $cs-color-red;
+}
+.bt svg.bg-divider-dark * {
+    fill: $cs-color-dark;
+}
+.bt svg.bg-divider-darker * {
+    fill: $cs-color-darker;
+}
+.bt svg.bg-divider-white * {
+    fill: $cs-color-white;
+}
+.bt svg.bg-divider-darker * {
+    fill: $cs-color-darker;
+}
+.bt .divider:not(:first-child) {
+    top: 1px;
+}
+
+%position-relative {
+    position: relative;
+}
+
+.bt .divider {
+    @extend %position-relative;
+}
+
+.bt .divider svg {
+    background: none !important;
+    height: 5vw;
+}
+
+.bt .divider-inverse {
+    transform: rotate(180deg);
+}
+
+.bt svg {
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.bt .flip-x {
+    transform: scaleX(-1);
+}
+
+/* Footer */
+
+.cs-footer ul {
+    list-style: none;
+}
+
+.cs-footer-nav {
+    display: inline-block;
+    padding-left: 0;
+}
+
+@media (min-width: 768px) {
+    .cs-footer-nav li {
+        display: inline-block;
+    }
+}
+
+@media (min-width: 768px) {
+    .cs-footer-nav li + li {
+        margin-top: 0;
+        border-left: 1px solid $cs-color-light;
+    }
+}
+
+.cs-footer-nav a {
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    text-align: center;
+    color: $cs-color-light;
+}
+
+.cs-footer-nav a:hover {
+    color: $cs-color-orange;
+}
+
+.cs-social-list {
+    padding: 0;
+}
+
+.cs-social-list .icon-cs-light {
+    background: $cs-color-rgba;
+    color: $cs-color-light;
+}
+
+ul.cs-social-list > li {
+    display: inline-block;
+}
+
+ul.cs-social-list > * {
+    margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+ul.cs-social-list a:hover {
+    color: $cs-color-light;
+    background: $cs-color-orange;
+}
+
+.cs-social-list .icon {
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.cs-social-list .icon::before {
+    @extend %position-relative;
+    display: inline-block;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+}
+
+.cs-social-list .icon-circle {
+    border-radius: 50%;
+    text-align: center;
+}
+
+.cs-social-list .icon-circle-md {
+    padding: 10px;
+    width: 48px;
+    height: 48px;
+}
+
+.cs-social-list .icon-sm {
+    font-size: 22px;
+    line-height: 28px;
+}
