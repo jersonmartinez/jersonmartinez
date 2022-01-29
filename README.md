@@ -1,18 +1,20 @@
-## ¡Hola! 👋
+## ¡Hola! <img src = "https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width = 25px>
 
  Kaizeneta, fundador de [Crashell](https://www.crashell.com) y desarrollador de [GNet](https://www.crashell.com/gnet). Adaptable a la inteligencia colectiva. Aficionado del fútbol y el ajedrez.
+ 
+Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartinez.github.io/jersonmartinez/).
 
 - Tengo 2 canales de YouTube, [Core Stack](https://www.youtube.com/c/gvideosmtutorialesgm/) y [Side Master](https://www.youtube.com/user/sidemastersupremo).
 - Formador en Udemy, con más de 60k estudiantes [Perfil de Udemy](https://www.udemy.com/user/side-master/)
 
-## Habilidades
+## <img src = "https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width = 20px> Habilidades 
 - Cloud Computing: AWS y Azure
 - Conocimientos en Tecnologías DevOps
 - Administración de sistemas GNU/Linux y Windows
 - Desarrollo web con lenguajes como: PHP, JS y Python
 - Shell Scripting con Bash, Batch y PowerShell
 
-## Estadísticas
+## ⚡ Estadísticas
 
 <a href="https://github.com/jersonmartinez/jersonmartinez/">
 <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=jersonmartinez&hide=html,css&locale=es&theme=tokyonight"/>
@@ -22,7 +24,7 @@
 <img align="center" src="https://github-readme-stats.vercel.app/api?username=jersonmartinez&show_icons=true&line_height=27&count_private=true&locale=es&theme=tokyonight" alt="Jerson Martínez Github Stats" />
 </a>
 
-## Contacto
+## 💬 Contacto
 
 💌 jersonmartinezsm@gmail.com
 
