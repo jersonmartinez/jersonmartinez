@@ -28,7 +28,6 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
 </a>
 </details>
 
-
 <details>
 	<summary> ⚡ Artículos escritos</summary>
 <br>
@@ -46,6 +45,17 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
 <li><a href="https://openwebinars.net/blog/shell-scripting-en-sistemas-windows/" target="_blank">Shell Scripting en Sistemas Windows</a></li>
 <li><a href="#" target="_blank">Go para DevOps [Escribiendo...]</a></li>
  </ul>
+</details>
+
+<details>
+	<summary> ⚡ Curriculum Vitae</summary>
+<br>
+<object data="http://yoursite.com/the.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="http://yoursite.com/the.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://yoursite.com/the.pdf">Download PDF</a>.</p>
+    </embed>
+</object>
+
 </details>
 
 ## 💬 Contacto
