@@ -47,6 +47,8 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
  </ul>
 </details>
 
+xfun::embed_file("[homework.pdf](https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf)")
+
 <details>
 	<summary> ⚡ Curriculum Vitae</summary>
 <br>
