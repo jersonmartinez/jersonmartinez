@@ -47,17 +47,10 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
  </ul>
 </details>
 
-xfun::embed_file("[homework.pdf](https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf)")
-
 <details>
 	<summary> ⚡ Curriculum Vitae</summary>
 <br>
-<object data="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
-
+<ul><li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">Ver el documento</a>.</li></ul>
 </details>
 
 ## 💬 Contacto
