@@ -11,11 +11,11 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
 - 📰 Escribo para el estudio de [Crashell](https://www.crashell.com/estudio).
 
 ## <img src = "https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width = 20px> Habilidades 
-- Cloud Computing: AWS y Azure
-- Conocimientos en Tecnologías DevOps
-- Administración de sistemas GNU/Linux y Windows
-- Desarrollo web con lenguajes como: PHP, JS y Python
-- Shell Scripting con Bash, Batch y PowerShell
+- Cloud Provider: `AWS`.
+- Tecnologías DevOps: `Vagrant`, `Ansible`, `Docker`, otros.
+- Administración de sistemas `GNU/Linux` y `Windows`
+- Desarrollo web con lenguajes como: `PHP`, `JS` y `Python`
+- Shell Scripting con `Bash`, `Batch` y `PowerShell`
 
 <details>
 	<summary> ⚡ Estadísticas</summary>
@@ -55,7 +55,7 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
 <details>
 	<summary> 📃 Curriculum Vitae</summary>
 <br>
-<ul><li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">Ver el documento</a>.</li></ul>
+<ul><li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">👉 Ver el documento</a>.</li></ul>
 </details>
 
 ## 💬 Contacto
