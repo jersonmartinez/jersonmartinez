@@ -8,6 +8,7 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
 - 📹 Formador en Udemy, con más de 60k estudiantes [Perfil de Udemy](https://www.udemy.com/user/side-master/)
 - 💻 Actualmente trabajo en [Hotaka iKhodi](https://www.hotaka.io/) como Mid-Level DevOps.
 - 📰 Escribo para el blog de [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) con más de 11 artículos publicados alrededor de `Cloud Computing`, `BigData` y `DevOps`.
+- 📰 Escribo para el estudio de [Crashell](https://www.crashell.com/estudio).
 
 ## <img src = "https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width = 20px> Habilidades 
 - Cloud Computing: AWS y Azure
@@ -29,26 +30,30 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
 </details>
 
 <details>
-	<summary> ⚡ Artículos escritos</summary>
+	<summary> 📰 Artículos publicados</summary>
 <br>
-<ul>
-<li><a href="https://openwebinars.net/blog/monitorizando-datos-con-influxdb-telegraf-y-grafana/" target="_blank">Monitorizando datos con InfluxDB, Telegraf y Grafana</a></li>
-<li><a href="https://openwebinars.net/blog/que-es-influxdb-y-primeros-pasos/" target="_blank">Qué es InfluxDB y primeros pasos</a></li>
-<li><a href="https://openwebinars.net/blog/que-es-telegraf-y-primeros-pasos/" target="_blank">Qué es Telegraf y primeros pasos</a></li>
-<li><a href="https://openwebinars.net/blog/que-es-grafana-y-primeros-pasos/" target="_blank">Qué es Grafana y primeros pasos</a></li>
-<li><a href="https://openwebinars.net/blog/go-vs-python-diferencias-y-puntos-fuertes/" target="_blank">Go vs Python: Diferencias y puntos fuertes</a></li>
-<li><a href="https://openwebinars.net/blog/gestion-de-procesos-y-servicios-desde-shell-script-en-windows/" target="_blank">Gestión de procesos y servicios desde Shell Script en Windows</a></li>
-<li><a href="https://openwebinars.net/blog/infraestructura-lamp-con-docker-compose/" target="_blank">Infraestructura LAMP con Docker Compose</a></li>
-<li><a href="https://openwebinars.net/blog/programacion-de-tareas-desde-la-terminal-de-windows/" target="_blank">Programación de tareas desde la terminal de Windows</a></li>
-<li><a href="https://openwebinars.net/blog/automatizacion-de-procesos-con-shell-script-batch/" target="_blank">Automatización de procesos con Shell Script Batch</a></li>
-<li><a href="https://openwebinars.net/blog/20-comandos-de-red-mas-importantes-en-windows/" target="_blank">20 comandos de red más importantes en Windows</a></li>
-<li><a href="https://openwebinars.net/blog/shell-scripting-en-sistemas-windows/" target="_blank">Shell Scripting en Sistemas Windows</a></li>
-<li><a href="#" target="_blank">Go para DevOps [Escribiendo...]</a></li>
- </ul>
+	<ul>
+		<li><a href="https://openwebinars.net/blog/monitorizando-datos-con-influxdb-telegraf-y-grafana/" target="_blank">Monitorizando datos con InfluxDB, Telegraf y Grafana</a></li>
+		<li><a href="https://openwebinars.net/blog/que-es-influxdb-y-primeros-pasos/" target="_blank">Qué es InfluxDB y primeros pasos</a></li>
+		<li><a href="https://openwebinars.net/blog/que-es-telegraf-y-primeros-pasos/" target="_blank">Qué es Telegraf y primeros pasos</a></li>
+		<li><a href="https://openwebinars.net/blog/que-es-grafana-y-primeros-pasos/" target="_blank">Qué es Grafana y primeros pasos</a></li>
+		<li><a href="https://openwebinars.net/blog/go-vs-python-diferencias-y-puntos-fuertes/" target="_blank">Go vs Python: Diferencias y puntos fuertes</a></li>
+		<li><a href="https://openwebinars.net/blog/gestion-de-procesos-y-servicios-desde-shell-script-en-windows/" target="_blank">Gestión de procesos y servicios desde Shell Script en Windows</a></li>
+		<li><a href="https://www.crashell.com/estudio/habilitar_distro_wsl_2_con_docker_engine_en_windows" target="_blank">Habilitar distro WSL 2 con Docker Engine en Windows</a></li>
+		<li><a href="https://www.crashell.com/estudio/hacer_ping_desde_php" target="_blank">Hacer ping desde PHP</a></li>
+		<li><a href="https://www.crashell.com/estudio/cortar_y_unir_archivos_desde_php" target="_blank">Cortar y unir archivos desde PHP</a></li>
+		<li><a href="https://www.crashell.com/estudio/mejora_la_productividad_de_tu_empresa_con_git" target="_blank">Mejora la productividad de tu empresa con Git</a></li>
+		<li><a href="https://openwebinars.net/blog/infraestructura-lamp-con-docker-compose/" target="_blank">Infraestructura LAMP con Docker Compose</a></li>
+		<li><a href="https://openwebinars.net/blog/programacion-de-tareas-desde-la-terminal-de-windows/" target="_blank">Programación de tareas desde la terminal de Windows</a></li>
+		<li><a href="https://openwebinars.net/blog/automatizacion-de-procesos-con-shell-script-batch/" target="_blank">Automatización de procesos con Shell Script Batch</a></li>
+		<li><a href="https://openwebinars.net/blog/20-comandos-de-red-mas-importantes-en-windows/" target="_blank">20 comandos de red más importantes en Windows</a></li>
+		<li><a href="https://openwebinars.net/blog/shell-scripting-en-sistemas-windows/" target="_blank">Shell Scripting en Sistemas Windows</a></li>
+		<li><a href="#" target="_blank">Go para DevOps [Escribiendo...]</a></li>
+	</ul>
 </details>
 
 <details>
-	<summary> ⚡ Curriculum Vitae</summary>
+	<summary> 📃 Curriculum Vitae</summary>
 <br>
 <ul><li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">Ver el documento</a>.</li></ul>
 </details>
