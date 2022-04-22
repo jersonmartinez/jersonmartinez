@@ -1,5 +1,8 @@
 ## ¡Hola, me llamo Antonio! <img src = "https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width = 25px>
 
+[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCJgGc8pQO1lv04VXrBxA_Hg?style=social)](https://youtube.com/sidemaster?sub_confirmation=1)
+[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCJgGc8pQO1lv04VXrBxA_Hg?style=social)](https://youtube.com/gvideosmtutorialesgm?sub_confirmation=1)
+
 Un poco sobre este cabezón, me considero un Kaizeneta, fundador de [Crashell](https://www.crashell.com) y desarrollador de [GNet](https://www.crashell.com/gnet). Apasionado de la cultura DevOps y todo alrededor a temas de Automatización. Adaptable a la inteligencia colectiva. Aficionado del fútbol y del ajedrez. 
  
 Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartinez.github.io/jersonmartinez/).
