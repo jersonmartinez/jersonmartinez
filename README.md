@@ -1,4 +1,4 @@
-## ¡Hola, me llamo Antonio! <img src = "https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width = 25px>
+## ¡Hola, me llamo Antonio! <img src = "https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" style="width:25px;" width="25px">
 
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCHQb90WIYhLUObEc8uVJR6A?label=Core%20Stack)](https://youtube.com/gvideosmtutorialesgm?sub_confirmation=1)
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UC-_To7b_NPrxvgG-_de5HRA?label=Side%20Master)](https://youtube.com/sidemaster?sub_confirmation=1)
@@ -13,7 +13,7 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
 - 📰 Escribo para el blog de [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) con más de 11 artículos publicados alrededor de `Cloud Computing`, `BigData` y `DevOps`.
 - 📰 Escribo para el estudio de [Crashell](https://www.crashell.com/estudio).
 
-## <img src = "https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width = 20px> Habilidades 
+## <img src = "https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="20px"> Habilidades 
 - Cloud Provider: `AWS`.
 - Tecnologías DevOps: `Vagrant`, `Ansible`, `Docker`, otros.
 - Administración de sistemas `GNU/Linux` y `Windows`
