@@ -1,4 +1,8 @@
-## ¡Hola, me llamo Antonio! <img src = "https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width = 25px>
+## ¡Hola, me llamo Antonio! 🖐
+<!-- <img src = "https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" style="width:25px;" width="25px"> -->
+
+[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCHQb90WIYhLUObEc8uVJR6A?label=Core%20Stack)](https://youtube.com/gvideosmtutorialesgm?sub_confirmation=1)
+[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UC-_To7b_NPrxvgG-_de5HRA?label=Side%20Master)](https://youtube.com/sidemaster?sub_confirmation=1)
 
 Un poco sobre este cabezón, me considero un Kaizeneta, fundador de [Crashell](https://www.crashell.com) y desarrollador de [GNet](https://www.crashell.com/gnet). Apasionado de la cultura DevOps y todo alrededor a temas de Automatización. Adaptable a la inteligencia colectiva. Aficionado del fútbol y del ajedrez. 
  
@@ -10,7 +14,8 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
 - 📰 Escribo para el blog de [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) con más de 11 artículos publicados alrededor de `Cloud Computing`, `BigData` y `DevOps`.
 - 📰 Escribo para el estudio de [Crashell](https://www.crashell.com/estudio).
 
-## <img src = "https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width = 20px> Habilidades 
+## Habilidades
+<!-- <img src = "https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="20px">   -->
 - Cloud Provider: `AWS`.
 - Tecnologías DevOps: `Vagrant`, `Ansible`, `Docker`, otros.
 - Administración de sistemas `GNU/Linux` y `Windows`
@@ -48,7 +53,9 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
 		<li><a href="https://openwebinars.net/blog/automatizacion-de-procesos-con-shell-script-batch/" target="_blank">📄 Automatización de procesos con Shell Script Batch</a></li>
 		<li><a href="https://openwebinars.net/blog/20-comandos-de-red-mas-importantes-en-windows/" target="_blank">📄 20 comandos de red más importantes en Windows</a></li>
 		<li><a href="https://openwebinars.net/blog/shell-scripting-en-sistemas-windows/" target="_blank">📄 Shell Scripting en Sistemas Windows</a></li>
-		<li><a href="#" target="_blank">Go para DevOps [Escribiendo...]</a></li>
+		<li><a href="#" target="_blank">Go para DevOps [Sin publicar...]</a></li>
+		<li><a href="#" target="_blank">Trunk Based Development vs Git Flow, cuál elegir [Sin publicar...]</a></li>
+		<li><a href="#" target="_blank">Certificaciones de Microsoft Azure [Sin publicar...]</a></li>
 	</ul>
 </details>
 
