@@ -8,9 +8,9 @@ Un poco sobre este cabezón, me considero un Kaizeneta, fundador de [Crashell](h
  
 Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartinez.github.io/jersonmartinez/).
 
-- 🎥 Enseño en 2 canales de YouTube, [Core Stack](https://www.youtube.com/c/gvideosmtutorialesgm/) y [Side Master](https://www.youtube.com/user/sidemastersupremo).
+- 🎥 Enseño en 2 canales de YouTube, [Core Stack](https://www.youtube.com/@core-stack?sub_confirmation=1) y [Side Master](https://www.youtube.com/user/sidemastersupremo?sub_confirmation=1).
 - 📹 Formador en Udemy, con más de 60k estudiantes [Perfil de Udemy](https://www.udemy.com/user/side-master/)
-- 💻 Actualmente trabajo en [Hotaka iKhodi](https://www.hotaka.io/) como Mid-Level DevOps.
+- 💻 Actualmente trabajo en [Hotaka iKhodi](https://www.hotaka.io/) como Ingeniero DevOps.
 - 📰 Escribo para el blog de [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) con más de 11 artículos publicados alrededor de `Cloud Computing`, `BigData` y `DevOps`.
 - 📰 Escribo para el estudio de [Crashell](https://www.crashell.com/estudio).
 
