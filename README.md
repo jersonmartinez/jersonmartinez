@@ -44,7 +44,7 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 		<li><a href="https://openwebinars.net/blog/certificaciones-de-azure/" target="_blank">📄 Certificaciones de Microsoft Azure</a></li>
 		<li><a href="https://openwebinars.net/blog/go-para-devops/" target="_blank">📄 Go para DevOps</a></li>
 		<li><a href="https://openwebinars.net/blog/trunk-based-development-vs-git-flow-cual-elegir/" target="_blank">📄 Trunk Based Development vs Git Flow, cuál elegir</a></li>
-		<li><a href="[#](https://openwebinars.net/blog/agile-testing-principios-etapas-y-ventajas/)" target="_blank">📄 Evolución y futuro de los proveedores Cloud</a></li>
+		<li><a href="https://openwebinars.net/blog/agile-testing-principios-etapas-y-ventajas/" target="_blank">📄 Evolución y futuro de los proveedores Cloud</a></li>
 	</ul>
 </details>
 
