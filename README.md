@@ -54,7 +54,7 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 <details>
 	<summary> 📃 Resume</summary>
 <br>
-<ul><li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">👉 View documen</a>.</li></ul>
+<ul><li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">👉 View document</a>.</li></ul>
 </details>
 
 ## 💬 Contact
