@@ -1,41 +1,29 @@
 ## ¡Hola, me llamo Jerson! 🖐
 <!-- <img src = "https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" style="width:25px;" width="25px"> -->
 
-[![@Core-Stack](@Core-Stack)](https://www.youtube.com/@core-stack?sub_confirmation=1),
-[![@SideMaster](@SideMaster)](https://youtube.com/sidemaster?sub_confirmation=1)
+[![@Core-Stack](https://img.shields.io/youtube/channel/subscribers/UCHQb90WIYhLUObEc8uVJR6A?label=%40Core-Stack&style=social)](https://www.youtube.com/@core-stack?sub_confirmation=1)
+[![@SideMaster](https://img.shields.io/youtube/channel/subscribers/UC-_To7b_NPrxvgG-_de5HRA?label=%40SideMaster&style=social)](https://youtube.com/sidemaster?sub_confirmation=1)
 
-Un poco sobre este cabezón, me considero un Kaizeneta, fundador de [Crashell](https://www.crashell.com) y desarrollador de [GNet](https://www.crashell.com/gnet). Apasionado de la cultura DevOps y todo alrededor a temas de Automatización. Adaptable a la inteligencia colectiva. Aficionado del fútbol y del ajedrez. 
+A bit about this big head, I consider myself a Kaizeneta, founder of [Crashell](https://www.crashell.com) and developer of [GNet](https://www.crashell.com/gnet). Passionate about DevOps culture and everything around Automation. Adaptable to collective intelligence. Soccer and chess fan. 
  
-Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartinez.github.io/jersonmartinez/).
+If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.github.io/jersonmartinez/).
 
-- 🎥 Enseño en 2 canales de YouTube, [Core Stack](https://www.youtube.com/@core-stack?sub_confirmation=1) y [Side Master](https://www.youtube.com/user/sidemastersupremo?sub_confirmation=1).
-- 📹 Formador en Udemy, con más de 60k estudiantes [Perfil de Udemy](https://www.udemy.com/user/side-master/)
-- 💻 Actualmente trabajo en [Hotaka iKhodi](https://www.hotaka.io/) como Ingeniero DevOps.
-- 📰 Escribo para el blog de [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) con más de 11 artículos publicados alrededor de `Cloud Computing`, `BigData` y `DevOps`.
-- 📰 Escribo para el estudio de [Crashell](https://www.crashell.com/estudio).
+- 🎥 I teach on 2 YouTube channels, [Core Stack](https://www.youtube.com/@core-stack?sub_confirmation=1) and [Side Master](https://www.youtube.com/user/sidemastersupremo?sub_confirmation=1).
+- 📹 Trainer on Udemy, with over 60k students [Udemy Profile](https://www.udemy.com/user/side-master/).
+- 💻 Currently working at [Hotaka iKhodi](https://www.hotaka.io/) as a DevOps Engineer.
+- 📰 I write for [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) blog with more than 11 published articles around `Cloud Computing`, `BigData` and `DevOps`.
+- 📰 I write for the [Crashell](https://www.crashell.com/estudio) studio.
 
-## Habilidades
-<!-- <img src = "https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="20px">   -->
+## Skills
+<!-- <img src = "https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="20px"> -->
 - Cloud Provider: `AWS`.
-- Tecnologías DevOps: `Vagrant`, `Ansible`, `Docker`, otros.
-- Administración de sistemas `GNU/Linux` y `Windows`
-- Desarrollo web con lenguajes como: `PHP`, `JS` y `Python`
-- Shell Scripting con `Bash`, `Batch` y `PowerShell`
+- DevOps Technologies: `Vagrant`, `Ansible`, `Docker`, others.
+- Administration of `GNU/Linux` and `Windows` systems.
+- Web development with languages such as: `PHP`, `JS` and `Python`.
+- Shell Scripting with `Bash`, `Batch` and `PowerShell`.
 
 <details>
-	<summary> ⚡ Estadísticas</summary>
-<br>
-<a href="https://github.com/jersonmartinez/jersonmartinez/">
-<img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=jersonmartinez&hide=html,css&locale=es&theme=tokyonight"/>
-</a>
-
-<a href="https://github.com/jersonmartinez/jersonmartinez/">
-<img align="center" src="https://github-readme-stats.vercel.app/api?username=jersonmartinez&show_icons=true&line_height=27&count_private=true&locale=es&theme=tokyonight" alt="Jerson Martínez Github Stats" />
-</a>
-</details>
-
-<details>
-	<summary> 📰 Artículos publicados</summary>
+	<summary> 📰 Published articles</summary>
 <br>
 	<ul>
 		<li><a href="https://openwebinars.net/blog/monitorizando-datos-con-influxdb-telegraf-y-grafana/" target="_blank">📄 Monitorizando datos con InfluxDB, Telegraf y Grafana</a></li>
@@ -61,16 +49,16 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
 </details>
 
 <details>
-	<summary> 📃 Curriculum Vitae</summary>
+	<summary> 📃 Resume</summary>
 <br>
-<ul><li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">👉 Ver el documento</a>.</li></ul>
+<ul><li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">👉 View documen</a>.</li></ul>
 </details>
 
-## 💬 Contacto
+## 💬 Contact
 
 💌 jersonmartinezsm@gmail.com
 
-✔ Sitio Web: [crashell.com](https://www.crashell.com)
+✔ Website: [crashell.com](https://www.crashell.com)
 
 <a href="https://www.crashell.com/?suscribirse" target="_blank"><img alt="Crashell" src="https://img.shields.io/twitter/url?color=9cf&label=%40Crashell&logo=Crashell&logoColor=informational&style=for-the-badge&url=https%3A%2F%2Ftwitter.com%2Fantoniomorenosm"></a>
 
@@ -79,15 +67,3 @@ Si quieres ver un poco más, pásate por mi [GitHub pages](https://jersonmartine
 
 <!--
 **jersonmartinez/jersonmartinez** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
