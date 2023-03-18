@@ -1,7 +1,7 @@
 ## ¡Hola, me llamo Jerson! 🖐
 <!-- <img src = "https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" style="width:25px;" width="25px"> -->
 
-[![@Core-Stack](https://img.shields.io/youtube/channel/subscribers/UCHQb90WIYhLUObEc8uVJR6A?label=%40Core-Stack&style=social)](https://www.youtube.com/@core-stack?sub_confirmation=1)
+[![@DevOpsea](https://img.shields.io/youtube/channel/subscribers/UCHQb90WIYhLUObEc8uVJR6A?label=%40DevOpsea&style=social)](https://www.youtube.com/@devopsea?sub_confirmation=1)
 [![@SideMaster](https://img.shields.io/youtube/channel/subscribers/UC-_To7b_NPrxvgG-_de5HRA?label=%40SideMaster&style=social)](https://youtube.com/sidemaster?sub_confirmation=1)
 
 A bit about this big head, I consider myself a Kaizeneta, founder of [Crashell](https://www.crashell.com) and developer of [GNet](https://www.crashell.com/gnet). Passionate about DevOps culture and everything around Automation. Adaptable to collective intelligence. Soccer and chess fan. 
