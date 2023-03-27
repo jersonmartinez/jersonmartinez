@@ -57,6 +57,8 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 <ul><li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">👉 View document</a>.</li></ul>
 </details>
 
+[![](https://visitcount.itsvg.in/api?id=jersonmartinez&label=Profile%20visits&color=12&icon=5&pretty=true)](https://visitcount.itsvg.in)
+
 ## 💬 Contact
 
 💌 jersonmartinezsm@gmail.com
