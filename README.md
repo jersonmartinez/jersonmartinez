@@ -1,4 +1,4 @@
-## ¡Hola, me llamo Jerson! 🖐
+## Hi there! My name is Jerson 🖐
 <!-- <img src = "https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" style="width:25px;" width="25px"> -->
 
 [![@DevOpsea](https://img.shields.io/youtube/channel/subscribers/UCHQb90WIYhLUObEc8uVJR6A?label=%40DevOpsea&style=social)](https://www.youtube.com/@devopsea?sub_confirmation=1)
