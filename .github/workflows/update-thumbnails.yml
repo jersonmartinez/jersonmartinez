@@ -1,0 +1,39 @@
+name: Update README with YouTube video thumbnails
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install axios xml2js
+
+      - name: Get YouTube video thumbnails
+        run: node src/js/get-thumbnails.js > thumbnails.md
+
+      - name: Update README
+        run: |
+          sed '/YOUTUBE-VIDEOS-LIST-BEGIN/,/YOUTUBE-VIDEOS-LIST-END/{//!d;}' README.md > temp.md
+          echo 'YOUTUBE-VIDEOS-LIST-BEGIN' >> temp.md
+          cat thumbnails.md >> temp.md
+          echo 'YOUTUBE-VIDEOS-LIST-END' >> temp.md
+          mv temp.md README.md
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "jersonmartinezsm@gmail.com"
+          git config --local user.name "jersonmartinez"
+          git commit -am "Update YouTube video thumbnails"
+          git push
