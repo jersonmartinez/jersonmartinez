@@ -59,15 +59,15 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 
 [![](https://visitcount.itsvg.in/api?id=jersonmartinez&label=Profile%20visits&color=12&icon=5&pretty=true)](https://visitcount.itsvg.in)
 
-# Mi Canal de YouTube
+## 🎥 My YouTube Channel
 
-Aquí están algunos de mis vídeos de YouTube:
+Here are some of my YouTube videos on [DevOpsea](https://www.youtube.com/@devopsea?sub_confirmation=1)
 
 <!-- YOUTUBE-VIDEOS-LIST-BEGIN -->
 <table><tr><td align="center"><a href="https://www.youtube.com/watch?v=o8MFI4VRkmg" target="_blank"><img src="https://img.youtube.com/vi/o8MFI4VRkmg/0.jpg" alt="Go para DevOps" width="100%"><br>Go para DevOps</a></td><td align="center"><a href="https://www.youtube.com/watch?v=NPM62BMnLS4" target="_blank"><img src="https://img.youtube.com/vi/NPM62BMnLS4/0.jpg" alt="CURSO COMPLETO de GIT y GITHUB para DEVOPS - Presentación" width="100%"><br>CURSO COMPLETO de GIT y GITHUB para DEVOPS - Presentación</a></td><td align="center"><a href="https://www.youtube.com/watch?v=g3xLye3LDWs" target="_blank"><img src="https://img.youtube.com/vi/g3xLye3LDWs/0.jpg" alt="Explorando el Universo DevOps con Jerson Martínez: Git y GitHub al Máximo" width="100%"><br>Explorando el Universo DevOps con Jerson Martínez: Git y GitHub al Máximo</a></td></tr><tr><td align="center"><a href="https://www.youtube.com/watch?v=UWDj87JuGcU" target="_blank"><img src="https://img.youtube.com/vi/UWDj87JuGcU/0.jpg" alt="Entendiendo DevOps y Agile #devopsea #agile" width="100%"><br>Entendiendo DevOps y Agile #devopsea #agile</a></td><td align="center"><a href="https://www.youtube.com/watch?v=kVJAWXVY-UY" target="_blank"><img src="https://img.youtube.com/vi/kVJAWXVY-UY/0.jpg" alt="Ventajas y desventajas de DEVOPS y AGILE #devopsea #devops #agile" width="100%"><br>Ventajas y desventajas de DEVOPS y AGILE #devopsea #devops #agile</a></td><td align="center"><a href="https://www.youtube.com/watch?v=ucLcOnrYu_0" target="_blank"><img src="https://img.youtube.com/vi/ucLcOnrYu_0/0.jpg" alt="Puntos FUERTES de AGILE #devopsea #agile" width="100%"><br>Puntos FUERTES de AGILE #devopsea #agile</a></td></tr><tr></tr></table>
 <!-- YOUTUBE-VIDEOS-LIST-END -->
 
-Más vídeos en mi [canal de YouTube](https://www.youtube.com/channel/UCHQb90WIYhLUObEc8uVJR6A).
+More videos on my [YouTube channel](https://www.youtube.com/@devopsea/videos/?sub_confirmation=1).
 
 
 ## List videos
