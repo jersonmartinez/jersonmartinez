@@ -22,17 +22,32 @@ jobs:
       - name: Install dependencies
         run: npm install axios xml2js
 
-      - name: Get YouTube video thumbnails
-        run: node src/js/get-thumbnails.js > thumbnails.md
+      - name: Get DevOpsea YouTube video thumbnails
+        run: node src/js/devopea-get-thumbnails.js > thumbnails.md
 
-      - name: Update README
+      - name: Update README - DevOpsea YT Channel
         run: |
-            awk '/<!-- YOUTUBE-VIDEOS-LIST-BEGIN -->/{exit}1' README.md > top.md
-            awk '/<!-- YOUTUBE-VIDEOS-LIST-END -->/,0' README.md | tail -n +2 > bottom.md
+            awk '/<!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-BEGIN -->/{exit}1' README.md > top.md
+            awk '/<!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-END -->/,0' README.md | tail -n +2 > bottom.md
             cat top.md > README.md
-            echo '<!-- YOUTUBE-VIDEOS-LIST-BEGIN -->' >> README.md
+            echo '<!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-BEGIN -->' >> README.md
             cat thumbnails.md >> README.md
-            echo '<!-- YOUTUBE-VIDEOS-LIST-END -->' >> README.md
+            echo '<!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-END -->' >> README.md
+            cat bottom.md >> README.md
+            rm top.md bottom.md
+
+      - name: Get Side Master YouTube video thumbnails
+        run: node src/js/sidemaster-get-thumbnails.js > thumbnails.md
+
+        # Add update README for <!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-BEGIN --> and <!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-END -->
+      - name: Update README - Side Master YT Channel
+        run: |
+            awk '/<!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-BEGIN -->/{exit}1' README.md > top.md
+            awk '/<!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-END -->/,0' README.md | tail -n +2 > bottom.md
+            cat top.md > README.md
+            echo '<!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-BEGIN -->' >> README.md
+            cat thumbnails.md >> README.md
+            echo '<!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-END -->' >> README.md
             cat bottom.md >> README.md
             rm top.md bottom.md
 
