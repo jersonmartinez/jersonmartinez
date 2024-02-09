@@ -64,7 +64,26 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 Aquí están algunos de mis vídeos de YouTube:
 
 <!-- YOUTUBE-VIDEOS-LIST-BEGIN -->
-<table><tr><td align="center"><a href="https://www.youtube.com/watch?v=o8MFI4VRkmg" target="_blank"><img src="https://img.youtube.com/vi/o8MFI4VRkmg/0.jpg" alt="Go para DevOps" style="width:210px;"><br>Go para DevOps</a></td><td align="center"><a href="https://www.youtube.com/watch?v=NPM62BMnLS4" target="_blank"><img src="https://img.youtube.com/vi/NPM62BMnLS4/0.jpg" alt="CURSO COMPLETO de GIT y GITHUB para DEVOPS - Presentación" style="width:210px;"><br>CURSO COMPLETO de GIT y GITHUB para DEVOPS - Presentación</a></td><td align="center"><a href="https://www.youtube.com/watch?v=g3xLye3LDWs" target="_blank"><img src="https://img.youtube.com/vi/g3xLye3LDWs/0.jpg" alt="Explorando el Universo DevOps con Jerson Martínez: Git y GitHub al Máximo" style="width:210px;"><br>Explorando el Universo DevOps con Jerson Martínez: Git y GitHub al Máximo</a></td></tr><tr><td align="center"><a href="https://www.youtube.com/watch?v=UWDj87JuGcU" target="_blank"><img src="https://img.youtube.com/vi/UWDj87JuGcU/0.jpg" alt="Entendiendo DevOps y Agile #devopsea #agile" style="width:210px;"><br>Entendiendo DevOps y Agile #devopsea #agile</a></td><td align="center"><a href="https://www.youtube.com/watch?v=kVJAWXVY-UY" target="_blank"><img src="https://img.youtube.com/vi/kVJAWXVY-UY/0.jpg" alt="Ventajas y desventajas de DEVOPS y AGILE #devopsea #devops #agile" style="width:210px;"><br>Ventajas y desventajas de DEVOPS y AGILE #devopsea #devops #agile</a></td><td align="center"><a href="https://www.youtube.com/watch?v=ucLcOnrYu_0" target="_blank"><img src="https://img.youtube.com/vi/ucLcOnrYu_0/0.jpg" alt="Puntos FUERTES de AGILE #devopsea #agile" style="width:210px;"><br>Puntos FUERTES de AGILE #devopsea #agile</a></td></tr><tr></tr></table>
+
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: center;
+                }
+                img {
+                    border-radius: 5px;
+                    transition: transform .2s;
+                }
+                img:hover {
+                    transform: scale(1.1);
+                }
+            </style>
+            <table><tr><td><a href="https://www.youtube.com/watch?v=o8MFI4VRkmg" target="_blank"><img src="https://img.youtube.com/vi/o8MFI4VRkmg/0.jpg" alt="Go para DevOps" style="width:210px;"><br>Go para DevOps</a></td><td><a href="https://www.youtube.com/watch?v=NPM62BMnLS4" target="_blank"><img src="https://img.youtube.com/vi/NPM62BMnLS4/0.jpg" alt="CURSO COMPLETO de GIT y GITHUB para DEVOPS - Presentación" style="width:210px;"><br>CURSO COMPLETO de GIT y GITHUB para DEVOPS - Presentación</a></td><td><a href="https://www.youtube.com/watch?v=g3xLye3LDWs" target="_blank"><img src="https://img.youtube.com/vi/g3xLye3LDWs/0.jpg" alt="Explorando el Universo DevOps con Jerson Martínez: Git y GitHub al Máximo" style="width:210px;"><br>Explorando el Universo DevOps con Jerson Martínez: Git y GitHub al Máximo</a></td></tr><tr><td><a href="https://www.youtube.com/watch?v=UWDj87JuGcU" target="_blank"><img src="https://img.youtube.com/vi/UWDj87JuGcU/0.jpg" alt="Entendiendo DevOps y Agile #devopsea #agile" style="width:210px;"><br>Entendiendo DevOps y Agile #devopsea #agile</a></td><td><a href="https://www.youtube.com/watch?v=kVJAWXVY-UY" target="_blank"><img src="https://img.youtube.com/vi/kVJAWXVY-UY/0.jpg" alt="Ventajas y desventajas de DEVOPS y AGILE #devopsea #devops #agile" style="width:210px;"><br>Ventajas y desventajas de DEVOPS y AGILE #devopsea #devops #agile</a></td><td><a href="https://www.youtube.com/watch?v=ucLcOnrYu_0" target="_blank"><img src="https://img.youtube.com/vi/ucLcOnrYu_0/0.jpg" alt="Puntos FUERTES de AGILE #devopsea #agile" style="width:210px;"><br>Puntos FUERTES de AGILE #devopsea #agile</a></td></tr><tr></tr></table>
 <!-- YOUTUBE-VIDEOS-LIST-END -->
 
 Más vídeos en mi [canal de YouTube](https://www.youtube.com/channel/UCHQb90WIYhLUObEc8uVJR6A).
