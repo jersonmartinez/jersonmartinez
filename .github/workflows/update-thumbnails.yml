@@ -25,7 +25,7 @@ jobs:
 
       - name: Update README
         run: |
-          sed '/YOUTUBE-VIDEOS-LIST-BEGIN/,/YOUTUBE-VIDEOS-LIST-END/{//!d;}' README.md > temp.md
+          sed '/<!-- YOUTUBE-VIDEOS-LIST-BEGIN -->/,/<!-- YOUTUBE-VIDEOS-LIST-END -->/{//!d;}' README.md > temp.md
           echo '<!-- YOUTUBE-VIDEOS-LIST-BEGIN -->' >> temp.md
           cat thumbnails.md >> temp.md
           echo '<!-- YOUTUBE-VIDEOS-LIST-END -->' >> temp.md
@@ -33,7 +33,9 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --local user.email "jersonmartinezsm@gmail.com"
-          git config --local user.name "jersonmartinez"
-          git commit -am "Update YouTube video thumbnails"
-          git push
+          git diff --quiet && git diff --staged --quiet || {
+            git config --local user.email "
+            git config --local user.name "jersonmartinez"
+            git commit -am "Update YouTube video thumbnails"
+            git push
+          }
