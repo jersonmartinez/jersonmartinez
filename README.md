@@ -73,6 +73,11 @@ Más vídeos en mi [canal de YouTube](https://www.youtube.com/channel/UCHQb90WIY
 ## List videos
 
 <!-- NO-YOUTUBE-VIDEOS-LIST:START -->
+- [Go para DevOps](https://www.youtube.com/watch?v=o8MFI4VRkmg)
+- [CURSO COMPLETO de GIT y GITHUB para DEVOPS - Presentación](https://www.youtube.com/watch?v=NPM62BMnLS4)
+- [Explorando el Universo DevOps con Jerson Martínez: Git y GitHub al Máximo](https://www.youtube.com/watch?v=g3xLye3LDWs)
+- [Entendiendo DevOps y Agile #devopsea #agile](https://www.youtube.com/watch?v=UWDj87JuGcU)
+- [Ventajas y desventajas de DEVOPS y AGILE #devopsea #devops #agile](https://www.youtube.com/watch?v=kVJAWXVY-UY)
 <!-- NO-YOUTUBE-VIDEOS-LIST:END -->
 
 ## 💬 Contact
