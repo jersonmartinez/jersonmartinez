@@ -8,17 +8,14 @@ axios.get('https://www.youtube.com/feeds/videos.xml?channel_id=UCHQb90WIYhLUObEc
     .then(response => {
         parser.parseStringPromise(response.data).then(result => {
             const entries = result.feed.entry.slice(0, MAX_RESULTS);
-            let videos = '<table style="width: 100%; overflow-y: hidden; overflow-x: hidden; border: none;"><tr>';
+            let videos = '<div style="display: flex; flex-wrap: wrap;">';
             entries.forEach((entry, index) => {
                 const videoId = entry['yt:videoId'][0];
                 const title = entry.title[0];
                 const thumbnail = `https://img.youtube.com/vi/${videoId}/0.jpg`;
-                videos += `<td style="padding: 0px; margin:0px; text-align: center;"><a href="https://www.youtube.com/watch?v=${videoId}" target="_blank"><img src="${thumbnail}" alt="${title}" width="100%" style="max-width: 100%;" ><br>${title}</a></td>`;
-                if ((index + 1) % 3 === 0) {
-                    videos += '</tr><tr>';
-                }
+                videos += `<div style="flex: 0 0 33.33%; padding: 10px; text-align: center;"><a href="https://www.youtube.com/watch?v=${videoId}" target="_blank"><img src="${thumbnail}" alt="${title}" style="max-width: 100%;" ><br>${title}</a></div>`;
             });
-            videos += '</tr></table>';
+            videos += '</div>';
             console.log(videos);
         });
     })
