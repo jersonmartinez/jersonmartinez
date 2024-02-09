@@ -25,11 +25,13 @@ jobs:
 
       - name: Update README
         run: |
-            awk '/<!-- YOUTUBE-VIDEOS-LIST-BEGIN -->/{print;flag=1;next}/<!-- YOUTUBE-VIDEOS-LIST-END -->/{flag=0}flag' README.md > top.md
-            awk '/<!-- YOUTUBE-VIDEOS-LIST-END -->/,0' README.md > bottom.md
+            awk '/<!-- YOUTUBE-VIDEOS-LIST-BEGIN -->/{exit}1' README.md > top.md
+            awk '/<!-- YOUTUBE-VIDEOS-LIST-END -->/,0' README.md | tail -n +2 > bottom.md
             cat top.md > README.md
+            echo '<!-- YOUTUBE-VIDEOS-LIST-BEGIN -->' >> README.md
             cat thumbnails.md >> README.md
-            tail -n +2 bottom.md >> README.md
+            echo '<!-- YOUTUBE-VIDEOS-LIST-END -->' >> README.md
+            cat bottom.md >> README.md
             rm top.md bottom.md
 
       - name: Commit and push changes
