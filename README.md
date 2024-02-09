@@ -62,7 +62,6 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 ## Mis vídeos de YouTube
 
 <!-- YOUTUBE-VIDEOS-LIST-BEGIN -->
-
 <!-- YOUTUBE-VIDEOS-LIST-END -->
 
 ## List videos
@@ -88,6 +87,8 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 
 <!--
 **jersonmartinez/jersonmartinez** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+YOUTUBE-VIDEOS-LIST-BEGIN
+YOUTUBE-VIDEOS-LIST-END
 YOUTUBE-VIDEOS-LIST-BEGIN
 - [Go para DevOps](https://img.youtube.com/vi/o8MFI4VRkmg/0.jpg)
 - [CURSO COMPLETO de GIT y GITHUB para DEVOPS - Presentación](https://img.youtube.com/vi/NPM62BMnLS4/0.jpg)
