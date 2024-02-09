@@ -84,19 +84,318 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 
 <a href="https://www.linkedin.com/in/jersonmartinezsm/" target="_blank"><img alt="LinkedIn URL" src="https://img.shields.io/twitter/url?label=Jerson%20Martinez&logo=linkedin&style=social&url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fjersonmartinezsm%2F"></a>
 <a href="https://twitter.com/antoniomorenosm" target="_blank"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/antoniomorenosm?label=S%C3%ADgueme%20en%20%40antoniomorenosm&style=social"></a>YOUTUBE-VIDEOS-LIST-BEGIN
-- [![Go para DevOps](https://img.youtube.com/vi/o8MFI4VRkmg/0.jpg)](https://www.youtube.com/watch?v=o8MFI4VRkmg)
-- [![CURSO COMPLETO de GIT y GITHUB para DEVOPS - Presentación](https://img.youtube.com/vi/NPM62BMnLS4/0.jpg)](https://www.youtube.com/watch?v=NPM62BMnLS4)
-- [![Explorando el Universo DevOps con Jerson Martínez: Git y GitHub al Máximo](https://img.youtube.com/vi/g3xLye3LDWs/0.jpg)](https://www.youtube.com/watch?v=g3xLye3LDWs)
-- [![Entendiendo DevOps y Agile #devopsea #agile](https://img.youtube.com/vi/UWDj87JuGcU/0.jpg)](https://www.youtube.com/watch?v=UWDj87JuGcU)
-- [![Ventajas y desventajas de DEVOPS y AGILE #devopsea #devops #agile](https://img.youtube.com/vi/kVJAWXVY-UY/0.jpg)](https://www.youtube.com/watch?v=kVJAWXVY-UY)
-- [![Puntos FUERTES de AGILE #devopsea #agile](https://img.youtube.com/vi/ucLcOnrYu_0/0.jpg)](https://www.youtube.com/watch?v=ucLcOnrYu_0)
-- [![Puntos FUERTES de DEVOPS #devopsea](https://img.youtube.com/vi/GtDY57z0ngY/0.jpg)](https://www.youtube.com/watch?v=GtDY57z0ngY)
-- [![DevOps vs Agile - Diferencias y Semejanzas #devops #agile](https://img.youtube.com/vi/apgsqgHn5ZE/0.jpg)](https://www.youtube.com/watch?v=apgsqgHn5ZE)
-- [![🥊DEVOPS vs AGILE - 🔄 Ágil o Automatizado #DevOps #Agile](https://img.youtube.com/vi/_V5HbUxaQ5I/0.jpg)](https://www.youtube.com/watch?v=_V5HbUxaQ5I)
-- [![DOMINA el Arte de los COMMITS en GIT y Haz HISTORIA](https://img.youtube.com/vi/SGk9Ca7htSQ/0.jpg)](https://www.youtube.com/watch?v=SGk9Ca7htSQ)
-- [![GIT en ACCIÓN   Cómo CREAR y VERIFICAR REPOSITORIOS LOCALES](https://img.youtube.com/vi/xwQbIUezRSs/0.jpg)](https://www.youtube.com/watch?v=xwQbIUezRSs)
-- [![La IMPORTANCIA de tener BUENAS BASES en GIT y GITHUB para DEVOPS](https://img.youtube.com/vi/-CMfAg5g6mU/0.jpg)](https://www.youtube.com/watch?v=-CMfAg5g6mU)
-- [![GIT o CAOS - Las CONSECUENCIAS de No Utilizar un SISTEMA de CONTROL de VERSIONES](https://img.youtube.com/vi/rOFffboGrto/0.jpg)](https://www.youtube.com/watch?v=rOFffboGrto)
-- [![Explorando DevOps - Git y GitHub como Herramientas Fundamentales](https://img.youtube.com/vi/YqJTKjpa32A/0.jpg)](https://www.youtube.com/watch?v=YqJTKjpa32A)
-- [![🥊DEVOPS vs AGILE 💥 Comprendiendo las DIFERENCIAS y MAXIMIZANDO la COLABORACIÓN 🔥🚀](https://img.youtube.com/vi/0GjUocrXFGY/0.jpg)](https://www.youtube.com/watch?v=0GjUocrXFGY)
 YOUTUBE-VIDEOS-LIST-END
+<!-- YOUTUBE-VIDEOS-LIST-BEGIN -->
+AxiosError: Request failed with status code 404
+    at settle (/home/runner/work/jersonmartinez/jersonmartinez/node_modules/axios/dist/node/axios.cjs:1967:12)
+    at IncomingMessage.handleStreamEnd (/home/runner/work/jersonmartinez/jersonmartinez/node_modules/axios/dist/node/axios.cjs:3066:11)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+    at Axios.request (/home/runner/work/jersonmartinez/jersonmartinez/node_modules/axios/dist/node/axios.cjs:3877:41)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5) {
+  code: 'ERR_BAD_REQUEST',
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    adapter: [ 'xhr', 'http' ],
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 0,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    env: { FormData: [Function], Blob: null },
+    validateStatus: [Function: validateStatus],
+    headers: Object [AxiosHeaders] {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': undefined,
+      'User-Agent': 'axios/1.6.7',
+      'Accept-Encoding': 'gzip, compress, deflate, br'
+    },
+    method: 'get',
+    url: 'https://www.youtube.com/feeds/videos.xml?channel_id=TU_ID_DE_CANAL',
+    data: undefined
+  },
+  request: <ref *1> ClientRequest {
+    _events: [Object: null prototype] {
+      abort: [Function (anonymous)],
+      aborted: [Function (anonymous)],
+      connect: [Function (anonymous)],
+      error: [Function (anonymous)],
+      socket: [Function (anonymous)],
+      timeout: [Function (anonymous)],
+      prefinish: [Function: requestOnPrefinish]
+    },
+    _eventsCount: 7,
+    _maxListeners: undefined,
+    outputData: [],
+    outputSize: 0,
+    writable: true,
+    destroyed: false,
+    _last: true,
+    chunkedEncoding: false,
+    shouldKeepAlive: false,
+    _defaultKeepAlive: true,
+    useChunkedEncodingByDefault: false,
+    sendDate: false,
+    _removedConnection: false,
+    _removedContLen: false,
+    _removedTE: false,
+    _contentLength: 0,
+    _hasBody: true,
+    _trailer: '',
+    finished: true,
+    _headerSent: true,
+    socket: TLSSocket {
+      _tlsOptions: [Object],
+      _secureEstablished: true,
+      _securePending: false,
+      _newSessionPending: false,
+      _controlReleased: true,
+      secureConnecting: false,
+      _SNICallback: null,
+      servername: 'www.youtube.com',
+      alpnProtocol: false,
+      authorized: true,
+      authorizationError: null,
+      encrypted: true,
+      _events: [Object: null prototype],
+      _eventsCount: 10,
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'www.youtube.com',
+      _readableState: [ReadableState],
+      _maxListeners: undefined,
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: undefined,
+      _server: null,
+      ssl: [TLSWrap],
+      _requestCert: true,
+      _rejectUnauthorized: true,
+      parser: null,
+      _httpMessage: [Circular *1],
+      [Symbol(res)]: [TLSWrap],
+      [Symbol(verified)]: true,
+      [Symbol(pendingSession)]: null,
+      [Symbol(async_id_symbol)]: 3,
+      [Symbol(kHandle)]: [TLSWrap],
+      [Symbol(kSetNoDelay)]: false,
+      [Symbol(lastWriteQueueSize)]: 0,
+      [Symbol(timeout)]: null,
+      [Symbol(kBuffer)]: null,
+      [Symbol(kBufferCb)]: null,
+      [Symbol(kBufferGen)]: null,
+      [Symbol(kCapture)]: false,
+      [Symbol(kBytesRead)]: 0,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(connect-options)]: [Object],
+      [Symbol(RequestTimeout)]: undefined
+    },
+    _header: 'GET /feeds/videos.xml?channel_id=TU_ID_DE_CANAL HTTP/1.1\r\n' +
+      'Accept: application/json, text/plain, */*\r\n' +
+      'User-Agent: axios/1.6.7\r\n' +
+      'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+      'Host: www.youtube.com\r\n' +
+      'Connection: close\r\n' +
+      '\r\n',
+    _keepAliveTimeout: 0,
+    _onPendingData: [Function: noopPendingOutput],
+    agent: Agent {
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      defaultPort: 443,
+      protocol: 'https:',
+      options: [Object],
+      requests: {},
+      sockets: [Object],
+      freeSockets: {},
+      keepAliveMsecs: 1000,
+      keepAlive: false,
+      maxSockets: Infinity,
+      maxFreeSockets: 256,
+      scheduling: 'lifo',
+      maxTotalSockets: Infinity,
+      totalSocketCount: 1,
+      maxCachedSessions: 100,
+      _sessionCache: [Object],
+      [Symbol(kCapture)]: false
+    },
+    socketPath: undefined,
+    method: 'GET',
+    maxHeaderSize: undefined,
+    insecureHTTPParser: undefined,
+    path: '/feeds/videos.xml?channel_id=TU_ID_DE_CANAL',
+    _ended: true,
+    res: IncomingMessage {
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 4,
+      _maxListeners: undefined,
+      socket: [TLSSocket],
+      httpVersionMajor: 1,
+      httpVersionMinor: 1,
+      httpVersion: '1.1',
+      complete: true,
+      headers: [Object],
+      rawHeaders: [Array],
+      trailers: {},
+      rawTrailers: [],
+      aborted: false,
+      upgrade: false,
+      url: '',
+      method: null,
+      statusCode: 404,
+      statusMessage: 'Not Found',
+      client: [TLSSocket],
+      _consuming: true,
+      _dumped: false,
+      req: [Circular *1],
+      responseUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=TU_ID_DE_CANAL',
+      redirects: [],
+      [Symbol(kCapture)]: false,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    aborted: false,
+    timeoutCb: null,
+    upgradeOrConnect: false,
+    parser: null,
+    maxHeadersCount: null,
+    reusedSocket: false,
+    host: 'www.youtube.com',
+    protocol: 'https:',
+    _redirectable: Writable {
+      _writableState: [WritableState],
+      _events: [Object: null prototype],
+      _eventsCount: 3,
+      _maxListeners: undefined,
+      _options: [Object],
+      _ended: true,
+      _ending: true,
+      _redirectCount: 0,
+      _redirects: [],
+      _requestBodyLength: 0,
+      _requestBodyBuffers: [],
+      _onNativeResponse: [Function (anonymous)],
+      _currentRequest: [Circular *1],
+      _currentUrl: 'https://www.youtube.com/feeds/videos.xml?channel_id=TU_ID_DE_CANAL',
+      [Symbol(kCapture)]: false
+    },
+    [Symbol(kCapture)]: false,
+    [Symbol(kNeedDrain)]: false,
+    [Symbol(corked)]: 0,
+    [Symbol(kOutHeaders)]: [Object: null prototype] {
+      accept: [Array],
+      'user-agent': [Array],
+      'accept-encoding': [Array],
+      host: [Array]
+    }
+  },
+  response: {
+    status: 404,
+    statusText: 'Not Found',
+    headers: Object [AxiosHeaders] {
+      date: 'Fri, 09 Feb 2024 06:58:42 GMT',
+      'content-type': 'text/html; charset=UTF-8',
+      server: 'YouTube RSS Feeds server',
+      'content-length': '1603',
+      'x-xss-protection': '0',
+      'x-frame-options': 'SAMEORIGIN',
+      'alt-svc': 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000',
+      connection: 'close'
+    },
+    config: {
+      transitional: [Object],
+      adapter: [Array],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 0,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      env: [Object],
+      validateStatus: [Function: validateStatus],
+      headers: [Object [AxiosHeaders]],
+      method: 'get',
+      url: 'https://www.youtube.com/feeds/videos.xml?channel_id=TU_ID_DE_CANAL',
+      data: undefined
+    },
+    request: <ref *1> ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: false,
+      _last: true,
+      chunkedEncoding: false,
+      shouldKeepAlive: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: false,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      _contentLength: 0,
+      _hasBody: true,
+      _trailer: '',
+      finished: true,
+      _headerSent: true,
+      socket: [TLSSocket],
+      _header: 'GET /feeds/videos.xml?channel_id=TU_ID_DE_CANAL HTTP/1.1\r\n' +
+        'Accept: application/json, text/plain, */*\r\n' +
+        'User-Agent: axios/1.6.7\r\n' +
+        'Accept-Encoding: gzip, compress, deflate, br\r\n' +
+        'Host: www.youtube.com\r\n' +
+        'Connection: close\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: noopPendingOutput],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'GET',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      path: '/feeds/videos.xml?channel_id=TU_ID_DE_CANAL',
+      _ended: true,
+      res: [IncomingMessage],
+      aborted: false,
+      timeoutCb: null,
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'www.youtube.com',
+      protocol: 'https:',
+      _redirectable: [Writable],
+      [Symbol(kCapture)]: false,
+      [Symbol(kNeedDrain)]: false,
+      [Symbol(corked)]: 0,
+      [Symbol(kOutHeaders)]: [Object: null prototype]
+    },
+    data: '<!DOCTYPE html>\n' +
+      '<html lang=en>\n' +
+      '  <meta charset=utf-8>\n' +
+      '  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n' +
+      '  <title>Error 404 (Not Found)!!1</title>\n' +
+      '  <style>\n' +
+      '    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n' +
+      '  </style>\n' +
+      '  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n' +
+      '  <p><b>404.</b> <ins>That’s an error.</ins>\n' +
+      '  <p>The requested URL <code>/feeds/videos.xml?channel_id=TU_ID_DE_CANAL</code> was not found on this server.  <ins>That’s all we know.</ins>\n'
+  }
+}
+<!-- YOUTUBE-VIDEOS-LIST-END -->
