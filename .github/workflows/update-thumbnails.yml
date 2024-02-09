@@ -38,10 +38,10 @@ jobs:
 
       - name: Commit and push changes
         run: |
-            git stash
+            git stash || true
             git fetch origin
             git rebase origin/main
-            git stash pop
+            git stash pop || true
             git diff --quiet && git diff --staged --quiet || {
                 git config --local user.email "jersonmartinezsm@gmail.com"
                 git config --local user.name "jersonmartinez"
