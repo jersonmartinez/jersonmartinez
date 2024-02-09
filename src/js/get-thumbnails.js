@@ -14,6 +14,10 @@ axios.get('https://www.youtube.com/feeds/videos.xml?channel_id=UCHQb90WIYhLUObEc
                 const title = entry.title[0];
                 const thumbnail = `https://img.youtube.com/vi/${videoId}/0.jpg`;
                 videos += `<div style="flex: 0 0 33.33%; padding: 10px; text-align: center;"><a href="https://www.youtube.com/watch?v=${videoId}" target="_blank"><img src="${thumbnail}" alt="${title}" style="max-width: 100%;" ><br>${title}</a></div>`;
+                // Add a line break after every 3 videos
+                if ((index + 1) % 3 === 0) {
+                    videos += '<br>';
+                }
             });
             videos += '</div>';
             console.log(videos);
