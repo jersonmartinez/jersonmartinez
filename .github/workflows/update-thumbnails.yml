@@ -1,4 +1,4 @@
-name: Update README with YouTube video thumbnails
+name: Update README with YT Video Thumbnails
 
 on:
   schedule:
@@ -34,7 +34,7 @@ jobs:
       - name: Commit and push changes
         run: |
           git diff --quiet && git diff --staged --quiet || {
-            git config --local user.email "
+            git config --local user.email "jersonmartinezsm@gmail.com"
             git config --local user.name "jersonmartinez"
             git commit -am "Update YouTube video thumbnails"
             git push

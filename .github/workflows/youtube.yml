@@ -13,5 +13,5 @@ jobs:
             - uses: actions/checkout@v2
             - uses: gautamkrishnar/blog-post-workflow@master
               with:
-                  comment_tag_name: "YOUTUBE-VIDEOS-LIST"
+                  comment_tag_name: "NO-YOUTUBE-VIDEOS-LIST"
                   feed_list: "https://www.youtube.com/feeds/videos.xml?channel_id=UCHQb90WIYhLUObEc8uVJR6A"
