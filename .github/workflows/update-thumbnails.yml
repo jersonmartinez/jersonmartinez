@@ -36,6 +36,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
+          git pull --rebase
           git diff --quiet && git diff --staged --quiet || {
             git config --local user.email "jersonmartinezsm@gmail.com"
             git config --local user.name "jersonmartinez"
