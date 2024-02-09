@@ -26,9 +26,9 @@ jobs:
       - name: Update README
         run: |
           sed '/YOUTUBE-VIDEOS-LIST-BEGIN/,/YOUTUBE-VIDEOS-LIST-END/{//!d;}' README.md > temp.md
-          echo 'YOUTUBE-VIDEOS-LIST-BEGIN' >> temp.md
+          echo '<!-- YOUTUBE-VIDEOS-LIST-BEGIN -->' >> temp.md
           cat thumbnails.md >> temp.md
-          echo 'YOUTUBE-VIDEOS-LIST-END' >> temp.md
+          echo '<!-- YOUTUBE-VIDEOS-LIST-END -->' >> temp.md
           mv temp.md README.md
 
       - name: Commit and push changes
