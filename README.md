@@ -88,3 +88,20 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 
 <!--
 **jersonmartinez/jersonmartinez** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+YOUTUBE-VIDEOS-LIST-BEGIN
+- [Go para DevOps](https://img.youtube.com/vi/o8MFI4VRkmg/0.jpg)
+- [CURSO COMPLETO de GIT y GITHUB para DEVOPS - Presentación](https://img.youtube.com/vi/NPM62BMnLS4/0.jpg)
+- [Explorando el Universo DevOps con Jerson Martínez: Git y GitHub al Máximo](https://img.youtube.com/vi/g3xLye3LDWs/0.jpg)
+- [Entendiendo DevOps y Agile #devopsea #agile](https://img.youtube.com/vi/UWDj87JuGcU/0.jpg)
+- [Ventajas y desventajas de DEVOPS y AGILE #devopsea #devops #agile](https://img.youtube.com/vi/kVJAWXVY-UY/0.jpg)
+- [Puntos FUERTES de AGILE #devopsea #agile](https://img.youtube.com/vi/ucLcOnrYu_0/0.jpg)
+- [Puntos FUERTES de DEVOPS #devopsea](https://img.youtube.com/vi/GtDY57z0ngY/0.jpg)
+- [DevOps vs Agile - Diferencias y Semejanzas #devops #agile](https://img.youtube.com/vi/apgsqgHn5ZE/0.jpg)
+- [🥊DEVOPS vs AGILE - 🔄 Ágil o Automatizado #DevOps #Agile](https://img.youtube.com/vi/_V5HbUxaQ5I/0.jpg)
+- [DOMINA el Arte de los COMMITS en GIT y Haz HISTORIA](https://img.youtube.com/vi/SGk9Ca7htSQ/0.jpg)
+- [GIT en ACCIÓN   Cómo CREAR y VERIFICAR REPOSITORIOS LOCALES](https://img.youtube.com/vi/xwQbIUezRSs/0.jpg)
+- [La IMPORTANCIA de tener BUENAS BASES en GIT y GITHUB para DEVOPS](https://img.youtube.com/vi/-CMfAg5g6mU/0.jpg)
+- [GIT o CAOS - Las CONSECUENCIAS de No Utilizar un SISTEMA de CONTROL de VERSIONES](https://img.youtube.com/vi/rOFffboGrto/0.jpg)
+- [Explorando DevOps - Git y GitHub como Herramientas Fundamentales](https://img.youtube.com/vi/YqJTKjpa32A/0.jpg)
+- [🥊DEVOPS vs AGILE 💥 Comprendiendo las DIFERENCIAS y MAXIMIZANDO la COLABORACIÓN 🔥🚀](https://img.youtube.com/vi/0GjUocrXFGY/0.jpg)
+YOUTUBE-VIDEOS-LIST-END
