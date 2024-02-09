@@ -11,7 +11,7 @@ axios.get('https://www.youtube.com/feeds/videos.xml?channel_id=UCHQb90WIYhLUObEc
                 const videoId = entry['yt:videoId'][0];
                 const title = entry.title[0];
                 const thumbnail = `https://img.youtube.com/vi/${videoId}/0.jpg`;
-                return `- [${title}](${thumbnail})`;
+                return `- [![${title}](${thumbnail})](https://www.youtube.com/watch?v=${videoId})`;
             });
             console.log(videos.join('\n'));
         });
