@@ -62,7 +62,6 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 ## Mis vídeos de YouTube
 
 <!-- YOUTUBE-VIDEOS-LIST-BEGIN -->
-
 <!-- YOUTUBE-VIDEOS-LIST-END -->
 
 ## List videos
@@ -84,4 +83,20 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 <a href="https://www.crashell.com/?suscribirse" target="_blank"><img alt="Crashell" src="https://img.shields.io/twitter/url?color=9cf&label=%40Crashell&logo=Crashell&logoColor=informational&style=for-the-badge&url=https%3A%2F%2Ftwitter.com%2Fantoniomorenosm"></a>
 
 <a href="https://www.linkedin.com/in/jersonmartinezsm/" target="_blank"><img alt="LinkedIn URL" src="https://img.shields.io/twitter/url?label=Jerson%20Martinez&logo=linkedin&style=social&url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fjersonmartinezsm%2F"></a>
-<a href="https://twitter.com/antoniomorenosm" target="_blank"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/antoniomorenosm?label=S%C3%ADgueme%20en%20%40antoniomorenosm&style=social"></a>
+<a href="https://twitter.com/antoniomorenosm" target="_blank"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/antoniomorenosm?label=S%C3%ADgueme%20en%20%40antoniomorenosm&style=social"></a>YOUTUBE-VIDEOS-LIST-BEGIN
+- [![Go para DevOps](https://img.youtube.com/vi/o8MFI4VRkmg/0.jpg)](https://www.youtube.com/watch?v=o8MFI4VRkmg)
+- [![CURSO COMPLETO de GIT y GITHUB para DEVOPS - Presentación](https://img.youtube.com/vi/NPM62BMnLS4/0.jpg)](https://www.youtube.com/watch?v=NPM62BMnLS4)
+- [![Explorando el Universo DevOps con Jerson Martínez: Git y GitHub al Máximo](https://img.youtube.com/vi/g3xLye3LDWs/0.jpg)](https://www.youtube.com/watch?v=g3xLye3LDWs)
+- [![Entendiendo DevOps y Agile #devopsea #agile](https://img.youtube.com/vi/UWDj87JuGcU/0.jpg)](https://www.youtube.com/watch?v=UWDj87JuGcU)
+- [![Ventajas y desventajas de DEVOPS y AGILE #devopsea #devops #agile](https://img.youtube.com/vi/kVJAWXVY-UY/0.jpg)](https://www.youtube.com/watch?v=kVJAWXVY-UY)
+- [![Puntos FUERTES de AGILE #devopsea #agile](https://img.youtube.com/vi/ucLcOnrYu_0/0.jpg)](https://www.youtube.com/watch?v=ucLcOnrYu_0)
+- [![Puntos FUERTES de DEVOPS #devopsea](https://img.youtube.com/vi/GtDY57z0ngY/0.jpg)](https://www.youtube.com/watch?v=GtDY57z0ngY)
+- [![DevOps vs Agile - Diferencias y Semejanzas #devops #agile](https://img.youtube.com/vi/apgsqgHn5ZE/0.jpg)](https://www.youtube.com/watch?v=apgsqgHn5ZE)
+- [![🥊DEVOPS vs AGILE - 🔄 Ágil o Automatizado #DevOps #Agile](https://img.youtube.com/vi/_V5HbUxaQ5I/0.jpg)](https://www.youtube.com/watch?v=_V5HbUxaQ5I)
+- [![DOMINA el Arte de los COMMITS en GIT y Haz HISTORIA](https://img.youtube.com/vi/SGk9Ca7htSQ/0.jpg)](https://www.youtube.com/watch?v=SGk9Ca7htSQ)
+- [![GIT en ACCIÓN   Cómo CREAR y VERIFICAR REPOSITORIOS LOCALES](https://img.youtube.com/vi/xwQbIUezRSs/0.jpg)](https://www.youtube.com/watch?v=xwQbIUezRSs)
+- [![La IMPORTANCIA de tener BUENAS BASES en GIT y GITHUB para DEVOPS](https://img.youtube.com/vi/-CMfAg5g6mU/0.jpg)](https://www.youtube.com/watch?v=-CMfAg5g6mU)
+- [![GIT o CAOS - Las CONSECUENCIAS de No Utilizar un SISTEMA de CONTROL de VERSIONES](https://img.youtube.com/vi/rOFffboGrto/0.jpg)](https://www.youtube.com/watch?v=rOFffboGrto)
+- [![Explorando DevOps - Git y GitHub como Herramientas Fundamentales](https://img.youtube.com/vi/YqJTKjpa32A/0.jpg)](https://www.youtube.com/watch?v=YqJTKjpa32A)
+- [![🥊DEVOPS vs AGILE 💥 Comprendiendo las DIFERENCIAS y MAXIMIZANDO la COLABORACIÓN 🔥🚀](https://img.youtube.com/vi/0GjUocrXFGY/0.jpg)](https://www.youtube.com/watch?v=0GjUocrXFGY)
+YOUTUBE-VIDEOS-LIST-END
