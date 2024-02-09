@@ -11,7 +11,7 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 - 🎥 I teach on 2 YouTube channels, [DevOpsea](https://www.youtube.com/@devopsea?sub_confirmation=1) and [Side Master](https://www.youtube.com/user/sidemastersupremo?sub_confirmation=1).
 - 📹 Trainer on Udemy, with over 60k students [Udemy Profile](https://www.udemy.com/user/side-master/).
 - 💻 Currently working at [Hotaka iKhodi](https://www.hotaka.io/) as a DevOps Engineer.
-- 📰 I write for [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) blog with more than 11 published articles around `Cloud Computing`, `BigData` and `DevOps`.
+- 📰 I write for [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) blog with more than 16 published articles around `Cloud Computing`, `BigData` and `DevOps`.
 - 📰 I write for the [Crashell](https://www.crashell.com/estudio) studio.
 
 ## Skills
