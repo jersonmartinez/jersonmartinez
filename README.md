@@ -283,7 +283,7 @@ AxiosError: Request failed with status code 404
     status: 404,
     statusText: 'Not Found',
     headers: Object [AxiosHeaders] {
-      date: 'Tue, 26 Mar 2024 05:04:09 GMT',
+      date: 'Tue, 26 Mar 2024 06:05:32 GMT',
       'content-type': 'text/html; charset=UTF-8',
       server: 'YouTube RSS Feeds server',
       'content-length': '1613',
@@ -385,7 +385,7 @@ More videos on my [DevOpsea YouTube channel](https://www.youtube.com/@DevOpsea/v
 Here are some of my YouTube videos on [Side Master](https://www.youtube.com/@SideMaster?sub_confirmation=1)
 
 <!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-BEGIN -->
-AxiosError: Request failed with status code 500
+AxiosError: Request failed with status code 404
     at settle (/home/runner/work/jersonmartinez/jersonmartinez/node_modules/axios/dist/node/axios.cjs:1966:12)
     at IncomingMessage.handleStreamEnd (/home/runner/work/jersonmartinez/jersonmartinez/node_modules/axios/dist/node/axios.cjs:3065:11)
     at IncomingMessage.emit (events.js:412:35)
@@ -393,7 +393,7 @@ AxiosError: Request failed with status code 500
     at processTicksAndRejections (internal/process/task_queues.js:82:21)
     at Axios.request (/home/runner/work/jersonmartinez/jersonmartinez/node_modules/axios/dist/node/axios.cjs:3876:41)
     at processTicksAndRejections (internal/process/task_queues.js:95:5) {
-  code: 'ERR_BAD_RESPONSE',
+  code: 'ERR_BAD_REQUEST',
   config: {
     transitional: {
       silentJSONParsing: true,
@@ -554,8 +554,8 @@ AxiosError: Request failed with status code 500
       upgrade: false,
       url: '',
       method: null,
-      statusCode: 500,
-      statusMessage: 'Internal Server Error',
+      statusCode: 404,
+      statusMessage: 'Not Found',
       client: [TLSSocket],
       _consuming: true,
       _dumped: false,
@@ -601,13 +601,13 @@ AxiosError: Request failed with status code 500
     }
   },
   response: {
-    status: 500,
-    statusText: 'Internal Server Error',
+    status: 404,
+    statusText: 'Not Found',
     headers: Object [AxiosHeaders] {
-      date: 'Tue, 26 Mar 2024 05:04:09 GMT',
+      date: 'Tue, 26 Mar 2024 06:05:33 GMT',
       'content-type': 'text/html; charset=UTF-8',
       server: 'YouTube RSS Feeds server',
-      'content-length': '1730',
+      'content-length': '1613',
       'x-xss-protection': '0',
       'x-frame-options': 'SAMEORIGIN',
       'alt-svc': 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000',
@@ -688,13 +688,13 @@ AxiosError: Request failed with status code 500
       '<html lang=en>\n' +
       '  <meta charset=utf-8>\n' +
       '  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">\n' +
-      '  <title>Error 500 (Server Error)!!1</title>\n' +
+      '  <title>Error 404 (Not Found)!!1</title>\n' +
       '  <style>\n' +
       '    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}\n' +
       '  </style>\n' +
       '  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>\n' +
-      '  <p><b>500.</b> <ins>That’s an error.</ins>\n' +
-      '  <p>The server encountered an error and could not complete your request.<p>If the problem persists, please <A HREF="http://www.google.com/support/">report</A> your problem and mention this error message and the query that caused it.  <ins>That’s all we know.</ins>\n'
+      '  <p><b>404.</b> <ins>That’s an error.</ins>\n' +
+      '  <p>The requested URL <code>/feeds/videos.xml?channel_id=UC-_To7b_NPrxvgG-_de5HRA</code> was not found on this server.  <ins>That’s all we know.</ins>\n'
   }
 }
 <!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-END -->
