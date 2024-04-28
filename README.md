@@ -283,7 +283,7 @@ AxiosError: Request failed with status code 404
     status: 404,
     statusText: 'Not Found',
     headers: Object [AxiosHeaders] {
-      date: 'Sun, 28 Apr 2024 02:15:18 GMT',
+      date: 'Sun, 28 Apr 2024 03:04:57 GMT',
       'content-type': 'text/html; charset=UTF-8',
       server: 'YouTube RSS Feeds server',
       'content-length': '1613',
@@ -604,7 +604,7 @@ AxiosError: Request failed with status code 404
     status: 404,
     statusText: 'Not Found',
     headers: Object [AxiosHeaders] {
-      date: 'Sun, 28 Apr 2024 02:15:19 GMT',
+      date: 'Sun, 28 Apr 2024 03:04:57 GMT',
       'content-type': 'text/html; charset=UTF-8',
       server: 'YouTube RSS Feeds server',
       'content-length': '1613',
