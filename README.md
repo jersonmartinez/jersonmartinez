@@ -1,5 +1,4 @@
 ## Hi there! My name is Jerson 🖐
-<!-- <img src = "https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" style="width:25px;" width="25px"> -->
 
 [![@DevOpsWithJerson](https://img.shields.io/youtube/channel/subscribers/UCHQb90WIYhLUObEc8uVJR6A?label=%40DevOpsea&style=social)](https://www.youtube.com/@DevOpsWithJerson?sub_confirmation=1)
 [![@SideMaster](https://img.shields.io/youtube/channel/subscribers/UC-_To7b_NPrxvgG-_de5HRA?label=%40SideMaster&style=social)](https://youtube.com/sidemaster?sub_confirmation=1)
@@ -8,7 +7,7 @@ A bit about this big head, I consider myself a Kaizeneta, founder of [Crashell](
  
 If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.github.io/jersonmartinez/).
 
-- 🎥 I teach on 2 YouTube channels, [DevOpsea](https://www.youtube.com/@devopsea?sub_confirmation=1) and [Side Master](https://www.youtube.com/user/sidemastersupremo?sub_confirmation=1).
+- 🎥 I teach on 2 YouTube channels, [DevOpsWithJerson](https://www.youtube.com/@DevOpsWithJerson?sub_confirmation=1) and [Side Master](https://www.youtube.com/user/sidemastersupremo?sub_confirmation=1).
 - 📹 Trainer on Udemy, with over 90k students [Udemy Profile](https://www.udemy.com/user/side-master/).
 - 💻 Currently working at [Hotaka iKhodi](https://www.hotaka.io/) as a DevOps Engineer.
 - 📰 I write for [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) blog with more than 16 published articles around `Cloud Computing`, `BigData` and `DevOps`.
@@ -61,13 +60,13 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 
 ## 🎥 DevOpsea YouTube Channel
 
-Here are some of my YouTube videos on [DevOpsea](https://www.youtube.com/@DevOpsWithJerson?sub_confirmation=1)
+Here are some of my YouTube videos on [DevOpsWithJerson](https://www.youtube.com/@DevOpsWithJerson?sub_confirmation=1)
 
 <!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-BEGIN -->
 <table><tr><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=kCrLxAe2rL0" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/kCrLxAe2rL0/0.jpg" alt="🚀 Domina Go: Curso completo con Gin, Revel, Echo, Gorilla y Fiber 🛠️" width="100%"><br>🚀 Domina Go: Curso completo con Gin, Revel, Echo, Gorilla y Fiber 🛠️</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=2cS5zEIh_zg" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/2cS5zEIh_zg/0.jpg" alt="Curso de Fiber Framework 🧵 ¡Domina el desarrollo web con Go!  🚀" width="100%"><br>Curso de Fiber Framework 🧵 ¡Domina el desarrollo web con Go!  🚀</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=O5Fr1S-BvKY" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/O5Fr1S-BvKY/0.jpg" alt="Curso de Gorilla Framework para Principiantes 🦍" width="100%"><br>Curso de Gorilla Framework para Principiantes 🦍</a></td></tr><tr><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=7cROq0Npc7U" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/7cROq0Npc7U/0.jpg" alt="Curso de GO con ECHO Framework para Principiantes 🔥💻" width="100%"><br>Curso de GO con ECHO Framework para Principiantes 🔥💻</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=Wpma2kD-oBM" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/Wpma2kD-oBM/0.jpg" alt="Curso de Go con el Framework Gin para Principiantes 🛠️" width="100%"><br>Curso de Go con el Framework Gin para Principiantes 🛠️</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=Bwy-aMjh2iI" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/Bwy-aMjh2iI/0.jpg" alt="Curso de Revel Framework de Go para Principiantes 🎯" width="100%"><br>Curso de Revel Framework de Go para Principiantes 🎯</a></td></tr><tr></tr></table>
 <!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-END -->
 
-More videos on my [DevOpsea YouTube channel](https://www.youtube.com/@DevOpsWithJerson/videos/?sub_confirmation=1).
+More videos on my [DevOpsWithJerson YouTube channel](https://www.youtube.com/@DevOpsWithJerson/videos/?sub_confirmation=1).
 
 ## 🎥 Side Master YouTube Channel
 
