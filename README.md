@@ -50,7 +50,7 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 	</ul>
 </details>
 
-</details>ummary>📃 Currículum</summary>
+</details>📃 Currículum</summary>
 	<br>
 	<ul>
 		<li><a href="https://docs.google.com/document/d/1r-Hpl-3WV1qDlLiUWJZkZ_7XFxrU1WgezGiaQnSrSkw/edit?usp=sharing" target="_blank">📄 Ver CV en Español</a></li>
