@@ -53,7 +53,10 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 <details>
 	<summary> 📃 Resume</summary>
 <br>
-<ul><li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/Curriculum%20Vitae%20-%20Jerson%20Antonio%20Mart%C3%ADnez%20Moreno.pdf">👉 View document</a>.</li></ul>
+	<ul>
+		<li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/C.V%20-%20Jerson%20Mart%C3%ADnez%20-%20DevOps%20Engineer%2C%20SRE%2C%20Cloud%20Architect%20-%20ES.pdf">👉 Ver CV en Español</a>.</li>
+		<li><a href="https://github.com/jersonmartinez/jersonmartinez/blob/main/src/CV/C.V%20-%20Jerson%20Mart%C3%ADnez%20-%20DevOps%20Engineer%2C%20SRE%2C%20Cloud%20Architect%20-%20EN.pdf">👉 View CV in English</a>.</li>
+	</ul>
 </details>
 
 [![](https://visitcount.itsvg.in/api?id=jersonmartinez&label=Profile%20visits&color=12&icon=5&pretty=true)](https://visitcount.itsvg.in)
