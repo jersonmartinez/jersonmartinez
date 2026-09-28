@@ -5,13 +5,15 @@
 [![DevOpsea](https://img.shields.io/badge/YouTube-DevOpsea-FF0000?logo=youtube&logoColor=white)](https://www.youtube.com/@DevOpsea?sub_confirmation=1)
 [![Side Master](https://img.shields.io/badge/YouTube-Side%20Master-FF0000?logo=youtube&logoColor=white)](https://www.youtube.com/@SideMaster?sub_confirmation=1)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Jerson%20Martínez-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jersonmartinezsm/)
-[![Website](https://img.shields.io/badge/Website-Crashell-24292F?logo=googlechrome&logoColor=white)](https://www.crashell.com)
+[![Website](https://img.shields.io/badge/Website-jersonmartinez.com-24292F?logo=googlechrome&logoColor=white)](https://jersonmartinez.com)
+
+> 🌐 **Sitio personal:** [jersonmartinez.com](https://jersonmartinez.com)
 
 ## About me
 
 I’m a **DevOps Engineer with 8+ years of experience** in automation, cloud infrastructure (**AWS**, **Azure**, **GCP**) and full-stack development. I help teams adopt DevOps practices and deliver scalable, secure and maintainable solutions with **Terraform**, **GitHub Actions**, **Docker** and **Kubernetes**.
 
-- 🌐 [Personal website](https://jersonmartinez.github.io/jersonmartinez/)
+- 🌐 [Personal website](https://jersonmartinez.com/)
 - 🎓 [Udemy profile](https://www.udemy.com/user/side-master/) — more than 90k students
 - ✍️ [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) — articles about cloud, Big Data and DevOps
 - 📰 [Crashell](https://www.crashell.com/estudio) — technical publications
