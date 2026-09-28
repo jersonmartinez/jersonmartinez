@@ -1,64 +1,50 @@
-name: README - YT Channels
+name: Update README YouTube content
+
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - README.md
+      - src/js/update-youtube-sections.js
+      - .github/workflows/update-thumbnails.yml
   schedule:
     - cron: '0 * * * *'
   workflow_dispatch:
+
+concurrency:
+  group: readme-youtube-content
+  cancel-in-progress: true
+
+permissions:
+  contents: write
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - name: Check out repository
+        uses: actions/checkout@v4
         with:
-          node-version: '14'
+          fetch-depth: 0
 
-      - name: Install dependencies
-        run: npm install axios xml2js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-      - name: Get DevOpsea YouTube video thumbnails
-        run: node src/js/devopea-get-thumbnails.js > thumbnails.md
+      - name: Update YouTube sections
+        run: node src/js/update-youtube-sections.js
 
-      - name: Update README - DevOpsea YT Channel
+      - name: Commit updated README
         run: |
-            awk '/<!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-BEGIN -->/{exit}1' README.md > top.md
-            awk '/<!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-END -->/,0' README.md | tail -n +2 > bottom.md
-            cat top.md > README.md
-            echo '<!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-BEGIN -->' >> README.md
-            cat thumbnails.md >> README.md
-            echo '<!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-END -->' >> README.md
-            cat bottom.md >> README.md
-            rm top.md bottom.md
+          if git diff --quiet -- README.md; then
+            echo "README is already up to date."
+            exit 0
+          fi
 
-      - name: Get Side Master YouTube video thumbnails
-        run: node src/js/sidemaster-get-thumbnails.js > thumbnails.md
-
-      - name: Update README - Side Master YT Channel
-        run: |
-            awk '/<!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-BEGIN -->/{exit}1' README.md > top.md
-            awk '/<!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-END -->/,0' README.md | tail -n +2 > bottom.md
-            cat top.md > README.md
-            echo '<!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-BEGIN -->' >> README.md
-            cat thumbnails.md >> README.md
-            echo '<!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-END -->' >> README.md
-            cat bottom.md >> README.md
-            rm top.md bottom.md
-
-      - name: Commit and push changes
-        run: |
-            git stash || true
-            git fetch origin
-            git rebase origin/main
-            git stash pop || true
-            git diff --quiet && git diff --staged --quiet || {
-                git config --local user.email "jersonmartinezsm@gmail.com"
-                git config --local user.name "jersonmartinez"
-                git commit -am "Update YouTube video thumbnails"
-                git push
-            }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "docs: update YouTube content [skip ci]"
+          git push origin HEAD:main

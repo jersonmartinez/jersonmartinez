@@ -1,24 +1,29 @@
-## Hi there! My name is Jerson 🖐
+# Jerson Martínez 👋
 
-[![@DevOpsea](https://img.shields.io/youtube/channel/subscribers/UCHQb90WIYhLUObEc8uVJR6A?label=%40DevOpsea&style=social)](https://www.youtube.com/@DevOpsea?sub_confirmation=1)
-[![@SideMaster](https://img.shields.io/youtube/channel/subscribers/UC-_To7b_NPrxvgG-_de5HRA?label=%40SideMaster&style=social)](https://youtube.com/sidemaster?sub_confirmation=1)
+[![DevOpsea](https://img.shields.io/badge/YouTube-DevOpsea-FF0000?logo=youtube&logoColor=white)](https://www.youtube.com/@DevOpsea?sub_confirmation=1)
+[![Side Master](https://img.shields.io/badge/YouTube-Side%20Master-FF0000?logo=youtube&logoColor=white)](https://www.youtube.com/@SideMaster?sub_confirmation=1)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Jerson%20Martínez-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jersonmartinezsm/)
+[![Website](https://img.shields.io/badge/Website-Crashell-24292F?logo=googlechrome&logoColor=white)](https://www.crashell.com)
 
-**DevOps Engineer with 8+ years of experience in automation**, cloud infrastructure (**AWS**, **Azure**, **GCP**), and full-stack development. I’ve led the adoption of DevOps culture in high-performance teams, implementing scalable solutions using tools like **Terraform**, **GitHub Actions**, **Docker**, and **Kubernetes**. Expert in cloud cost optimization, continuous deployment, and securing production environments.
- 
-If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.github.io/jersonmartinez/).
+## About me
 
-- 🎥 I teach on 2 YouTube channels, [DevOpsea](https://www.youtube.com/@DevOpsea?sub_confirmation=1) and [Side Master](https://www.youtube.com/user/sidemastersupremo?sub_confirmation=1).
-- 📹 Trainer on Udemy, with over 90k students [Udemy Profile](https://www.udemy.com/user/side-master/).
-- 📰 I write for [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) blog with more than 40 published articles around `Cloud Computing`, `BigData` and `DevOps`.
-- 📰 I write for the [Crashell](https://www.crashell.com/estudio) studio.
+I’m a **DevOps Engineer with 8+ years of experience** in automation, cloud infrastructure (**AWS**, **Azure**, **GCP**) and full-stack development. I help teams adopt DevOps practices and deliver scalable, secure and maintainable solutions with **Terraform**, **GitHub Actions**, **Docker** and **Kubernetes**.
+
+- 🌐 [Personal website](https://jersonmartinez.github.io/jersonmartinez/)
+- 🎓 [Udemy profile](https://www.udemy.com/user/side-master/) — more than 90k students
+- ✍️ [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) — articles about cloud, Big Data and DevOps
+- 📰 [Crashell](https://www.crashell.com/estudio) — technical publications
 
 ## Skills
-<!-- <img src = "https://media2.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif?cid=ecf05e47a0n3gi1bfqntqmob8g9aid1oyj2wr3ds3mg700bl&rid=giphy.gif" width="20px"> -->
-- **Tools:** Git, GitHub Actions, Docker, Kubernetes, Rundeck, Ansible, Grafana, Prometheus, Datadog, ELK Stack, AWS (IAM Roles, Lambda, API Gateway, EC2, RDS, ECS, ECR, CloudWatch, CloudTrail, CloudFormation, Security Hub, Inspector, GuardDuty, Secrets Manager, etc), Azure, Pulumi, Terraform, RabbitMQ.
-- **Methodologies:** Kanban, Scrum, Infrastructure as Code, CI/CD.
-- **Programming Languages:** HTML, CSS, JavaScript, PHP, Batch, Bash, PowerShell, Python, Go.
-- **Databases:** MySQL, PostgreSQL, SQL Server, MongoDB, Redis, DynamoDB. 
-- **Languages:** English (B1), Spanish (Native).
+
+- **Cloud & infrastructure:** AWS, Azure, GCP, Terraform, Pulumi, Docker, Kubernetes, RabbitMQ
+- **DevOps & observability:** Git, GitHub Actions, Rundeck, Ansible, Grafana, Prometheus, Datadog, ELK Stack
+- **Programming:** HTML, CSS, JavaScript, PHP, Bash, PowerShell, Python, Go
+- **Databases:** MySQL, PostgreSQL, SQL Server, MongoDB, Redis, DynamoDB
+- **Methods:** Kanban, Scrum, Infrastructure as Code, CI/CD
+- **Languages:** Spanish (native), English (B1)
+
+## Resources
 
 <details>
 	<summary> 📰 Published articles</summary>
@@ -62,35 +67,111 @@ If you want to see a bit more, stop by my [GitHub pages](https://jersonmartinez.
 	</ul>
 </details>
 
-[![](https://visitcount.itsvg.in/api?id=jersonmartinez&label=Profile%20visits&color=12&icon=5&pretty=true)](https://visitcount.itsvg.in)
+## Contact
 
-## 🎥 DevOpsea YouTube Channel
+- 📧 [jersonmartinezsm@gmail.com](mailto:jersonmartinezsm@gmail.com)
+- 🌐 [Crashell](https://www.crashell.com)
+- 💼 [LinkedIn](https://www.linkedin.com/in/jersonmartinezsm/)
+- 𝕏 [@antoniomorenosm](https://twitter.com/antoniomorenosm)
 
-Here are some of my YouTube videos on [DevOpsea](https://www.youtube.com/@DevOpsea?sub_confirmation=1)
+## YouTube
+
+New tutorials and sessions from my two channels. The cards below are updated automatically from official YouTube channel data.
+
+### DevOpsea
+
+[Open the DevOpsea channel](https://www.youtube.com/@DevOpsea?sub_confirmation=1)
 
 <!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-BEGIN -->
-<table><tr><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=kCrLxAe2rL0" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/kCrLxAe2rL0/0.jpg" alt="🚀 Domina Go: Curso completo con Gin, Revel, Echo, Gorilla y Fiber 🛠️" width="100%"><br>🚀 Domina Go: Curso completo con Gin, Revel, Echo, Gorilla y Fiber 🛠️</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=2cS5zEIh_zg" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/2cS5zEIh_zg/0.jpg" alt="Curso de Fiber Framework 🧵 ¡Domina el desarrollo web con Go!  🚀" width="100%"><br>Curso de Fiber Framework 🧵 ¡Domina el desarrollo web con Go!  🚀</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=O5Fr1S-BvKY" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/O5Fr1S-BvKY/0.jpg" alt="Curso de Gorilla Framework para Principiantes 🦍" width="100%"><br>Curso de Gorilla Framework para Principiantes 🦍</a></td></tr><tr><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=7cROq0Npc7U" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/7cROq0Npc7U/0.jpg" alt="Curso de GO con ECHO Framework para Principiantes 🔥💻" width="100%"><br>Curso de GO con ECHO Framework para Principiantes 🔥💻</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=Wpma2kD-oBM" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/Wpma2kD-oBM/0.jpg" alt="Curso de Go con el Framework Gin para Principiantes 🛠️" width="100%"><br>Curso de Go con el Framework Gin para Principiantes 🛠️</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=Bwy-aMjh2iI" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/Bwy-aMjh2iI/0.jpg" alt="Curso de Revel Framework de Go para Principiantes 🎯" width="100%"><br>Curso de Revel Framework de Go para Principiantes 🎯</a></td></tr><tr></tr></table>
+<table>
+  <tr>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=kCrLxAe2rL0">
+      <img src="https://i.ytimg.com/vi/kCrLxAe2rL0/hqdefault.jpg" alt="Curso COMPLETO de Go: Gin, Revel, Echo, Gorilla y Fiber 🛠️" width="100%">
+      <br><strong>Curso COMPLETO de Go: Gin, Revel, Echo, Gorilla y Fiber 🛠️</strong>
+    </a>
+  </td>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=2cS5zEIh_zg">
+      <img src="https://i.ytimg.com/vi/2cS5zEIh_zg/hqdefault.jpg" alt="Curso de GO con FIBER Framework" width="100%">
+      <br><strong>Curso de GO con FIBER Framework</strong>
+    </a>
+  </td>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=O5Fr1S-BvKY">
+      <img src="https://i.ytimg.com/vi/O5Fr1S-BvKY/hqdefault.jpg" alt="Curso de GO con GORILLA Framework 🦍" width="100%">
+      <br><strong>Curso de GO con GORILLA Framework 🦍</strong>
+    </a>
+  </td>
+  </tr>
+  <tr>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=7cROq0Npc7U">
+      <img src="https://i.ytimg.com/vi/7cROq0Npc7U/hqdefault.jpg" alt="Curso de GO con ECHO Framework 🔥💻" width="100%">
+      <br><strong>Curso de GO con ECHO Framework 🔥💻</strong>
+    </a>
+  </td>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=Wpma2kD-oBM">
+      <img src="https://i.ytimg.com/vi/Wpma2kD-oBM/hqdefault.jpg" alt="Curso de GO con GIN Framework🛠️" width="100%">
+      <br><strong>Curso de GO con GIN Framework🛠️</strong>
+    </a>
+  </td>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=Bwy-aMjh2iI">
+      <img src="https://i.ytimg.com/vi/Bwy-aMjh2iI/hqdefault.jpg" alt="Curso de GO con REVEL Framework 🎯" width="100%">
+      <br><strong>Curso de GO con REVEL Framework 🎯</strong>
+    </a>
+  </td>
+  </tr>
+</table>
 <!-- DEVOPSEA-YOUTUBE-VIDEOS-LIST-END -->
 
-More videos on my [DevOpsea YouTube channel](https://www.youtube.com/@DevOpsea/videos/?sub_confirmation=1).
+### Side Master
 
-## 🎥 Side Master YouTube Channel
-
-Here are some of my YouTube videos on [Side Master](https://www.youtube.com/@SideMaster?sub_confirmation=1)
+[Open the Side Master channel](https://www.youtube.com/@SideMaster?sub_confirmation=1)
 
 <!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-BEGIN -->
-<table><tr><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=bsk2lG5PmRs" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/bsk2lG5PmRs/0.jpg" alt="Sesión #8 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%"><br>Sesión #8 - Aprendiendo Python en 1 semana de forma autodidacta</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=FGm8MgGULxI" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/FGm8MgGULxI/0.jpg" alt="Sesión #7 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%"><br>Sesión #7 - Aprendiendo Python en 1 semana de forma autodidacta</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=3XCwCzopYTg" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/3XCwCzopYTg/0.jpg" alt="Sesión #6 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%"><br>Sesión #6 - Aprendiendo Python en 1 semana de forma autodidacta</a></td></tr><tr><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=HmPV_xmVqyE" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/HmPV_xmVqyE/0.jpg" alt="Sesión #5 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%"><br>Sesión #5 - Aprendiendo Python en 1 semana de forma autodidacta</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=AKtNfOuvs-0" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/AKtNfOuvs-0/0.jpg" alt="Sesión #4 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%"><br>Sesión #4 - Aprendiendo Python en 1 semana de forma autodidacta</a></td><td align="center" style="background-color: black;"><a href="https://www.youtube.com/watch?v=rnGTJKJyhAk" target="_blank" style="color: white;"><img src="https://img.youtube.com/vi/rnGTJKJyhAk/0.jpg" alt="Sesión #3 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%"><br>Sesión #3 - Aprendiendo Python en 1 semana de forma autodidacta</a></td></tr><tr></tr></table>
+<table>
+  <tr>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=bsk2lG5PmRs">
+      <img src="https://i.ytimg.com/vi/bsk2lG5PmRs/hqdefault.jpg" alt="Sesión #8 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
+      <br><strong>Sesión #8 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
+    </a>
+  </td>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=FGm8MgGULxI">
+      <img src="https://i.ytimg.com/vi/FGm8MgGULxI/hqdefault.jpg" alt="Sesión #7 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
+      <br><strong>Sesión #7 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
+    </a>
+  </td>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=3XCwCzopYTg">
+      <img src="https://i.ytimg.com/vi/3XCwCzopYTg/hqdefault.jpg" alt="Sesión #6 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
+      <br><strong>Sesión #6 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
+    </a>
+  </td>
+  </tr>
+  <tr>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=HmPV_xmVqyE">
+      <img src="https://i.ytimg.com/vi/HmPV_xmVqyE/hqdefault.jpg" alt="Sesión #5 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
+      <br><strong>Sesión #5 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
+    </a>
+  </td>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=AKtNfOuvs-0">
+      <img src="https://i.ytimg.com/vi/AKtNfOuvs-0/hqdefault.jpg" alt="Sesión #4 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
+      <br><strong>Sesión #4 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
+    </a>
+  </td>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=rnGTJKJyhAk">
+      <img src="https://i.ytimg.com/vi/rnGTJKJyhAk/hqdefault.jpg" alt="Sesión #3 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
+      <br><strong>Sesión #3 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
+    </a>
+  </td>
+  </tr>
+</table>
 <!-- SIDEMASTER-YOUTUBE-VIDEOS-LIST-END -->
-
-More videos on my [Side Master YouTube channel](https://www.youtube.com/@SideMaster/videos/?sub_confirmation=1).
-
-## 💬 Contact
-
-💌 jersonmartinezsm@gmail.com
-
-✔ Website: [crashell.com](https://www.crashell.com)
-
-<a href="https://www.crashell.com/?suscribirse" target="_blank"><img alt="Crashell" src="https://img.shields.io/twitter/url?color=9cf&label=%40Crashell&logo=Crashell&logoColor=informational&style=for-the-badge&url=https%3A%2F%2Ftwitter.com%2Fantoniomorenosm"></a>
-
-<a href="https://www.linkedin.com/in/jersonmartinezsm/" target="_blank"><img alt="LinkedIn URL" src="https://img.shields.io/twitter/url?label=Jerson%20Martinez&logo=linkedin&style=social&url=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fjersonmartinezsm%2F"></a>
-<a href="https://twitter.com/antoniomorenosm" target="_blank"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/antoniomorenosm?label=S%C3%ADgueme%20en%20%40antoniomorenosm&style=social"></a>
