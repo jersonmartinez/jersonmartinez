@@ -1,265 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="Proyectos de Jerson Martínez en DevOps, cloud, automatización y desarrollo de software.">
-        <meta name="theme-color" content="#212529">
-        <title>Jerson Martínez | Proyectos</title>
-        <link rel="shortcut icon" href="src/images/logo/favicon.png" type="image/x-icon">
-        <link rel="stylesheet" href="src/libs/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="src/libs/fontawesome/css/all.css">
-        <link rel="stylesheet" href="src/libs/custom/css/global.css">
-        <link rel="stylesheet" href="src/libs/custom/css/scroll-to-top.css">
-        <script src="src/libs/jquery/jquery-3.6.0.min.js"></script>
-    </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Proyectos de Jerson Martínez: GNet, Infralytics y automatización de plataformas y contenido técnico.">
+  <meta name="theme-color" content="#07111f">
+  <title>Jerson Martínez | Proyectos</title>
+  <link rel="icon" href="src/images/logo/favicon.png" type="image/png">
+  <link rel="stylesheet" href="src/libs/custom/css/portfolio.css">
+  <script src="src/libs/custom/js/portfolio.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href="./" aria-label="Jerson Martínez, inicio"><span class="brand-mark" aria-hidden="true">JM</span><span>Jerson <span>/</span> DevOps</span></a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Abrir menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <nav class="site-nav" id="site-nav" data-site-nav aria-label="Navegación principal"><a href="./">Inicio</a><a href="./experience.html">Experiencia</a><a href="./certifications.html">Credenciales</a><a href="./projects.html" aria-current="page">Proyectos</a><a class="nav-contact" href="mailto:jersonmartinezsm@gmail.com">Hablemos</a></nav>
+  </div></header>
 
-    <body>
-        
-        <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container">
-                <div class="d-block d-sm-block d-md-none">
-                    <a class="navbar-brand cursor-pointer text-light" href="./index.html">
-                        <img src="src/images/logo/w-logo.png" class="img-fluid" alt="Crashell">
-                    </a>
-                </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
-                    aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                    <div class="d-none d-sm-none d-md-block">
-                        <a class="navbar-brand" href="#">
-                            <img src="src/images/logo/w-logo.png" alt="Antonio Moreno" />
-                        </a>
-                    </div>
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                        <li class="nav-item active">
-                            <a class="nav-link text-light" href="./index.html">
-                                <i class="fa fa-home"></i> 
-                                Vista general 
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="./experience.html">
-                                <i class="fas fa-briefcase"></i>
-                                Experiencia
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="./certifications.html">
-                                <i class="fas fa-graduation-cap"></i>
-                                Certificaciones
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="#">
-                                <i class="fas fa-tasks"></i>
-                                Proyectos
-                            </a>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="email" placeholder="Déjame tu correo" aria-label="Suscríbete">
-                        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Suscribirse</button>
-                    </form>
-                </div>
-            </div>
-        </nav>
+  <main id="contenido">
+    <section class="page-hero"><div class="container">
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Proyectos / sistemas en producción mental</p>
+      <h1>El código importa. El sistema completo, más.</h1>
+      <p class="lede">Una selección de proyectos que muestran cómo pienso sobre observabilidad, gestión de infraestructura, automatización y experiencia de quien opera.</p>
+      <div class="page-hero-meta"><span>GNet</span><span>Infralytics</span><span>Automation</span></div>
+    </div></section>
 
-        <div class="container my-4 py-4"></div>
+    <section class="section"><div class="container"><div class="project-grid">
+      <article class="card project-card project-card--wide"><span class="card-number">01 / FLAGSHIP SYSTEM</span><h2>GNet — gestión de red para GNU/Linux.</h2><p>El proyecto de tesis y uno de los desarrollos más importantes de mi trayectoria: un sistema web para descubrir, gestionar y monitorizar dispositivos, recursos, VPS y eventos.</p><div class="project-meta"><span>Network management</span><span>GNU/Linux</span><span>Monitoring</span><span>Events</span></div><a class="card-link" href="https://www.crashell.com/gnet" target="_blank" rel="noopener noreferrer">Conocer GNet en Crashell ↗</a></article>
+      <article class="card project-card"><span class="card-number">02 / OPERATIONS</span><h2>Infralytics</h2><p>Sistema orientado a mejorar la eficiencia de la gestión de servidores, nacido de la experiencia operando infraestructura de clientes.</p><div class="project-meta"><span>Infrastructure</span><span>Efficiency</span><span>Observability</span></div><a class="card-link" href="./experience.html">Contexto en la trayectoria ↗</a></article>
+      <article class="card project-card"><span class="card-number">03 / ENABLEMENT</span><h2>Contenido que se mantiene solo.</h2><p>Automatización de README, canales de YouTube y calidad de sitio: datos reales, fallbacks, validación y PRs revisables en lugar de cambios directos.</p><div class="project-meta"><span>GitHub Actions</span><span>Node.js</span><span>Quality gates</span></div><a class="card-link" href="https://github.com/jersonmartinez/jersonmartinez" target="_blank" rel="noopener noreferrer">Ver el repositorio ↗</a></article>
+    </div></div></section>
 
-        <main class="container my-4" role="main">
-        
-            <div class="row p-0">
-                <div class="col-md-12 col-lg-12 col-12">
-                    <div class="card web50-card-dark">
-                        <h5 class="card-header">¿Y los proyectos pa' cuándo? 😁</h5>
-                        <div class="card-body">
-                            <div class="alert alert-dark" role="info">
-                                <p>Estoy después de varios años, trabajando en un par de proyectos que considero sólidos, el primero que empecé a desarrollar fue <a class="web50-a-effect"
-                                        target="_blank" href="https://www.crashell.com/gnet">GNet</a> y <a class="web50-a-effect" target="_blank" href="https://www.crashell.com/gnet">Crashell</a>, que por cierto, de este último, el logotipo que estás viendo, es de este mismo, que a su vez, es uno de mis mejores desarrollos.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        
-                <div class="col-md-12 col-lg-12 col-12 mt-3">
-                    <div class="card web50-card-dark">
-                        <h5 class="card-header">GNet</h5>
-                        <div class="card-body">
-        
-                            <div class="alert alert-dark" role="info">
-                                <p><a class="web50-a-effect" target="_blank" href="https://www.crashell.com/gnet">GNet</a> fue el primer gran desarrollo, se trata de un sistema de gestión de red de dispositivos informáticos GNU/Linux.</p>
-                            </div>
+    <section class="section section--line" aria-labelledby="gnet-features"><div class="container"><div class="section-heading"><p class="section-label">GNet / capabilities</p><h2 id="gnet-features">Un sistema visto desde quien lo opera.</h2><p class="lede">La interacción conserva las capacidades originales, pero las presenta como decisiones de plataforma.</p></div>
+      <div class="card" data-tabs>
+        <div class="tabs-layout">
+          <div class="tab-list" role="tablist" aria-label="Capacidades de GNet">
+            <button class="tab-button" type="button" role="tab" id="tab-discovery" data-tab="discovery" aria-controls="panel-discovery" aria-selected="true">Autodescubrimiento</button>
+            <button class="tab-button" type="button" role="tab" id="tab-management" data-tab="management" aria-controls="panel-management" aria-selected="false">Gestión de dispositivos</button>
+            <button class="tab-button" type="button" role="tab" id="tab-resources" data-tab="resources" aria-controls="panel-resources" aria-selected="false">Recursos</button>
+            <button class="tab-button" type="button" role="tab" id="tab-anonymous" data-tab="anonymous" aria-controls="panel-anonymous" aria-selected="false">Monitorización</button>
+            <button class="tab-button" type="button" role="tab" id="tab-events" data-tab="events" aria-controls="panel-events" aria-selected="false">Eventos</button>
+            <button class="tab-button" type="button" role="tab" id="tab-vps" data-tab="vps" aria-controls="panel-vps" aria-selected="false">VPS</button>
+          </div>
+          <div>
+            <section class="tab-panel" id="panel-discovery" data-panel="discovery" role="tabpanel" aria-labelledby="tab-discovery"><h3>Descubrir antes de administrar.</h3><p>GNet convierte la detección de equipos en el primer paso de una vista operable de la red.</p><div class="code-surface">$ gnet discover --network production<br>→ 24 devices found<br>→ 24 identities registered<br>→ 0 unmanaged critical assets</div></section>
+            <section class="tab-panel" id="panel-management" data-panel="management" role="tabpanel" aria-labelledby="tab-management" hidden><h3>Una fuente de verdad para los dispositivos.</h3><p>Gestiona equipos y sus relaciones sin depender de inventarios manuales o dispersos.</p><div class="code-surface">inventory.sync()<br>devices.status = "managed"<br>policy.attach("baseline-linux")</div></section>
+            <section class="tab-panel" id="panel-resources" data-panel="resources" role="tabpanel" aria-labelledby="tab-resources" hidden><h3>Recursos que cuentan una historia.</h3><p>CPU, memoria y capacidad dejan de ser números aislados para convertirse en señales de operación.</p><div class="code-surface">cpu: 42%  /  memory: 61%<br>disk: 68% /  trend: stable<br>signal: healthy</div></section>
+            <section class="tab-panel" id="panel-anonymous" data-panel="anonymous" role="tabpanel" aria-labelledby="tab-anonymous" hidden><h3>Visibilidad sin perder contexto.</h3><p>La monitorización anónima permite observar comportamiento y salud de infraestructura de forma segura.</p><div class="code-surface">telemetry.collect({ scope: "anonymous" })<br>dashboard.signal("availability")</div></section>
+            <section class="tab-panel" id="panel-events" data-panel="events" role="tabpanel" aria-labelledby="tab-events" hidden><h3>Eventos que llegan con prioridad.</h3><p>El sistema ayuda a separar ruido de señales accionables para responder antes y mejor.</p><div class="code-surface">event.priority = "high"<br>route.to("on-call")<br>response.start()</div></section>
+            <section class="tab-panel" id="panel-vps" data-panel="vps" role="tabpanel" aria-labelledby="tab-vps" hidden><h3>VPS dentro de la misma operación.</h3><p>La infraestructura distribuida también necesita una vista coherente de salud, recursos y eventos.</p><div class="code-surface">vps.healthcheck()<br>availability: 99.95%<br>next_action: "observe"</div></section>
+          </div>
+        </div>
+      </div>
+    </div></section>
 
-                            <div class="row">
-                                <div class="col-md-12 col-lg-12 col-12 my-3">
-                                    <p><b>Funcionalidades: </b></p>
+    <section class="section section--tight"><div class="container"><div class="contact-panel"><div><p class="section-label">Arquitectura y automatización</p><h2>Hablemos de lo que debe ser confiable.</h2></div><a class="button" href="mailto:jersonmartinezsm@gmail.com">Contactar ↗</a></div></div></section>
+  </main>
 
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                                <a class="nav-link active" id="v-pills-autodescubrimiento-tab" data-toggle="pill" href="#v-pills-autodescubrimiento" role="tab"
-                                                    aria-controls="v-pills-autodescubrimiento" aria-selected="true">Autodescubrimiento</a>
-                                                <a class="nav-link" id="v-pills-management-tab" data-toggle="pill" href="#v-pills-management" role="tab"
-                                                    aria-controls="v-pills-management" aria-selected="false">Gestión de dispositivos</a>
-                                                <a class="nav-link" id="v-pills-monitoring_resources-tab" data-toggle="pill" href="#v-pills-monitoring_resources" role="tab"
-                                                    aria-controls="v-pills-monitoring_resources" aria-selected="false">Monitorizción de recursos</a>
-                                                <a class="nav-link" id="v-pills-monitoring_anonimous-tab" data-toggle="pill" href="#v-pills-monitoring_anonimous" role="tab"
-                                                    aria-controls="v-pills-monitoring_anonimous" aria-selected="false">Monitorización anónima</a>
-                                                <a class="nav-link" id="v-pills-event_management-tab" data-toggle="pill" href="#v-pills-event_management" role="tab"
-                                                    aria-controls="v-pills-event_management" aria-selected="false">Gestión de eventos</a>
-                                                <a class="nav-link" id="v-pills-monitoring_vps-tab" data-toggle="pill" href="#v-pills-monitoring_vps" role="tab"
-                                                    aria-controls="v-pills-monitoring_vps" aria-selected="false">Monitorización de VPS</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-9">
-                                            <div class="tab-content" id="v-pills-tabContent">
-                                                <div class="tab-pane fade show active" id="v-pills-autodescubrimiento" role="tabpanel" aria-labelledby="v-pills-autodescubrimiento-tab">
-                                                    <img src="https://www.crashell.com/app/src/images/elements/home-carousel/monitoring.jpg" style="width: 100%;" alt="Monitoring"/>
-                                                </div>
-                                                <div class="tab-pane fade" id="v-pills-management" role="tabpanel" aria-labelledby="v-pills-management-tab">
-                                                    <img src="https://www.crashell.com/app/src/images/elements/home-carousel/network.jpg" style="width: 100%;" alt="Network"/>
-                                                </div>
-                                                <div class="tab-pane fade" id="v-pills-monitoring_resources" role="tabpanel" aria-labelledby="v-pills-monitoring_resources-tab">
-                                                    <img src="https://www.crashell.com/app/src/images/elements/home-carousel/network-map.jpg" style="width: 100%;" alt="Network Map"/>
-                                                </div>
-                                                <div class="tab-pane fade" id="v-pills-monitoring_anonimous" role="tabpanel" aria-labelledby="v-pills-monitoring_anonimous-tab">
-                                                    <img src="https://www.crashell.com/app/src/images/elements/home-carousel/device-management.jpg" style="width: 100%;" alt="Device Management"/>
-                                                </div>
-                                                <div class="tab-pane fade" id="v-pills-event_management" role="tabpanel" aria-labelledby="v-pills-event_management-tab">
-                                                    <img src="https://www.crashell.com/app/src/images/elements/home-carousel/event-viewer.jpg" style="width: 100%;" alt="Event Viewer"/>
-                                                </div>
-                                                <div class="tab-pane fade" id="v-pills-monitoring_vps" role="tabpanel" aria-labelledby="v-pills-monitoring_vps-tab">
-                                                    <img src="https://www.crashell.com/app/src/images/elements/home-carousel/vps.jpg" style="width: 100%;" alt="VPS"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-        
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12 col-lg-12 col-12 mt-3">
-                    <div class="card web50-card-dark">
-                        <h5 class="card-header">Crashell</h5>
-                        <div class="card-body">
-        
-                            <div class="alert alert-dark" role="info">
-                                <p><a class="web50-a-effect" target="_blank" href="https://www.crashell.com/">Crashell</a> es el gran proyeto que sigo trabajando, por supuesto en este caso somos varias personas, acá podemos encontrar artículos relacionados a temas DevOps.</p>
-                                <p>En esta web encontrarás bastantes recursos, así que te invito a <a href="https://www.crashell.com/?suscribirse" target="_blank" class="web50-a-effect">suscribirte aquí</a>.</p>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-        
-            </div>
-        
-        </main>
-
-        <footer>
-            
-            <div class="bt">
-                <div class="elementor-shape divider flip-x injected-svg bg-divider-darker" data-negative="false">
-                    <svg class="bg-divider-darker" xmlns="http://www.w3.org/2000/svg" viewBox="0 2 1000 100"
-                        preserveAspectRatio="none">
-                        <path class="elementor-shape-fill" style="box-sizing: unset !important;"
-                            d="M421.9,6.5c22.6-2.5,51.5,0.4,75.5,5.3c23.6,4.9,70.9,23.5,100.5,35.7c75.8,32.2,133.7,44.5,192.6,49.7 c23.6,2.1,48.7,3.5,103.4-2.5c54.7-6,106.2-25.6,106.2-25.6V0H0v30.3c0,0,72,32.6,158.4,30.5c39.2-0.7,92.8-6.7,134-22.4 c21.2-8.1,52.2-18.2,79.7-24.2C399.3,7.9,411.6,7.5,421.9,6.5z">
-                        </path>
-                    </svg>
-                </div>
-            </div>
-            
-            <div class="container-fluid bg-cs-darker">
-                <div class="container py-1">
-                    <div class="row cs-footer text-center py-lg-10 pt-3 pb-5">
-                        <div class="col-12">
-                            <img src="src/images/logo/w-logo.png" class="img-fluid" alt="Crashell">
-                        </div>
-                        <!-- Desktop -->
-                        <div class="d-none d-sm-none d-md-block" style="width: 100%;">
-                            <div class="col-12 mt-4">
-                                <ul class="cs-footer-nav">
-                                    <li class="px-2"><a href="./" class="cs-link"> <i
-                                                class="cs-icon fa fa-home"></i> Vista general</a></li>
-                                    <li class="px-2"><a href="./experience.html" class="cs-link"> <i
-                                                class="cs-icon fas fa-briefcase"></i> Experiencia</a></li>
-                                    <li class="px-2"><a href="./certifications.html" class="cs-link"> <i
-                                                class="cs-icon fas fa-graduation-cap"></i> Certificaciones</a></li>
-                                    <li class="px-2"><a href="#" class="cs-link"><i
-                                                class="cs-icon fas fa-tasks"></i> Proyectos</a></li>
-                                </ul>
-                            </div>
-                        </div>
-            
-                        <!-- Mobile -->
-                        <div class="d-block d-sm-block d-md-none" style="width: 100%;">
-                            <ul class="cs-footer-nav">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <li class="mt-3 p-2 bg-cs-dark rounded">
-                                            <a href="./" class="cs-link"> <i
-                                                    class="cs-icon fa fa-home"></i> Principal</a>
-                                        </li>
-                                    </div>
-                                    <div class="col-6">
-                                        <li class="mt-3 p-2 bg-cs-dark rounded">
-                                            <a href="./experience.html" class="cs-link"> <i
-                                                    class="cs-icon fas fa-briefcase"></i> Experiencia</a>
-                                        </li>
-                                    </div>
-                                    <div class="col-6">
-                                        <li class="mt-3 p-2 bg-cs-dark rounded">
-                                            <a href="./certifications.html" class="cs-link"> <i
-                                                    class="cs-icon fas fa-graduation-cap"></i> Títulos</a>
-                                        </li>
-                                    </div>
-                                    <div class="col-6">
-                                        <li class="mt-3 p-2 bg-cs-dark rounded">
-                                            <a href="#" class="cs-link"><i
-                                                    class="cs-icon fas fa-tasks"></i> Proyectos</a>
-                                        </li>
-                                    </div>
-                                </div>
-                            </ul>
-                        </div>
-            
-                        <div class="col-12 mt-4">
-                            <ul class="cs-social-list">
-                                <li>
-                                    <a class="icon icon-sm icon-circle icon-circle-md icon-cs-light fab fa-github" target="_blank"rel="noopener noreferrer" href="https://github.com/jersonmartinez/">
-                                    </a>
-                                </li>
-                                <li><a class="icon icon-sm icon-circle icon-circle-md icon-cs-light fab fa-twitter" target="_blank" rel="noopener noreferrer" href="https://twitter.com/antoniomorenosm"></a></li>
-                                <li><a class="icon icon-sm icon-circle icon-circle-md icon-cs-light fab fa-linkedin-in" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/jersonmartinezsm/"></a></li>
-                                <li><a class="icon icon-sm icon-circle icon-circle-md icon-cs-light fab fa-youtube" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/gvideosmtutorialesgm"></a></li>
-                            </ul>
-                        </div>
-            
-                        <div class="col-md-12 mt-4">
-                            <small class="text-light">
-                                Todos los derechos reservados
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </footer>
-
-        <a href="#" class="scroll-top text-center" id="ScrollToTop">
-            <i class="fas fa-angle-double-up"></i>
-        </a>
-        
-        <script src="src/libs/bootstrap/js/bootstrap.min.js"></script>
-        <script src="src/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="src/libs/custom/js/global.js"></script>
-
-    </body>
+  <footer class="site-footer"><div class="container footer-inner"><p>© <span data-current-year>2026</span> Jerson Martínez · DevOps Engineer</p><nav class="footer-links" aria-label="Enlaces externos"><a href="https://www.crashell.com/gnet" target="_blank" rel="noopener noreferrer">GNet</a><a href="https://github.com/jersonmartinez" target="_blank" rel="noopener noreferrer">GitHub</a><a href="mailto:jersonmartinezsm@gmail.com">Email</a></nav></div></footer>
+  <a class="scroll-top" href="#contenido" data-scroll-top aria-label="Volver arriba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></a>
+</body>
 </html>
