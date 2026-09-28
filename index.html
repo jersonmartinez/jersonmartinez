@@ -1,304 +1,160 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="Jerson Martínez: ingeniería DevOps, cloud, automatización y desarrollo de software.">
-        <meta name="theme-color" content="#212529">
-        <title>Jerson Martínez | DevOps y cloud</title>
-        <link rel="shortcut icon" href="src/images/logo/favicon.png" type="image/x-icon">
-        <link rel="stylesheet" href="src/libs/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="src/libs/fontawesome/css/all.css">
-        <link rel="stylesheet" href="src/libs/custom/css/global.css">
-        <link rel="stylesheet" href="src/libs/custom/css/scroll-to-top.css">
-        <script src="src/libs/jquery/jquery-3.6.0.min.js"></script>
-    </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Jerson Martínez, DevOps Engineer, SRE, DevSecOps y Cloud Architect especializado en automatización multi-cloud.">
+  <meta name="theme-color" content="#07111f">
+  <meta property="og:title" content="Jerson Martínez | DevOps Engineer · SRE · Cloud Architect">
+  <meta property="og:description" content="Diseño plataformas cloud resilientes, seguras y operables.">
+  <meta property="og:image" content="src/images/profile.jpg">
+  <title>Jerson Martínez | DevOps Engineer · SRE · Cloud Architect</title>
+  <link rel="icon" href="src/images/logo/favicon.png" type="image/png">
+  <link rel="stylesheet" href="src/libs/custom/css/portfolio.css">
+  <script src="src/libs/custom/js/portfolio.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Jerson Martínez, inicio">
+        <span class="brand-mark" aria-hidden="true">JM</span>
+        <span>Jerson <span>/</span> DevOps</span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <nav class="site-nav" id="site-nav" data-site-nav aria-label="Navegación principal">
+        <a href="./" aria-current="page">Inicio</a>
+        <a href="./experience.html">Experiencia</a>
+        <a href="./certifications.html">Credenciales</a>
+        <a href="./projects.html">Proyectos</a>
+        <a class="nav-contact" href="mailto:jersonmartinezsm@gmail.com">Hablemos</a>
+      </nav>
+    </div>
+  </header>
 
-    <body>
-        
-        <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container">
-                <div class="d-block d-sm-block d-md-none">
-                    <a class="navbar-brand cursor-pointer text-light" href="#">
-                        <img src="src/images/logo/w-logo.png" class="img-fluid" alt="Crashell">
-                    </a>
-                </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
-                    aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                    <div class="d-none d-sm-none d-md-block">
-                        <a class="navbar-brand" href="#">
-                            <img src="src/images/logo/w-logo.png" alt="Antonio Moreno" />
-                        </a>
-                    </div>
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                        <li class="nav-item active">
-                            <a class="nav-link text-light" href="#">
-                                <i class="fa fa-home"></i> 
-                                Vista general 
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="./experience.html">
-                                <i class="fas fa-briefcase"></i>
-                                Experiencia
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="./certifications.html">
-                                <i class="fas fa-graduation-cap"></i>
-                                Certificaciones
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="./projects.html">
-                                <i class="fas fa-tasks"></i>
-                                Proyectos
-                            </a>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="email" placeholder="Déjame tu correo" aria-label="Suscríbete">
-                        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Suscribirse</button>
-                    </form>
-                </div>
+  <main id="contenido">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> DevOps · SRE · DevSecOps · Cloud</p>
+          <h1 id="hero-title">Convierto la <em>complejidad cloud</em> en sistemas confiables.</h1>
+          <p class="lede">Soy Jerson Martínez, ingeniero DevOps con más de 9 años liderando automatización, gobernanza y resiliencia en AWS, Azure y GCP.</p>
+          <div class="hero-actions">
+            <a class="button" href="./experience.html">Conocer mi trayectoria <span aria-hidden="true">↗</span></a>
+            <a class="button button--ghost" href="https://github.com/jersonmartinez" target="_blank" rel="noopener noreferrer">Ver GitHub</a>
+          </div>
+          <ul class="hero-facts" aria-label="Datos destacados">
+            <li><strong>9+</strong><span>años en tecnología</span></li>
+            <li><strong>3</strong><span>clouds principales</span></li>
+            <li><strong>100+</strong><span>certificaciones y cursos</span></li>
+          </ul>
+        </div>
+        <aside class="profile-panel" aria-label="Perfil de Jerson Martínez">
+          <div class="profile-image">
+            <img src="src/images/profile.jpg" width="1568" height="1568" alt="Jerson Martínez con camisa lila y brazos cruzados" fetchpriority="high">
+          </div>
+          <div class="profile-meta">
+            <div>
+              <strong>Jerson Martínez</strong>
+              <p>Ingeniero en Telemática<br>GMT-6 · Latinoamérica</p>
             </div>
-        </nav>
+            <span class="profile-tag">Open to impact</span>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-        <div class="container my-4 py-4"></div>
+    <section class="section section--line" aria-labelledby="capabilities-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-label">Cómo trabajo</p>
+          <h2 id="capabilities-title">Ingeniería que se puede operar.</h2>
+          <p class="lede">La automatización solo crea valor cuando también mejora la seguridad, la visibilidad y las decisiones del equipo.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <span class="card-number">01 / PLATFORM</span>
+            <h3>Plataformas multi-cloud</h3>
+            <p>Diseño Landing Zones, infraestructura como código y pipelines para que los equipos entreguen con una base estable.</p>
+            <a class="card-link" href="./projects.html">Explorar proyectos ↗</a>
+          </article>
+          <article class="card">
+            <span class="card-number">02 / RELIABILITY</span>
+            <h3>Resiliencia operativa</h3>
+            <p>Conecto observabilidad, SRE y respuesta operativa para reducir el riesgo y hacer visible el estado real de los servicios.</p>
+            <a class="card-link" href="./experience.html">Ver experiencia ↗</a>
+          </article>
+          <article class="card">
+            <span class="card-number">03 / ENABLEMENT</span>
+            <h3>Equipos de alto rendimiento</h3>
+            <p>Lidero cultura DevOps, GitOps, FinOps y DevSecOps para convertir buenas prácticas en hábitos sostenibles.</p>
+            <a class="card-link" href="./certifications.html">Ver credenciales ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
 
-        <main class="container my-4" role="main">
+    <section class="section" aria-labelledby="impact-title">
+      <div class="container impact-grid">
+        <div class="section-heading">
+          <p class="section-label">Resultados</p>
+          <h2 id="impact-title">La infraestructura también comunica.</h2>
+          <p class="lede">Mi trabajo conecta decisiones técnicas con resultados medibles: menos fricción, mejor trazabilidad y más confianza para operar.</p>
+          <ul class="tag-list" aria-label="Tecnologías principales">
+            <li>AWS</li><li>Azure</li><li>GCP</li><li>Terraform</li><li>GitHub Actions</li><li>Kubernetes</li><li>Python</li><li>Go</li>
+          </ul>
+        </div>
+        <div class="metric-grid" aria-label="Resultados destacados del currículum">
+          <div class="metric"><strong>60%</strong><span>reducción de costes de infraestructura reportada</span></div>
+          <div class="metric"><strong>80%+</strong><span>mejora de calidad backend en experiencia full-stack</span></div>
+          <div class="metric"><strong>60+</strong><span>artículos publicados sobre DevOps y cloud</span></div>
+          <div class="metric"><strong>100</strong><span>puntos obtenidos en la tesis de GNet</span></div>
+        </div>
+      </div>
+    </section>
 
-            <div class="row p-0">
-                <div class="col-md-4 col-lg-4 col-12">
-                    <div class="card mb-3 web50-card-dark web50-card-profile">
-                        <img src="src/images/me.png" class="card-img-top" alt="Antonio Moreno">
-                        <div class="card-body">
-                            <h5 class="card-title">Antonio Moreno</h5>
-                            <p class="card-text">Kaizeneta, fundador de Crashell y desarrollador de GNet. Aficionado del fútbol y el
-                                ajedrez.</p>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item web50-card-dark">
-                                <i class="fa fa-building" aria-hidden="true"></i>
-                                <a class="web50-a-effect" href="https://github.com/Crashell" target="_blank" rel="noopener noreferrer">@Crashell</a>
-                            </li>
-                            <li class="list-group-item web50-card-dark">
-                                <i class="fa fa-globe" aria-hidden="true"></i>
-                                Managua, Nicaragua
-                            </li>
-                            <li class="list-group-item web50-card-dark">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                                <a class="web50-a-effect" href="mailto:jersonmartinezsm@gmail.com" target="_blank"
-                                    rel="noopener noreferrer">jersonmartinezsm@gmail.com</a>
-                            </li>
-                            <li class="list-group-item web50-card-dark">
-                                <i class="fab fa-twitter"></i>
-                                <a class="web50-a-effect" href="https://twitter.com/antoniomorenosm" target="_blank" rel="noopener noreferrer">@antoniomorenosm</a>
-                            </li>
-                        </ul>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 col-6 web50-btn-col-6">
-                                    <a href="https://www.linkedin.com/in/jersonmartinezsm/" target="_blank" class="card-link web50-cardlink" id="web50-cl-linkedin">
-                                        <i class="fab fa-linkedin"></i>
-                                    </a>
+    <section class="section section--line" aria-labelledby="path-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-label">Siguiente lectura</p>
+          <h2 id="path-title">Una vista completa, sin ruido.</h2>
+        </div>
+        <div class="path-grid">
+          <article class="card path-card path-card--accent">
+            <div><span class="card-number">CAREER / 2019 — NOW</span><h3>De la automatización al liderazgo técnico.</h3><p>MindTech–Nubity, Pliret–PRB, CodersLab, Hotaka iKhodi y experiencia como formador.</p></div>
+            <a class="card-link" href="./experience.html">Recorrer la trayectoria ↗</a>
+          </article>
+          <article class="card path-card">
+            <div><span class="card-number">BUILD / SYSTEMS</span><h3>Proyectos que explican cómo pienso.</h3><p>GNet, Infralytics y automatización de contenido técnico.</p></div>
+            <a class="card-link" href="./projects.html">Ver los proyectos ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
 
-                                </div>
-                                <div class="col-md-6 col-6 web50-btn-col-6">
-                                    <a href="https://www.youtube.com/user/gvideosmtutorialesgm" target="_blank" class="card-link web50-cardlink web50-cl-youtube">
-                                        <i class="fab fa-youtube"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
+    <section class="section section--tight" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact-panel">
+          <div><p class="section-label">Contacto</p><h2 id="contact-title">¿Tienes una plataforma que hacer confiable?</h2></div>
+          <a class="button" href="mailto:jersonmartinezsm@gmail.com">Escribir a Jerson ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
-                <!-- <div class="d-none d-sm-none d-md-block">Este texto solo visible para escritorio</div>
-                <div class="d-block d-sm-block d-md-none">Este texto solo visible para smartphone</div> -->
-
-
-                <div class="col-md-8">
-                    <div class="card web50-card-dark">
-                        <h5 class="card-header">Sobre mi</h5>
-                        <div class="card-body">
-                            <h5 class="card-title">¡Hola! 👋</h5>
-                            <p class="card-text">
-                                Kaizeneta, fundador de <a href="https://www.crashell.com/" class="web50-a-effect" target="_blank" rel="noopener noreferrer">Crashell</a> y desarrollador de <a href="https://www.crashell.com/gnet" class="web50-a-effect" target="_blank" rel="noopener noreferrer">GNet</a>. Adaptable a la inteligencia colectiva. Aficionado del fútbol y el ajedrez.
-                            </p>
-                            <ul>
-                                <li>
-                                    Tengo 2 canales de YouTube, <a href="https://www.youtube.com/c/gvideosmtutorialesgm/" class="web50-a-effect" target="_blank" rel="noopener noreferrer">Core Stack</a> y <a href="https://www.youtube.com/user/sidemastersupremo" class="web50-a-effect" target="_blank" rel="noopener noreferrer">Side Master</a>.
-                                </li>
-                                <li>
-                                    Formador en Udemy, con más de 45k estudiantes.
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card mt-3 web50-card-dark">
-                        <h5 class="card-header">Habilidades</h5>
-                        <div class="card-body">
-                            <h5 class="card-title">¡Me encanta la tecnología!</h5>
-                            <p class="card-text">Las skills, como diría la típica persona que presume su Spanglish, son importantes irlas puliendo continuamente.</p>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <ul>
-                                        <li>Cloud Computing: 
-                                            <ul>
-                                                <li>AWS</li>
-                                                <li>Azure</li>
-                                            </ul>
-                                        </li>
-                                        <li>Tecnologías DevOps
-                                            <ul>
-                                                <li>Vagrant, Docker, Ansible, Terraform</li>
-                                            </ul>
-                                        </li>
-                                        <li>Administración de sistemas
-                                            <ul>
-                                                <li>GNU/Linux y Windows Server</li>
-                                            </ul>
-                                        </li>
-                                        <li>Desarrollo web con lenguajes como
-                                            <ul>
-                                                <li>PHP, JS y Python</li>
-                                            </ul>
-                                        </li>
-                                        <li>Shell Scripting con
-                                            <ul>
-                                                <li>Bash, Batch y PowerShell</li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                                <div class="col-md-6">
-                                    <a href="https://github.com/jersonmartinez/jersonmartinez/">
-                                        <img align="center"
-                                            src="https://github-readme-stats.vercel.app/api/top-langs/?username=jersonmartinez&hide=html,css&theme=tokyonight&locale=es"
-                                            class="img-fluid" />
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <!-- <a href="https://github.com/jersonmartinez/jersonmartinez/">
-                                <img align="center"
-                                    src="https://github-readme-stats.vercel.app/api?username=jersonmartinez&show_icons=true&line_height=27&count_private=true&theme=gruvbox"
-                                    alt="Jerson Martínez Github Stats" />
-                            </a> -->
-
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-
-        </main>
-
-        <footer>
-            
-            <div class="bt">
-                <div class="elementor-shape divider flip-x injected-svg bg-divider-darker" data-negative="false">
-                    <svg class="bg-divider-darker" xmlns="http://www.w3.org/2000/svg" viewBox="0 2 1000 100"
-                        preserveAspectRatio="none">
-                        <path class="elementor-shape-fill" style="box-sizing: unset !important;"
-                            d="M421.9,6.5c22.6-2.5,51.5,0.4,75.5,5.3c23.6,4.9,70.9,23.5,100.5,35.7c75.8,32.2,133.7,44.5,192.6,49.7 c23.6,2.1,48.7,3.5,103.4-2.5c54.7-6,106.2-25.6,106.2-25.6V0H0v30.3c0,0,72,32.6,158.4,30.5c39.2-0.7,92.8-6.7,134-22.4 c21.2-8.1,52.2-18.2,79.7-24.2C399.3,7.9,411.6,7.5,421.9,6.5z">
-                        </path>
-                    </svg>
-                </div>
-            </div>
-            
-            <div class="container-fluid bg-cs-darker">
-                <div class="container py-1">
-                    <div class="row cs-footer text-center py-lg-10 pt-3 pb-5">
-                        <div class="col-12">
-                            <img src="src/images/logo/w-logo.png" class="img-fluid" alt="Crashell">
-                        </div>
-                        <!-- Desktop -->
-                        <div class="d-none d-sm-none d-md-block" style="width: 100%;">
-                            <div class="col-12 mt-4">
-                                <ul class="cs-footer-nav">
-                                    <li class="px-2"><a href="./" class="cs-link"> <i
-                                                class="cs-icon fa fa-home"></i> Vista general</a></li>
-                                    <li class="px-2"><a href="./experience.html" class="cs-link"> <i
-                                                class="cs-icon fas fa-briefcase"></i> Experiencia</a></li>
-                                    <li class="px-2"><a href="./certifications.html" class="cs-link"> <i
-                                                class="cs-icon fas fa-graduation-cap"></i> Certificaciones</a></li>
-                                    <li class="px-2"><a href="./projects.html" class="cs-link"><i
-                                                class="cs-icon fas fa-tasks"></i> Proyectos</a></li>
-                                </ul>
-                            </div>
-                        </div>
-            
-                        <!-- Mobile -->
-                        <div class="d-block d-sm-block d-md-none" style="width: 100%;">
-                            <ul class="cs-footer-nav">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <li class="mt-3 p-2 bg-cs-dark rounded">
-                                            <a href="./" class="cs-link"> <i
-                                                    class="cs-icon fa fa-home"></i> Principal</a>
-                                        </li>
-                                    </div>
-                                    <div class="col-6">
-                                        <li class="mt-3 p-2 bg-cs-dark rounded">
-                                            <a href="./experience.html" class="cs-link"> <i
-                                                    class="cs-icon fas fa-briefcase"></i> Experiencia</a>
-                                        </li>
-                                    </div>
-                                    <div class="col-6">
-                                        <li class="mt-3 p-2 bg-cs-dark rounded">
-                                            <a href="./certifications.html" class="cs-link"> <i
-                                                    class="cs-icon fas fa-graduation-cap"></i> Títulos</a>
-                                        </li>
-                                    </div>
-                                    <div class="col-6">
-                                        <li class="mt-3 p-2 bg-cs-dark rounded">
-                                            <a href="./projects.html" class="cs-link"><i
-                                                    class="cs-icon fas fa-tasks"></i> Proyectos</a>
-                                        </li>
-                                    </div>
-                                </div>
-                            </ul>
-                        </div>
-            
-                        <div class="col-12 mt-4">
-                            <ul class="cs-social-list">
-                                <li>
-                                    <a class="icon icon-sm icon-circle icon-circle-md icon-cs-light fab fa-github" target="_blank"rel="noopener noreferrer" href="https://github.com/jersonmartinez/">
-                                    </a>
-                                </li>
-                                <li><a class="icon icon-sm icon-circle icon-circle-md icon-cs-light fab fa-twitter" target="_blank" rel="noopener noreferrer" href="https://twitter.com/antoniomorenosm"></a></li>
-                                <li><a class="icon icon-sm icon-circle icon-circle-md icon-cs-light fab fa-linkedin-in" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/jersonmartinezsm/"></a></li>
-                                <li><a class="icon icon-sm icon-circle icon-circle-md icon-cs-light fab fa-youtube" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/gvideosmtutorialesgm"></a></li>
-                            </ul>
-                        </div>
-            
-                        <div class="col-md-12 mt-4">
-                            <small class="text-light">
-                                Todos los derechos reservados
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </footer>
-
-        <a href="#" class="scroll-top text-center" id="ScrollToTop">
-            <i class="fas fa-angle-double-up"></i>
-        </a>
-        
-        <script src="src/libs/bootstrap/js/bootstrap.min.js"></script>
-        <script src="src/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="src/libs/custom/js/global.js"></script>
-
-    </body>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span data-current-year>2026</span> Jerson Martínez · DevOps Engineer</p>
+      <nav class="footer-links" aria-label="Enlaces externos">
+        <a href="https://www.linkedin.com/in/jersonmartinezsm/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.youtube.com/@DevOpsea" target="_blank" rel="noopener noreferrer">DevOpsea</a>
+        <a href="https://www.youtube.com/@SideMaster" target="_blank" rel="noopener noreferrer">Side Master</a>
+        <a href="https://github.com/jersonmartinez" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+  <a class="scroll-top" href="#contenido" data-scroll-top aria-label="Volver arriba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></a>
+</body>
 </html>
