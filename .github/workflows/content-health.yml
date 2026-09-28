@@ -1,0 +1,19 @@
+name: Check content freshness
+
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  freshness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4.2.2
+      - name: Check YouTube cache freshness
+        run: node tools/check-content-health.js

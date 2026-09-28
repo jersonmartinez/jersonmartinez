@@ -1,0 +1,17 @@
+{
+  "name": "jersonmartinez-profile",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static portfolio and profile README automation",
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test",
+    "validate": "node tools/validate-site.js",
+    "links": "node tools/check-links.js",
+    "content:health": "node tools/check-content-health.js",
+    "youtube:dry-run": "node src/js/update-youtube-sections.js --dry-run --offline"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

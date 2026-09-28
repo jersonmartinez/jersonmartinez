@@ -1,0 +1,21 @@
+name: Audit TLS certificates
+
+on:
+  schedule:
+    - cron: '30 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  certificates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4.2.2
+      - name: Check certificate expiry
+        env:
+          TLS_MIN_DAYS: 30
+        run: node tools/check-certificates.js
