@@ -28,45 +28,45 @@ I’m a **DevOps Engineer with 8+ years of experience** in automation, cloud inf
 ## Resources
 
 <details>
-	<summary> 📰 Published articles</summary>
+  <summary> 📰 Published articles</summary>
 <br>
-	<ul>
-		<li><a href="https://openwebinars.net/blog/monitorizando-datos-con-influxdb-telegraf-y-grafana/" target="_blank">📄 Monitorizando datos con InfluxDB, Telegraf y Grafana</a></li>
-		<li><a href="https://openwebinars.net/blog/que-es-influxdb-y-primeros-pasos/" target="_blank">📄 Qué es InfluxDB y primeros pasos</a></li>
-		<li><a href="https://openwebinars.net/blog/que-es-telegraf-y-primeros-pasos/" target="_blank">📄 Qué es Telegraf y primeros pasos</a></li>
-		<li><a href="https://openwebinars.net/blog/que-es-grafana-y-primeros-pasos/" target="_blank">📄 Qué es Grafana y primeros pasos</a></li>
-		<li><a href="https://openwebinars.net/blog/go-vs-python-diferencias-y-puntos-fuertes/" target="_blank">📄 Go vs Python: Diferencias y puntos fuertes</a></li>
-		<li><a href="https://openwebinars.net/blog/gestion-de-procesos-y-servicios-desde-shell-script-en-windows/" target="_blank">📄 Gestión de procesos y servicios desde Shell Script en Windows</a></li>
-		<li><a href="https://www.crashell.com/estudio/habilitar_distro_wsl_2_con_docker_engine_en_windows" target="_blank">📄 Habilitar distro WSL 2 con Docker Engine en Windows</a></li>
-		<li><a href="https://www.crashell.com/estudio/hacer_ping_desde_php" target="_blank">📄 Hacer ping desde PHP</a></li>
-		<li><a href="https://www.crashell.com/estudio/cortar_y_unir_archivos_desde_php" target="_blank">📄 Cortar y unir archivos desde PHP</a></li>
-		<li><a href="https://www.crashell.com/estudio/mejora_la_productividad_de_tu_empresa_con_git" target="_blank">📄 Mejora la productividad de tu empresa con Git</a></li>
-		<li><a href="https://openwebinars.net/blog/infraestructura-lamp-con-docker-compose/" target="_blank">📄 Infraestructura LAMP con Docker Compose</a></li>
-		<li><a href="https://openwebinars.net/blog/programacion-de-tareas-desde-la-terminal-de-windows/" target="_blank">📄 Programación de tareas desde la terminal de Windows</a></li>
-		<li><a href="https://openwebinars.net/blog/automatizacion-de-procesos-con-shell-script-batch/" target="_blank">📄 Automatización de procesos con Shell Script Batch</a></li>
-		<li><a href="https://openwebinars.net/blog/20-comandos-de-red-mas-importantes-en-windows/" target="_blank">📄 20 comandos de red más importantes en Windows</a></li>
-		<li><a href="https://openwebinars.net/blog/shell-scripting-en-sistemas-windows/" target="_blank">📄 Shell Scripting en Sistemas Windows</a></li>
-		<li><a href="https://openwebinars.net/blog/certificaciones-de-azure/" target="_blank">📄 Certificaciones de Microsoft Azure</a></li>
-		<li><a href="https://openwebinars.net/blog/go-para-devops/" target="_blank">📄 Go para DevOps</a></li>
-		<li><a href="https://openwebinars.net/blog/trunk-based-development-vs-git-flow-cual-elegir/" target="_blank">📄 Trunk Based Development vs Git Flow, cuál elegir</a></li>
-		<li><a href="https://openwebinars.net/blog/evolucion-y-futuro-de-los-proveedores-cloud/" target="_blank">📄 Evolución y futuro de los proveedores Cloud</a></li>
-		<li><a href="https://openwebinars.net/blog/agile-testing-principios-etapas-y-ventajas/" target="_blank">📄 Agile testing: Principios, etapas y ventajas</a></li>
-		<li><a href="https://openwebinars.net/blog/top-herramientas-devops-comunicacion-y-chatops/" target="_blank">📄 Top herramientas DevOps: Comunicación y ChatOps</a></li>
-		<li><a href="https://openwebinars.net/blog/top-herramientas-devops-del-monitoreo-la-observabilidad/" target="_blank">📄 Top herramientas DevOps: Del Monitoreo a la Observabilidad</a></li>
-	</ul>
+  <ul>
+    <li><a href="https://openwebinars.net/blog/monitorizando-datos-con-influxdb-telegraf-y-grafana/" target="_blank">📄 Monitorizando datos con InfluxDB, Telegraf y Grafana</a></li>
+    <li><a href="https://openwebinars.net/blog/que-es-influxdb-y-primeros-pasos/" target="_blank">📄 Qué es InfluxDB y primeros pasos</a></li>
+    <li><a href="https://openwebinars.net/blog/que-es-telegraf-y-primeros-pasos/" target="_blank">📄 Qué es Telegraf y primeros pasos</a></li>
+    <li><a href="https://openwebinars.net/blog/que-es-grafana-y-primeros-pasos/" target="_blank">📄 Qué es Grafana y primeros pasos</a></li>
+    <li><a href="https://openwebinars.net/blog/go-vs-python-diferencias-y-puntos-fuertes/" target="_blank">📄 Go vs Python: Diferencias y puntos fuertes</a></li>
+    <li><a href="https://openwebinars.net/blog/gestion-de-procesos-y-servicios-desde-shell-script-en-windows/" target="_blank">📄 Gestión de procesos y servicios desde Shell Script en Windows</a></li>
+    <li><a href="https://www.crashell.com/estudio/habilitar_distro_wsl_2_con_docker_engine_en_windows" target="_blank">📄 Habilitar distro WSL 2 con Docker Engine en Windows</a></li>
+    <li><a href="https://www.crashell.com/estudio/hacer_ping_desde_php" target="_blank">📄 Hacer ping desde PHP</a></li>
+    <li><a href="https://www.crashell.com/estudio/cortar_y_unir_archivos_desde_php" target="_blank">📄 Cortar y unir archivos desde PHP</a></li>
+    <li><a href="https://www.crashell.com/estudio/mejora_la_productividad_de_tu_empresa_con_git" target="_blank">📄 Mejora la productividad de tu empresa con Git</a></li>
+    <li><a href="https://openwebinars.net/blog/infraestructura-lamp-con-docker-compose/" target="_blank">📄 Infraestructura LAMP con Docker Compose</a></li>
+    <li><a href="https://openwebinars.net/blog/programacion-de-tareas-desde-la-terminal-de-windows/" target="_blank">📄 Programación de tareas desde la terminal de Windows</a></li>
+    <li><a href="https://openwebinars.net/blog/automatizacion-de-procesos-con-shell-script-batch/" target="_blank">📄 Automatización de procesos con Shell Script Batch</a></li>
+    <li><a href="https://openwebinars.net/blog/20-comandos-de-red-mas-importantes-en-windows/" target="_blank">📄 20 comandos de red más importantes en Windows</a></li>
+    <li><a href="https://openwebinars.net/blog/shell-scripting-en-sistemas-windows/" target="_blank">📄 Shell Scripting en Sistemas Windows</a></li>
+    <li><a href="https://openwebinars.net/blog/certificaciones-de-azure/" target="_blank">📄 Certificaciones de Microsoft Azure</a></li>
+    <li><a href="https://openwebinars.net/blog/go-para-devops/" target="_blank">📄 Go para DevOps</a></li>
+    <li><a href="https://openwebinars.net/blog/trunk-based-development-vs-git-flow-cual-elegir/" target="_blank">📄 Trunk Based Development vs Git Flow, cuál elegir</a></li>
+    <li><a href="https://openwebinars.net/blog/evolucion-y-futuro-de-los-proveedores-cloud/" target="_blank">📄 Evolución y futuro de los proveedores Cloud</a></li>
+    <li><a href="https://openwebinars.net/blog/agile-testing-principios-etapas-y-ventajas/" target="_blank">📄 Agile testing: Principios, etapas y ventajas</a></li>
+    <li><a href="https://openwebinars.net/blog/top-herramientas-devops-comunicacion-y-chatops/" target="_blank">📄 Top herramientas DevOps: Comunicación y ChatOps</a></li>
+    <li><a href="https://openwebinars.net/blog/top-herramientas-devops-del-monitoreo-la-observabilidad/" target="_blank">📄 Top herramientas DevOps: Del Monitoreo a la Observabilidad</a></li>
+  </ul>
 </details>
 
 <details>
-	<summary>📃 Currículum</summary>
-	<br>
-	<ul>
-		<li>
-			<a href="https://docs.google.com/document/d/1r-Hpl-3WV1qDlLiUWJZkZ_7XFxrU1WgezGiaQnSrSkw/edit?usp=sharing" target="_blank">📄 Ver CV en Español</a>
-		</li>
-		<li>
-			<a href="https://docs.google.com/document/d/1aYwQcfaZAgsv0OWtSb56qzilAySD_xYH7YJbdNMnRl0/edit?usp=sharing" target="_blank">📄 View CV in English</a>
-		</li>
-	</ul>
+  <summary>📃 Currículum</summary>
+  <br>
+  <ul>
+    <li>
+      <a href="https://docs.google.com/document/d/1r-Hpl-3WV1qDlLiUWJZkZ_7XFxrU1WgezGiaQnSrSkw/edit?usp=sharing" target="_blank">📄 Ver CV en Español</a>
+    </li>
+    <li>
+      <a href="https://docs.google.com/document/d/1aYwQcfaZAgsv0OWtSb56qzilAySD_xYH7YJbdNMnRl0/edit?usp=sharing" target="_blank">📄 View CV in English</a>
+    </li>
+  </ul>
 </details>
 
 ## Automation
