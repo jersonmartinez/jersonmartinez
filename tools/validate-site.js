@@ -61,11 +61,37 @@ function validateStaticFiles() {
   if (!robots.includes('Sitemap:')) fail('robots.txt no referencia el sitemap.');
 }
 
+function validateFrontendContracts() {
+  const expectedCanonicals = {
+    'index.html': 'https://www.jersonmartinez.com/',
+    'projects.html': 'https://www.jersonmartinez.com/projects.html',
+    'experience.html': 'https://www.jersonmartinez.com/experience.html',
+    'certifications.html': 'https://www.jersonmartinez.com/certifications.html'
+  };
+  for (const [page, canonical] of Object.entries(expectedCanonicals)) {
+    const html = read(page);
+    if (!html.includes(`rel="canonical" href="${canonical}"`)) fail(`${page}: canonical ausente o incorrecto.`);
+    if (!/<meta[^>]+property=["']og:title["']/i.test(html)) fail(`${page}: falta og:title.`);
+    if (!/<meta[^>]+property=["']og:image["']/i.test(html)) fail(`${page}: falta og:image.`);
+    if (!/<script type=["']application\/ld\+json["']/i.test(html)) fail(`${page}: falta JSON-LD.`);
+    if (!html.includes('src/libs/custom/js/portfolio.js')) fail(`${page}: falta el comportamiento compartido.`);
+  }
+  const index = read('index.html');
+  if (!index.includes('class="hero-proof"') || !index.includes('class="stat-band"')) fail('index.html: faltan superficies de resumen profesional.');
+  const projects = read('projects.html');
+  if (!projects.includes('03 / AUTOMATION') || !projects.includes('no representa telemetría en tiempo real')) fail('projects.html: falta estado o contexto de datos.');
+  const experience = read('experience.html');
+  if (!experience.includes('class="timeline-summary"') || !experience.includes('class="timeline-tags"')) fail('experience.html: faltan resumen o etiquetas de experiencia.');
+  const certifications = read('certifications.html');
+  if (!certifications.includes('100+ cursos y certificaciones') || !certifications.includes('no sustituye la verificación')) fail('certifications.html: falta contexto de credenciales.');
+}
+
 function main() {
   validateStaticFiles();
   validateConfig();
   validateReadme();
   validatePages();
+  validateFrontendContracts();
   console.log(`Validación correcta: ${PAGES.length} páginas, README, configuración y recursos locales.`);
 }
 
