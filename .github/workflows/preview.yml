@@ -22,10 +22,10 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4.2.2
       - name: Build preview archive
-        run: tar --exclude='.git' --exclude='node_modules' -czf site-preview.tar.gz .
+        run: tar --exclude='.git' --exclude='node_modules' -czf "$RUNNER_TEMP/site-preview.tar.gz" .
       - name: Upload preview artifact
         uses: actions/upload-artifact@v4.6.2
         with:
           name: site-preview-${{ github.event.pull_request.number }}
-          path: site-preview.tar.gz
+          path: ${{ runner.temp }}/site-preview.tar.gz
           retention-days: 7
