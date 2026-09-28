@@ -1,0 +1,38 @@
+name: Site quality audit
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4.2.2
+      - name: Start local static server
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > server.log 2>&1 &
+          echo $! > server.pid
+          sleep 2
+      - name: Run Lighthouse
+        run: npx --yes lighthouse@12.8.2 http://127.0.0.1:8765/ --output=json --output-path=./lighthouse-report.json --chrome-flags="--headless --no-sandbox"
+      - name: Run accessibility audit
+        run: npx --yes pa11y@8.0.0 http://127.0.0.1:8765/
+      - name: Upload quality reports
+        if: always()
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: site-quality-reports
+          path: |
+            lighthouse-report.json
+            server.log
+          retention-days: 14
+      - name: Stop local static server
+        if: always()
+        run: kill "$(cat server.pid)" || true

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns="http://www.w3.org/2005/Atom">
+  <entry>
+    <yt:videoId>abcDEF12345</yt:videoId>
+    <title><![CDATA[Curso <completo> & Go 🚀]]></title>
+    <published>2026-09-28T10:00:00+00:00</published>
+  </entry>
+  <entry>
+    <yt:videoId>abcDEF12345</yt:videoId>
+    <title>Duplicado</title>
+    <published>2026-09-27T10:00:00+00:00</published>
+  </entry>
+</feed>

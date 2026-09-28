@@ -1,5 +1,7 @@
 # Jerson Martínez 👋
 
+[![Validate profile and automation](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/validate.yml/badge.svg)](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/validate.yml)
+[![Deploy static site](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/deploy-pages.yml)
 [![DevOpsea](https://img.shields.io/badge/YouTube-DevOpsea-FF0000?logo=youtube&logoColor=white)](https://www.youtube.com/@DevOpsea?sub_confirmation=1)
 [![Side Master](https://img.shields.io/badge/YouTube-Side%20Master-FF0000?logo=youtube&logoColor=white)](https://www.youtube.com/@SideMaster?sub_confirmation=1)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Jerson%20Martínez-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jersonmartinezsm/)
@@ -66,6 +68,15 @@ I’m a **DevOps Engineer with 8+ years of experience** in automation, cloud inf
 		</li>
 	</ul>
 </details>
+
+## Automation
+
+This profile is maintained by reproducible checks and scheduled workflows:
+
+- [Automation runbook](docs/AUTOMATION.md): sources, fallbacks, recovery and operations.
+- Pull requests run tests, metadata/resource checks, local link checks and Markdown validation.
+- A weekly audit reports external link failures without changing content automatically.
+- YouTube updates arrive as reviewable pull requests; no scheduled job writes directly to `main`.
 
 ## Contact
 

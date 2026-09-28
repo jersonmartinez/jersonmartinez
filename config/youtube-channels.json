@@ -1,0 +1,19 @@
+{
+  "maxResults": 6,
+  "requestTimeoutMs": 10000,
+  "retries": 4,
+  "channels": [
+    {
+      "name": "DevOpsea",
+      "handle": "@DevOpsea",
+      "channelId": "UCHQb90WIYhLUObEc8uVJR6A",
+      "marker": "DEVOPSEA"
+    },
+    {
+      "name": "Side Master",
+      "handle": "@SideMaster",
+      "channelId": "UC-_To7b_NPrxvgG-_de5HRA",
+      "marker": "SIDEMASTER"
+    }
+  ]
+}

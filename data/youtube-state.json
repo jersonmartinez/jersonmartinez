@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "channels": {
+    "DevOpsea": {
+      "lastValidAt": "2026-09-28T00:00:00.000Z",
+      "entries": [
+        {"id":"kCrLxAe2rL0","title":"Curso COMPLETO de Go: Gin, Revel, Echo, Gorilla y Fiber 🛠️","published":""},
+        {"id":"2cS5zEIh_zg","title":"Curso de GO con FIBER Framework","published":""},
+        {"id":"O5Fr1S-BvKY","title":"Curso de GO con GORILLA Framework 🦍","published":""},
+        {"id":"7cROq0Npc7U","title":"Curso de GO con ECHO Framework 🔥💻","published":""},
+        {"id":"Wpma2kD-oBM","title":"Curso de GO con GIN Framework🛠️","published":""},
+        {"id":"Bwy-aMjh2iI","title":"Curso de GO con REVEL Framework 🎯","published":""}
+      ]
+    },
+    "Side Master": {
+      "lastValidAt": "2026-09-28T00:00:00.000Z",
+      "entries": [
+        {"id":"bsk2lG5PmRs","title":"Sesión #8 - Aprendiendo Python en 1 semana de forma autodidacta","published":""},
+        {"id":"FGm8MgGULxI","title":"Sesión #7 - Aprendiendo Python en 1 semana de forma autodidacta","published":""},
+        {"id":"3XCwCzopYTg","title":"Sesión #6 - Aprendiendo Python en 1 semana de forma autodidacta","published":""},
+        {"id":"HmPV_xmVqyE","title":"Sesión #5 - Aprendiendo Python en 1 semana de forma autodidacta","published":""},
+        {"id":"AKtNfOuvs-0","title":"Sesión #4 - Aprendiendo Python en 1 semana de forma autodidacta","published":""},
+        {"id":"rnGTJKJyhAk","title":"Sesión #3 - Aprendiendo Python en 1 semana de forma autodidacta","published":""}
+      ]
+    }
+  }
+}

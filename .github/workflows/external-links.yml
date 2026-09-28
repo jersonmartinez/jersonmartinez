@@ -1,0 +1,42 @@
+name: Audit external links
+
+on:
+  schedule:
+    - cron: '30 6 * * 1'
+  workflow_dispatch:
+
+concurrency:
+  group: external-link-audit
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 20
+
+      - name: Check external links
+        run: node tools/check-links.js --external
+
+      - name: Upload link report
+        if: always()
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: external-link-report
+          path: link-report.json
+          retention-days: 14
+
+      - name: Write failure summary
+        if: failure()
+        run: |
+          echo 'External link audit failed. Review the uploaded link-report.json artifact.' >> "$GITHUB_STEP_SUMMARY"
