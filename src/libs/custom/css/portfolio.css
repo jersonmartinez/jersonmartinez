@@ -104,12 +104,16 @@ button { cursor: pointer; }
   place-items: center;
   border: 1px solid var(--line-strong);
   border-radius: 0.65rem;
-  color: var(--ink);
+  color: var(--ink) !important;
   background: var(--accent);
-  font-size: 0.85rem;
+  font-size: 0;
+  font-weight: 900;
   letter-spacing: -0.05em;
 }
-.brand span { color: var(--accent); }
+.brand-mark::after { content: "JM"; color: var(--ink); font-size: 0.72rem; }
+.brand > span:not(.brand-mark) { color: var(--text); }
+.brand > span:not(.brand-mark) span { color: var(--accent); }
+.brand-mark { color: var(--ink); }
 .nav-toggle {
   display: none;
   padding: 0.5rem;
@@ -258,6 +262,7 @@ p { margin: 0; color: var(--muted); }
 .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 .project-card { display: flex; flex-direction: column; min-height: 20rem; }
 .project-card h2 { margin-bottom: 0.8rem; font-size: 1.8rem; letter-spacing: -0.035em; }
+.metric-note { grid-column: 1 / -1; margin-top: 0.15rem; color: var(--muted); font-size: 0.72rem; }
 .project-card .project-meta { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 1.2rem 0; }
 .project-meta span { padding: 0.35rem 0.55rem; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-family: "SFMono-Regular", Consolas, monospace; font-size: 0.7rem; }
 .project-card .card-link { margin-top: auto; }
