@@ -14,14 +14,18 @@ const absoluteImage = profile.website + '/images/profile.jpg';
     <meta name="theme-color" content="#07111f" />
     <meta name="color-scheme" content="dark" />
     <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
-    <link rel="alternate icon" href="/brand/favicon.svg" />
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Jerson Martínez" />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={absoluteImage} />
     <meta property="og:locale" content="es_ES" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteImage} />
     <title>{title}</title>
   </head>
   <body>
