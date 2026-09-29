@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LogoCloud from '../components/LogoCloud.astro';
 import SkillsExplorer from '../components/SkillsExplorer.astro';
-import { profile, projects, teaching, certifications, skills } from '../data/portfolio.js';
+import { profile, projects, teaching, certifications, skills, projectSlug } from '../data/portfolio.js';
 const featuredProjects = projects.filter((project) => project.featured);
 const logos = [
   { name: 'AWS', logo: '/brands/aws.svg' },
@@ -76,7 +76,7 @@ const logos = [
       <div class="featured-grid">
         {featuredProjects.map((project, index) => <article class={`card project-card ${index === 0 ? 'project-card--accent' : ''}`}>
           <div><span class="card-label">{project.kind}</span><h3>{project.name}</h3><p>{project.description}</p><div class="project-meta">{project.tags.map((tag) => <span>{tag}</span>)}</div></div>
-          <div class="project-bottom">{project.href ? <a class="card-link" href={project.href} target="_blank" rel="noopener noreferrer">{project.cta} <i class="fas fa-external-link-alt" aria-hidden="true"></i><span class="sr-only"> (abre en nueva pestaña)</span></a> : <span class="status">Producto personal</span>}</div>
+          <div class="project-bottom">{project.href ? <a class="card-link" href={project.href} target="_blank" rel="noopener noreferrer">{project.cta} <i class="fas fa-external-link-alt" aria-hidden="true"></i><span class="sr-only"> (abre en nueva pestaña)</span></a> : <span class="status">Producto personal</span>}<a class="card-link card-link--soft" href={`/projects.html#${projectSlug(project.name)}`}>Ver ficha <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
         </article>)}
       </div>
     </div>
@@ -84,7 +84,7 @@ const logos = [
 
   <section class="section section--line" id="enseñanza" data-section="enseñanza">
     <div class="container">
-      <div class="section-head-row"><div class="section-heading"><p class="section-kicker">04 / conocimiento</p><h2>La enseñanza también es una plataforma.</h2><p class="lede">Cursos, artículos y canales que convierten experiencia de operación en conocimiento reutilizable.</p></div><a class="button button--ghost" href="/courses.html"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Ver Cursos (7)</a></div>
+      <div class="section-head-row"><div class="section-heading"><p class="section-kicker">04 / conocimiento</p><h2>La enseñanza también es una plataforma.</h2><p class="lede">Cursos, artículos y canales que convierten experiencia de operación en conocimiento reutilizable.</p></div><div class="head-row-actions"><a class="button button--ghost" href="/courses.html"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Ver Cursos (7)</a><a class="button button--ghost" href="/courses.html#canales"><i class="fas fa-play" aria-hidden="true"></i> Ver canales</a></div></div>
       <div class="teaching-grid">{teaching.map((item) => <article class="card teaching-card"><img src={item.logo} width="32" height="32" alt={`${item.name} logo`} loading="lazy" /><div><h3>{item.name}</h3><strong class="teaching-metric">{item.metric}</strong><p>{item.description}</p></div><a href={item.href} target="_blank" rel="noopener noreferrer">Abrir recurso <i class="fas fa-external-link-alt" aria-hidden="true"></i><span class="sr-only"> (abre en nueva pestaña)</span></a></article>)}</div>
     </div>
   </section>

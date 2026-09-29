@@ -36,6 +36,9 @@ export const skills = [
   { name: 'Idiomas', icon: 'fa-language', items: ['Español (nativo)', 'English (B1+ · Professional Working Proficiency)'] }
 ];
 
+// Ancla estable por proyecto para navegación cruzada home <-> /projects.html (#proyecto-<slug>).
+export const projectSlug = (name) => 'proyecto-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
 export const projects = [
   {
     name: 'Factib',

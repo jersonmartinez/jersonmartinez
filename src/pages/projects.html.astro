@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { projects, profile } from '../data/portfolio.js';
+import { projects, profile, projectSlug } from '../data/portfolio.js';
 const filters = [['all', 'Todos'], ['personal', 'Personales'], ['open-source', 'Open source'], ['teaching', 'Contenido']];
 function filterFor(project) {
   if (project.name === 'Factib' || project.name === 'Crashell') return 'personal';
@@ -16,11 +16,23 @@ const counts = projects.reduce((acc, project) => {
 ---
 <BaseLayout title="Proyectos | Jerson Martínez" description="Productos personales, open source, automatizaciones y contenido técnico de Jerson Martínez." canonical={`${profile.website}/projects.html`}>
   <section class="page-hero"><div class="container"><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Proyectos / sistemas verificables</p><h1>Una trayectoria contada como sistemas.</h1><p class="lede">Productos personales, repositorios públicos, automatizaciones y contenido técnico: cada proyecto muestra una forma concreta de resolver problemas.</p><div class="page-hero-meta"><span>Factib · producto personal</span><span>Crashell · publicaciones</span><span>MCPs · automatización</span><span>IA + DevOps · gobernanza</span></div></div></section>
-  <section class="section"><div class="container"><div class="section-heading"><p class="section-kicker">01 / portfolio técnico</p><h2>Elige el tipo de trabajo que quieres recorrer.</h2><p class="lede">Los proyectos personales y los repositorios públicos están separados para que el contexto sea claro.</p></div><div class="filter-bar" role="group" aria-label="Filtrar proyectos">{filters.map(([value, label], index) => <button class={`filter-button ${index === 0 ? 'is-active' : ''}`} type="button" data-filter={value} aria-pressed={index === 0 ? 'true' : 'false'}>{label} <span class="filter-count" aria-hidden="true">({counts[value] || 0})</span></button>)}</div><div class="repo-grid">{projects.map((project) => <article class="card repo-card" data-category={filterFor(project)}><span class="repo-kind">{project.kind}</span><h3 style="margin-top: .8rem">{project.name}</h3><p style="margin-top: .8rem">{project.description}</p><div class="project-meta">{project.tags.map((tag) => <span>{tag}</span>)}</div>{project.href ? <a class="card-link" href={project.href} target="_blank" rel="noopener noreferrer">{project.cta} <i class="fas fa-external-link-alt" aria-hidden="true"></i></a> : <span class="status">Producto personal</span>}</article>)}</div><p class="data-note" style="margin-top: 1.3rem">Los repositorios enlazados son públicos en el perfil de GitHub consultado. Factib se presenta como producto personal porque no aparece como repositorio público en ese perfil.</p></div></section>
+  <section class="section"><div class="container"><div class="section-heading"><p class="section-kicker">01 / portfolio técnico</p><h2>Elige el tipo de trabajo que quieres recorrer.</h2><p class="lede">Los proyectos personales y los repositorios públicos están separados para que el contexto sea claro.</p></div><div class="filter-bar" role="group" aria-label="Filtrar proyectos">{filters.map(([value, label], index) => <button class={`filter-button ${index === 0 ? 'is-active' : ''}`} type="button" data-filter={value} aria-pressed={index === 0 ? 'true' : 'false'}>{label} <span class="filter-count" aria-hidden="true">({counts[value] || 0})</span></button>)}</div><div class="repo-grid">{projects.map((project) => <article id={projectSlug(project.name)} class="card repo-card" style="scroll-margin-top: 96px" data-category={filterFor(project)}><span class="repo-kind">{project.kind}</span><h3 style="margin-top: .8rem">{project.name}</h3><p style="margin-top: .8rem">{project.description}</p><div class="project-meta">{project.tags.map((tag) => <span>{tag}</span>)}</div>{project.href ? <a class="card-link" href={project.href} target="_blank" rel="noopener noreferrer">{project.cta} <i class="fas fa-external-link-alt" aria-hidden="true"></i></a> : <span class="status">Producto personal</span>}</article>)}</div><p class="data-note" style="margin-top: 1.3rem">Los repositorios enlazados son públicos en el perfil de GitHub consultado. Factib se presenta como producto personal porque no aparece como repositorio público en ese perfil.</p></div></section>
   <section class="section section--line"><div class="container"><div class="contact-panel"><div><p class="section-kicker">02 / colaboración</p><h2>¿Quieres hablar de plataforma, gobernanza o automatización?</h2></div><a class="button" href={`mailto:${profile.email}`}>Contactar <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></div></div></section>
 </BaseLayout>
 <script>
   const buttons = [...document.querySelectorAll('[data-filter]')];
   const cards = [...document.querySelectorAll('[data-category]')];
   buttons.forEach((button) => button.addEventListener('click', () => { const filter = button.getAttribute('data-filter'); buttons.forEach((item) => { const active = item === button; item.classList.toggle('is-active', active); item.setAttribute('aria-pressed', String(active)); }); cards.forEach((card) => { const isHidden = filter !== 'all' && card.getAttribute('data-category') !== filter; card.setAttribute('data-hidden', String(isHidden)); card.hidden = isHidden; }); }));
+
+  // Navegación cruzada: al llegar con #proyecto-<slug>, asegura el filtro 'Todos' para que la ficha sea visible y despláza a ella.
+  const focusHashProject = () => {
+    const hash = decodeURIComponent(location.hash || '');
+    if (!hash.startsWith('#proyecto-')) return;
+    const target = document.getElementById(hash.slice(1));
+    if (!target) return;
+    buttons.find((b) => b.getAttribute('data-filter') === 'all')?.click();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  window.addEventListener('hashchange', focusHashProject);
+  focusHashProject();
 </script>

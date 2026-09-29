@@ -5,9 +5,19 @@ const navItems = [
   ['Proyectos', '/projects.html', 'proyectos', 'fa-project-diagram'],
   ['Cursos', '/courses.html', 'cursos', 'fa-graduation-cap'],
   ['Credenciales', '/certifications.html', 'credenciales', 'fa-certificate'],
-  ['Trayectoria', '/experience.html', 'trayectoria', 'fa-route']
+  ['Trayectoria', '/experience.html', 'trayectoria', 'fa-route'],
+  ['Contacto', '/#contacto', 'contacto', 'fa-comment-dots']
 ];
 const pathname = Astro.url.pathname;
+// Normaliza rutas para comparar con/sin '.html' y barra final.
+const normalize = (p) => (p || '/').replace(/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
+const here = normalize(pathname);
+// Estado activo en SSR: para rutas de página, coincidencia exacta. Para anclas del home ('/#seccion'),
+// se marca activo el enlace 'Inicio' cuando estamos en el home; la sección visible exacta la ajusta el script.
+const isCurrent = (href) => {
+  const [path] = href.split('#');
+  return here === normalize(path || '/');
+};
 ---
 <header class="site-header">
   <div class="header-inner container">
@@ -18,8 +28,8 @@ const pathname = Astro.url.pathname;
       <span></span><span></span><span></span>
     </button>
     <nav class="site-nav" id="site-nav" data-site-nav aria-label="Navegación principal">
-      {navItems.map(([label, href, key, icon]) => <a href={href} data-nav-key={key} class={pathname === href ? 'is-current' : ''}><i class={`fas ${icon}`} aria-hidden="true"></i><span class="nav-label">{label}</span></a>)}
-      <a class="nav-contact" href="mailto:jersonmartinezsm@gmail.com"><i class="fas fa-paper-plane" aria-hidden="true"></i><span>Hablemos</span></a>
+      {navItems.map(([label, href, key, icon]) => <a href={href} data-nav-key={key} data-nav-href={href} class={isCurrent(href) ? 'is-current' : ''} aria-current={isCurrent(href) ? 'page' : undefined}><i class={`fas ${icon}`} aria-hidden="true"></i><span class="nav-label">{label}</span></a>)}
+      <a class="nav-contact" href="mailto:jersonmartinezsm@gmail.com" aria-label="Escribir un correo a Jerson (abre el cliente de email)" data-tooltip="Abrir email"><i class="fas fa-paper-plane" aria-hidden="true"></i><span>Escríbeme</span></a>
     </nav>
   </div>
 </header>
@@ -30,4 +40,21 @@ const pathname = Astro.url.pathname;
   toggle?.addEventListener('click', () => { const open = nav?.classList.toggle('is-open') ?? false; toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú'); if (open) nav?.querySelector('a')?.focus(); });
   nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => close()));
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && nav?.classList.contains('is-open')) close({ returnFocus: true }); });
+
+  // Item 38: en el home, sincroniza is-current de los enlaces de ancla ('/#seccion') con la sección visible.
+  const isHome = location.pathname === '/' || location.pathname === '/index.html';
+  if (isHome) {
+    const anchorLinks = [...(nav?.querySelectorAll('a[data-nav-href*="#"]') ?? [])];
+    if (anchorLinks.length) {
+      const hashOf = (link) => (link.getAttribute('data-nav-href') || '').split('#')[1];
+      const sections = anchorLinks.map((l) => document.getElementById(hashOf(l))).filter(Boolean);
+      const setActive = (id) => anchorLinks.forEach((link) => {
+        const active = hashOf(link) === id;
+        link.classList.toggle('is-current', active);
+        if (active) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current');
+      });
+      const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) setActive(entry.target.id); }), { rootMargin: '-45% 0px -50% 0px' });
+      sections.forEach((section) => observer.observe(section));
+    }
+  }
 </script>
