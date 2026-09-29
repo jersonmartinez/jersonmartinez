@@ -92,3 +92,16 @@ npm run links
 ```
 
 The GitHub Actions validation workflow builds `dist`, validates the generated assets and checks local links. The deployment workflow publishes only `dist`; it never uploads the source tree as the site artifact.
+
+## SEO, PWA y accesibilidad (endurecimiento)
+
+Todo el contenido nuevo reutiliza datos ya verificados; no se añaden cifras, proyectos ni enlaces inventados.
+
+- **Datos estructurados**: `BaseLayout.astro` emite JSON-LD `schema.org/Person` (nombre, URL, imagen, email, `sameAs` a GitHub/LinkedIn/YouTube/Udemy) y, en páginas internas, `BreadcrumbList` (prop `breadcrumb`).
+- **Metadatos**: `author`, `robots` (`index, follow, max-image-preview:large`), `referrer`, `application-name`, `apple-touch-icon`, metas `apple-mobile-web-app-*` / `mobile-web-app-capable`, `og:image:alt/width/height` y `twitter:image:alt`.
+- **Rendimiento**: `preconnect`/`dns-prefetch` a `cdn.simpleicons.org`; `decoding="async"` en imágenes y `fetchpriority="high"` en el retrato y el wordmark.
+- **PWA/indexación**: `public/robots.txt` (con `Sitemap:`), `public/sitemap.xml` (5 rutas reales), `public/site.webmanifest` (`<link rel="manifest">`) y `public/humans.txt` (`<link rel="author">`).
+- **Accesibilidad**: migas de pan visibles con `aria-current`, `aria-labelledby` en secciones, `<main tabindex="-1">`, avisos `sr-only` "(abre en nueva pestaña)" en enlaces externos, `hreflang` en los CV, `lang="en"` en ítems en inglés, `rel="me"` en redes del pie, y timeline como `<ol>/<li>` con `<time datetime>` legible por máquina.
+- **UX**: hoja de impresión (`@media print`), pie con año dinámico y "Volver arriba", enlace de pie de la página actual, `scroll-margin-top` para anclas, resaltado `:target` y `<noscript>` que aclara el filtro de proyectos.
+
+El test `tests/portfolio.test.js` cubre la presencia de estos artefactos (robots/sitemap/manifest/humans y el JSON-LD) además de los valores protegidos.

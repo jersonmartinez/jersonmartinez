@@ -81,3 +81,20 @@ test('los valores protegidos existen textualmente en portfolio.js', () => {
     assert.ok(data.includes(value), `Valor protegido ausente o alterado: "${value}"`);
   }
 });
+
+// Items 126-128: los artefactos de SEO/PWA y datos estructurados existen y son coherentes.
+test('SEO/PWA: robots, sitemap, manifest, humans y JSON-LD existen', () => {
+  assert.match(read('public/robots.txt'), /Sitemap:\s*https:\/\/www\.jersonmartinez\.com\/sitemap\.xml/);
+  const sitemap = read('public/sitemap.xml');
+  for (const route of ['/', '/projects.html', '/courses.html', '/certifications.html', '/experience.html']) {
+    assert.ok(sitemap.includes(`https://www.jersonmartinez.com${route}`), `Ruta ausente en sitemap: ${route}`);
+  }
+  const manifest = JSON.parse(read('public/site.webmanifest'));
+  assert.equal(manifest.start_url, '/');
+  assert.equal(manifest.theme_color, '#07111f');
+  assert.match(read('public/humans.txt'), /github\.com\/jersonmartinez/);
+  const layout = read('src/layouts/BaseLayout.astro');
+  assert.match(layout, /application\/ld\+json/);
+  assert.match(layout, /schema\.org/);
+  assert.match(layout, /rel="manifest"/);
+});
