@@ -36,10 +36,12 @@ const isCurrent = (href) => {
 <script>
   const toggle = document.querySelector('[data-nav-toggle]');
   const nav = document.querySelector('[data-site-nav]');
-  const close = ({ returnFocus = false } = {}) => { nav?.classList.remove('is-open'); toggle?.setAttribute('aria-expanded', 'false'); toggle?.setAttribute('aria-label', 'Abrir menú'); if (returnFocus) toggle?.focus(); };
-  toggle?.addEventListener('click', () => { const open = nav?.classList.toggle('is-open') ?? false; toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú'); if (open) nav?.querySelector('a')?.focus(); });
+  const close = ({ returnFocus = false } = {}) => { nav?.classList.remove('is-open'); document.body.classList.remove('nav-locked'); toggle?.setAttribute('aria-expanded', 'false'); toggle?.setAttribute('aria-label', 'Abrir menú'); if (returnFocus) toggle?.focus(); };
+  toggle?.addEventListener('click', (event) => { event.stopPropagation(); const open = nav?.classList.toggle('is-open') ?? false; document.body.classList.toggle('nav-locked', open); toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú'); if (open) nav?.querySelector('a')?.focus(); });
   nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => close()));
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && nav?.classList.contains('is-open')) close({ returnFocus: true }); });
+  // Item 26: cerrar el menú móvil al hacer clic fuera del nav (backdrop) y bloquear el scroll mientras is-open.
+  document.addEventListener('click', (event) => { if (!nav?.classList.contains('is-open')) return; const target = event.target; if (nav.contains(target) || toggle?.contains(target)) return; close(); });
 
   // Item 38: en el home, sincroniza is-current de los enlaces de ancla ('/#seccion') con la sección visible.
   const isHome = location.pathname === '/' || location.pathname === '/index.html';

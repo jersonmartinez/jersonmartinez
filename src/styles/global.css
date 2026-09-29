@@ -7,7 +7,9 @@
 .skill-tab:hover { color: var(--text); border-color: var(--line); transform: translateX(2px); }
 .skill-tab.is-active { color: var(--text); border-color: var(--line-strong); background: rgba(103,232,249,.16); transform: translateX(2px); }
 .skill-tab.is-active > i:first-child { color: var(--lime); }
-.skill-tab-arrow { margin-left: auto; color: var(--muted) !important; font-size: .62rem; }
+.skill-tab-arrow { margin-left: auto; color: var(--muted) !important; font-size: .62rem; opacity: 0; transform: translateX(-.25rem); transition: opacity .18s ease, transform .18s ease, color .18s ease; }
+.skill-tab:hover .skill-tab-arrow, .skill-tab:focus-visible .skill-tab-arrow { opacity: .7; transform: translateX(0); }
+.skill-tab.is-active .skill-tab-arrow { opacity: 1; transform: translateX(0); color: var(--lime) !important; }
 .skills-panels { min-width: 0; }
 .skills-panel { min-height: 100%; padding: 1.5rem; border: 1px solid var(--line); border-radius: calc(var(--radius) - .25rem); background: linear-gradient(145deg, rgba(17,41,67,.78), rgba(7,17,31,.64)); }
 .skills-panel[hidden] { display: none; }
@@ -47,6 +49,14 @@ a { color: inherit; }
 button { font: inherit; cursor: pointer; }
 ::selection { color: var(--ink); background: var(--cyan); }
 :focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
+/* Item 27: foco de teclado consistente y perceptible en enlaces, botones, filtros y tabs. */
+a:focus-visible, button:focus-visible, .filter-button:focus-visible, .skill-tab:focus-visible, [role='tab']:focus-visible, .card-link:focus-visible, .credential-link:focus-visible, .card[href]:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 3px;
+  border-radius: .55rem;
+}
+/* Item 26: bloquea el scroll del body mientras el menú móvil está abierto. */
+body.nav-locked { overflow: hidden; }
 .container { width: min(calc(100% - 2.25rem), var(--max)); margin-inline: auto; }
 .skip-link { position: fixed; top: .8rem; left: .8rem; z-index: 99; padding: .6rem .9rem; border-radius: 999px; color: var(--ink); background: var(--cyan); transform: translateY(-150%); transition: transform .2s ease; }
 .skip-link:focus { transform: translateY(0); }
@@ -126,8 +136,9 @@ p { margin: 0; color: var(--muted); }
 .journey-rail a:hover, .journey-rail a.is-active { border-left-color: var(--lime); color: var(--text); background: rgba(196,242,105,.07); }
 .journey-content { min-width: 0; }
 .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-.card { padding: 1.45rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-soft); box-shadow: 0 16px 60px rgba(0,0,0,.12); }
-.card:hover { border-color: var(--line-strong); }
+.card { padding: 1.45rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-soft); box-shadow: 0 16px 60px rgba(0,0,0,.12); transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease; }
+/* Item 28: estado hover/focus perceptible y uniforme para cards; el foco de teclado recibe el mismo tratamiento que el hover. */
+.card:hover, .card:focus-within { border-color: var(--line-strong); transform: translateY(-3px); box-shadow: 0 24px 80px rgba(0,0,0,.22); }
 .card-label { display: block; min-height: 2.2rem; margin-bottom: 2rem; color: var(--cyan); font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .04em; text-transform: uppercase; }
 .card h3 { margin-bottom: .7rem; }
 .card p { font-size: .9rem; }
@@ -191,12 +202,23 @@ p { margin: 0; color: var(--muted); }
 .cert-list li::before { margin-right: .5rem; color: var(--cyan); content: '↳'; }
 .credential-more { margin-top: .65rem; font-family: 'DM Mono', monospace; font-size: .72rem; }
 .credential-more a { color: var(--cyan); }
+/* Item 29: 'Verificar' de cada credencial con hover/focus claro y señalando enlace externo; icono con contraste suficiente. */
+.credential-link { display: flex; align-items: center; justify-content: space-between; gap: .8rem; color: inherit; text-decoration: none; }
+.credential-link:hover, .credential-link:focus-visible { color: var(--cyan); }
+.credential-link:hover .credential-verify, .credential-link:focus-visible .credential-verify { text-decoration: underline; text-underline-offset: .2em; }
+.credential-verify { display: inline-flex; align-items: center; gap: .35rem; flex: 0 0 auto; color: var(--cyan); font-family: 'DM Mono', monospace; font-size: .64rem; }
+.credential-verify i { color: var(--cyan); font-size: .6rem; }
+.credential-link:hover .credential-verify i, .credential-link:focus-visible .credential-verify i { color: var(--lime); }
 .disclaimer { padding: 1rem 1.2rem; border: 1px solid rgba(246,181,108,.3); border-radius: .75rem; color: var(--orange); background: rgba(246,181,108,.06); font-family: 'DM Mono', monospace; font-size: .72rem; }
 
 .filter-bar { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
 .filter-button { padding: .55rem .7rem; border: 1px solid var(--line); border-radius: .6rem; color: var(--muted); background: transparent; font-size: .76rem; }
 .filter-button:hover, .filter-button.is-active { color: var(--ink); border-color: var(--cyan); background: var(--cyan); }
 .filter-count { font-family: 'DM Mono', monospace; font-size: .72rem; opacity: .7; }
+/* Item 14: contador accesible del filtro (aria-live). Item 13: estado vacío cuando ninguna card coincide. */
+.filter-status { margin: -0.6rem 0 1.2rem; color: var(--muted); font-family: 'DM Mono', monospace; font-size: .72rem; }
+.repo-empty { margin-top: 1.2rem; padding: 1.4rem 1.6rem; border: 1px dashed var(--line-strong); border-radius: var(--radius); color: var(--muted); background: rgba(17,41,67,.36); font-family: 'DM Mono', monospace; font-size: .82rem; text-align: center; }
+.repo-empty[hidden] { display: none; }
 .repo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .repo-card[data-hidden='true'] { display: none; }
 .repo-card[hidden] { display: none !important; }
@@ -247,8 +269,6 @@ p { margin: 0; color: var(--muted); }
 .course-card h2, .course-card h3 { font-size: 1.25rem; letter-spacing: -.035em; }
 .course-card p { margin-top: .8rem; }
 .course-card .card-link { margin-top: auto; }
-.credential-link { color: inherit; text-decoration: none; }
-.credential-link:hover { color: var(--cyan); text-decoration: underline; text-underline-offset: .2em; }
   .brand { width: 12rem; }
   .nav-toggle { display: block; }
   .site-nav { position: absolute; top: calc(100% + 1px); right: .75rem; left: .75rem; display: none; flex-direction: column; align-items: stretch; padding: .65rem; border: 1px solid var(--line); border-radius: .9rem; background: var(--surface); box-shadow: var(--shadow); }
@@ -258,8 +278,6 @@ p { margin: 0; color: var(--muted); }
   .skill-list li { font-size: .66rem; }
   .hero { padding-top: 4.3rem; }
   .hero h1 { max-width: 12ch; font-size: clamp(2.8rem, 14vw, 5rem); }
-.credential-link { display: flex; align-items: center; justify-content: space-between; gap: .8rem; }
-.credential-verify { flex: 0 0 auto; color: var(--cyan); font-family: 'DM Mono', monospace; font-size: .64rem; }
   .hero-facts { grid-template-columns: repeat(2, 1fr); }
   .section, .page-hero { padding-block: 4rem; }
   .cards, .featured-grid, .teaching-grid, .cert-grid, .repo-grid, .course-grid { grid-template-columns: 1fr; }
