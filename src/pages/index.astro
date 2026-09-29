@@ -24,7 +24,9 @@ const logos = [
           <a class="button button--ghost" href="#proyectos"><i class="fas fa-arrow-down" aria-hidden="true"></i> Ver proyectos</a>
         </div>
         <ul class="hero-facts" aria-label="Resumen profesional">
-          {profile.facts.map(([value, label]) => <li><strong>{value}</strong><span>{label}</span></li>)}
+          {profile.facts.map(([value, label, meta]) => <li>{meta && meta.href
+            ? <a class="hero-fact-link" href={meta.href} {...(meta.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={meta.label}><strong>{value}</strong><span>{label} <i class="fas fa-external-link-alt" aria-hidden="true"></i></span></a>
+            : <><strong>{value}</strong><span>{label}</span></>}</li>)}
         </ul>
       </div>
       <aside class="profile-panel" aria-label="Perfil de Jerson Martínez">
