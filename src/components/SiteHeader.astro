@@ -26,8 +26,8 @@ const pathname = Astro.url.pathname;
 <script>
   const toggle = document.querySelector('[data-nav-toggle]');
   const nav = document.querySelector('[data-site-nav]');
-  const close = () => { nav?.classList.remove('is-open'); toggle?.setAttribute('aria-expanded', 'false'); toggle?.setAttribute('aria-label', 'Abrir menú'); };
-  toggle?.addEventListener('click', () => { const open = nav?.classList.toggle('is-open') ?? false; toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú'); });
-  nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', close));
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });
+  const close = ({ returnFocus = false } = {}) => { nav?.classList.remove('is-open'); toggle?.setAttribute('aria-expanded', 'false'); toggle?.setAttribute('aria-label', 'Abrir menú'); if (returnFocus) toggle?.focus(); };
+  toggle?.addEventListener('click', () => { const open = nav?.classList.toggle('is-open') ?? false; toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú'); if (open) nav?.querySelector('a')?.focus(); });
+  nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => close()));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && nav?.classList.contains('is-open')) close({ returnFocus: true }); });
 </script>

@@ -64,6 +64,7 @@ button { font: inherit; cursor: pointer; }
 .site-nav .nav-contact:hover { color: var(--ink); background: var(--lime); }
 .nav-toggle { display: none; width: 2.8rem; height: 2.8rem; padding: .65rem; border: 1px solid var(--line); border-radius: .75rem; background: transparent; }
 .nav-toggle span { display: block; height: 2px; margin: 4px 0; background: var(--text); }
+.nav-toggle:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; border-color: var(--cyan); }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .icon { display: inline-block; line-height: 1; }
@@ -191,6 +192,7 @@ p { margin: 0; color: var(--muted); }
 .filter-count { font-family: 'DM Mono', monospace; font-size: .72rem; opacity: .7; }
 .repo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .repo-card[data-hidden='true'] { display: none; }
+.repo-card[hidden] { display: none !important; }
 .repo-card h2 { font-size: 1.45rem; letter-spacing: -.035em; }
 .repo-kind { color: var(--lime); font-family: 'DM Mono', monospace; font-size: .68rem; }
 
@@ -270,4 +272,8 @@ p { margin: 0; color: var(--muted); }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .button { width: 100%; }
 }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .button:hover, .site-nav a:hover, .site-nav a.is-current, .profile-social:hover, .profile-social:focus-visible { transform: none !important; }
+}

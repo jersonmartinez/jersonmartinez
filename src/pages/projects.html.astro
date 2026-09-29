@@ -22,5 +22,5 @@ const counts = projects.reduce((acc, project) => {
 <script>
   const buttons = [...document.querySelectorAll('[data-filter]')];
   const cards = [...document.querySelectorAll('[data-category]')];
-  buttons.forEach((button) => button.addEventListener('click', () => { const filter = button.getAttribute('data-filter'); buttons.forEach((item) => { const active = item === button; item.classList.toggle('is-active', active); item.setAttribute('aria-pressed', String(active)); }); cards.forEach((card) => card.setAttribute('data-hidden', String(filter !== 'all' && card.getAttribute('data-category') !== filter))); }));
+  buttons.forEach((button) => button.addEventListener('click', () => { const filter = button.getAttribute('data-filter'); buttons.forEach((item) => { const active = item === button; item.classList.toggle('is-active', active); item.setAttribute('aria-pressed', String(active)); }); cards.forEach((card) => { const isHidden = filter !== 'all' && card.getAttribute('data-category') !== filter; card.setAttribute('data-hidden', String(isHidden)); card.hidden = isHidden; }); }));
 </script>
