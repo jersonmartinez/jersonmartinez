@@ -323,3 +323,12 @@ p { margin: 0; color: var(--muted); }
   .card, .timeline-card, .skills-panel { border: 1px solid #999; background: #fff; box-shadow: none; }
   .section { padding-block: 1rem; }
 }
+
+/* Item 88: migas de pan visibles y accesibles en páginas internas. */
+.breadcrumb { margin: 0 0 1rem; }
+.breadcrumb ol { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; margin: 0; padding: 0; list-style: none; font-size: .78rem; color: var(--muted); }
+.breadcrumb li { display: inline-flex; align-items: center; gap: .45rem; }
+.breadcrumb li + li::before { content: '/'; color: var(--line-strong); }
+.breadcrumb a { color: var(--muted); text-decoration: none; transition: color .18s ease; }
+.breadcrumb a:hover, .breadcrumb a:focus-visible { color: var(--cyan); }
+.breadcrumb [aria-current='page'] { color: var(--text); font-weight: 700; }

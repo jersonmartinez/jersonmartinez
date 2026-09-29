@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import { profile } from '../data/portfolio.js';
-const { title, description, canonical = profile.website + '/' } = Astro.props;
+const { title, description, canonical = profile.website + '/', breadcrumb } = Astro.props;
 const absoluteImage = profile.website + '/images/profile.jpg';
 // Item 85: structured data JSON-LD (schema.org/Person) construido solo con datos ya verificados del perfil.
 const personJsonLd = {
@@ -15,6 +15,17 @@ const personJsonLd = {
   jobTitle: 'DevOps Tech Lead',
   description: profile.intro,
   sameAs: [profile.github, profile.linkedin, 'https://www.youtube.com/@DevOpsea', 'https://www.udemy.com/user/side-master/']
+};
+// Item 88: BreadcrumbList JSON-LD opcional en páginas internas (breadcrumb = [[nombre, ruta], ...]).
+const breadcrumbJsonLd = breadcrumb && {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: breadcrumb.map(([name, path], index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name,
+    item: profile.website + path
+  }))
 };
 ---
 <!doctype html>
@@ -51,6 +62,7 @@ const personJsonLd = {
     <meta name="twitter:image:alt" content="Retrato de Jerson Martínez" />
     <title>{title}</title>
     <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+    {breadcrumbJsonLd && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />}
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
