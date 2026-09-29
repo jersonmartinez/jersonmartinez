@@ -1,32 +1,33 @@
-name: Validate profile and automation
+name: Validate Astro portfolio
 
 on:
   pull_request:
     branches: [main]
     paths:
-      - '**.html'
-      - '**.md'
+      - 'src/**'
+      - 'public/**'
+      - 'astro.config.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tools/**'
+      - 'tests/**'
       - 'README.md'
       - 'CNAME'
       - 'robots.txt'
       - 'sitemap.xml'
-      - 'config/**'
-      - 'data/**'
-      - 'src/js/**'
-      - 'tools/**'
-      - 'tests/**'
-      - 'package.json'
       - '.github/workflows/**'
   push:
     branches: [main]
     paths:
-      - 'README.md'
-      - 'config/**'
-      - 'data/**'
-      - 'src/js/**'
+      - 'src/**'
+      - 'public/**'
+      - 'astro.config.mjs'
+      - 'package.json'
+      - 'package-lock.json'
       - 'tools/**'
       - 'tests/**'
-      - 'package.json'
+      - 'README.md'
+      - '.github/workflows/**'
 
 permissions:
   contents: read
@@ -36,34 +37,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4.2.2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.4.0
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-node@v4.4.0
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
-
-      - name: Check JavaScript syntax
-        run: |
-          node --check src/js/update-youtube-sections.js
-          node --check tools/validate-site.js
-          node --check tools/check-links.js
-
-      - name: Run unit tests
-        run: npm test
-
-      - name: Validate site and local links
-        run: |
-          npm run validate
-          npm run links
-
-      - name: Validate YouTube generator offline
-        run: npm run youtube:dry-run
-
-      - name: Validate Markdown
-        run: npx --yes markdownlint-cli2@0.17.2 README.md
-
-      - name: Validate GitHub Actions syntax
-        run: docker run --rm -v "$GITHUB_WORKSPACE:/repo" -w /repo rhysd/actionlint:1.7.7
+      - run: npm ci
+      - run: npm test
+      - run: npm run validate
+      - run: npm run build
+      - run: VALIDATE_BUILD=1 npm run validate
+      - run: npm run links
+      - run: npm run youtube:dry-run
+      - run: npx --yes markdownlint-cli2@0.17.2 README.md
+      - run: docker run --rm -v "$GITHUB_WORKSPACE:/repo" -w /repo rhysd/actionlint:1.7.7 .github/workflows/*.yml

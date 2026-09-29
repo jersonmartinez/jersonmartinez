@@ -1,58 +1,53 @@
-const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const test = require('node:test');
 
 const root = path.resolve(__dirname, '..');
-const pages = ['index.html', 'projects.html', 'experience.html', 'certifications.html'];
 const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
 
-test('todas las páginas exponen metadata y datos estructurados del portfolio', () => {
-  for (const page of pages) {
-    const html = read(page);
-    assert.match(html, /rel="canonical"/);
-    assert.match(html, /property="og:title"/);
-    assert.match(html, /property="og:image"/);
-    assert.match(html, /application\/ld\+json/);
-    assert.match(html, /portfolio\.css\?v=2/);
+test('Astro expone las cuatro rutas y el layout compartido', () => {
+  for (const page of ['src/pages/index.astro', 'src/pages/projects.html.astro', 'src/pages/experience.html.astro', 'src/pages/certifications.html.astro']) {
+    const source = read(page);
+    assert.match(source, /BaseLayout/);
+    assert.match(source, /Jerson Martínez|profile|projects|experience|certifications/);
   }
 });
 
-test('la portada mantiene CTA, procedencia de métricas y especialidades', () => {
-  const html = read('index.html');
-  assert.match(html, /class="hero-proof"/);
-  assert.match(html, /class="stat-band"/);
-  assert.match(html, /Cifras tomadas del CV facilitado/);
-  assert.match(html, /Hablemos de arquitectura/);
+test('la identidad visual tiene logo y favicon concretos', () => {
+  assert.match(read('src/components/SiteHeader.astro'), /brand\/logo\.svg/);
+  assert.match(read('src/layouts/BaseLayout.astro'), /brand\/favicon\.svg/);
+  assert.match(read('public/brand/logo.svg'), /JERSON/);
+  assert.match(read('public/brand/favicon.svg'), /viewBox="0 0 64 64"/);
 });
 
-test('proyectos distingue estados y ejemplos conceptuales', () => {
-  const html = read('projects.html');
-  assert.match(html, /03 \/ AUTOMATION/);
-  assert.match(html, /Proyecto académico documentado/);
-  assert.match(html, /Proyecto descrito en el CV/);
-  assert.match(html, /no representa telemetría en tiempo real/);
-  assert.match(html, /role="tablist"/);
+test('el contenido destaca productos, repositorios, IA y gobernanza', () => {
+  const data = read('src/data/portfolio.js');
+  for (const value of ['Factib', 'Crashell', 'IA + DevOps', 'Governance', 'MCP GitHub Projects', 'MCP Monday Projects', 'Kiro Crew']) assert.match(data, new RegExp(value.replace(/[+]/g, '\\+')));
 });
 
-test('experiencia y credenciales exponen datos agrupados y contextualizados', () => {
-  const experience = read('experience.html');
-  const certifications = read('certifications.html');
-  assert.match(experience, /class="timeline-summary"/);
-  assert.match(experience, /class="timeline-tags"/);
-  assert.match(experience, /resultados reportados/);
-  assert.match(certifications, /100\+ cursos y certificaciones/);
-  assert.match(certifications, /no sustituye la verificación/);
-  assert.match(certifications, /class="credential-meta"/);
+test('la navegación sigue un recorrido ordenado y tiene interacción', () => {
+  const home = read('src/pages/index.astro');
+  const header = read('src/components/SiteHeader.astro');
+  assert.match(home, /01.*Impacto/);
+  assert.match(home, /02.*Proyectos/);
+  assert.match(home, /05.*Contacto/);
+  assert.match(header, /aria-expanded/);
+  assert.match(home, /IntersectionObserver/);
 });
 
-test('la interacción compartida soporta menú, tabs y movimiento reducido', () => {
-  const javascript = read('src/libs/custom/js/portfolio.js');
-  const css = read('src/libs/custom/css/portfolio.css');
-  assert.match(javascript, /aria-expanded/);
-  assert.match(javascript, /event\.key === 'Home'/);
-  assert.match(javascript, /event\.key === 'End'/);
-  assert.match(javascript, /aria-orientation/);
-  assert.match(css, /prefers-reduced-motion/);
-  assert.match(css, /@media \(max-width: 560px\)/);
+test('cursos, canales y credenciales exponen métricas y enlaces verificables', () => {
+  const data = read('src/data/portfolio.js');
+  const courses = read('src/pages/courses.html.astro');
+  const certifications = read('src/pages/certifications.html.astro');
+  assert.match(data, /Más de 77 mil/);
+  assert.match(data, /15K\+/);
+  assert.match(courses, /Mis cursos \(7\)/);
+  assert.match(courses, /Más de 77 mil/);
+  assert.match(data, /Más de 15K suscriptores/);
+  assert.match(certifications, /credential-link/);
+  assert.match(data, /cp\.certmetrics\.com/);
+  assert.match(data, /learn\.microsoft\.com\/api\/credentials/);
+  assert.match(data, /credly\.com\/badges/);
+  assert.match(data, /brands\/openwebinars\.svg/);
 });

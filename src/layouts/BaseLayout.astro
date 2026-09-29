@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import { profile } from '../data/portfolio.js';
+const { title, description, canonical = profile.website + '/' } = Astro.props;
+const absoluteImage = profile.website + '/images/profile.jpg';
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#07111f" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/brand/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={absoluteImage} />
+    <meta property="og:locale" content="es_ES" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <SiteHeader />
+    <main id="contenido"><slot /></main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div><strong>Jerson Martínez</strong><span>DevOps · SRE · Cloud</span></div>
+        <nav aria-label="Enlaces de pie de página">
+          <a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href={`mailto:${profile.email}`}>Email</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

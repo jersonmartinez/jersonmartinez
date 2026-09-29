@@ -1,15 +1,17 @@
-name: Deploy static site
+name: Deploy Astro portfolio
 
 on:
   push:
     branches: [main]
     paths:
-      - '**.html'
       - 'src/**'
+      - 'public/**'
+      - 'astro.config.mjs'
+      - 'package.json'
+      - 'package-lock.json'
       - 'CNAME'
       - 'robots.txt'
       - 'sitemap.xml'
-      - '.nojekyll'
   workflow_dispatch:
 
 concurrency:
@@ -22,26 +24,25 @@ permissions:
   id-token: write
 
 env:
-  NODE_VERSION: 20
+  NODE_VERSION: 22
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4.2.2
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.4.0
+      - uses: actions/checkout@v4.2.2
+      - uses: actions/setup-node@v4.4.0
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Validate before deployment
-        run: node tools/validate-site.js
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3.0.1
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: VALIDATE_BUILD=1 npm run validate
+      - uses: actions/configure-pages@v5.0.0
+      - uses: actions/upload-pages-artifact@v3.0.1
         with:
-          path: .
-
+          path: ./dist
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -49,6 +50,5 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - uses: actions/deploy-pages@v4.0.5
         id: deployment
-        uses: actions/deploy-pages@v4.0.5

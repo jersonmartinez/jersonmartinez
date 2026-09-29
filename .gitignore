@@ -1,2 +1,4 @@
 .kiro/
+dist/
+node_modules/
 link-report.json
