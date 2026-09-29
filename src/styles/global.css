@@ -305,3 +305,21 @@ p { margin: 0; color: var(--muted); }
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
   .button:hover, .site-nav a:hover, .site-nav a.is-current, .profile-social:hover, .profile-social:focus-visible { transform: none !important; }
 }
+
+/* Item 86: pie legal con año dinámico y enlace de vuelta arriba. */
+.footer-legal { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; margin-top: 1.4rem; padding-top: 1.1rem; border-top: 1px solid var(--line); }
+.footer-copy { margin: 0; color: var(--muted); font-size: .78rem; }
+.footer-top { display: inline-flex; align-items: center; gap: .4rem; color: var(--muted); font-size: .78rem; font-weight: 700; text-decoration: none; transition: color .18s ease; }
+.footer-top:hover, .footer-top:focus-visible { color: var(--cyan); }
+@media (max-width: 560px) { .footer-legal { flex-direction: column; align-items: flex-start; } }
+
+/* Item 87: estilos de impresión — quita fondos decorativos, expande enlaces y ahorra tinta. */
+@media print {
+  body { color: #000; background: #fff; }
+  body::before, body::after { display: none !important; }
+  .site-header, .nav-toggle, .skip-link, .footer-top, .filter-bar, .hero-actions, .contact-actions { display: none !important; }
+  a { color: #000; text-decoration: underline; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .75em; word-break: break-all; }
+  .card, .timeline-card, .skills-panel { border: 1px solid #999; background: #fff; box-shadow: none; }
+  .section { padding-block: 1rem; }
+}

@@ -4,6 +4,18 @@ import SiteHeader from '../components/SiteHeader.astro';
 import { profile } from '../data/portfolio.js';
 const { title, description, canonical = profile.website + '/' } = Astro.props;
 const absoluteImage = profile.website + '/images/profile.jpg';
+// Item 85: structured data JSON-LD (schema.org/Person) construido solo con datos ya verificados del perfil.
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  url: profile.website,
+  image: absoluteImage,
+  email: `mailto:${profile.email}`,
+  jobTitle: 'DevOps Tech Lead',
+  description: profile.intro,
+  sameAs: [profile.github, profile.linkedin, 'https://www.youtube.com/@DevOpsea', 'https://www.udemy.com/user/side-master/']
+};
 ---
 <!doctype html>
 <html lang="es">
@@ -13,25 +25,37 @@ const absoluteImage = profile.website + '/images/profile.jpg';
     <meta name="description" content={description} />
     <meta name="theme-color" content="#07111f" />
     <meta name="color-scheme" content="dark" />
+    <meta name="author" content="Jerson Martínez" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="generator" content="Astro" />
     <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/brand/favicon.svg" />
     <link rel="canonical" href={canonical} />
+    <link rel="preconnect" href="https://cdn.simpleicons.org" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Jerson Martínez" />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={absoluteImage} />
+    <meta property="og:image:alt" content="Retrato de Jerson Martínez" />
+    <meta property="og:image:width" content="1568" />
+    <meta property="og:image:height" content="1568" />
     <meta property="og:locale" content="es_ES" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteImage} />
+    <meta name="twitter:image:alt" content="Retrato de Jerson Martínez" />
     <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <SiteHeader />
-    <main id="contenido"><slot /></main>
+    <main id="contenido" tabindex="-1"><slot /></main>
     <footer class="site-footer">
       <div class="container footer-inner">
         <div><strong>Jerson Martínez</strong><span>Cloud · automatización · gobernanza</span></div>
@@ -46,6 +70,10 @@ const absoluteImage = profile.website + '/images/profile.jpg';
           <a href={profile.linkedin} target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="sr-only">LinkedIn</span></a>
           <a href={`mailto:${profile.email}`} aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i><span class="sr-only">Email</span></a>
         </nav>
+      </div>
+      <div class="container footer-legal">
+        <p class="footer-copy">© {new Date().getFullYear()} Jerson Martínez. Todos los derechos reservados.</p>
+        <a class="footer-top" href="#contenido"><i class="fas fa-arrow-up" aria-hidden="true"></i> Volver arriba</a>
       </div>
     </footer>
   </body>
