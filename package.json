@@ -1,10 +1,13 @@
 {
-  "name": "jersonmartinez-profile",
+  "name": "jersonmartinez-portfolio",
   "private": true,
-  "version": "1.0.0",
-  "description": "Static portfolio and profile README automation",
+  "version": "2.0.0",
+  "description": "Astro portfolio for Jerson Martínez — DevOps Engineer, SRE, DevSecOps and Cloud Architect.",
   "type": "commonjs",
   "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
     "test": "node --test",
     "validate": "node tools/validate-site.js",
     "links": "node tools/check-links.js",
@@ -13,5 +16,8 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "astro": "5.13.5"
   }
 }

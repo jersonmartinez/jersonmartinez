@@ -14,7 +14,8 @@
 I’m a **DevOps Engineer with 8+ years of experience** in automation, cloud infrastructure (**AWS**, **Azure**, **GCP**) and full-stack development. I help teams adopt DevOps practices and deliver scalable, secure and maintainable solutions with **Terraform**, **GitHub Actions**, **Docker** and **Kubernetes**.
 
 - 🌐 [Personal website](https://jersonmartinez.com/)
-- 🎓 [Udemy profile](https://www.udemy.com/user/side-master/) — more than 90k students
+- 🎓 [Udemy profile](https://www.udemy.com/user/side-master/) — more than 77k students
+- 🎓 **Cursos:** más de 77 mil estudiantes en 7 cursos de Udemy. Consulta el [catálogo de cursos](https://jersonmartinez.com/courses.html).
 - ✍️ [OpenWebinars](https://openwebinars.net/@antoniomorenosm/) — articles about cloud, Big Data and DevOps
 - 📰 [Crashell](https://www.crashell.com/estudio) — technical publications
 
@@ -70,6 +71,10 @@ I’m a **DevOps Engineer with 8+ years of experience** in automation, cloud inf
     </li>
   </ul>
 </details>
+
+## Website architecture
+
+The personal site is built with [Astro](https://astro.build/) and deployed as a static build. Astro keeps the portfolio fast and indexable while allowing focused interactions such as the ordered journey navigation, mobile menu and project filters. Source pages live in `src/pages/`, shared UI in `src/components/`, and verified profile/project data in `src/data/portfolio.js`.
 
 ## Automation
 
