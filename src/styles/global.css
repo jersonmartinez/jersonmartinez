@@ -170,7 +170,7 @@ p { margin: 0; color: var(--muted); }
 .timeline-item:first-child .timeline-dot { background: var(--lime); box-shadow: 0 0 0 1px var(--lime), 0 0 0 .3rem rgba(196,242,105,.12); }
 .timeline-card { padding: 1.35rem 1.5rem; }
 .timeline-card header { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: .7rem; }
-.timeline-card h2 { font-size: 1.25rem; letter-spacing: -.03em; }
+.timeline-card h2, .timeline-card h3 { font-size: 1.25rem; letter-spacing: -.03em; }
 .timeline-card time { color: var(--cyan); font-family: 'DM Mono', monospace; font-size: .7rem; text-align: right; white-space: nowrap; }
 .company { display: block; margin-top: .3rem; color: var(--lime); font-size: .83rem; font-weight: 800; }
 
@@ -178,7 +178,7 @@ p { margin: 0; color: var(--muted); }
 .cert-card { min-height: 21rem; }
 .cert-card-head { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.5rem; }
 .cert-card-head img { width: 2.2rem; height: 2.2rem; object-fit: contain; }
-.cert-card h2 { font-size: 1.45rem; letter-spacing: -.035em; }
+.cert-card h2, .cert-card h3 { font-size: 1.45rem; letter-spacing: -.035em; }
 .cert-list { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
 .cert-list li { color: var(--muted); font-size: .86rem; }
 .cert-list li::before { margin-right: .5rem; color: var(--cyan); content: '↳'; }
@@ -193,7 +193,7 @@ p { margin: 0; color: var(--muted); }
 .repo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .repo-card[data-hidden='true'] { display: none; }
 .repo-card[hidden] { display: none !important; }
-.repo-card h2 { font-size: 1.45rem; letter-spacing: -.035em; }
+.repo-card h2, .repo-card h3 { font-size: 1.45rem; letter-spacing: -.035em; }
 .repo-kind { color: var(--lime); font-family: 'DM Mono', monospace; font-size: .68rem; }
 
 .contact-panel { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 2rem; border: 1px solid var(--line-strong); border-radius: var(--radius); background: linear-gradient(120deg, rgba(103,232,249,.1), rgba(196,242,105,.05)); }
@@ -234,7 +234,7 @@ p { margin: 0; color: var(--muted); }
 .course-summary span { color: var(--muted); font-size: .8rem; }
 .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 1rem; align-items: start; }
 .course-card { display: flex; flex-direction: column; min-height: 13rem; }
-.course-card h2 { font-size: 1.25rem; letter-spacing: -.035em; }
+.course-card h2, .course-card h3 { font-size: 1.25rem; letter-spacing: -.035em; }
 .course-card p { margin-top: .8rem; }
 .course-card .card-link { margin-top: auto; }
 .credential-link { color: inherit; text-decoration: none; }
