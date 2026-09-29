@@ -181,7 +181,7 @@ p { margin: 0; color: var(--muted); }
 .page-hero h1 { max-width: 14ch; margin-bottom: 1.3rem; }
 .page-hero-meta { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.8rem; }
 .page-hero-meta span { padding: .45rem .65rem; border: 1px solid var(--line); border-radius: .5rem; color: var(--muted); font-family: 'DM Mono', monospace; font-size: .68rem; }
-.timeline { position: relative; display: grid; gap: .85rem; }
+.timeline { position: relative; display: grid; gap: .85rem; margin: 0; padding: 0; list-style: none; }
 .timeline::before { position: absolute; top: .7rem; bottom: .7rem; left: .52rem; width: 1px; content: ''; background: var(--line-strong); }
 .timeline-item { position: relative; display: grid; grid-template-columns: 1.1rem 1fr; gap: 1.2rem; }
 .timeline-dot { z-index: 1; width: 1.1rem; height: 1.1rem; margin-top: 1.55rem; border: 3px solid var(--ink); border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 1px var(--cyan); }
@@ -332,3 +332,7 @@ p { margin: 0; color: var(--muted); }
 .breadcrumb a { color: var(--muted); text-decoration: none; transition: color .18s ease; }
 .breadcrumb a:hover, .breadcrumb a:focus-visible { color: var(--cyan); }
 .breadcrumb [aria-current='page'] { color: var(--text); font-weight: 700; }
+
+/* Item 99: enlace de pie de la página actual. */
+.footer-links a.is-current { color: var(--cyan); font-weight: 700; }
+.footer-links a { transition: color .18s ease; }
