@@ -11,28 +11,51 @@ permissions:
 jobs:
   quality:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - slug: home
+            route: /
+          - slug: projects
+            route: /projects.html/
+          - slug: courses
+            route: /courses.html/
+          - slug: certifications
+            route: /certifications.html/
+          - slug: experience
+            route: /experience.html/
     steps:
       - name: Check out repository
         uses: actions/checkout@v4.2.2
-      - name: Start local static server
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Astro site
+        run: npm run build
+      - name: Start built static server
         run: |
-          python3 -m http.server 8765 --bind 127.0.0.1 > server.log 2>&1 &
-          echo $! > server.pid
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory dist > server-${{ matrix.slug }}.log 2>&1 &
+          echo $! > server-${{ matrix.slug }}.pid
           sleep 2
       - name: Run Lighthouse
-        run: npx --yes lighthouse@12.8.2 http://127.0.0.1:8765/ --output=json --output-path=./lighthouse-report.json --chrome-flags="--headless --no-sandbox"
+        run: npx --yes lighthouse@12.8.2 "http://127.0.0.1:8765${{ matrix.route }}" --output=json --output-path="./lighthouse-${{ matrix.slug }}.json" --chrome-flags="--headless --no-sandbox"
       - name: Run accessibility audit
-        run: npx --yes pa11y@8.0.0 http://127.0.0.1:8765/
+        run: npx --yes pa11y@8.0.0 "http://127.0.0.1:8765${{ matrix.route }}"
       - name: Upload quality reports
         if: always()
         uses: actions/upload-artifact@v4.6.2
         with:
-          name: site-quality-reports
+          name: site-quality-${{ matrix.slug }}
           path: |
-            lighthouse-report.json
-            server.log
+            lighthouse-${{ matrix.slug }}.json
+            server-${{ matrix.slug }}.log
           retention-days: 14
       - name: Stop local static server
         if: always()
-        run: kill "$(cat server.pid)" || true
+        run: kill "$(cat server-${{ matrix.slug }}.pid)" || true

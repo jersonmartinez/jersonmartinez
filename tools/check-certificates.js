@@ -3,7 +3,24 @@ const path = require('node:path');
 const tls = require('node:tls');
 
 const root = path.resolve(__dirname, '..');
-const sources = ['README.md', 'index.html', 'projects.html', 'experience.html', 'certifications.html'];
+const buildSources = [
+  'dist/index.html',
+  'dist/projects.html/index.html',
+  'dist/experience.html/index.html',
+  'dist/certifications.html/index.html',
+  'dist/courses.html/index.html'
+];
+const sourceFallback = [
+  'README.md',
+  'src/data/portfolio.js',
+  'src/layouts/BaseLayout.astro',
+  'src/pages/index.astro',
+  'src/pages/projects.html.astro',
+  'src/pages/experience.html.astro',
+  'src/pages/certifications.html.astro',
+  'src/pages/courses.html.astro'
+];
+const sources = buildSources.every((file) => fs.existsSync(path.join(root, file))) ? buildSources : sourceFallback;
 const urls = new Set();
 const pattern = /https:\/\/[^\s"'<>)]*/gi;
 for (const source of sources) {

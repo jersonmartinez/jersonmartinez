@@ -1,17 +1,17 @@
-name: Audit TLS certificates
+name: Production smoke
 
 on:
   schedule:
-    - cron: '30 7 * * 1'
+    - cron: '15 8 * * 1-5'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  certificates:
+  smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - name: Check out repository
         uses: actions/checkout@v4.2.2
@@ -22,9 +22,5 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Build Astro site
-        run: npm run build
-      - name: Check certificate expiry
-        env:
-          TLS_MIN_DAYS: 30
-        run: node tools/check-certificates.js
+      - name: Check production site
+        run: npm run production:smoke

@@ -119,3 +119,17 @@ en [`docs/IMPROVEMENTS-RECORD.md`](./IMPROVEMENTS-RECORD.md).
 - `tests/improvements-record.test.js` verifica que el documento esté presente,
   declare un total coherente (>=100), no contradiga los valores protegidos y que
   cada fila cite el SHA de su commit.
+
+## Mantenimiento post-merge y auditorías reales
+
+- `npm run production:smoke` comprueba el dominio canónico, la redirección desde el dominio raíz, las cinco rutas públicas, la marca, el contenido principal y el `canonical` generado en producción. Acepta `PRODUCTION_BASE_URL` y `PRODUCTION_APEX_URL` para validar otro entorno.
+- `.github/workflows/production-smoke.yml` ejecuta ese smoke de lunes a viernes y también permite lanzarlo manualmente.
+- `site-quality.yml` instala dependencias, construye `dist` y ejecuta Lighthouse y pa11y sobre las cinco rutas generadas por Astro; no sirve la raíz del repositorio.
+- `certificates.yml` construye `dist` antes de que `tools/check-certificates.js` extraiga hosts TLS. El checker usa HTML generado y, si no existe build, usa las fuentes Astro y los datos del portfolio como fallback.
+- Los enlaces oficiales de AWS, Microsoft Learn y Credly se muestran como `Verificar`. Los enlaces de GitHub que apuntan al perfil general se muestran como `Ver perfil`; no representan un badge oficial.
+- El manifest habilita instalación básica, pero no se anuncia soporte offline porque el portfolio todavía no incluye service worker.
+- Las páginas externas pueden devolver `403` o bloquear `HEAD` (por ejemplo Udemy). Eso no invalida automáticamente un enlace; se verifica mediante navegación normal o revisión manual antes de sustituirlo.
+
+## Diseño de verificación de credenciales
+
+`certifications.html.astro` incluye una guía visual de tres pasos: elegir el emisor, abrir la acción etiquetada y confirmar el resultado en la fuente correspondiente. La guía usa el mismo sistema de tarjetas e iconos del portfolio y se adapta a una columna en móvil.

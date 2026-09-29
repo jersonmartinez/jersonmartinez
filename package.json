@@ -12,7 +12,8 @@
     "validate": "node tools/validate-site.js",
     "links": "node tools/check-links.js",
     "content:health": "node tools/check-content-health.js",
-    "youtube:dry-run": "node src/js/update-youtube-sections.js --dry-run --offline"
+    "youtube:dry-run": "node src/js/update-youtube-sections.js --dry-run --offline",
+    "production:smoke": "node tools/check-production.js"
   },
   "engines": {
     "node": ">=20"

@@ -342,3 +342,14 @@ section[id], article[id] { scroll-margin-top: 84px; }
 /* Item 123: resalta brevemente el objetivo de un ancla (#seccion) para orientar al usuario. */
 :target { scroll-margin-top: 84px; }
 .repo-card:target { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: var(--radius); }
+
+/* Post-merge design: makes credential verification a visible, scannable journey. */
+.verification-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.verification-step { min-height: 15rem; }
+.verification-step-icon { display: inline-grid; width: 2.35rem; height: 2.35rem; place-items: center; border: 1px solid rgba(103,232,249,.4); border-radius: .7rem; color: var(--cyan); background: rgba(103,232,249,.08); }
+.verification-step .card-label { min-height: auto; margin: 1.2rem 0 .65rem; }
+.verification-step h3 { margin-bottom: .55rem; }
+.verification-step p { margin: 0; color: var(--muted); font-size: .88rem; }
+.verification-step strong { color: var(--text); }
+@media (max-width: 900px) { .verification-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 680px) { .verification-steps { grid-template-columns: 1fr; } }
