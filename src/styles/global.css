@@ -336,3 +336,9 @@ p { margin: 0; color: var(--muted); }
 /* Item 99: enlace de pie de la página actual. */
 .footer-links a.is-current { color: var(--cyan); font-weight: 700; }
 .footer-links a { transition: color .18s ease; }
+
+/* Item 122: compensa el salto de anclas para que el encabezado no quede pegado al borde superior. */
+section[id], article[id] { scroll-margin-top: 84px; }
+/* Item 123: resalta brevemente el objetivo de un ancla (#seccion) para orientar al usuario. */
+:target { scroll-margin-top: 84px; }
+.repo-card:target { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: var(--radius); }
