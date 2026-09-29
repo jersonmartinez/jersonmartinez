@@ -105,3 +105,17 @@ Todo el contenido nuevo reutiliza datos ya verificados; no se añaden cifras, pr
 - **UX**: hoja de impresión (`@media print`), pie con año dinámico y "Volver arriba", enlace de pie de la página actual, `scroll-margin-top` para anclas, resaltado `:target` y `<noscript>` que aclara el filtro de proyectos.
 
 El test `tests/portfolio.test.js` cubre la presencia de estos artefactos (robots/sitemap/manifest/humans y el JSON-LD) además de los valores protegidos.
+
+## Registro auditable de mejoras
+
+El detalle numerado de todas las mejoras aplicadas al portafolio (más de 100,
+por categoría, con su archivo/área afectada y el commit que las introdujo) vive
+en [`docs/IMPROVEMENTS-RECORD.md`](./IMPROVEMENTS-RECORD.md).
+
+- La fuente de verdad es `tools/gen-improvements-record.js` (array
+  `IMPROVEMENTS`); el documento se regenera con `node tools/gen-improvements-record.js`.
+- El generador valida que no haya referencias de audit duplicadas y que cada
+  archivo atribuido exista en el árbol.
+- `tests/improvements-record.test.js` verifica que el documento esté presente,
+  declare un total coherente (>=100), no contradiga los valores protegidos y que
+  cada fila cite el SHA de su commit.
