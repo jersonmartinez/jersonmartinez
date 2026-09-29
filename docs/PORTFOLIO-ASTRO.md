@@ -14,6 +14,50 @@ The portfolio uses **Astro 5** with static output. This fits a profile site host
 
 The `.html` suffix is intentionally preserved for existing links and bookmarks while the implementation is under `src/pages/*.astro`.
 
+## Mapa de rutas desplegadas y datos que las alimentan (mantenimiento)
+
+Cada página se compila desde un archivo en `src/pages/` y consume exports concretos
+de `src/data/portfolio.js` (fuente única de verdad). Para cambiar contenido, edita
+`portfolio.js`; para cambiar estructura/marcado, edita el `.astro` correspondiente.
+
+| Ruta desplegada        | Archivo fuente                            | Exports de `portfolio.js` que consume |
+| ---------------------- | ----------------------------------------- | ------------------------------------- |
+| `/`                    | `src/pages/index.astro`                   | `profile`, `projects` (destacados: `featured`), `teaching`, `certifications`, `skills`, `projectSlug` |
+| `/projects.html`       | `src/pages/projects.html.astro`           | `projects`, `profile`, `projectSlug` |
+| `/courses.html`        | `src/pages/courses.html.astro`            | `courses`, `profile`, `youtubeChannels` |
+| `/certifications.html` | `src/pages/certifications.html.astro`     | `certifications`, `cvLinks`, `profile` |
+| `/experience.html`     | `src/pages/experience.html.astro`         | `experience`, `profile`, `experienceLede` |
+
+Componentes compartidos: `src/layouts/BaseLayout.astro` (envoltura común, usa
+`profile`), `src/components/SiteHeader.astro` (navegación), `SkillsExplorer.astro`
+(render de `skills` en el home) y `LogoCloud.astro` (nube de logos del home).
+
+Notas de derivación (evitan cifras divergentes):
+- `profile.facts[0]` (años de experiencia) se deriva de `profile.yearsExperience`.
+- Las métricas de suscriptores de YouTube en `teaching` se derivan de `youtubeChannels`.
+
+## Convención de nombres de rutas con `.html.astro` (item 82)
+
+Las páginas internas usan el patrón de nombre `nombre.html.astro`, que Astro compila
+a la ruta `/nombre.html`:
+
+| Archivo en `src/pages/`      | Ruta generada          |
+| ---------------------------- | ---------------------- |
+| `index.astro`                | `/`                    |
+| `projects.html.astro`        | `/projects.html`       |
+| `courses.html.astro`         | `/courses.html`        |
+| `certifications.html.astro`  | `/certifications.html` |
+| `experience.html.astro`      | `/experience.html`     |
+
+**Por qué el sufijo `.html`:** el sitio se publicó originalmente como HTML estático
+(`projects.html`, etc.). Conservar el sufijo mantiene vivos los enlaces externos,
+marcadores y resultados indexados por buscadores; quitarlo rompería esas URLs.
+
+**Regla al añadir una página nueva:** si debe conservar una URL con `.html`, nómbrala
+`nueva.html.astro` (no `nueva.astro`, que generaría `/nueva`). Enlázala internamente
+como `/nueva.html`. El `SiteHeader.astro` normaliza rutas con y sin `.html` y barra
+final, de modo que el estado activo del menú funciona en ambas formas.
+
 ## Brand and icon system
 
 - `public/brand/logo.svg` is the simplified horizontal **Jerson + terminal dot** wordmark; the isotipo was removed from the header.

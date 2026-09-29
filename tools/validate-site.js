@@ -18,7 +18,7 @@ function validateSources() {
   }
   for (const file of ['public/brand/logo.svg', 'public/brand/favicon.svg', 'public/images/profile.jpg', 'public/brands/aws.svg', 'public/brands/azure.svg', 'public/brands/github.png', 'public/brands/openwebinars.svg']) if (!exists(file)) fail(`Falta el asset ${file}.`);
   const data = read('src/data/portfolio.js');
-  for (const value of ['Factib', 'Crashell', 'mcp-github-projects', 'mcp-monday-projects', 'kiro-crew', 'InfraQuiz', 'DevOpsea', 'Side Master', 'Más de 77 mil', '15K+', '+10', 'Cloud Providers', '60+', 'Google Cloud Platform (GCP)', 'courses']) {
+  for (const value of ['Factib', 'Crashell', 'mcp-github-projects', 'mcp-monday-projects', 'kiro-crew', 'InfraQuiz', 'DevOpsea', 'Side Master', 'Más de 77 mil', 'Más de 15K', '≈ 4.1K', '+10', 'Cloud Providers', '60+', 'Google Cloud Platform (GCP)', 'courses']) {
     if (!data.includes(value)) fail(`Falta contenido verificable: ${value}.`);
   }
   const homePage = read('src/pages/index.astro');
@@ -36,6 +36,26 @@ function validateDist() {
   const home = read('dist/index.html');
   if (!home.includes('Jerson Martínez') || home.includes('Jerson / DevOps')) fail('El build conserva el branding antiguo.');
   if (!home.includes('/brand/favicon.svg')) fail('El build no incluye el favicon.');
+
+  // Validadores estructurales del HTML compilado (items 45, 83, 84).
+  const builtRoutes = ['index.html', 'projects.html/index.html', 'experience.html/index.html', 'certifications.html/index.html', 'courses.html/index.html'];
+  for (const route of builtRoutes) {
+    const html = read(`dist/${route}`);
+    // Item 45: exactamente un <h1> y jerarquía de headings sin saltos.
+    const h1s = (html.match(/<h1[\s>]/gi) || []).length;
+    if (h1s !== 1) fail(`dist/${route}: se esperaba 1 <h1>, hay ${h1s}.`);
+    const seq = [...html.matchAll(/<(h[1-6])[\s>]/gi)].map((m) => Number(m[1][1]));
+    let prev = 0;
+    for (const level of seq) { if (prev !== 0 && level > prev + 1) fail(`dist/${route}: salto de jerarquía h${prev} → h${level}.`); prev = level; }
+    // Item 84: toda <img> con atributo alt.
+    const imgsNoAlt = (html.match(/<img\b[^>]*>/gi) || []).filter((img) => !/\salt\s*=/.test(img));
+    if (imgsNoAlt.length) fail(`dist/${route}: ${imgsNoAlt.length} <img> sin atributo alt.`);
+  }
+  // Item 83: anclas internas del home existen como id.
+  const homeIds = new Set([...home.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
+  for (const anchor of ['impacto', 'skills', 'proyectos', 'enseñanza', 'credenciales', 'contacto']) {
+    if (!homeIds.has(anchor)) fail(`El home no expone el id de ancla #${anchor}.`);
+  }
 }
 
 function validateStaticFiles() {

@@ -1,3 +1,16 @@
+// =============================================================================
+// FUENTE ÚNICA DE VERDAD DEL PORTFOLIO
+// -----------------------------------------------------------------------------
+// VALORES PROTEGIDOS — CONFIRMADOS POR EL USUARIO. NO EDITAR NI INVENTAR.
+// Copiar exactos; cualquier cambio de estas cifras es una regresión de contenido
+// y el test tests/portfolio.test.js ("valores protegidos") lo bloqueará:
+//   • Udemy:       'Más de 77 mil estudiantes'
+//   • DevOpsea:    'Más de 15K suscriptores'
+//   • Side Master: '≈ 4.1K'
+// Solo se permite contenido ya integrado del CV ES/EN y del perfil público de
+// GitHub. No añadir proyectos, cifras ni enlaces sin verificar.
+// Mapa de rutas desplegadas y qué exporta consume cada una: docs/PORTFOLIO-ASTRO.md.
+// =============================================================================
 export const profile = {
   name: 'Jerson Martínez',
   location: 'Latinoamérica · GMT-6',
