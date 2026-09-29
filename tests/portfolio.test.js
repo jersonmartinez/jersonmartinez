@@ -98,3 +98,21 @@ test('SEO/PWA: robots, sitemap, manifest, humans y JSON-LD existen', () => {
   assert.match(layout, /schema\.org/);
   assert.match(layout, /rel="manifest"/);
 });
+
+
+test('la verificación de credenciales distingue emisor oficial y perfil relacionado', () => {
+  const page = read('src/pages/certifications.html.astro');
+  assert.match(page, /verification-steps/);
+  assert.match(page, /credentialAction/);
+  assert.match(page, /Ver perfil/);
+  assert.match(page, /Comprueba cada credencial en su fuente/);
+});
+
+test('el smoke de producción conserva las cinco rutas y el dominio canónico', () => {
+  const smoke = read('tools/check-production.js');
+  assert.match(smoke, /www\.jersonmartinez\.com/);
+  for (const route of ['/projects.html/', '/courses.html/', '/certifications.html/', '/experience.html/']) {
+    assert.match(smoke, new RegExp(route.replace(/[/.]/g, '\\$&')));
+  }
+  assert.match(smoke, /canonical/);
+});
