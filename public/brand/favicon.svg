@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Jerson">
   <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#67e8f9"/><stop offset="1" stop-color="#c4f269"/></linearGradient></defs>
   <rect width="64" height="64" rx="18" fill="#07111f"/>
   <rect x="5" y="5" width="54" height="54" rx="15" fill="#10243b" stroke="#67e8f9" stroke-width="2"/>
-  <text x="8" y="44" fill="url(#g)" font-family="Arial,sans-serif" font-size="28" font-weight="900" letter-spacing="-2">JM</text>
-  <circle cx="16" cy="18" r="3" fill="#c4f269"/><circle cx="48" cy="18" r="3" fill="#67e8f9"/>
+  <path d="M20 17v22c0 6 3 9 9 9 5 0 8-3 8-9V17" fill="none" stroke="#f3f7fb" stroke-linecap="round" stroke-width="6"/>
+  <circle cx="47" cy="46" r="6" fill="url(#g)"/>
 </svg>

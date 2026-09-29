@@ -1,33 +1,33 @@
 ---
 const navItems = [
-  ['Inicio', '/', 'home'],
-  ['Impacto', '/#impacto', 'impacto'],
-  ['Proyectos', '/projects.html', 'proyectos'],
-  ['Cursos', '/courses.html', 'cursos'],
-  ['Credenciales', '/certifications.html', 'credenciales'],
-  ['Trayectoria', '/experience.html', 'trayectoria']
+  ['Inicio', '/', 'home', 'fa-home'],
+  ['Impacto', '/#impacto', 'impacto', 'fa-chart-line'],
+  ['Proyectos', '/projects.html', 'proyectos', 'fa-project-diagram'],
+  ['Cursos', '/courses.html', 'cursos', 'fa-graduation-cap'],
+  ['Credenciales', '/certifications.html', 'credenciales', 'fa-certificate'],
+  ['Trayectoria', '/experience.html', 'trayectoria', 'fa-route']
 ];
 const pathname = Astro.url.pathname;
 ---
 <header class="site-header">
   <div class="header-inner container">
     <a class="brand" href="/" aria-label="Jerson Martínez, inicio">
-      <img src="/brand/logo.svg" width="280" height="64" alt="Jerson Martínez" />
+      <img src="/brand/logo.svg" width="230" height="56" alt="Jerson Martínez" />
     </a>
     <button class="nav-toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Abrir menú">
       <span></span><span></span><span></span>
     </button>
     <nav class="site-nav" id="site-nav" data-site-nav aria-label="Navegación principal">
-      {navItems.map(([label, href, key], index) => <a href={href} data-nav-key={key} class={pathname === href ? 'is-current' : ''}><span>{String(index + 1).padStart(2, '0')}</span>{label}</a>)}
-      <a class="nav-contact" href="mailto:jersonmartinezsm@gmail.com">Hablemos <span aria-hidden="true">↗</span></a>
+      {navItems.map(([label, href, key, icon]) => <a href={href} data-nav-key={key} class={pathname === href ? 'is-current' : ''}><i class={`fas ${icon}`} aria-hidden="true"></i><span class="nav-label">{label}</span></a>)}
+      <a class="nav-contact" href="mailto:jersonmartinezsm@gmail.com"><i class="fas fa-paper-plane" aria-hidden="true"></i><span>Hablemos</span></a>
     </nav>
   </div>
 </header>
 <script>
   const toggle = document.querySelector('[data-nav-toggle]');
   const nav = document.querySelector('[data-site-nav]');
-  const close = () => { nav?.classList.remove('is-open'); toggle?.setAttribute('aria-expanded', 'false'); };
-  toggle?.addEventListener('click', () => { const open = nav?.classList.toggle('is-open') ?? false; toggle.setAttribute('aria-expanded', String(open)); });
+  const close = () => { nav?.classList.remove('is-open'); toggle?.setAttribute('aria-expanded', 'false'); toggle?.setAttribute('aria-label', 'Abrir menú'); };
+  toggle?.addEventListener('click', () => { const open = nav?.classList.toggle('is-open') ?? false; toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú'); });
   nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', close));
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });
 </script>

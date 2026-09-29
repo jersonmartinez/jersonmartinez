@@ -30,11 +30,11 @@ const absoluteImage = profile.website + '/images/profile.jpg';
     <main id="contenido"><slot /></main>
     <footer class="site-footer">
       <div class="container footer-inner">
-        <div><strong>Jerson Martínez</strong><span>DevOps · SRE · Cloud</span></div>
+        <div><strong>Jerson Martínez</strong><span>Cloud · automatización · gobernanza</span></div>
         <nav aria-label="Enlaces de pie de página">
-          <a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href={`mailto:${profile.email}`}>Email</a>
+          <a href={profile.github} target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span></a>
+          <a href={profile.linkedin} target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="sr-only">LinkedIn</span></a>
+          <a href={`mailto:${profile.email}`} aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i><span class="sr-only">Email</span></a>
         </nav>
       </div>
     </footer>

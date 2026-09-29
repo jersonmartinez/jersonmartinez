@@ -18,9 +18,11 @@ function validateSources() {
   }
   for (const file of ['public/brand/logo.svg', 'public/brand/favicon.svg', 'public/images/profile.jpg', 'public/brands/aws.svg', 'public/brands/azure.svg', 'public/brands/github.png', 'public/brands/openwebinars.svg']) if (!exists(file)) fail(`Falta el asset ${file}.`);
   const data = read('src/data/portfolio.js');
-  for (const value of ['Factib', 'Crashell', 'mcp-github-projects', 'mcp-monday-projects', 'kiro-crew', 'InfraQuiz', 'DevOpsea', 'Side Master', 'Más de 77 mil', '15K+', 'courses']) {
+  for (const value of ['Factib', 'Crashell', 'mcp-github-projects', 'mcp-monday-projects', 'kiro-crew', 'InfraQuiz', 'DevOpsea', 'Side Master', 'Más de 77 mil', '15K+', '+10', 'Cloud Providers', '60+', 'Google Cloud Platform (GCP)', 'courses']) {
     if (!data.includes(value)) fail(`Falta contenido verificable: ${value}.`);
   }
+  const homePage = read('src/pages/index.astro');
+  if (!homePage.includes('SkillsExplorer') || !homePage.includes('fa-paper-plane') || !homePage.includes('profile-social')) fail('La portada perdió la navegación de skills o los iconos principales.');
   const projectsPage = read('src/pages/projects.html.astro');
   if (!projectsPage.includes('no aparece como repositorio público')) fail('Factib debe conservar su contexto de disponibilidad pública.');
 }
