@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import { profile } from '../data/portfolio.js';
-const { title, description, canonical = profile.website + '/', breadcrumb } = Astro.props;
+const { title, description, canonical = profile.website + '/', breadcrumb, preloadImage } = Astro.props;
 const absoluteImage = profile.website + '/images/profile.jpg';
 // Item 85: structured data JSON-LD (schema.org/Person) construido solo con datos ya verificados del perfil.
 const personJsonLd = {
@@ -61,6 +61,7 @@ const here = Astro.url.pathname.replace(/\/$/, '') || '/';
     <link rel="canonical" href={canonical} />
     <link rel="preconnect" href="https://cdn.simpleicons.org" crossorigin />
     <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Jerson Martínez" />
     <meta property="og:url" content={canonical} />
