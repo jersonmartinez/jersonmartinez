@@ -1,6 +1,5 @@
 export const profile = {
   name: 'Jerson Martínez',
-  role: 'DevOps Engineer · SRE · DevSecOps · Cloud Architect',
   location: 'Latinoamérica · GMT-6',
   email: 'jersonmartinezsm@gmail.com',
   website: 'https://www.jersonmartinez.com',
@@ -8,12 +7,28 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/jersonmartinezsm/',
   intro: 'Diseño plataformas cloud confiables, automatizo operaciones y convierto la gobernanza en una ventaja para los equipos.',
   facts: [
-    ['9+', 'años de experiencia'],
-    ['3', 'nubes principales'],
+    ['+10', 'años de experiencia'],
+    ['3', 'Cloud Providers'],
     ['100+', 'cursos y certificaciones'],
     ['60+', 'artículos publicados']
   ]
 };
+
+export const skills = [
+  { name: 'Infraestructura', icon: 'fa-server', items: ['Infraestructura híbrida (on-premises + cloud)', 'Windows Server', 'Linux', 'Microsoft Entra ID', 'Active Directory', 'IIS', 'DNS', 'DHCP', 'LDAP', 'NTP', 'Capacity planning', 'Right-sizing', 'BCP / DRP', 'High availability', 'Failover', 'Multi-AZ / Multi-region'] },
+  { name: 'Cloud', icon: 'fa-cloud', items: ['AWS', 'Microsoft Azure', 'Google Cloud Platform (GCP)', 'AWS MAP', 'Landing Zones', 'Cloud Governance', 'Infrastructure Modernization'] },
+  { name: 'Virtualización', icon: 'fa-layer-group', items: ['VMware vSphere', 'Hyper-V', 'KVM', 'VirtualBox', 'Vagrant'] },
+  { name: 'Contenedores', icon: 'fa-cubes', items: ['Docker', 'Podman', 'WSLC', 'Kubernetes'] },
+  { name: 'IaC', icon: 'fa-code-branch', items: ['Terraform', 'Ansible', 'Pulumi', 'CloudFormation', 'AWS SAM'] },
+  { name: 'DevOps & CI/CD', icon: 'fa-code-commit', items: ['Git', 'GitHub Actions', 'Azure DevOps', 'Repos', 'Pipelines', 'Boards', 'Artifacts', 'Environments', 'Rundeck'] },
+  { name: 'Observabilidad', icon: 'fa-chart-line', items: ['Grafana', 'Prometheus', 'ELK Stack', 'Filebeat', 'Telegraf', 'Datadog', 'Zabbix', 'SolarWinds', 'Nagios'] },
+  { name: 'Storage & Backup', icon: 'fa-database', items: ['AWS EBS', 'AWS FSx', 'Azure Files', 'AWS Backup', 'Azure Backup', 'Snapshots', 'Amazon Machine Images (AMI)'] },
+  { name: 'Seguridad', icon: 'fa-shield-alt', items: ['ITIL', 'ISO 27001', 'DevSecOps', 'FinOps', 'IAM', 'AWS Security Hub', 'GuardDuty', 'Inspector', 'Secrets Manager'] },
+  { name: 'IA generativa', icon: 'fa-robot', items: ['RAG', 'LLM orchestration', 'Model evaluation', 'AWS Bedrock', 'Gemini', 'LibreChat', 'AI-assisted software engineering', 'Prompt and context management', 'Kiro', 'Devin', 'Claude Code', 'Cursor'] },
+  { name: 'Desarrollo', icon: 'fa-terminal', items: ['Python', 'PowerShell', 'Bash', 'Go', 'JavaScript', 'PHP', 'HTML', 'CSS', 'SQL'] },
+  { name: 'Bases de datos', icon: 'fa-database', items: ['PostgreSQL', 'MySQL', 'SQL Server', 'MongoDB', 'Redis', 'DynamoDB'] },
+  { name: 'Idiomas', icon: 'fa-language', items: ['Español (nativo)', 'English (B1+ · Professional Working Proficiency)'] }
+];
 
 export const projects = [
   {

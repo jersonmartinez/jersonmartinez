@@ -1,0 +1,41 @@
+---
+const { skills } = Astro.props;
+---
+<div class="skills-explorer" data-skills-explorer>
+  <div class="skills-tabs" role="tablist" aria-label="Categorías de habilidades" aria-orientation="vertical">
+    {skills.map((skill, index) => <button class={`skill-tab ${index === 0 ? 'is-active' : ''}`} type="button" role="tab" id={`skill-tab-${index}`} aria-selected={index === 0 ? 'true' : 'false'} aria-controls={`skill-panel-${index}`} data-skill-tab={index} tabindex={index === 0 ? '0' : '-1'}><i class={`fas ${skill.icon}`} aria-hidden="true"></i><span>{skill.name}</span><i class="fas fa-chevron-right skill-tab-arrow" aria-hidden="true"></i></button>)}
+  </div>
+  <div class="skills-panels">
+    {skills.map((skill, index) => <section class={`skills-panel ${index === 0 ? 'is-active' : ''}`} id={`skill-panel-${index}`} role="tabpanel" aria-labelledby={`skill-tab-${index}`} data-skill-panel={index} hidden={index !== 0}><div class="skills-panel-heading"><span class="skill-panel-icon"><i class={`fas ${skill.icon}`} aria-hidden="true"></i></span><div><p class="section-kicker">Perfil técnico</p><h3>{skill.name}</h3></div></div><ul class="skill-list">{skill.items.map((item) => <li>{item}</li>)}</ul></section>)}
+  </div>
+</div>
+<script>
+  const explorer = document.querySelector('[data-skills-explorer]');
+  const tabs = explorer ? [...explorer.querySelectorAll('[data-skill-tab]')] : [];
+  const panels = explorer ? [...explorer.querySelectorAll('[data-skill-panel]')] : [];
+  const activate = (index, focus = false) => {
+    tabs.forEach((tab, tabIndex) => {
+      const active = tabIndex === index;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+      if (active && focus) tab.focus();
+    });
+    panels.forEach((panel, panelIndex) => {
+      const active = panelIndex === index;
+      panel.hidden = !active;
+      panel.classList.toggle('is-active', active);
+    });
+  };
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activate(index));
+    tab.addEventListener('keydown', (event) => {
+      let next = index;
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = tabs.length - 1;
+      if (next !== index) { event.preventDefault(); activate(next, true); }
+    });
+  });
+</script>
