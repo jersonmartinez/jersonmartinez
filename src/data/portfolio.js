@@ -1,3 +1,16 @@
+// =============================================================================
+// FUENTE ÚNICA DE VERDAD DEL PORTFOLIO
+// -----------------------------------------------------------------------------
+// VALORES PROTEGIDOS — CONFIRMADOS POR EL USUARIO. NO EDITAR NI INVENTAR.
+// Copiar exactos; cualquier cambio de estas cifras es una regresión de contenido
+// y el test tests/portfolio.test.js ("valores protegidos") lo bloqueará:
+//   • Udemy:       'Más de 77 mil estudiantes'
+//   • DevOpsea:    'Más de 15K suscriptores'
+//   • Side Master: '≈ 4.1K'
+// Solo se permite contenido ya integrado del CV ES/EN y del perfil público de
+// GitHub. No añadir proyectos, cifras ni enlaces sin verificar.
+// Mapa de rutas desplegadas y qué exporta consume cada una: docs/PORTFOLIO-ASTRO.md.
+// =============================================================================
 export const profile = {
   name: 'Jerson Martínez',
   location: 'Latinoamérica · GMT-6',
@@ -6,13 +19,19 @@ export const profile = {
   github: 'https://github.com/jersonmartinez',
   linkedin: 'https://www.linkedin.com/in/jersonmartinezsm/',
   intro: 'Diseño plataformas cloud confiables, automatizo operaciones y convierto la gobernanza en una ventaja para los equipos.',
+  // Fuente única de verdad para la antigüedad profesional (evita cifras divergentes en distintas páginas).
+  yearsExperience: 10,
   facts: [
-    ['+10', 'años de experiencia'],
+    ['+10', 'años de experiencia', { source: 'yearsExperience' }],
     ['3', 'Cloud Providers'],
-    ['100+', 'cursos y certificaciones'],
-    ['60+', 'artículos publicados']
+    ['100+', 'cursos y certificaciones', { href: '/certifications.html', label: 'Ver certificaciones' }],
+    ['60+', 'artículos publicados', { href: 'https://openwebinars.net/profesores/antoniomorenosm/', label: 'Ver artículos en OpenWebinars', external: true }]
   ]
 };
+
+// Deriva la etiqueta textual de la antigüedad a partir del único campo profile.yearsExperience.
+profile.facts[0][0] = `+${profile.yearsExperience}`;
+export const experienceLede = `Más de ${profile.yearsExperience} años conectando ingeniería, automatización y estrategia cloud para organizaciones y equipos de alto rendimiento.`;
 
 export const skills = [
   { name: 'Infraestructura', icon: 'fa-server', items: ['Infraestructura híbrida (on-premises + cloud)', 'Windows Server', 'Linux', 'Microsoft Entra ID', 'Active Directory', 'IIS', 'DNS', 'DHCP', 'LDAP', 'NTP', 'Capacity planning', 'Right-sizing', 'BCP / DRP', 'High availability', 'Failover', 'Multi-AZ / Multi-region'] },
@@ -29,6 +48,9 @@ export const skills = [
   { name: 'Bases de datos', icon: 'fa-database', items: ['PostgreSQL', 'MySQL', 'SQL Server', 'MongoDB', 'Redis', 'DynamoDB'] },
   { name: 'Idiomas', icon: 'fa-language', items: ['Español (nativo)', 'English (B1+ · Professional Working Proficiency)'] }
 ];
+
+// Ancla estable por proyecto para navegación cruzada home <-> /projects.html (#proyecto-<slug>).
+export const projectSlug = (name) => 'proyecto-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
 export const projects = [
   {
@@ -117,7 +139,7 @@ export const projects = [
   },
   {
     name: 'docker-lamp',
-    kind: 'Open source · 122 estrellas',
+    kind: 'Open source · Docker Compose',
     theme: 'Docker · PHP · Apache · MySQL',
     description: 'Stack LAMP moderno con Docker Compose para desarrollo web reproducible.',
     tags: ['Docker Compose', 'PHP', 'MySQL'],
@@ -166,9 +188,11 @@ export const certifications = [
 ];
 
 export const youtubeChannels = [
-  { name: 'DevOpsea', logo: 'https://cdn.simpleicons.org/youtube/FF0000', subscribers: '15K+', metric: 'Más de 15K suscriptores', description: 'Cursos de Go con Gin, Revel, Echo, Gorilla y Fiber.', href: 'https://www.youtube.com/@DevOpsea?sub_confirmation=1' },
-  { name: 'Side Master', logo: 'https://cdn.simpleicons.org/youtube/FF0000', subscribers: '4.1K', metric: '≈ 4.1K suscriptores', description: 'Sesiones prácticas de aprendizaje autodidacta y programación.', href: 'https://www.youtube.com/@SideMaster?sub_confirmation=1' }
+  { name: 'DevOpsea', logo: 'https://cdn.simpleicons.org/youtube/FF0000', subscribers: 'Más de 15K', description: 'Cursos de Go con Gin, Revel, Echo, Gorilla y Fiber.', href: 'https://www.youtube.com/@DevOpsea?sub_confirmation=1' },
+  { name: 'Side Master', logo: 'https://cdn.simpleicons.org/youtube/FF0000', subscribers: '≈ 4.1K', description: 'Sesiones prácticas de aprendizaje autodidacta y programación.', href: 'https://www.youtube.com/@SideMaster?sub_confirmation=1' }
 ];
+// La etiqueta de suscriptores se deriva de un único campo (subscribers) para evitar cifras divergentes.
+youtubeChannels.forEach((channel) => { channel.metric = `${channel.subscribers} suscriptores`; });
 
 export const courses = [
   { name: 'Desarrollo Web Go: Usando Gin, Echo, Gorilla y Fiber', href: 'https://www.udemy.com/user/side-master/' },
@@ -182,10 +206,15 @@ export const courses = [
 
 export const teaching = [
   { name: 'Udemy', logo: 'https://cdn.simpleicons.org/udemy/A435F0', metric: 'Más de 77 mil estudiantes · 7 cursos', description: 'Cursos de DevOps y desarrollo web publicados para una comunidad internacional.', href: 'https://www.udemy.com/user/side-master/' },
-  { name: 'DevOpsea', logo: 'https://cdn.simpleicons.org/youtube/FF0000', metric: 'Más de 15K suscriptores', description: 'Cursos de Go con Gin, Revel, Echo, Gorilla y Fiber.', href: 'https://www.youtube.com/@DevOpsea?sub_confirmation=1' },
-  { name: 'Side Master', logo: 'https://cdn.simpleicons.org/youtube/FF0000', metric: '≈ 4.1K suscriptores', description: 'Sesiones prácticas de aprendizaje autodidacta y programación.', href: 'https://www.youtube.com/@SideMaster?sub_confirmation=1' },
+  { name: 'DevOpsea', logo: 'https://cdn.simpleicons.org/youtube/FF0000', description: 'Cursos de Go con Gin, Revel, Echo, Gorilla y Fiber.', href: 'https://www.youtube.com/@DevOpsea?sub_confirmation=1' },
+  { name: 'Side Master', logo: 'https://cdn.simpleicons.org/youtube/FF0000', description: 'Sesiones prácticas de aprendizaje autodidacta y programación.', href: 'https://www.youtube.com/@SideMaster?sub_confirmation=1' },
   { name: 'OpenWebinars', logo: '/brands/openwebinars.svg', metric: '60+ artículos', description: 'Contenido sobre cloud, observabilidad, Git y DevOps.', href: 'https://openwebinars.net/profesores/antoniomorenosm/' }
 ];
+// Las métricas de los canales de YouTube en 'teaching' se derivan de youtubeChannels (fuente única).
+teaching.forEach((item) => {
+  const channel = youtubeChannels.find((c) => c.name === item.name);
+  if (channel) item.metric = channel.metric;
+});
 
 export const cvLinks = [
   ['CV en español', 'https://docs.google.com/document/d/1r-Hpl-3WV1qDlLiUWJZkZ_7XFxrU1WgezGiaQnSrSkw/edit?usp=sharing'],

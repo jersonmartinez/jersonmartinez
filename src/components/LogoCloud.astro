@@ -2,5 +2,5 @@
 const { items } = Astro.props;
 ---
 <div class="logo-cloud" aria-label="Ecosistema de plataformas y certificaciones">
-  {items.map((item) => <div class="logo-pill"><img src={item.logo} alt={`${item.name} logo`} width="28" height="28" loading="lazy" /><span>{item.name}</span></div>)}
+  {items.map((item) => <div class="logo-pill" title={item.name} aria-label={item.name}><img src={item.logo} alt={`${item.name} logo`} width="28" height="28" loading="lazy" decoding="async" /><span>{item.name}</span></div>)}
 </div>

@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LogoCloud from '../components/LogoCloud.astro';
 import SkillsExplorer from '../components/SkillsExplorer.astro';
-import { profile, projects, teaching, certifications, skills } from '../data/portfolio.js';
+import { profile, projects, teaching, certifications, skills, projectSlug } from '../data/portfolio.js';
 const featuredProjects = projects.filter((project) => project.featured);
 const logos = [
   { name: 'AWS', logo: '/brands/aws.svg' },
@@ -12,7 +12,7 @@ const logos = [
   { name: 'Kubernetes', logo: 'https://cdn.simpleicons.org/kubernetes/326CE5' }
 ];
 ---
-<BaseLayout title="Jerson Martínez | Cloud, DevOps y automatización" description={profile.intro}>
+<BaseLayout title="Jerson Martínez | Cloud, DevOps y automatización" description={profile.intro} preloadImage="/images/profile.jpg">
   <section class="hero" data-section="home">
     <div class="container hero-grid">
       <div class="hero-copy">
@@ -24,33 +24,35 @@ const logos = [
           <a class="button button--ghost" href="#proyectos"><i class="fas fa-arrow-down" aria-hidden="true"></i> Ver proyectos</a>
         </div>
         <ul class="hero-facts" aria-label="Resumen profesional">
-          {profile.facts.map(([value, label]) => <li><strong>{value}</strong><span>{label}</span></li>)}
+          {profile.facts.map(([value, label, meta]) => <li>{meta && meta.href
+            ? <a class="hero-fact-link" href={meta.href} {...(meta.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={meta.label}><strong>{value}</strong><span>{label} <i class="fas fa-external-link-alt" aria-hidden="true"></i></span></a>
+            : <><strong>{value}</strong><span>{label}</span></>}</li>)}
         </ul>
       </div>
       <aside class="profile-panel" aria-label="Perfil de Jerson Martínez">
-        <div class="profile-image"><img src="/images/profile.jpg" width="1568" height="1568" alt="Jerson Martínez con camisa lila y brazos cruzados" fetchpriority="high" /></div>
+        <div class="profile-image"><img src="/images/profile.jpg" width="1568" height="1568" alt="Retrato de Jerson Martínez" fetchpriority="high" decoding="async" /></div>
         <div class="profile-meta"><div><strong>Jerson Martínez</strong><span>Ingeniero en Telemática · GMT-6</span></div><span class="profile-tag">MULTI-CLOUD</span></div>
         <div class="profile-links" aria-label="Perfiles públicos">
-          <a class="profile-social" href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-tooltip="GitHub"><i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span></a>
-          <a class="profile-social" href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" data-tooltip="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="sr-only">LinkedIn</span></a>
-          <a class="profile-social" href="https://www.youtube.com/@DevOpsea" target="_blank" rel="noopener noreferrer" aria-label="DevOpsea en YouTube" data-tooltip="DevOpsea en YouTube"><i class="fab fa-youtube" aria-hidden="true"></i><span class="sr-only">DevOpsea en YouTube</span></a>
+          <a class="profile-social" href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub (abre en nueva pestaña)" data-tooltip="GitHub"><i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub (abre en nueva pestaña)</span></a>
+          <a class="profile-social" href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (abre en nueva pestaña)" data-tooltip="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="sr-only">LinkedIn (abre en nueva pestaña)</span></a>
+          <a class="profile-social" href="https://www.youtube.com/@DevOpsea" target="_blank" rel="noopener noreferrer" aria-label="DevOpsea en YouTube (abre en nueva pestaña)" data-tooltip="DevOpsea en YouTube"><i class="fab fa-youtube" aria-hidden="true"></i><span class="sr-only">DevOpsea en YouTube (abre en nueva pestaña)</span></a>
         </div>
       </aside>
     </div>
   </section>
 
-  <section class="section section--line" id="impacto" data-section="impacto">
+  <section class="section section--line" id="impacto" data-section="impacto" aria-labelledby="impacto-title">
     <div class="container journey">
       <nav class="journey-rail" aria-label="Recorrido del portfolio">
-        <a class="is-active" href="#impacto"><span>01</span> Impacto</a>
-        <a href="#skills"><span>02</span> Skills</a>
-        <a href="#proyectos"><span>03</span> Proyectos</a>
-        <a href="#enseñanza"><span>04</span> Cursos</a>
-        <a href="#credenciales"><span>05</span> Credenciales</a>
-        <a href="#contacto"><span>06</span> Contacto</a>
+        <a class="is-active" href="#impacto" aria-current="true"><span aria-hidden="true">01</span> Impacto</a>
+        <a href="#skills"><span aria-hidden="true">02</span> Skills</a>
+        <a href="#proyectos"><span aria-hidden="true">03</span> Proyectos</a>
+        <a href="#enseñanza"><span aria-hidden="true">04</span> Cursos</a>
+        <a href="#credenciales"><span aria-hidden="true">05</span> Credenciales</a>
+        <a href="#contacto"><span aria-hidden="true">06</span> Contacto</a>
       </nav>
       <div class="journey-content">
-        <div class="section-heading"><p class="section-kicker">01 / enfoque</p><h2>Plataformas que se pueden gobernar, medir y mejorar.</h2><p class="lede">La automatización no termina en un pipeline verde: conecta delivery, seguridad, costes y decisiones de negocio.</p></div>
+        <div class="section-heading"><p class="section-kicker">01 / enfoque</p><h2 id="impacto-title">Plataformas que se pueden gobernar, medir y mejorar.</h2><p class="lede">La automatización no termina en un pipeline verde: conecta delivery, seguridad, costes y decisiones de negocio.</p></div>
         <div class="cards">
           <article class="card"><span class="card-label">Platform engineering</span><h3>Cloud con una base operable.</h3><p>Landing Zones, IaC, pipelines y estándares para que cada equipo pueda entregar sin reinventar la plataforma.</p></article>
           <article class="card"><span class="card-label">AI + DevOps</span><h3>Automatización aumentada.</h3><p>Asistentes GenAI, agentes y MCPs conectan conocimiento, herramientas y acciones con controles claros.</p></article>
@@ -61,47 +63,47 @@ const logos = [
     </div>
   </section>
 
-  <section class="section section--line" id="skills" data-section="skills">
+  <section class="section section--line" id="skills" data-section="skills" aria-labelledby="skills-title">
     <div class="container">
-      <div class="section-heading"><p class="section-kicker">02 / habilidades</p><h2>Un mapa para recorrer la plataforma completa.</h2><p class="lede">Las categorías y herramientas se extraen del CV actualizado: selecciona un dominio para ver el contexto técnico sin convertir la página en una lista interminable.</p></div>
+      <div class="section-heading"><p class="section-kicker">02 / habilidades</p><h2 id="skills-title">Un mapa para recorrer la plataforma completa.</h2><p class="lede">Las categorías y herramientas se extraen del CV actualizado: selecciona un dominio para ver el contexto técnico sin convertir la página en una lista interminable.</p></div>
       <SkillsExplorer skills={skills} />
     </div>
   </section>
 
-  <section class="section" id="proyectos" data-section="proyectos">
+  <section class="section" id="proyectos" data-section="proyectos" aria-labelledby="proyectos-title">
     <div class="container">
-      <div class="section-head-row"><div class="section-heading"><p class="section-kicker">03 / sistemas</p><h2>Proyectos que explican cómo trabajo.</h2><p class="lede">Productos personales, open source, automatizaciones y sistemas académicos con una misma pregunta: ¿cómo se opera mejor?</p></div><a class="button button--ghost" href="/projects.html"><i class="fas fa-arrow-right" aria-hidden="true"></i> Explorar todo</a></div>
+      <div class="section-head-row"><div class="section-heading"><p class="section-kicker">03 / sistemas</p><h2 id="proyectos-title">Proyectos que explican cómo trabajo.</h2><p class="lede">Productos personales, open source, automatizaciones y sistemas académicos con una misma pregunta: ¿cómo se opera mejor?</p></div><a class="button button--ghost" href="/projects.html"><i class="fas fa-arrow-right" aria-hidden="true"></i> Explorar todo</a></div>
       <div class="featured-grid">
         {featuredProjects.map((project, index) => <article class={`card project-card ${index === 0 ? 'project-card--accent' : ''}`}>
           <div><span class="card-label">{project.kind}</span><h3>{project.name}</h3><p>{project.description}</p><div class="project-meta">{project.tags.map((tag) => <span>{tag}</span>)}</div></div>
-          <div class="project-bottom">{project.href ? <a class="card-link" href={project.href} target="_blank" rel="noopener noreferrer">{project.cta} <i class="fas fa-external-link-alt" aria-hidden="true"></i></a> : <span class="status">Producto personal</span>}</div>
+          <div class="project-bottom">{project.href ? <a class="card-link" href={project.href} target="_blank" rel="noopener noreferrer">{project.cta} <i class="fas fa-external-link-alt" aria-hidden="true"></i><span class="sr-only"> (abre en nueva pestaña)</span></a> : <span class="status">Producto personal</span>}<a class="card-link card-link--soft" href={`/projects.html#${projectSlug(project.name)}`}>Ver ficha <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
         </article>)}
       </div>
     </div>
   </section>
 
-  <section class="section section--line" id="enseñanza" data-section="enseñanza">
+  <section class="section section--line" id="enseñanza" data-section="enseñanza" aria-labelledby="ensenanza-title">
     <div class="container">
-      <div class="section-head-row"><div class="section-heading"><p class="section-kicker">04 / conocimiento</p><h2>La enseñanza también es una plataforma.</h2><p class="lede">Cursos, artículos y canales que convierten experiencia de operación en conocimiento reutilizable.</p></div><a class="button button--ghost" href="/courses.html"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Ver Cursos (7)</a></div>
-      <div class="teaching-grid">{teaching.map((item) => <article class="card teaching-card"><img src={item.logo} width="32" height="32" alt={`${item.name} logo`} loading="lazy" /><div><h3>{item.name}</h3><strong class="teaching-metric">{item.metric}</strong><p>{item.description}</p></div><a href={item.href} target="_blank" rel="noopener noreferrer">Abrir recurso <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></article>)}</div>
+      <div class="section-head-row"><div class="section-heading"><p class="section-kicker">04 / conocimiento</p><h2 id="ensenanza-title">La enseñanza también es una plataforma.</h2><p class="lede">Cursos, artículos y canales que convierten experiencia de operación en conocimiento reutilizable.</p></div><div class="head-row-actions"><a class="button button--ghost" href="/courses.html"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Ver Cursos (7)</a><a class="button button--ghost" href="/courses.html#canales"><i class="fas fa-play" aria-hidden="true"></i> Ver canales</a></div></div>
+      <div class="teaching-grid">{teaching.map((item) => <article class="card teaching-card"><img src={item.logo} width="32" height="32" alt={`${item.name} logo`} loading="lazy" decoding="async" /><div><h3>{item.name}</h3><strong class="teaching-metric">{item.metric}</strong><p>{item.description}</p></div><a href={item.href} target="_blank" rel="noopener noreferrer">Abrir recurso <i class="fas fa-external-link-alt" aria-hidden="true"></i><span class="sr-only"> (abre en nueva pestaña)</span></a></article>)}</div>
     </div>
   </section>
 
-  <section class="section" id="credenciales" data-section="credenciales">
+  <section class="section" id="credenciales" data-section="credenciales" aria-labelledby="credenciales-title">
     <div class="container">
-      <div class="section-head-row"><div class="section-heading"><p class="section-kicker">05 / evidencia</p><h2>Credenciales con contexto.</h2><p class="lede">Certificaciones y formación que respaldan arquitectura, seguridad, delivery y operación multi-cloud.</p></div><a class="button button--ghost" href="/certifications.html"><i class="fas fa-certificate" aria-hidden="true"></i> Ver detalle</a></div>
-      <div class="cert-grid">{certifications.map((cert) => <article class="card cert-card"><div class="cert-card-head"><img src={cert.logo} width="36" height="36" alt={`${cert.provider} logo`} loading="lazy" /><h2>{cert.provider}</h2></div><ul class="cert-list">{cert.items.slice(0, 4).map((item) => <li><a class="credential-link" href={item.href} target="_blank" rel="noopener noreferrer"><span>{item.name}</span><span class="credential-verify">Verificar <i class="fas fa-external-link-alt" aria-hidden="true"></i></span></a></li>)}</ul></article>)}</div>
+      <div class="section-head-row"><div class="section-heading"><p class="section-kicker">05 / evidencia</p><h2 id="credenciales-title">Credenciales con contexto.</h2><p class="lede">Certificaciones y formación que respaldan arquitectura, seguridad, delivery y operación multi-cloud.</p></div><a class="button button--ghost" href="/certifications.html"><i class="fas fa-certificate" aria-hidden="true"></i> Ver detalle</a></div>
+      <div class="cert-grid">{certifications.map((cert) => <article class="card cert-card"><div class="cert-card-head"><img src={cert.logo} width="36" height="36" alt={`${cert.provider} logo`} loading="lazy" decoding="async" /><h3>{cert.provider}</h3></div><ul class="cert-list">{cert.items.slice(0, 4).map((item) => <li><a class="credential-link" href={item.href} target="_blank" rel="noopener noreferrer"><span>{item.name}</span><span class="credential-verify">Verificar <i class="fas fa-external-link-alt" aria-hidden="true"></i></span><span class="sr-only"> (abre en nueva pestaña)</span></a></li>)}</ul>{cert.items.length > 4 && <p class="credential-more"><a href="/certifications.html">Ver las {cert.items.length} credenciales de {cert.provider} <i class="fas fa-arrow-right" aria-hidden="true"></i></a></p>}</article>)}</div>
       <p class="data-note">Resumen basado en el CV facilitado; la validación oficial de cada credencial corresponde a su emisor.</p>
     </div>
   </section>
 
-  <section class="section section--tight" id="contacto" data-section="contacto">
-    <div class="container"><div class="contact-panel"><div><p class="section-kicker">06 / siguiente paso</p><h2>¿Qué plataforma necesitas hacer confiable?</h2></div><a class="button" href={`mailto:${profile.email}`}><i class="fas fa-paper-plane" aria-hidden="true"></i> Escribir a Jerson</a></div></div>
+  <section class="section section--tight" id="contacto" data-section="contacto" aria-labelledby="contacto-title">
+    <div class="container"><div class="contact-panel"><div><p class="section-kicker">06 / siguiente paso</p><h2 id="contacto-title">¿Qué plataforma necesitas hacer confiable?</h2></div><div class="contact-actions"><a class="button" href={`mailto:${profile.email}`}><i class="fas fa-paper-plane" aria-hidden="true"></i> Escribir a Jerson</a><a class="button button--ghost" href={profile.linkedin} target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in" aria-hidden="true"></i> LinkedIn<span class="sr-only"> (abre en nueva pestaña)</span></a><a class="button button--ghost" href={profile.github} target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> GitHub<span class="sr-only"> (abre en nueva pestaña)</span></a></div></div></div>
   </section>
 </BaseLayout>
 <script>
   const sections = [...document.querySelectorAll('[data-section]')];
   const railLinks = [...document.querySelectorAll('.journey-rail a')];
-  const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) railLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === `#${entry.target.id}`)); }), { rootMargin: '-35% 0px -55% 0px' });
+  const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) railLinks.forEach((link) => { const active = link.getAttribute('href') === `#${entry.target.id}`; link.classList.toggle('is-active', active); if (active) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current'); }); }), { rootMargin: '-35% 0px -55% 0px' });
   sections.forEach((section) => observer.observe(section));
 </script>

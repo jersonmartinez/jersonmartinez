@@ -14,6 +14,50 @@ The portfolio uses **Astro 5** with static output. This fits a profile site host
 
 The `.html` suffix is intentionally preserved for existing links and bookmarks while the implementation is under `src/pages/*.astro`.
 
+## Mapa de rutas desplegadas y datos que las alimentan (mantenimiento)
+
+Cada página se compila desde un archivo en `src/pages/` y consume exports concretos
+de `src/data/portfolio.js` (fuente única de verdad). Para cambiar contenido, edita
+`portfolio.js`; para cambiar estructura/marcado, edita el `.astro` correspondiente.
+
+| Ruta desplegada        | Archivo fuente                            | Exports de `portfolio.js` que consume |
+| ---------------------- | ----------------------------------------- | ------------------------------------- |
+| `/`                    | `src/pages/index.astro`                   | `profile`, `projects` (destacados: `featured`), `teaching`, `certifications`, `skills`, `projectSlug` |
+| `/projects.html`       | `src/pages/projects.html.astro`           | `projects`, `profile`, `projectSlug` |
+| `/courses.html`        | `src/pages/courses.html.astro`            | `courses`, `profile`, `youtubeChannels` |
+| `/certifications.html` | `src/pages/certifications.html.astro`     | `certifications`, `cvLinks`, `profile` |
+| `/experience.html`     | `src/pages/experience.html.astro`         | `experience`, `profile`, `experienceLede` |
+
+Componentes compartidos: `src/layouts/BaseLayout.astro` (envoltura común, usa
+`profile`), `src/components/SiteHeader.astro` (navegación), `SkillsExplorer.astro`
+(render de `skills` en el home) y `LogoCloud.astro` (nube de logos del home).
+
+Notas de derivación (evitan cifras divergentes):
+- `profile.facts[0]` (años de experiencia) se deriva de `profile.yearsExperience`.
+- Las métricas de suscriptores de YouTube en `teaching` se derivan de `youtubeChannels`.
+
+## Convención de nombres de rutas con `.html.astro` (item 82)
+
+Las páginas internas usan el patrón de nombre `nombre.html.astro`, que Astro compila
+a la ruta `/nombre.html`:
+
+| Archivo en `src/pages/`      | Ruta generada          |
+| ---------------------------- | ---------------------- |
+| `index.astro`                | `/`                    |
+| `projects.html.astro`        | `/projects.html`       |
+| `courses.html.astro`         | `/courses.html`        |
+| `certifications.html.astro`  | `/certifications.html` |
+| `experience.html.astro`      | `/experience.html`     |
+
+**Por qué el sufijo `.html`:** el sitio se publicó originalmente como HTML estático
+(`projects.html`, etc.). Conservar el sufijo mantiene vivos los enlaces externos,
+marcadores y resultados indexados por buscadores; quitarlo rompería esas URLs.
+
+**Regla al añadir una página nueva:** si debe conservar una URL con `.html`, nómbrala
+`nueva.html.astro` (no `nueva.astro`, que generaría `/nueva`). Enlázala internamente
+como `/nueva.html`. El `SiteHeader.astro` normaliza rutas con y sin `.html` y barra
+final, de modo que el estado activo del menú funciona en ambas formas.
+
 ## Brand and icon system
 
 - `public/brand/logo.svg` is the simplified horizontal **Jerson + terminal dot** wordmark; the isotipo was removed from the header.
@@ -48,3 +92,30 @@ npm run links
 ```
 
 The GitHub Actions validation workflow builds `dist`, validates the generated assets and checks local links. The deployment workflow publishes only `dist`; it never uploads the source tree as the site artifact.
+
+## SEO, PWA y accesibilidad (endurecimiento)
+
+Todo el contenido nuevo reutiliza datos ya verificados; no se añaden cifras, proyectos ni enlaces inventados.
+
+- **Datos estructurados**: `BaseLayout.astro` emite JSON-LD `schema.org/Person` (nombre, URL, imagen, email, `sameAs` a GitHub/LinkedIn/YouTube/Udemy) y, en páginas internas, `BreadcrumbList` (prop `breadcrumb`).
+- **Metadatos**: `author`, `robots` (`index, follow, max-image-preview:large`), `referrer`, `application-name`, `apple-touch-icon`, metas `apple-mobile-web-app-*` / `mobile-web-app-capable`, `og:image:alt/width/height` y `twitter:image:alt`.
+- **Rendimiento**: `preconnect`/`dns-prefetch` a `cdn.simpleicons.org`; `decoding="async"` en imágenes y `fetchpriority="high"` en el retrato y el wordmark.
+- **PWA/indexación**: `public/robots.txt` (con `Sitemap:`), `public/sitemap.xml` (5 rutas reales), `public/site.webmanifest` (`<link rel="manifest">`) y `public/humans.txt` (`<link rel="author">`).
+- **Accesibilidad**: migas de pan visibles con `aria-current`, `aria-labelledby` en secciones, `<main tabindex="-1">`, avisos `sr-only` "(abre en nueva pestaña)" en enlaces externos, `hreflang` en los CV, `lang="en"` en ítems en inglés, `rel="me"` en redes del pie, y timeline como `<ol>/<li>` con `<time datetime>` legible por máquina.
+- **UX**: hoja de impresión (`@media print`), pie con año dinámico y "Volver arriba", enlace de pie de la página actual, `scroll-margin-top` para anclas, resaltado `:target` y `<noscript>` que aclara el filtro de proyectos.
+
+El test `tests/portfolio.test.js` cubre la presencia de estos artefactos (robots/sitemap/manifest/humans y el JSON-LD) además de los valores protegidos.
+
+## Registro auditable de mejoras
+
+El detalle numerado de todas las mejoras aplicadas al portafolio (más de 100,
+por categoría, con su archivo/área afectada y el commit que las introdujo) vive
+en [`docs/IMPROVEMENTS-RECORD.md`](./IMPROVEMENTS-RECORD.md).
+
+- La fuente de verdad es `tools/gen-improvements-record.js` (array
+  `IMPROVEMENTS`); el documento se regenera con `node tools/gen-improvements-record.js`.
+- El generador valida que no haya referencias de audit duplicadas y que cada
+  archivo atribuido exista en el árbol.
+- `tests/improvements-record.test.js` verifica que el documento esté presente,
+  declare un total coherente (>=100), no contradiga los valores protegidos y que
+  cada fila cite el SHA de su commit.

@@ -56,7 +56,7 @@ test('cursos, canales y credenciales exponen métricas y enlaces verificables', 
   const courses = read('src/pages/courses.html.astro');
   const certifications = read('src/pages/certifications.html.astro');
   assert.match(data, /Más de 77 mil/);
-  assert.match(data, /15K\+/);
+  assert.match(data, /Más de 15K/);
   assert.match(courses, /Mis cursos \(7\)/);
   assert.match(courses, /Más de 77 mil/);
   assert.match(data, /Más de 15K suscriptores/);
@@ -65,4 +65,36 @@ test('cursos, canales y credenciales exponen métricas y enlaces verificables', 
   assert.match(data, /learn\.microsoft\.com\/api\/credentials/);
   assert.match(data, /credly\.com\/badges/);
   assert.match(data, /brands\/openwebinars\.svg/);
+});
+
+// Item 43: los VALORES PROTEGIDOS confirmados por el usuario deben existir
+// textualmente en portfolio.js. Previene regresiones de contenido: si alguien
+// edita una de estas cifras por error, este test falla.
+test('los valores protegidos existen textualmente en portfolio.js', () => {
+  const data = read('src/data/portfolio.js');
+  const protectedValues = [
+    'Más de 77 mil estudiantes', // Udemy
+    'Más de 15K',                // DevOpsea (deriva 'Más de 15K suscriptores')
+    '≈ 4.1K'                     // Side Master
+  ];
+  for (const value of protectedValues) {
+    assert.ok(data.includes(value), `Valor protegido ausente o alterado: "${value}"`);
+  }
+});
+
+// Items 126-128: los artefactos de SEO/PWA y datos estructurados existen y son coherentes.
+test('SEO/PWA: robots, sitemap, manifest, humans y JSON-LD existen', () => {
+  assert.match(read('public/robots.txt'), /Sitemap:\s*https:\/\/www\.jersonmartinez\.com\/sitemap\.xml/);
+  const sitemap = read('public/sitemap.xml');
+  for (const route of ['/', '/projects.html', '/courses.html', '/certifications.html', '/experience.html']) {
+    assert.ok(sitemap.includes(`https://www.jersonmartinez.com${route}`), `Ruta ausente en sitemap: ${route}`);
+  }
+  const manifest = JSON.parse(read('public/site.webmanifest'));
+  assert.equal(manifest.start_url, '/');
+  assert.equal(manifest.theme_color, '#07111f');
+  assert.match(read('public/humans.txt'), /github\.com\/jersonmartinez/);
+  const layout = read('src/layouts/BaseLayout.astro');
+  assert.match(layout, /application\/ld\+json/);
+  assert.match(layout, /schema\.org/);
+  assert.match(layout, /rel="manifest"/);
 });
