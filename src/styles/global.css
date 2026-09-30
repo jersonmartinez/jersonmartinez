@@ -202,7 +202,7 @@ p { margin: 0; color: var(--muted); }
 .cert-list li::before { margin-right: .5rem; color: var(--cyan); content: '↳'; }
 .credential-more { margin-top: .65rem; font-family: 'DM Mono', monospace; font-size: .72rem; }
 .credential-more a { color: var(--cyan); }
-/* Item 29: 'Verificar' de cada credencial con hover/focus claro y señalando enlace externo; icono con contraste suficiente. */
+/* Item 29: enlace de cada certificación con hover/focus claro y contraste suficiente. */
 .credential-link { display: flex; align-items: center; justify-content: space-between; gap: .8rem; color: inherit; text-decoration: none; }
 .credential-link:hover, .credential-link:focus-visible { color: var(--cyan); }
 .credential-link:hover .credential-verify, .credential-link:focus-visible .credential-verify { text-decoration: underline; text-underline-offset: .2em; }
@@ -353,3 +353,48 @@ section[id], article[id] { scroll-margin-top: 84px; }
 .verification-step strong { color: var(--text); }
 @media (max-width: 900px) { .verification-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 680px) { .verification-steps { grid-template-columns: 1fr; } }
+
+/* Portfolio recruiter + consulting UX refresh */
+.brand { width: 9.9rem; }
+.profile-name { display: block; margin-bottom: .25rem; color: var(--text); font-size: 1.1rem; font-weight: 800; letter-spacing: -.03em; text-decoration: none; }
+.profile-name:hover, .profile-name:focus-visible { color: var(--cyan); text-decoration: underline; text-underline-offset: .25em; }
+.profile-meta > div > span { display: block; }
+.hero .eyebrow { max-width: 48rem; }
+.hero h1 { max-width: 17ch; }
+.logo-cloud { gap: .65rem; }
+.logo-pill { min-height: 3.05rem; }
+.teaching-card img[src*="openwebinars"] { width: 8.8rem; height: 2.75rem; object-fit: contain; object-position: left center; }
+.teaching-card a, .card-link { text-underline-offset: .22em; }
+.teaching-card a:hover, .teaching-card a:focus-visible { text-decoration: underline; }
+.credential-link { justify-content: flex-start; }
+.credential-link span:first-child { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: .22em; transition: color .18s ease, text-decoration-color .18s ease; }
+.credential-link:hover span:first-child, .credential-link:focus-visible span:first-child { text-decoration-color: currentColor; }
+.course-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
+.course-card { display: flex; flex-direction: column; min-height: 100%; padding: 0; overflow: hidden; }
+.course-visual { position: relative; min-height: 10.8rem; overflow: hidden; border-bottom: 1px solid var(--line); background: linear-gradient(135deg, rgba(103,232,249,.14), rgba(196,242,105,.06)); }
+.course-visual svg { display: block; width: 100%; height: 100%; min-height: 10.8rem; }
+.course-access { position: absolute; top: .85rem; right: .85rem; padding: .35rem .55rem; border: 1px solid rgba(196,242,105,.6); border-radius: 999px; color: var(--ink); background: var(--lime); font-family: 'DM Mono', monospace; font-size: .62rem; font-weight: 800; text-transform: uppercase; }
+.course-card-body { display: flex; flex: 1; flex-direction: column; padding: 1.35rem; }
+.course-card-body .card-label { min-height: auto; margin-bottom: 1rem; }
+.course-card-body h3 { font-size: 1.2rem; }
+.course-card-body p { margin-top: .75rem; }
+.course-access-label { display: inline-flex; align-self: flex-start; margin-top: 1rem; padding: .3rem .48rem; border: 1px solid var(--line); border-radius: .45rem; color: var(--muted); font-family: 'DM Mono', monospace; font-size: .64rem; }
+.course-access-label.is-free { color: var(--lime); border-color: rgba(196,242,105,.45); background: rgba(196,242,105,.07); }
+.course-card .card-link { margin-top: auto; }
+.about-quick-links { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.7rem; }
+.about-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(18rem, .9fr); gap: 1rem; align-items: start; }
+.about-story { display: grid; gap: 1rem; }
+.about-story .section-kicker, .about-stack-card .section-kicker, .about-credentials-card .section-kicker { margin-bottom: 0; }
+.about-story h2 { font-size: clamp(2rem, 4vw, 3.4rem); }
+.about-story h3 { margin-top: .7rem; }
+.about-results { display: grid; gap: .75rem; margin: 0; padding: 0; list-style: none; }
+.about-results li { padding: .8rem .9rem; border-left: 2px solid var(--cyan); color: var(--muted); background: rgba(103,232,249,.05); }
+.about-results strong { color: var(--text); }
+.about-aside { display: grid; gap: 1rem; }
+.about-stack-card h2 { margin-bottom: 1.1rem; font-size: clamp(1.7rem, 3vw, 2.5rem); }
+.about-stack-list { display: flex; flex-wrap: wrap; gap: .45rem; }
+.about-stack-list span { padding: .35rem .5rem; border: 1px solid var(--line); border-radius: .45rem; color: var(--muted); font-family: 'DM Mono', monospace; font-size: .66rem; }
+.about-links { display: flex; flex-wrap: wrap; gap: .7rem; }
+.about-links .card-link { margin-top: 0; }
+@media (max-width: 900px) { .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .about-layout { grid-template-columns: 1fr; } }
+@media (max-width: 680px) { .course-grid { grid-template-columns: 1fr; } .about-quick-links { display: grid; } .about-quick-links .button { width: 100%; } .teaching-card img[src*="openwebinars"] { width: 10rem; } }

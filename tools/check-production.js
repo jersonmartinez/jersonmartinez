@@ -2,11 +2,12 @@
 const BASE_URL = new URL(process.env.PRODUCTION_BASE_URL || 'https://www.jersonmartinez.com');
 const APEX_URL = new URL(process.env.PRODUCTION_APEX_URL || 'https://jersonmartinez.com');
 const routes = [
-  ['/', 'Diseño'],
+  ['/', 'Ingeniero DevOps, SRE y DevSecOps'],
   ['/projects.html/', 'Una trayectoria contada como sistemas.'],
-  ['/courses.html/', 'Conocimiento que se puede reutilizar.'],
+  ['/courses.html/', 'Una ruta visual para aprender Go.'],
   ['/certifications.html/', 'Aprender para operar mejor.'],
-  ['/experience.html/', 'Experiencia construyendo sistemas y equipos que escalan.']
+  ['/experience.html/', 'Experiencia construyendo sistemas y equipos que escalan.'],
+  ['/about.html/', 'Ingeniería que conecta personas, plataformas y resultados.']
 ];
 
 async function fetchPage(url, options = {}) {

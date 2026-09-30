@@ -37,7 +37,7 @@ test('las referencias de audit no se duplican', () => {
 
 test('el registro respeta los valores protegidos', () => {
   const md = read(DOC);
-  for (const value of ['Más de 77 mil estudiantes', 'Más de 15K suscriptores', '≈ 4.1K']) {
+  for (const value of ['Más de 77 mil estudiantes', '+14K suscriptores', '+5K suscriptores', '+60 artículos y cursos']) {
     assert.ok(md.includes(value), `Valor protegido ausente en el registro: "${value}"`);
   }
   // No debe introducir cifras alternativas prohibidas.

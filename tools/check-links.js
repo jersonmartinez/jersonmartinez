@@ -4,8 +4,8 @@ const path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
 const BUILD = path.join(ROOT, 'dist');
 const sources = fs.existsSync(BUILD)
-  ? ['dist/index.html', 'dist/projects.html/index.html', 'dist/experience.html/index.html', 'dist/certifications.html/index.html', 'dist/courses.html/index.html', 'README.md']
-  : ['README.md', 'src/pages/index.astro', 'src/pages/projects.html.astro', 'src/pages/experience.html.astro', 'src/pages/certifications.html.astro', 'src/pages/courses.html.astro'];
+  ? ['dist/index.html', 'dist/projects.html/index.html', 'dist/experience.html/index.html', 'dist/certifications.html/index.html', 'dist/courses.html/index.html', 'dist/about.html/index.html', 'README.md']
+  : ['README.md', 'src/pages/index.astro', 'src/pages/projects.html.astro', 'src/pages/experience.html.astro', 'src/pages/certifications.html.astro', 'src/pages/courses.html.astro', 'src/pages/about.html.astro'];
 const URL_PATTERN = /(?:href|src)=["']([^"']+)["']|\[[^\]]+\]\(([^)]+)\)/gi;
 const failures = [];
 let checked = 0;

@@ -6,11 +6,12 @@ The portfolio uses **Astro 5** with static output. This fits a profile site host
 
 ## Route map
 
-- `/` — ordered presentation: impact, skills, systems, teaching, credentials and contact.
+- `/` — ordered presentation: impact, skills, systems, teaching, certifications and contact.
 - `/projects.html` — personal products, public repositories and a filterable project index.
-- `/courses.html` — seven Udemy courses, student total and YouTube channels.
-- `/certifications.html` — AWS, Microsoft Azure and GitHub credentials with official local logo assets.
+- `/courses.html` — seven Udemy courses, individual public links, SVG course visuals and YouTube channels.
+- `/certifications.html` — AWS, Microsoft Azure and GitHub certifications with direct name links.
 - `/experience.html` — CV-backed professional timeline.
+- `/about.html` — recruiter/client-facing profile, results, stack and collaboration context.
 
 The `.html` suffix is intentionally preserved for existing links and bookmarks while the implementation is under `src/pages/*.astro`.
 
@@ -26,6 +27,7 @@ de `src/data/portfolio.js` (fuente única de verdad). Para cambiar contenido, ed
 | `/projects.html`       | `src/pages/projects.html.astro`           | `projects`, `profile`, `projectSlug` |
 | `/courses.html`        | `src/pages/courses.html.astro`            | `courses`, `profile`, `youtubeChannels` |
 | `/certifications.html` | `src/pages/certifications.html.astro`     | `certifications`, `cvLinks`, `profile` |
+| `/about.html`          | `src/pages/about.html.astro`       | `cvLinks`, `profile` |
 | `/experience.html`     | `src/pages/experience.html.astro`         | `experience`, `profile`, `experienceLede` |
 
 Componentes compartidos: `src/layouts/BaseLayout.astro` (envoltura común, usa
@@ -40,6 +42,7 @@ Notas de derivación (evitan cifras divergentes):
 
 Las páginas internas usan el patrón de nombre `nombre.html.astro`, que Astro compila
 a la ruta `/nombre.html`:
+| `about.html.astro`        | `/about.html`        |
 
 | Archivo en `src/pages/`      | Ruta generada          |
 | ---------------------------- | ---------------------- |
@@ -64,7 +67,7 @@ final, de modo que el estado activo del menú funciona en ambas formas.
 - `public/brand/favicon.svg` is the compact J-and-dot favicon.
 - `public/images/profile.jpg` is the public profile image used by the site.
 - The site uses the repository's local **Font Awesome 5.9** assets as its single reusable UI icon library. Header actions, navigation entries, CTA buttons, social links, tooltips, skill categories and external-link affordances all use the same icon system.
-- `public/brands/aws.svg`, `public/brands/azure.svg`, `public/brands/github.png` and `public/brands/openwebinars.svg` remain provider/content logos, separate from UI iconography.
+- `public/brands/aws.svg`, `public/brands/azure.svg`, `public/brands/github.svg` and `public/brands/openwebinars.svg` remain provider/content logos, separate from UI iconography.
 
 ## CV-driven content
 
@@ -100,7 +103,7 @@ Todo el contenido nuevo reutiliza datos ya verificados; no se añaden cifras, pr
 - **Datos estructurados**: `BaseLayout.astro` emite JSON-LD `schema.org/Person` (nombre, URL, imagen, email, `sameAs` a GitHub/LinkedIn/YouTube/Udemy) y, en páginas internas, `BreadcrumbList` (prop `breadcrumb`).
 - **Metadatos**: `author`, `robots` (`index, follow, max-image-preview:large`), `referrer`, `application-name`, `apple-touch-icon`, metas `apple-mobile-web-app-*` / `mobile-web-app-capable`, `og:image:alt/width/height` y `twitter:image:alt`.
 - **Rendimiento**: `preconnect`/`dns-prefetch` a `cdn.simpleicons.org`; `decoding="async"` en imágenes y `fetchpriority="high"` en el retrato y el wordmark.
-- **PWA/indexación**: `public/robots.txt` (con `Sitemap:`), `public/sitemap.xml` (5 rutas reales), `public/site.webmanifest` (`<link rel="manifest">`) y `public/humans.txt` (`<link rel="author">`).
+- **PWA/indexación**: `public/robots.txt` (con `Sitemap:`), `public/sitemap.xml` (6 rutas reales), `public/site.webmanifest` (`<link rel="manifest">`) y `public/humans.txt` (`<link rel="author">`).
 - **Accesibilidad**: migas de pan visibles con `aria-current`, `aria-labelledby` en secciones, `<main tabindex="-1">`, avisos `sr-only` "(abre en nueva pestaña)" en enlaces externos, `hreflang` en los CV, `lang="en"` en ítems en inglés, `rel="me"` en redes del pie, y timeline como `<ol>/<li>` con `<time datetime>` legible por máquina.
 - **UX**: hoja de impresión (`@media print`), pie con año dinámico y "Volver arriba", enlace de pie de la página actual, `scroll-margin-top` para anclas, resaltado `:target` y `<noscript>` que aclara el filtro de proyectos.
 
@@ -122,14 +125,14 @@ en [`docs/IMPROVEMENTS-RECORD.md`](./IMPROVEMENTS-RECORD.md).
 
 ## Mantenimiento post-merge y auditorías reales
 
-- `npm run production:smoke` comprueba el dominio canónico, la redirección desde el dominio raíz, las cinco rutas públicas, la marca, el contenido principal y el `canonical` generado en producción. Acepta `PRODUCTION_BASE_URL` y `PRODUCTION_APEX_URL` para validar otro entorno.
+- `npm run production:smoke` comprueba el dominio canónico, la redirección desde el dominio raíz, las seis rutas públicas, la marca, el contenido principal y el `canonical` generado en producción. Acepta `PRODUCTION_BASE_URL` y `PRODUCTION_APEX_URL` para validar otro entorno.
 - `.github/workflows/production-smoke.yml` ejecuta ese smoke de lunes a viernes y también permite lanzarlo manualmente.
-- `site-quality.yml` instala dependencias, construye `dist` y ejecuta Lighthouse y pa11y sobre las cinco rutas generadas por Astro; no sirve la raíz del repositorio.
-- `certificates.yml` construye `dist` antes de que `tools/check-certificates.js` extraiga hosts TLS. El checker usa HTML generado y, si no existe build, usa las fuentes Astro y los datos del portfolio como fallback.
-- Los enlaces oficiales de AWS, Microsoft Learn y Credly se muestran como `Verificar`. Los enlaces de GitHub que apuntan al perfil general se muestran como `Ver perfil`; no representan un badge oficial.
+- `site-quality.yml` instala dependencias, construye `dist` y ejecuta Lighthouse y pa11y sobre las seis rutas generadas por Astro; no sirve la raíz del repositorio.
+- `certificates.yml` construye `dist` antes de que `tools/check-certificates.js` extraiga hosts TLS. El checker usa HTML generado y, si no existe build, usa las fuentes Astro y los datos del portfolio como fallback. `api.whatsapp.com` queda explícitamente fuera del umbral de expiración porque es un endpoint de borde gestionado por WhatsApp; el enlace conserva el número y el mensaje del CV.
+- Los nombres de AWS, Microsoft Learn, Credly y GitHub se muestran como enlaces directos a sus fuentes públicas; no se añade una etiqueta distinta al nombre.
 - El manifest habilita instalación básica, pero no se anuncia soporte offline porque el portfolio todavía no incluye service worker.
 - Las páginas externas pueden devolver `403` o bloquear `HEAD` (por ejemplo Udemy). Eso no invalida automáticamente un enlace; se verifica mediante navegación normal o revisión manual antes de sustituirlo.
 
-## Diseño de verificación de credenciales
+## Diseño de enlaces de certificaciones
 
-`certifications.html.astro` incluye una guía visual de tres pasos: elegir el emisor, abrir la acción etiquetada y confirmar el resultado en la fuente correspondiente. La guía usa el mismo sistema de tarjetas e iconos del portfolio y se adapta a una columna en móvil.
+`certifications.html.astro` presenta cada nombre como enlace directo a su fuente pública, con foco visible, apertura en pestaña nueva y una guía visual de contexto para revisar el emisor. La experiencia usa el mismo sistema de tarjetas e iconos del portfolio y se adapta a una columna en móvil.

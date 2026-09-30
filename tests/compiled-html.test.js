@@ -22,7 +22,8 @@ const BUILD_PAGES = [
   { route: '/projects.html', file: 'projects.html/index.html' },
   { route: '/experience.html', file: 'experience.html/index.html' },
   { route: '/certifications.html', file: 'certifications.html/index.html' },
-  { route: '/courses.html', file: 'courses.html/index.html' }
+  { route: '/courses.html', file: 'courses.html/index.html' },
+  { route: '/about.html', file: 'about.html/index.html' }
 ];
 
 // Sólo consideramos las páginas de primer nivel; ignora restos anidados
@@ -90,7 +91,7 @@ test('todas las <img> del build tienen atributo alt (item 84)', { skip }, () => 
 test('las anclas internas del home existen como id (item 83)', { skip }, () => {
   if (built && built.missing) assert.fail(`Build incompleto: falta dist/${built.missing}`);
   const home = built.find((p) => p.route === '/').html;
-  const expectedAnchors = ['impacto', 'skills', 'proyectos', 'enseñanza', 'credenciales', 'contacto'];
+  const expectedAnchors = ['impacto', 'skills', 'proyectos', 'enseñanza', 'certificaciones', 'contacto'];
   const ids = new Set(matchAll(home, /\bid="([^"]+)"/g).map((m) => m[1]));
   const missing = expectedAnchors.filter((a) => !ids.has(a));
   assert.deepEqual(missing, [], `Anclas del home sin id correspondiente: ${missing.map((a) => '#' + a).join(', ')}`);
