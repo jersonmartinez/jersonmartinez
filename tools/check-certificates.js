@@ -8,7 +8,8 @@ const buildSources = [
   'dist/projects.html/index.html',
   'dist/experience.html/index.html',
   'dist/certifications.html/index.html',
-  'dist/courses.html/index.html'
+  'dist/courses.html/index.html',
+  'dist/about.html/index.html'
 ];
 const sourceFallback = [
   'README.md',
@@ -18,7 +19,8 @@ const sourceFallback = [
   'src/pages/projects.html.astro',
   'src/pages/experience.html.astro',
   'src/pages/certifications.html.astro',
-  'src/pages/courses.html.astro'
+  'src/pages/courses.html.astro',
+  'src/pages/about.html.astro'
 ];
 const sources = buildSources.every((file) => fs.existsSync(path.join(root, file))) ? buildSources : sourceFallback;
 const urls = new Set();
@@ -29,6 +31,10 @@ for (const source of sources) {
 }
 
 const thresholdDays = Number(process.env.TLS_MIN_DAYS || 30);
+// WhatsApp gestiona este endpoint/redirector y su certificado de borde puede rotar
+// dentro del umbral sin que el portfolio pueda renovarlo. Se mantiene como URL
+// funcional, pero no debe bloquear la auditoría de certificados propios.
+const providerManagedHosts = new Set(['api.whatsapp.com']);
 function checkHost(host) {
   return new Promise((resolve, reject) => {
     const socket = tls.connect({ host, port: 443, servername: host, rejectUnauthorized: false, timeout: 10000 }, () => {
@@ -46,7 +52,7 @@ function checkHost(host) {
 }
 
 (async () => {
-  const hosts = [...urls].map((url) => new URL(url).hostname).filter((host) => host !== 'localhost');
+  const hosts = [...urls].map((url) => new URL(url).hostname).filter((host) => host !== 'localhost' && !providerManagedHosts.has(host));
   const failures = [];
   for (const host of new Set(hosts)) {
     try {

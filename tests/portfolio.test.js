@@ -6,8 +6,8 @@ const test = require('node:test');
 const root = path.resolve(__dirname, '..');
 const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
 
-test('Astro expone las cinco rutas y el layout compartido', () => {
-  for (const page of ['src/pages/index.astro', 'src/pages/projects.html.astro', 'src/pages/experience.html.astro', 'src/pages/certifications.html.astro', 'src/pages/courses.html.astro']) {
+test('Astro expone las seis rutas y el layout compartido', () => {
+  for (const page of ['src/pages/index.astro', 'src/pages/projects.html.astro', 'src/pages/experience.html.astro', 'src/pages/certifications.html.astro', 'src/pages/courses.html.astro', 'src/pages/about.html.astro']) {
     const source = read(page);
     assert.match(source, /BaseLayout/);
     assert.match(source, /Jerson Martínez|profile|projects|experience|certifications|courses/);
@@ -16,7 +16,7 @@ test('Astro expone las cinco rutas y el layout compartido', () => {
 
 test('la identidad visual tiene wordmark, favicon y librería de iconos local', () => {
   assert.match(read('src/components/SiteHeader.astro'), /brand\/logo\.svg/);
-  assert.match(read('src/components/SiteHeader.astro'), /fa-paper-plane/);
+  assert.match(read('src/components/SiteHeader.astro'), /fa-whatsapp/);
   assert.match(read('src/layouts/BaseLayout.astro'), /brand\/favicon\.svg/);
   assert.match(read('src/styles/global.css'), /fontawesome\/css\/all\.css/);
   assert.match(read('public/brand/logo.svg'), /Jerson/);
@@ -56,10 +56,12 @@ test('cursos, canales y credenciales exponen métricas y enlaces verificables', 
   const courses = read('src/pages/courses.html.astro');
   const certifications = read('src/pages/certifications.html.astro');
   assert.match(data, /Más de 77 mil/);
-  assert.match(data, /Más de 15K/);
+  assert.match(data, /\+14K/);
+  assert.match(data, /\+5K/);
+  assert.match(data, /\+60 artículos y cursos/);
   assert.match(courses, /Mis cursos \(7\)/);
   assert.match(courses, /Más de 77 mil/);
-  assert.match(data, /Más de 15K suscriptores/);
+  assert.match(data, /\+14K/);
   assert.match(certifications, /credential-link/);
   assert.match(data, /cp\.certmetrics\.com/);
   assert.match(data, /learn\.microsoft\.com\/api\/credentials/);
@@ -74,8 +76,9 @@ test('los valores protegidos existen textualmente en portfolio.js', () => {
   const data = read('src/data/portfolio.js');
   const protectedValues = [
     'Más de 77 mil estudiantes', // Udemy
-    'Más de 15K',                // DevOpsea (deriva 'Más de 15K suscriptores')
-    '≈ 4.1K'                     // Side Master
+    '+14K',                       // DevOpsea
+    '+5K',                        // Side Master
+    '+60 artículos y cursos'      // OpenWebinars
   ];
   for (const value of protectedValues) {
     assert.ok(data.includes(value), `Valor protegido ausente o alterado: "${value}"`);
@@ -86,7 +89,7 @@ test('los valores protegidos existen textualmente en portfolio.js', () => {
 test('SEO/PWA: robots, sitemap, manifest, humans y JSON-LD existen', () => {
   assert.match(read('public/robots.txt'), /Sitemap:\s*https:\/\/www\.jersonmartinez\.com\/sitemap\.xml/);
   const sitemap = read('public/sitemap.xml');
-  for (const route of ['/', '/projects.html', '/courses.html', '/certifications.html', '/experience.html']) {
+  for (const route of ['/', '/projects.html', '/courses.html', '/certifications.html', '/experience.html', '/about.html']) {
     assert.ok(sitemap.includes(`https://www.jersonmartinez.com${route}`), `Ruta ausente en sitemap: ${route}`);
   }
   const manifest = JSON.parse(read('public/site.webmanifest'));
@@ -100,18 +103,18 @@ test('SEO/PWA: robots, sitemap, manifest, humans y JSON-LD existen', () => {
 });
 
 
-test('la verificación de credenciales distingue emisor oficial y perfil relacionado', () => {
+test('las certificaciones exponen nombres enlazados y no etiquetas accesorias', () => {
   const page = read('src/pages/certifications.html.astro');
-  assert.match(page, /verification-steps/);
-  assert.match(page, /credentialAction/);
-  assert.match(page, /Ver perfil/);
-  assert.match(page, /Comprueba cada credencial en su fuente/);
+  assert.match(page, /credential-link/);
+  assert.doesNotMatch(page, /Verificar/);
+  assert.doesNotMatch(page, /credential-verify/);
+  assert.match(page, /target="_blank"/);
 });
 
 test('el smoke de producción conserva las cinco rutas y el dominio canónico', () => {
   const smoke = read('tools/check-production.js');
   assert.match(smoke, /www\.jersonmartinez\.com/);
-  for (const route of ['/projects.html/', '/courses.html/', '/certifications.html/', '/experience.html/']) {
+  for (const route of ['/projects.html/', '/courses.html/', '/certifications.html/', '/experience.html/', '/about.html/']) {
     assert.match(smoke, new RegExp(route.replace(/[/.]/g, '\\$&')));
   }
   assert.match(smoke, /canonical/);

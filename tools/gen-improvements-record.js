@@ -100,7 +100,7 @@ const IMPROVEMENTS = [
   [92, 'SEO', 'src/pages/certifications.html.astro', 'hreflang coherente en descargas de CV (ES/EN) para señalar idioma al buscador.', '83401a4'],
   // --- 07bca7e docs/tests ---
   [41, 'Documentación', 'docs/PORTFOLIO-ASTRO.md', 'Tabla ruta desplegada -> archivo fuente -> exports de portfolio.js que consume cada página, más notas de derivación.', '07bca7e'],
-  [42, 'Contenido', 'src/data/portfolio.js', 'Comentario de cabecera declarando los VALORES PROTEGIDOS confirmados (Udemy "Más de 77 mil estudiantes", DevOpsea "Más de 15K suscriptores", Side Master "≈ 4.1K").', '07bca7e'],
+  [42, 'Contenido', 'src/data/portfolio.js', 'Comentario de cabecera declarando los VALORES PROTEGIDOS confirmados (Udemy "Más de 77 mil estudiantes", DevOpsea "+14K suscriptores", Side Master "+5K suscriptores", OpenWebinars "+60 artículos y cursos").', '07bca7e'],
   [43, 'Testing', 'tests/portfolio.test.js', 'Test que asserta que los valores protegidos existen textualmente en portfolio.js; corrige aserción obsoleta "15K+".', '07bca7e'],
   [44, 'Testing', 'tests/data-links.test.js', 'Validador de formato de todos los href de portfolio.js (https/mailto/ruta interna; sin vacíos, "#" ni placeholders).', '07bca7e'],
   [45, 'Testing', 'tests/compiled-html.test.js', 'Validador del HTML compilado: un único <h1> por página y jerarquía de headings sin saltos (VALIDATE_BUILD=1).', '07bca7e'],

@@ -31,8 +31,9 @@ const breadcrumbJsonLd = breadcrumb && {
 const footerLinks = [
   ['/projects.html', 'Proyectos'],
   ['/courses.html', 'Cursos'],
-  ['/certifications.html', 'Credenciales'],
-  ['/experience.html', 'Trayectoria']
+  ['/certifications.html', 'Certificaciones'],
+  ['/experience.html', 'Trayectoria'],
+  ['/about.html', 'Sobre mí']
 ];
 const here = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
@@ -87,14 +88,14 @@ const here = Astro.url.pathname.replace(/\/$/, '') || '/';
     <main id="contenido" tabindex="-1"><slot /></main>
     <footer class="site-footer">
       <div class="container footer-inner">
-        <div><strong>Jerson Martínez</strong><span>Cloud · automatización · gobernanza</span></div>
+        <div><strong>Jerson Martínez</strong><span>DevOps · SRE · DevSecOps · Cloud</span></div>
         <nav class="footer-links" aria-label="Secciones del sitio">
           {footerLinks.map(([href, label]) => <a href={href} class={here === href.replace(/\.html$/, '') || here === href ? 'is-current' : ''} aria-current={here === href.replace(/\.html$/, '') || here === href ? 'page' : undefined}>{label}</a>)}
         </nav>
         <nav class="footer-social" aria-label="Perfiles sociales">
           <a href={profile.github} target="_blank" rel="me noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span></a>
           <a href={profile.linkedin} target="_blank" rel="me noopener noreferrer"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="sr-only">LinkedIn</span></a>
-          <a href={`mailto:${profile.email}`} aria-label="Email"><i class="fas fa-envelope" aria-hidden="true"></i><span class="sr-only">Email</span></a>
+          <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i><span class="sr-only">WhatsApp</span></a>
         </nav>
       </div>
       <div class="container footer-legal">

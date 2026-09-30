@@ -155,7 +155,7 @@ Estos valores están cubiertos por el test `tests/portfolio.test.js`
 | 85 | #33 | `src/pages/courses.html.astro` | Descripción de cada course-card derivada del framework real del nombre del curso. | `fd0c9ce` |
 | 86 | #36 | `src/data/portfolio.js` | Métrica de YouTube derivada de un único campo subscribers (copy confirmado intacto). | `fd0c9ce` |
 | 87 | #37 | `src/pages/index.astro` | Métricas de suscriptores en teaching derivadas de youtubeChannels (fuente única). | `fd0c9ce` |
-| 88 | #42 | `src/data/portfolio.js` | Comentario de cabecera declarando los VALORES PROTEGIDOS confirmados (Udemy "Más de 77 mil estudiantes", DevOpsea "Más de 15K suscriptores", Side Master "≈ 4.1K"). | `07bca7e` |
+| 88 | #42 | `src/data/portfolio.js` | Comentario de cabecera declarando los VALORES PROTEGIDOS confirmados (Udemy "Más de 77 mil estudiantes", DevOpsea "+14K suscriptores", Side Master "+5K suscriptores", OpenWebinars "+60 artículos y cursos"). | `07bca7e` |
 | 89 | #101 | `src/pages/projects.html.astro` | Chip "{projects.length} proyectos" (conteo real desde datos). | `e1befd2` |
 
 ### SEO (16)

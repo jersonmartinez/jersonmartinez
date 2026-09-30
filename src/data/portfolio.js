@@ -5,8 +5,9 @@
 // Copiar exactos; cualquier cambio de estas cifras es una regresión de contenido
 // y el test tests/portfolio.test.js ("valores protegidos") lo bloqueará:
 //   • Udemy:       'Más de 77 mil estudiantes'
-//   • DevOpsea:    'Más de 15K suscriptores'
-//   • Side Master: '≈ 4.1K'
+//   • DevOpsea:    '+14K suscriptores'
+//   • Side Master: '+5K suscriptores'
+//   • OpenWebinars: '+60 artículos y cursos'
 // Solo se permite contenido ya integrado del CV ES/EN y del perfil público de
 // GitHub. No añadir proyectos, cifras ni enlaces sin verificar.
 // Mapa de rutas desplegadas y qué exporta consume cada una: docs/PORTFOLIO-ASTRO.md.
@@ -18,8 +19,9 @@ export const profile = {
   website: 'https://www.jersonmartinez.com',
   github: 'https://github.com/jersonmartinez',
   linkedin: 'https://www.linkedin.com/in/jersonmartinezsm/',
+  whatsapp: 'https://api.whatsapp.com/send?phone=50589630866&text=Hola%2C%20un%20gusto%20saludarte.%20Te%20escribimos%20porque%20nos%20gustar%C3%ADa%20conocerte%20mejor%20y%20explorar%20una%20posible%20colaboraci%C3%B3n.%20%C2%BFEst%C3%A1s%20disponible%20para%20conversar%3F',
+  headline: 'Ingeniero DevOps | SRE | DevSecOps | Cloud 🚀 | AWS & Azure 🏅 | Go y Python 👨‍💻',
   intro: 'Diseño plataformas cloud confiables, automatizo operaciones y convierto la gobernanza en una ventaja para los equipos.',
-  // Fuente única de verdad para la antigüedad profesional (evita cifras divergentes en distintas páginas).
   yearsExperience: 10,
   facts: [
     ['+10', 'años de experiencia', { source: 'yearsExperience' }],
@@ -39,7 +41,7 @@ export const skills = [
   { name: 'Virtualización', icon: 'fa-layer-group', items: ['VMware vSphere', 'Hyper-V', 'KVM', 'VirtualBox', 'Vagrant'] },
   { name: 'Contenedores', icon: 'fa-cubes', items: ['Docker', 'Podman', 'WSLC', 'Kubernetes'] },
   { name: 'IaC', icon: 'fa-code-branch', items: ['Terraform', 'Ansible', 'Pulumi', 'CloudFormation', 'AWS SAM'] },
-  { name: 'DevOps & CI/CD', icon: 'fa-code-commit', items: ['Git', 'GitHub Actions', 'Azure DevOps', 'Repos', 'Pipelines', 'Boards', 'Artifacts', 'Environments', 'Rundeck'] },
+  { name: 'DevOps & CI/CD', icon: 'fa-code-branch', items: ['Git', 'GitHub Actions', 'Azure DevOps', 'Repos', 'Pipelines', 'Boards', 'Artifacts', 'Environments', 'Rundeck'] },
   { name: 'Observabilidad', icon: 'fa-chart-line', items: ['Grafana', 'Prometheus', 'ELK Stack', 'Filebeat', 'Telegraf', 'Datadog', 'Zabbix', 'SolarWinds', 'Nagios'] },
   { name: 'Storage & Backup', icon: 'fa-database', items: ['AWS EBS', 'AWS FSx', 'Azure Files', 'AWS Backup', 'Azure Backup', 'Snapshots', 'Amazon Machine Images (AMI)'] },
   { name: 'Seguridad', icon: 'fa-shield-alt', items: ['ITIL', 'ISO 27001', 'DevSecOps', 'FinOps', 'IAM', 'AWS Security Hub', 'GuardDuty', 'Inspector', 'Secrets Manager'] },
@@ -182,38 +184,88 @@ export const certifications = [
   },
   {
     provider: 'GitHub',
-    logo: '/brands/github.png',
+    logo: '/brands/github.svg',
     items: [{ name: 'GitHub Foundations', href: 'https://www.credly.com/badges/3e8cf8d4-00d5-4390-a338-d3a43a6f001e/linked_in?t=sjzzbr' }, { name: 'GitHub Actions', href: 'https://github.com/jersonmartinez' }, { name: 'Gobernanza de repositorios y delivery', href: 'https://github.com/jersonmartinez' }]
   }
 ];
 
 export const youtubeChannels = [
-  { name: 'DevOpsea', logo: 'https://cdn.simpleicons.org/youtube/FF0000', subscribers: 'Más de 15K', description: 'Cursos de Go con Gin, Revel, Echo, Gorilla y Fiber.', href: 'https://www.youtube.com/@DevOpsea?sub_confirmation=1' },
-  { name: 'Side Master', logo: 'https://cdn.simpleicons.org/youtube/FF0000', subscribers: '≈ 4.1K', description: 'Sesiones prácticas de aprendizaje autodidacta y programación.', href: 'https://www.youtube.com/@SideMaster?sub_confirmation=1' }
+  { name: 'DevOpsea', logo: 'https://cdn.simpleicons.org/youtube/FF0000', subscribers: '+14K', description: 'Cursos de Go con Gin, Revel, Echo, Gorilla y Fiber.', href: 'https://www.youtube.com/@DevOpsea?sub_confirmation=1', cta: 'Ir al canal' },
+  { name: 'Side Master', logo: 'https://cdn.simpleicons.org/youtube/FF0000', subscribers: '+5K', description: 'Sesiones prácticas de aprendizaje autodidacta y programación.', href: 'https://www.youtube.com/@SideMaster?sub_confirmation=1', cta: 'Ir al canal' }
 ];
 // La etiqueta de suscriptores se deriva de un único campo (subscribers) para evitar cifras divergentes.
 youtubeChannels.forEach((channel) => { channel.metric = `${channel.subscribers} suscriptores`; });
 
 export const courses = [
-  { name: 'Desarrollo Web Go: Usando Gin, Echo, Gorilla y Fiber', href: 'https://www.udemy.com/user/side-master/' },
-  { name: 'Desarrollo Web en Go con Fiber Framework', href: 'https://www.udemy.com/user/side-master/' },
-  { name: 'Desarrollo Web en Go con Gorilla Framework', href: 'https://www.udemy.com/user/side-master/' },
-  { name: 'Desarrollo Web en Go con Echo Framework', href: 'https://www.udemy.com/user/side-master/' },
-  { name: 'Desarrollo Web en Go con Gin Framework', href: 'https://www.udemy.com/user/side-master/' },
-  { name: 'Desarrollo Web en Go con Revel Framework', href: 'https://www.udemy.com/user/side-master/' },
-  { name: 'Fundamentos de los Frameworks Web en Go', href: 'https://www.udemy.com/user/side-master/' }
+  {
+    name: 'Desarrollo Web Go: Usando Gin, Revel, Echo, Gorilla y Fiber',
+    framework: 'Gin · Revel · Echo · Gorilla · Fiber',
+    visual: 'GO',
+    summary: 'Recorrido comparativo por cinco frameworks web de Go, desde la configuración del entorno hasta servidores web ejecutables localmente.',
+    access: 'Acceso en Udemy',
+    href: 'https://www.udemy.com/course/desarrollo-web-go-usando-gin-revel-echo-gorilla-y-fiber/'
+  },
+  {
+    name: 'Desarrollo Web en Go con Fiber Framework',
+    framework: 'Fiber',
+    visual: 'FY',
+    summary: 'Aplicaciones web robustas y eficientes con Fiber, un framework de Go orientado a construir servicios rápidos.',
+    access: 'Acceso en Udemy',
+    href: 'https://www.udemy.com/course/desarrollo-web-en-go-con-fiber-framework/'
+  },
+  {
+    name: 'Desarrollo Web en Go con Gorilla Framework',
+    framework: 'Gorilla',
+    visual: 'GR',
+    summary: 'Desarrollo de aplicaciones web con el enfoque minimalista y flexible del ecosistema Gorilla para Go.',
+    access: 'Acceso en Udemy',
+    href: 'https://www.udemy.com/course/desarrollo-web-en-go-con-gorilla-framework/'
+  },
+  {
+    name: 'Desarrollo Web en Go con Echo Framework',
+    framework: 'Echo',
+    visual: 'EC',
+    summary: 'Construcción rápida de aplicaciones web y APIs RESTful con las capacidades del framework Echo.',
+    access: 'Acceso en Udemy',
+    href: 'https://www.udemy.com/course/desarrollo-web-en-go-con-echo-framework/'
+  },
+  {
+    name: 'Desarrollo Web en Go con Gin Framework',
+    framework: 'Gin',
+    visual: 'GN',
+    summary: 'APIs web rápidas y eficientes con Gin, desde un entorno sencillo hasta una base preparada para crecer.',
+    access: 'Acceso en Udemy',
+    href: 'https://www.udemy.com/course/desarrollo-web-en-go-con-gin-framework/'
+  },
+  {
+    name: 'Desarrollo Web en Go con Revel Framework',
+    framework: 'Revel',
+    visual: 'RV',
+    summary: 'Aplicaciones web robustas en Go con Revel, incluyendo la puesta en marcha de un proyecto completo.',
+    access: 'Acceso en Udemy',
+    href: 'https://www.udemy.com/course/desarrollo-web-en-go-con-revel-framework/'
+  },
+  {
+    name: 'Fundamentos de los Frameworks Web en Go',
+    framework: 'Fundamentos',
+    visual: 'GO+',
+    summary: 'Introducción comparativa a Revel, Gin, Echo, Gorilla y Fiber para entender cuándo elegir cada enfoque.',
+    access: 'Gratis según la ficha pública consultada',
+    free: true,
+    href: 'https://www.udemy.com/course/frameworks-web-en-go/'
+  }
 ];
 
 export const teaching = [
-  { name: 'Udemy', logo: 'https://cdn.simpleicons.org/udemy/A435F0', metric: 'Más de 77 mil estudiantes · 7 cursos', description: 'Cursos de DevOps y desarrollo web publicados para una comunidad internacional.', href: 'https://www.udemy.com/user/side-master/' },
-  { name: 'DevOpsea', logo: 'https://cdn.simpleicons.org/youtube/FF0000', description: 'Cursos de Go con Gin, Revel, Echo, Gorilla y Fiber.', href: 'https://www.youtube.com/@DevOpsea?sub_confirmation=1' },
-  { name: 'Side Master', logo: 'https://cdn.simpleicons.org/youtube/FF0000', description: 'Sesiones prácticas de aprendizaje autodidacta y programación.', href: 'https://www.youtube.com/@SideMaster?sub_confirmation=1' },
-  { name: 'OpenWebinars', logo: '/brands/openwebinars.svg', metric: '60+ artículos', description: 'Contenido sobre cloud, observabilidad, Git y DevOps.', href: 'https://openwebinars.net/profesores/antoniomorenosm/' }
+  { name: 'Udemy', logo: 'https://cdn.simpleicons.org/udemy/A435F0', metric: '+77K estudiantes', description: 'Cursos de DevOps y desarrollo web publicados para una comunidad internacional.', cta: 'Ver cursos', href: 'https://www.udemy.com/user/side-master/' },
+  { name: 'DevOpsea', logo: 'https://cdn.simpleicons.org/youtube/FF0000', metric: '+14K suscriptores', description: 'Cursos de Go con Gin, Revel, Echo, Gorilla y Fiber.', cta: 'Ir al canal', href: 'https://www.youtube.com/@DevOpsea?sub_confirmation=1' },
+  { name: 'Side Master', logo: 'https://cdn.simpleicons.org/youtube/FF0000', metric: '+5K suscriptores', description: 'Sesiones prácticas de aprendizaje autodidacta y programación.', cta: 'Ir al canal', href: 'https://www.youtube.com/@SideMaster?sub_confirmation=1' },
+  { name: 'OpenWebinars', logo: '/brands/openwebinars.svg', metric: '+60 artículos y cursos', description: 'Contenido sobre cloud, observabilidad, Git y DevOps.', cta: 'Ver formaciones', href: 'https://openwebinars.net/profesores/antoniomorenosm/' }
 ];
-// Las métricas de los canales de YouTube en 'teaching' se derivan de youtubeChannels (fuente única).
+// Las métricas de los canales de YouTube se mantienen alineadas con youtubeChannels.
 teaching.forEach((item) => {
   const channel = youtubeChannels.find((c) => c.name === item.name);
-  if (channel) item.metric = channel.metric;
+  if (channel) { item.metric = channel.metric; item.cta = channel.cta; }
 });
 
 export const cvLinks = [
