@@ -46,3 +46,33 @@ Estado por punto. "Hecho" significa presente en el árbol y verificado contra el
 15. **Hecho.** stylelint añadido con `stylelint-order` (orden de propiedades) y prohibición de colores
     literales (`color-no-hex`, `rgb/rgba/hsl/hsla` prohibidos) en el orquestador y en `fonts/icons`,
     integrado en el workflow `validate`. Config: `.stylelintrc.json`.
+
+## Rendimiento (39-44)
+
+39. **Hecho.** `content-visibility: auto` + `contain-intrinsic-size: auto 640px` en `.section--line`
+    (secciones bajo el pliegue) para omitir su renderizado hasta acercarse en el scroll.
+40. **Verificado — no procede fix.** `manrope-latin.woff2` es una fuente VARIABLE con eje `wght`
+    real de 200 a 800 (comprobado con fontTools). Los pesos 700/800 son másteres reales, no negrita
+    sintética; el `@font-face { font-weight: 400 800 }` es correcto. No hay defecto que corregir.
+41. **Hecho.** Caras de respaldo con `size-adjust` y métricas (`ascent/descent/line-gap-override`)
+    para Manrope (sobre Arial) y DM Mono (sobre Courier New), enlazadas en las pilas de fuente
+    (`'Manrope Fallback'`, `'DM Mono Fallback'`) para minimizar el reflow/CLS en el swap.
+42. **Hecho.** La monoespaciada pasa a `font-display: optional` (es decorativa: kickers, metadatos,
+    IDs); se conserva una sola cara por peso y su cara de respaldo con métricas.
+43. **Hecho.** `aspect-ratio: 1` y dimensiones explícitas en `.logo-pill img` y `.teaching-card img`
+    para reservar espacio y evitar CLS mientras cargan.
+44. **Pendiente (en evaluación).** Migrar imágenes a `astro:assets`. Los logos de marca son SVG
+    (astro:assets no los optimiza) y el retrato ya tiene variantes responsive manuales (avif/webp/jpg
+    a 320/640/960). Se evaluará el beneficio real antes de forzar la migración (ver checkpoint de
+    rendimiento posterior); no se cuenta como hecho hasta estar en el árbol.
+
+## Accesibilidad (45-47)
+
+45. **Hecho.** Auditoría de contraste real con axe-core 4.13 en las 6 rutas, en tema oscuro (por
+    defecto/CI) y en el tema claro opcional. Corregidas todas las violaciones: superficies translúcidas
+    heredadas re-mapeadas en claro, `.site-header` tokenizado a `--surface-overlay`, `.nav-contact`
+    pasa a `--accent-contrast` (blanco sobre cian en claro), contadores sin depender de `opacity`.
+    Resultado: 0 violaciones axe en ambos temas; pa11y WCAG2AA 6/6.
+46. **Hecho.** `.profile-social` ampliado a 2.75rem (44 px) de objetivo táctil.
+47. **Hecho.** `.cert-grid--badges` con columnas fluidas (`auto-fit`/`minmax`) bajo 1200px: la rejilla
+    de credenciales refluye a una sola columna sin scroll horizontal ni recortes a 200/400% de zoom.

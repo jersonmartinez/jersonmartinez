@@ -5,17 +5,38 @@
   font-weight: 400 800;
   src: url('/fonts/manrope-latin.woff2') format('woff2');
 }
+/* Item 41: cara de respaldo con métricas ajustadas (size-adjust + *-override) para que
+   el intercambio Manrope→sistema no provoque reflow/CLS. Métricas de @capsizecss para
+   Manrope sobre Arial. */
 @font-face {
-  font-display: swap;
+  ascent-override: 98.9%;
+  descent-override: 29.7%;
+  font-family: 'Manrope Fallback';
+  line-gap-override: 0%;
+  size-adjust: 108.75%;
+  src: local('Arial');
+}
+/* Item 42: la monoespaciada es decorativa (kickers, metadatos, IDs); font-display: optional
+   evita el bloqueo y el swap tardío. Se conserva una sola cara por peso. */
+@font-face {
+  font-display: optional;
   font-family: 'DM Mono';
   font-style: normal;
   font-weight: 400;
   src: url('/fonts/dm-mono-400-latin.woff2') format('woff2');
 }
 @font-face {
-  font-display: swap;
+  font-display: optional;
   font-family: 'DM Mono';
   font-style: normal;
   font-weight: 500;
   src: url('/fonts/dm-mono-500-latin.woff2') format('woff2');
+}
+@font-face {
+  ascent-override: 90%;
+  descent-override: 22%;
+  font-family: 'DM Mono Fallback';
+  line-gap-override: 0%;
+  size-adjust: 102%;
+  src: local('Courier New');
 }
