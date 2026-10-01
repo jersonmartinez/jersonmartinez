@@ -1,12 +1,54 @@
 version: 2
+
+# Las acciones se fijan por SHA completo con un comentario `# vX.Y.Z`.
+# Dependabot actualiza el SHA y el comentario a la vez, así que el pinning
+# inmutable no impide recibir actualizaciones.
 updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 5
+      day: monday
+      time: '06:00'
+      timezone: America/Managua
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: 'chore(deps)'
+    labels:
+      - dependencies
+      - github_actions
+    assignees:
+      - jersonmartinez
+    # Una sola PR agrupada en vez de una por acción: evita la acumulación de
+    # PRs abiertas que hubo que consolidar a mano.
+    groups:
+      github-actions:
+        patterns:
+          - '*'
+
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: monthly
-    open-pull-requests-limit: 5
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: America/Managua
+    open-pull-requests-limit: 3
+    versioning-strategy: increase
+    commit-message:
+      prefix: 'chore(deps)'
+      prefix-development: 'chore(deps-dev)'
+    labels:
+      - dependencies
+    assignees:
+      - jersonmartinez
+    groups:
+      # Parches y menores juntos: ruido mínimo y revisión rápida.
+      npm-minor-patch:
+        update-types:
+          - minor
+          - patch
+      # Los mayores llegan por separado para poder evaluar el cambio de contrato.
+      npm-major:
+        update-types:
+          - major
