@@ -5,7 +5,7 @@
   font-weight: 400 800;
   src: url('/fonts/manrope-latin.woff2') format('woff2');
 }
-/* Item 41: cara de respaldo con métricas ajustadas (size-adjust + *-override) para que
+/* cara de respaldo con métricas ajustadas (size-adjust + *-override) para que
    el intercambio Manrope→sistema no provoque reflow/CLS. Métricas de @capsizecss para
    Manrope sobre Arial. */
 @font-face {
@@ -16,7 +16,7 @@
   size-adjust: 108.75%;
   src: local('Arial');
 }
-/* Item 42: la monoespaciada es decorativa (kickers, metadatos, IDs); font-display: optional
+/* la monoespaciada es decorativa (kickers, metadatos, IDs); font-display: optional
    evita el bloqueo y el swap tardío. Se conserva una sola cara por peso. */
 @font-face {
   font-display: optional;

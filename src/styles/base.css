@@ -1,14 +1,14 @@
-/* Item 32: transiciones de navegación entre documentos cuando el navegador las soporta. */
+/* transiciones de navegación entre documentos cuando el navegador las soporta. */
 @view-transition { navigation: auto; }
 * { box-sizing: border-box; }
-/* Item 38: sin scroll-behavior global; el desplazamiento suave se dispara por interacción
+/* sin scroll-behavior global; el desplazamiento suave se dispara por interacción
    desde el script (anclas, rail, paleta), respetando prefers-reduced-motion. */
 html { scroll-behavior: auto; }
 body { background: var(--ink); color: var(--text); font-family: 'Manrope', 'Manrope Fallback', ui-sans-serif, system-ui, sans-serif; line-height: 1.65; margin: 0; min-width: 320px; }
 body::before { background: radial-gradient(circle at 82% 3%, var(--glow-cyan), transparent 31rem), radial-gradient(circle at 7% 36%, var(--glow-lime), transparent 28rem); content: ''; inset: 0; pointer-events: none; position: fixed; z-index: -2; }
-/* Item 17: la rejilla decorativa se limita a las cabeceras hero (home y páginas internas)
+/* la rejilla decorativa se limita a las cabeceras hero (home y páginas internas)
    en vez de cubrir todo el viewport de forma fija. Lenguaje gráfico de infraestructura
-   (Item 18): la rejilla evoca topología/diagramas de plataforma. */
+   : la rejilla evoca topología/diagramas de plataforma. */
 .hero, .page-hero { isolation: isolate; position: relative; }
 .hero::before, .page-hero::before { background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px); background-size: 3.25rem 3.25rem; content: ''; inset: 0; mask-image: radial-gradient(circle at 78% 18%, #000, transparent 70%); opacity: .5; pointer-events: none; position: absolute; z-index: -1; }
 img { display: block; max-width: 100%; }
@@ -16,13 +16,13 @@ a { color: inherit; }
 button { cursor: pointer; font: inherit; }
 ::selection { background: var(--cyan); color: var(--ink); }
 :focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: 4px; }
-/* Item 5: foco de teclado consistente y perceptible vía token --focus-ring-*. */
+/* foco de teclado consistente y perceptible vía token --focus-ring-*. */
 a:focus-visible, button:focus-visible, .filter-button:focus-visible, .skill-tab:focus-visible, [role='tab']:focus-visible, .card-link:focus-visible, .credential-badge:focus-visible, .credential-more:focus-visible, .card[href]:focus-visible {
   border-radius: var(--radius-sm);
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }
-/* Item 26: bloquea el scroll del body mientras el menú móvil está abierto. */
+/* bloquea el scroll del body mientras el menú móvil está abierto. */
 body.nav-locked { overflow: hidden; }
 .container { margin-inline: auto; width: min(calc(100% - 2.25rem), var(--max)); }
 .skip-link { background: var(--cyan); border-radius: var(--radius-pill); color: var(--accent-contrast); left: .8rem; padding: var(--space-xs) var(--space-sm); position: fixed; top: .8rem; transform: translateY(-150%); transition: transform var(--dur-slow) var(--ease-standard); z-index: 99; }
@@ -37,7 +37,11 @@ body.nav-locked { overflow: hidden; }
    pasó a tener cuatro ítems flex y la marca se encogía de 158 px a 67 px (medido). */
 .brand { color: var(--text); display: inline-flex; flex: 0 0 auto; line-height: 0; text-decoration: none; width: 9.9rem; }
 .brand svg { height: auto; width: 100%; }
-.site-nav { align-items: center; display: flex; flex: 0 1 auto; gap: .3rem; min-width: 0; }
+/* El nav NO se encoge por debajo de su contenido: con flex: 0 1 auto y min-width: 0 se
+   comprimía y sus hijos desbordaban la caja, pintando el CTA de WhatsApp 35 px por encima
+   del grupo de controles (medido a 1440 px). El ajuste por ancho se hace con los puntos de
+   corte, no dejando que la caja colapse. */
+.site-nav { align-items: center; display: flex; flex: 0 0 auto; gap: .3rem; }
 .site-nav a { align-items: center; border: 1px solid transparent; border-radius: var(--radius-md); color: var(--muted); display: inline-flex; font-size: var(--fs-sm); font-weight: 700; gap: .48rem; padding: .72rem .76rem; text-decoration: none; transition: color var(--dur-base) var(--ease-standard), background var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard), transform var(--dur-base) var(--ease-standard); white-space: nowrap; }
 .site-nav a .icon { color: var(--cyan); font-size: var(--fs-xs); text-align: center; width: 1rem; }
 .site-nav a:hover, .site-nav a.is-current { background: var(--surface-tint-cyan); border-color: var(--line); color: var(--text); transform: translateY(-1px); }
@@ -50,14 +54,14 @@ body.nav-locked { overflow: hidden; }
 .nav-toggle { background: transparent; border: 1px solid var(--line); border-radius: var(--radius-md); display: none; height: 2.8rem; padding: var(--space-xs); width: 2.8rem; }
 .nav-toggle span { background: var(--text); display: block; height: 2px; margin: 4px 0; }
 .nav-toggle:focus-visible { border-color: var(--cyan); outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
-/* Item 8: botón conmutador de tema, alineado con el estilo de la navegación. */
+/* botón conmutador de tema, alineado con el estilo de la navegación. */
 .theme-toggle { align-items: center; background: transparent; border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--muted); display: inline-flex; font-size: var(--fs-sm); font-weight: 700; gap: .48rem; min-height: 2.6rem; padding: .55rem .7rem; transition: color var(--dur-base) var(--ease-standard), background var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard); white-space: nowrap; }
 .theme-toggle .icon { color: var(--cyan); font-size: .9rem; }
 .theme-toggle:hover { background: var(--surface-tint-cyan); border-color: var(--line-strong); color: var(--text); }
 .theme-toggle[hidden] { display: none; }
 
 .sr-only { border: 0; clip: rect(0, 0, 0, 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; white-space: nowrap; width: 1px; }
-/* Item 16: iconos SVG inline (sprite) que reemplazan el webfont de Font Awesome.
+/* iconos SVG inline (sprite) que reemplazan el webfont de Font Awesome.
    Se dimensionan como un glyph de texto: 1em, color heredado (currentColor). */
 .icon { display: inline-block; fill: currentColor; height: 1em; line-height: 1; vertical-align: -.125em; width: 1em; }
 .icon-sprite { height: 0; overflow: hidden; position: absolute; width: 0; }
@@ -67,6 +71,14 @@ body.nav-locked { overflow: hidden; }
    depender de un tooltip ::after sólo por hover, inalcanzable en táctil y para lectores. */
 .profile-social::after { background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-xs); bottom: calc(100% + .55rem); box-shadow: var(--tooltip-shadow); color: var(--text); content: attr(data-tooltip); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-3xs); font-weight: 500; left: 50%; opacity: 0; padding: .35rem .5rem; pointer-events: none; position: absolute; transform: translate(-50%, .25rem); transition: opacity var(--dur-base) var(--ease-standard), transform var(--dur-base) var(--ease-standard); white-space: nowrap; z-index: 4; }
 .profile-social:hover::after, .profile-social:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+/* El rótulo sólo vivía en un tooltip ::after por hover, de modo que en táctil el icono
+   quedaba sin nombre visible. Donde no hay hover, el nombre se muestra como texto. */
+.profile-social-name { border: 0; clip: rect(0, 0, 0, 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; white-space: nowrap; width: 1px; }
+@media (hover: none) {
+  .profile-social { gap: .5rem; grid-auto-flow: column; padding-inline: .7rem; width: auto; }
+  .profile-social::after { content: none; }
+  .profile-social-name { clip: auto; font-size: var(--fs-2xs); font-weight: 700; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+}
 .profile-links { display: flex; flex-wrap: wrap; gap: .55rem; padding: var(--space-xs); }
 
 

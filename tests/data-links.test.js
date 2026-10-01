@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
 
-// Item 44: validador de enlaces de datos. Comprueba que todos los href
+// validador de enlaces de datos. Comprueba que todos los href
 // declarados en src/data/portfolio.js (repos GitHub, Udemy, YouTube,
 // credenciales, CV) tienen un formato válido y que no queda ningún enlace
 // vacío o apuntando a '#'. No hace peticiones de red: valida sólo el formato.

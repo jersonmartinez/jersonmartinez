@@ -1,4 +1,4 @@
-/* Item 34: paleta de comandos accesible. Script externo (CSP estricta sin unsafe-inline).
+/* paleta de comandos accesible. Script externo (CSP estricta sin unsafe-inline).
    - Se abre con Cmd/Ctrl+K o con el botón [data-command-open] (sólo visible con JS).
    - Diálogo modal con focus trap, Escape para cerrar, restaura el foco al disparador.
    - Degradación sin JS: el diálogo permanece oculto ([hidden]); la navegación normal sigue

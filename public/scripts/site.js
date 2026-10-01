@@ -71,7 +71,7 @@
       panel.hidden = !active;
       panel.classList.toggle('is-active', active);
     });
-    // Item 35: refleja la tab activa en la URL (?skill=slug) sin ensuciar el historial.
+    // refleja la tab activa en la URL (?skill=slug) sin ensuciar el historial.
     if (updateUrl && tabs[index]) {
       const slug = tabs[index].getAttribute('data-skill-slug') || String(index);
       const url = new URL(location.href);
@@ -90,7 +90,7 @@
       if (next !== index) { event.preventDefault(); activateSkill(next, true, true); }
     });
   });
-  // Item 35: restaura la tab desde la URL al cargar.
+  // restaura la tab desde la URL al cargar.
   if (tabs.length) {
     const requestedSkill = new URL(location.href).searchParams.get('skill');
     if (requestedSkill) {
@@ -156,7 +156,7 @@
   window.addEventListener('hashchange', focusHashProject);
   focusHashProject();
 
-  /* Item 8: conmutador de tema persistente y accesible. El botón sólo se muestra con JS
+  /* conmutador de tema persistente y accesible. El botón sólo se muestra con JS
      (progressive enhancement); sin JS el sitio sigue prefers-color-scheme. */
   const themeToggle = document.querySelector('[data-theme-toggle]');
   if (themeToggle) {
@@ -202,7 +202,7 @@
     systemLight.addEventListener('change', () => { if (!localStorage.getItem('theme')) reflect(false); });
   }
 
-  /* Item 38: desplazamiento suave disparado por interacción (no global). Un clic en un enlace
+  /* desplazamiento suave disparado por interacción (no global). Un clic en un enlace
      interno de ancla hace scroll suave salvo que el usuario prefiera movimiento reducido. */
   document.addEventListener('click', (event) => {
     const link = event.target.closest('a[href^="#"]');
@@ -218,7 +218,7 @@
     target.focus({ preventScroll: true });
   });
 
-  /* Item 36: indicador de progreso de lectura en páginas largas. Barra fija alimentada por el
+  /* indicador de progreso de lectura en páginas largas. Barra fija alimentada por el
      scroll; se oculta en páginas cortas y respeta prefers-reduced-motion (sin transición). */
   const progressBar = document.querySelector('[data-scroll-progress]');
   if (progressBar) {
@@ -238,7 +238,7 @@
     }
   }
 
-  /* Item 33: prefetch de rutas internas DISPARADO POR INTENCIÓN (hover/focus), no en la carga
+  /* prefetch de rutas internas DISPARADO POR INTENCIÓN (hover/focus), no en la carga
      inicial. Un prefetch estático de varias páginas competía con la imagen LCP y empeoraba el
      Largest Contentful Paint; hacerlo al pasar el ratón/foco mantiene el beneficio sin coste en el
      primer render. CSP-safe (inyecta <link rel="prefetch">, no ejecuta scripts remotos). */

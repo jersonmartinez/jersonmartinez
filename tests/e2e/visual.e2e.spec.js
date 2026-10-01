@@ -1,6 +1,6 @@
 const { test } = require('@playwright/test');
 
-// Item 50: comparación visual automática por PR. Captura screenshots viewport-only de las rutas
+// comparación visual automática por PR. Captura screenshots viewport-only de las rutas
 // y de estados clave (tema claro, paleta) como ARTEFACTOS del PR (se suben en e2e.yml). No se usa
 // un gate de pixel-diff duro porque el render de fuentes varía entre entornos y lo volvería
 // inestable; el artefacto permite la comparación visual humana en cada PR.

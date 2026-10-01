@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
 
-// Item 49: aserciones sobre el DOM COMPILADO (dist/), no regex sobre el código fuente.
+// aserciones sobre el DOM COMPILADO (dist/), no regex sobre el código fuente.
 // Estas pruebas verifican el resultado renderizado real que antes se inferia leyendo src/*.
 // Se ejecutan sólo tras `npm run build` con VALIDATE_BUILD=1 (igual que compiled-html.test.js).
 

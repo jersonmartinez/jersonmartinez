@@ -21,9 +21,9 @@
 
 
 
-/* Item 28: estado hover/focus perceptible y uniforme para cards; el foco de teclado recibe el mismo tratamiento que el hover. */
+/* estado hover/focus perceptible y uniforme para cards; el foco de teclado recibe el mismo tratamiento que el hover. */
 .card--interactive:hover, .card--interactive:focus-within { border-color: var(--line-strong); box-shadow: var(--elevation-2); transform: translateY(-3px); }
-/* Item 19: estado activo (pulsación) y no interactivo documentados y perceptibles. */
+/* estado activo (pulsación) y no interactivo documentados y perceptibles. */
 .card--interactive:active { box-shadow: var(--elevation-1); transform: translateY(-1px); }
 .card[aria-disabled='true'], .card--static { cursor: default; opacity: .85; }
 .card-label { color: var(--cyan); display: block; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-2xs); letter-spacing: .04em; margin-bottom: var(--space-sm); text-transform: uppercase; }
@@ -99,18 +99,22 @@
 .filter-bar { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
 .filter-button { background: transparent; border: 1px solid var(--line); border-radius: var(--radius-sm); color: var(--muted); font-size: .76rem; padding: .55rem .7rem; }
 .filter-button:hover, .filter-button.is-active { background: var(--cyan); border-color: var(--cyan); color: var(--ink); }
-.filter-count { font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .72rem; opacity: .7; }
-/* Item 14: contador accesible del filtro (aria-live). Item 13: estado vacío cuando ninguna card coincide. */
+/* Antes aplicaba opacity .7 sobre el texto, lo que degrada el contraste que el token ya
+   garantiza; el tema claro tenía que deshacerlo con dos parches. Hereda el color del
+   botón (currentColor): atenuado cuando está inactivo y sobre fondo cian cuando está
+   activo, donde fijarlo a --muted fallaba el contraste (detectado por axe). */
+.filter-count { color: currentColor; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-2xs); }
+/* contador accesible del filtro (aria-live). estado vacío cuando ninguna card coincide. */
 .filter-status { color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .72rem; margin: -0.6rem 0 1.2rem; }
-.repo-empty { background: var(--surface-soft); border: 1px dashed var(--line-strong); border-radius: var(--radius); color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .82rem; margin-top: 1.2rem; padding: 1.4rem 1.6rem; text-align: center; }
+.repo-empty { background: var(--surface-soft); border: 1px dashed var(--line-strong); border-radius: var(--radius-lg); color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .82rem; margin-top: 1.2rem; padding: 1.4rem 1.6rem; text-align: center; }
 .repo-empty[hidden] { display: none; }
 .repo-grid { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.repo-card[data-hidden='true'] { display: none; }
+/* Un solo mecanismo de ocultado por filtro: el atributo [hidden]. */
 .repo-card[hidden] { display: none; }
 .repo-card h2, .repo-card h3 { font-size: var(--fs-h3-lg); letter-spacing: -.035em; }
 .repo-kind { color: var(--lime); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .68rem; }
 
-.contact-panel { align-items: center; background: linear-gradient(120deg, var(--surface-tint-cyan-strong), var(--surface-tint-lime)); border: 1px solid var(--line-strong); border-radius: var(--radius); display: flex; gap: 2rem; justify-content: space-between; padding: 2rem; }
+.contact-panel { align-items: center; background: linear-gradient(120deg, var(--surface-tint-cyan-strong), var(--surface-tint-lime)); border: 1px solid var(--line-strong); border-radius: var(--radius-lg); display: flex; gap: 2rem; justify-content: space-between; padding: 2rem; }
 .contact-panel h2 { font-size: clamp(1.8rem, 4vw, 3.1rem); max-width: 15ch; }
 .contact-actions { display: flex; flex-wrap: wrap; gap: .7rem; }
 .site-footer { border-top: 1px solid var(--line); padding: 2.5rem 0; }
@@ -130,25 +134,21 @@
   .hero h1 { font-size: clamp(2.6rem, 4.2vw, 3.8rem); }
   .hero-facts { gap: .6rem; }
 }
-/* Corrección de layout del header: los controles de tema y paleta (puntos 8 y 34) añaden
-   ~230 px a la fila y "Sobre mí" se partía en dos líneas ya a 1280 px. Las etiquetas de
-   navegación nunca se parten (white-space) y por debajo de 1320 px los dos controles pasan
-   a modo icono; su nombre accesible lo aporta aria-label, no el texto oculto. */
+/* Los controles de tema y paleta van SIEMPRE en modo icono. El punto de corte anterior
+   (por debajo de 1320 px) no servía: la fila del header vive dentro de .container, cuyo
+   ancho está topado en --max (1180 px), así que un viewport más ancho no le da más sitio.
+   Por encima de 1320 px reaparecían las etiquetas y la fila desbordaba 51 px (medido a
+   1340, 1440 y 1920 px). Su nombre accesible lo aporta aria-label, no un texto visible. */
+.theme-toggle-label, .command-open-label { display: none; }
 @media (max-width: 1320px) {
   .header-inner { gap: 1.25rem; }
-  .theme-toggle-label, .command-open-label, .command-open-kbd { display: none; }
   .site-nav a { padding-inline: .62rem; }
-}
-@media (min-width: 681px) and (max-width: 1080px) {
-  .site-nav { gap: .1rem; }
-  .site-nav a { font-size: .78rem; padding-inline: .48rem; }
-  .site-nav .nav-contact { margin-left: .3rem; }
 }
 /* El colapso del header sube de 820 a 1000 px. Al sacar los controles de tema y paleta del
    <nav> para que sigan alcanzables en móvil, la fila pasó a tener cuatro ítems flex que no
    se comprimen, y entre 821 y 999 px desbordaba (medido: 75 px a 840 px, 15 px a 900 px).
    A partir de 1000 px la navegación completa cabe sin desbordar. */
-@media (max-width: 999px) {
+@media (max-width: 1199px) {
   .nav-toggle { display: block; }
   .site-nav { align-items: stretch; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--elevation-3); display: none; flex-direction: column; left: .75rem; padding: .65rem; position: absolute; right: .75rem; top: calc(100% + 1px); }
   .site-nav.is-open { display: flex; }
@@ -199,8 +199,11 @@
   .hero-actions .button { width: 100%; }
 }
 /* Suelo de diseño: body tiene min-width 320 px y la marca de 12rem junto a los tres
-   controles desbordaba 4 px a ese ancho (medido). Se estrecha la marca, no se oculta
-   ningún control. */
+   controles desbordaba a ese ancho (medido). Se estrecha la marca y se retira la pista
+   del atajo de teclado, que en un viewport táctil de 320 px no es accionable. */
+@media (max-width: 560px) {
+  .command-open-kbd { display: none; }
+}
 @media (max-width: 420px) {
   .brand { width: 8.75rem; }
   .header-controls { gap: .3rem; }
@@ -213,14 +216,14 @@
   .button:hover, .site-nav a:hover, .site-nav a.is-current, .profile-social:hover, .profile-social:focus-visible, .credential-badge:hover { transform: none !important; }
 }
 
-/* Item 86: pie legal con año dinámico y enlace de vuelta arriba. */
+/* pie legal con año dinámico y enlace de vuelta arriba. */
 .footer-legal { align-items: center; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: .75rem; justify-content: space-between; margin-top: 1.4rem; padding-top: 1.1rem; }
 .footer-copy { color: var(--muted); font-size: .78rem; margin: 0; }
 .footer-top { align-items: center; color: var(--muted); display: inline-flex; font-size: var(--fs-sm); font-weight: 700; gap: .4rem; min-height: 1.75rem; text-decoration: none; transition: color var(--dur-base) var(--ease-standard); }
 .footer-top:hover, .footer-top:focus-visible { color: var(--cyan); }
 @media (max-width: 560px) { .footer-legal { align-items: flex-start; flex-direction: column; } }
 
-/* Item 87: estilos de impresión — quita fondos decorativos, expande enlaces y ahorra tinta. */
+/* estilos de impresión — quita fondos decorativos, expande enlaces y ahorra tinta. */
 @media print {
   body { background: #fff; color: #000; }
   body::before, body::after, .hero::before, .page-hero::before { display: none !important; }
@@ -234,7 +237,7 @@
   .section { padding-block: 1rem; }
 }
 
-/* Item 88: migas de pan visibles y accesibles en páginas internas. */
+/* migas de pan visibles y accesibles en páginas internas. */
 .breadcrumb { margin: 0 0 1rem; }
 .breadcrumb ol { align-items: center; color: var(--muted); display: flex; flex-wrap: wrap; font-size: .78rem; gap: .45rem; list-style: none; margin: 0; padding: 0; }
 .breadcrumb li { align-items: center; display: inline-flex; gap: .45rem; }
@@ -243,7 +246,7 @@
 .breadcrumb a:hover, .breadcrumb a:focus-visible { color: var(--cyan); }
 .breadcrumb [aria-current='page'] { color: var(--text); font-weight: 700; }
 
-/* Item 99: enlace de pie de la página actual. */
+/* enlace de pie de la página actual. */
 .footer-links a.is-current { color: var(--cyan); font-weight: 700; }
 .footer-links a { transition: color var(--dur-base) var(--ease-standard); }
 
@@ -251,7 +254,7 @@
    Antes eran 84 px fijos frente a un header de 89 px, de modo que el encabezado enlazado
    quedaba parcialmente tapado. Un solo origen de verdad para secciones y :target. */
 section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
-.repo-card:target { border-radius: var(--radius); outline: 2px solid var(--lime); outline-offset: 4px; }
+.repo-card:target { border-radius: var(--radius-lg); outline: 2px solid var(--lime); outline-offset: 4px; }
 
 /* Post-merge design: makes credential verification a visible, scannable journey. */
 .verification-steps { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; margin: 0; padding: 0; }
@@ -286,7 +289,7 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
    izquierdo; se centra en la columna del medio en vez de dejarla huérfana. */
 .course-grid .course-card:last-child:nth-child(3n + 1) { grid-column: 2; }
 .course-card { display: flex; flex-direction: column; min-height: 100%; overflow: hidden; padding: 0; }
-.course-visual { background: linear-gradient(135deg, rgba(103,232,249,.14), rgba(196,242,105,.06)); border-bottom: 1px solid var(--line); min-height: 10.8rem; overflow: hidden; position: relative; }
+.course-visual { background: linear-gradient(135deg, var(--artwork-wash-a), var(--artwork-wash-b)); border-bottom: 1px solid var(--line); min-height: 10.8rem; overflow: hidden; position: relative; }
 .course-visual svg { display: block; height: 100%; min-height: 10.8rem; width: 100%; }
 .course-access { background: var(--lime); border: 1px solid var(--ring-lime-strong); border-radius: var(--radius-pill); color: var(--ink); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .62rem; font-weight: 800; padding: .35rem .55rem; position: absolute; right: .85rem; text-transform: uppercase; top: .85rem; }
 .course-card-body { display: flex; flex: 1; flex-direction: column; padding: 1.35rem; }
@@ -334,6 +337,9 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 
 .project-case { display: flex; flex-direction: column; scroll-margin-top: var(--anchor-offset); }
 .project-case-head { display: grid; gap: .65rem; }
+/* Tipo y tema del proyecto en UNA sola fila: apilados competian con el titulo. */
+.project-case-tagline { align-items: baseline; display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; }
+.project-case-tagline .project-theme::before { color: var(--line-strong); content: '·'; margin-right: .5rem; }
 .project-case-head h3 { font-size: var(--fs-h3-lg); margin: .2rem 0 0; }
 .project-theme { color: var(--cyan); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .66rem; }
 .project-case-story { display: grid; gap: .65rem; margin: 1.25rem 0 0; }
@@ -350,7 +356,7 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 
 .course-path-step { color: var(--cyan); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .62rem; font-weight: 500; left: .85rem; position: absolute; top: .85rem; }
 .course-visual-base { fill: #0a1b2d; }
-.course-grid-line { fill: none; stroke: rgba(168,187,204,.18); stroke-width: 1; }
+.course-grid-line { fill: none; stroke: var(--artwork-grid); stroke-width: 1; }
 .course-gradient-start { stop-color: #67e8f9; }
 .course-gradient-end { stop-color: #c4f269; }
 .course-mountain { opacity: .18; }
@@ -415,7 +421,7 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .timeline-context .icon { color: var(--cyan); margin-top: .25rem; }
 .timeline-links { display: flex; flex-wrap: wrap; gap: .75rem; }
 
-.about-portrait { aspect-ratio: 16 / 8; border-radius: var(--radius) var(--radius) 0 0; display: block; margin: -1.45rem -1.45rem .5rem; overflow: hidden; }
+.about-portrait { aspect-ratio: 16 / 8; border-radius: var(--radius-lg) var(--radius-lg) 0 0; display: block; margin: -1.45rem -1.45rem .5rem; overflow: hidden; }
 .about-portrait img { height: 100%; object-fit: cover; object-position: center 28%; width: 100%; }
 .about-results a { color: var(--cyan); }
 .stack-groups { display: grid; gap: .55rem; }
@@ -429,7 +435,7 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 /* Navegación progresiva: sin JS el menú móvil permanece visible y usable.
    Mismo punto de corte que el colapso del header (1000 px); si no, en la franja colapsada
    el desplegable quedaría display:none y la navegación sería inalcanzable sin JS. */
-@media (max-width: 999px) {
+@media (max-width: 1199px) {
   html:not(.js) .header-inner { align-items: flex-start; flex-direction: column; padding-block: .8rem; }
   html:not(.js) .nav-toggle { display: none; }
   html:not(.js) .site-nav { box-shadow: none; display: flex; position: static; width: 100%; }
@@ -480,20 +486,20 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .footer-social a { border: 1px solid transparent; border-radius: var(--radius-md); display: grid; height: 2.75rem; place-items: center; width: 2.75rem; }
 .footer-social a:hover, .footer-social a:focus-visible { background: var(--surface-raised); border-color: var(--line-strong); }
 
-/* Item 39: content-visibility bajo el pliegue para saltar el renderizado de secciones no visibles.
+/* content-visibility bajo el pliegue para saltar el renderizado de secciones no visibles.
    contain-intrinsic-size reserva alto estimado y evita saltos de scroll. */
 .section--line { contain-intrinsic-size: auto 640px; content-visibility: auto; }
-/* Item 43: dimensiones explícitas y aspect-ratio en los logos del ecosistema para reservar
+/* dimensiones explícitas y aspect-ratio en los logos del ecosistema para reservar
    espacio y evitar CLS mientras cargan. */
 .logo-pill img { aspect-ratio: 1; height: 1.75rem; object-fit: contain; width: 1.75rem; }
 .teaching-card img { aspect-ratio: 1; }
-/* Item 47: reflujo y zoom 200/400% en la rejilla de credenciales: columnas fluidas que
+/* reflujo y zoom 200/400% en la rejilla de credenciales: columnas fluidas que
    colapsan a una sola sin scroll horizontal ni recortes. */
 @media (max-width: 1200px) {
   .cert-grid--badges { grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
 }
 
-/* Item 8 + 45: en tema claro explícito, re-mapea las superficies translúcidas heredadas
+/* en tema claro explícito, re-mapea las superficies translúcidas heredadas
    (literales oscuros) a equivalentes claros para mantener el contraste AA del texto atenuado.
    Solo aplica con data-theme='light'; el modo oscuro por defecto queda intacto. */
 :root[data-theme='light'] .skills-explorer,
@@ -506,7 +512,6 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 :root[data-theme='light'] .credential-copy small { color: var(--muted); }
 :root[data-theme='light'] .credential-verify,
 :root[data-theme='light'] .credential-verify .icon { color: var(--lime); }
-:root[data-theme='light'] .filter-count { color: var(--muted); opacity: 1; }
 :root[data-theme='light'] .site-nav a.is-current,
 :root[data-theme='light'] .site-nav a:hover { background: var(--surface-tint-cyan-strong); color: var(--text); }
 :root[data-theme='light'] .filter-button.is-active,
@@ -518,7 +523,7 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 :root[data-theme='light'] .course-path-step { background: #0a1b2d; color: #f4f8fb; }
 :root[data-theme='light'] .course-visual-copy span { color: #d6e1e9; }
 
-/* Item 8 + 45: en tema claro, el header necesita un fondo OPACO para que axe (y el usuario)
+/* en tema claro, el header necesita un fondo OPACO para que axe (y el usuario)
    calculen el contraste del texto de navegación sobre blanco, no sobre el cuerpo oscuro que
    queda detrás de un fondo semitransparente. Igual para la etiqueta del conmutador y contadores. */
 :root[data-theme='light'] .site-header { background: #ffffff; }
@@ -526,12 +531,8 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 :root[data-theme='light'] .theme-toggle,
 :root[data-theme='light'] .theme-toggle-label { color: #1f2d3d; }
 :root[data-theme='light'] .site-nav a.is-current { background: var(--surface-tint-cyan-strong); color: #0b1b2d; }
-:root[data-theme='light'] .filter-button.is-active .filter-count,
-:root[data-theme='light'] .filter-button.is-active .filter-count[aria-hidden='true'] { color: #e6f4f9; opacity: 1; }
-:root[data-theme='light'] .filter-count,
-:root[data-theme='light'] .filter-count[aria-hidden='true'] { color: #2c3a49; opacity: 1; }
 
-/* Item 20: cifras tabulares en métricas y credential IDs para alineación vertical consistente. */
+/* cifras tabulares en métricas y credential IDs para alineación vertical consistente. */
 .hero-facts strong,
 .impact-item strong,
 .learning-summary .card > strong,
@@ -541,25 +542,25 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .teaching-metrics strong,
 .teaching-metric { font-variant-numeric: tabular-nums; }
 
-/* Item 21: separadores y bordes derivados con color-mix() desde tokens, con fallback para
+/* separadores y bordes derivados con color-mix() desde tokens, con fallback para
    navegadores sin color-mix (la declaración previa var(--line) permanece como respaldo). */
 @supports (border-top-color: color-mix(in srgb, red, blue)) {
   .section--line { border-top-color: color-mix(in srgb, var(--cyan) 22%, transparent); }
   .timeline-card header { border-bottom: 1px solid color-mix(in srgb, var(--line-strong) 40%, transparent); }
 }
 
-/* Item 23: backdrop-filter sólo cuando el navegador lo soporta; si no, fondo sólido de respaldo. */
+/* backdrop-filter sólo cuando el navegador lo soporta; si no, fondo sólido de respaldo. */
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .site-header { backdrop-filter: blur(18px); background: var(--surface-overlay); }
 }
 
-/* Item 24: respeta prefers-reduced-transparency usando superficies totalmente opacas. */
+/* respeta prefers-reduced-transparency usando superficies totalmente opacas. */
 @media (prefers-reduced-transparency: reduce) {
   .site-header { backdrop-filter: none; background: var(--surface); }
   .skills-explorer, .skills-panel, .card, .credential-badge, .logo-pill, .profile-panel, .contact-panel { background: var(--surface-raised); }
 }
 
-/* Item 22: estilos de la guía visual interna (/guia-visual). Clases dedicadas para evitar
+/* estilos de la guía visual interna (/guia-visual). Clases dedicadas para evitar
    estilos inline bajo CSP estricta. */
 .guide-swatches { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); list-style: none; margin: 0; padding: 0; }
 .guide-swatch { display: grid; gap: .4rem; }
@@ -610,13 +611,13 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .guide-cards-sample { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 680px) { .guide-cards-sample { grid-template-columns: 1fr; } }
 
-/* Item 36: indicador de progreso de lectura fijo bajo el borde superior en páginas largas. */
+/* indicador de progreso de lectura fijo bajo el borde superior en páginas largas. */
 .scroll-progress { background: transparent; height: 3px; left: 0; position: fixed; right: 0; top: 0; z-index: 40; }
 .scroll-progress[hidden] { display: none; }
 .scroll-progress-bar { background: linear-gradient(90deg, var(--cyan), var(--lime)); display: block; height: 100%; transform: scaleX(0); transform-origin: left; width: 100%; }
 @media (prefers-reduced-motion: no-preference) { .scroll-progress-bar { transition: transform var(--dur-fast) linear; } }
 
-/* Item 34: botón disparador y diálogo de la paleta de comandos. */
+/* botón disparador y diálogo de la paleta de comandos. */
 .command-open { align-items: center; background: transparent; border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--muted); display: inline-flex; font-size: var(--fs-sm); font-weight: 700; gap: .45rem; min-height: 2.6rem; padding: .55rem .7rem; transition: border-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard); white-space: nowrap; }
 .command-open .icon { color: var(--cyan); }
 .command-open:hover { border-color: var(--line-strong); color: var(--text); }
@@ -634,7 +635,7 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .command-empty { color: var(--muted); margin: 1rem 0 0; padding: .65rem .75rem; }
 .command-empty[hidden] { display: none; }
 
-/* Item 25: bloque de código con resaltado por clases (sin estilos inline, CSP-safe). */
+/* bloque de código con resaltado por clases (sin estilos inline, CSP-safe). */
 .codeblock { border: 1px solid var(--line); border-radius: var(--radius-md); margin: 0; overflow: hidden; }
 .codeblock-caption { align-items: center; background: var(--surface-sunken); border-bottom: 1px solid var(--line); color: var(--muted); display: flex; flex-wrap: wrap; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-2xs); gap: .6rem; padding: .6rem .85rem; }
 .codeblock-lang { background: var(--surface-tint-cyan-strong); border-radius: var(--radius-xs); color: var(--cyan); padding: .1rem .4rem; text-transform: uppercase; }
@@ -651,7 +652,7 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .codeblock-pre .tok-string { color: var(--lime); }
 .codeblock-pre .tok-number { color: var(--orange); }
 
-/* Item 27/28: diagrama de arquitectura y cadena de entrega accesibles. El SVG es decorativo
+/* diagrama de arquitectura y cadena de entrega accesibles. El SVG es decorativo
    (aria-hidden) y la alternativa textual estructurada vive en una lista descrita por aria. */
 .evidence-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .evidence-figure { border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
@@ -669,12 +670,12 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .diagram-accent { fill: none; stroke: var(--lime); stroke-dasharray: 4 3; stroke-width: 1.5; }
 @media (max-width: 820px) { .evidence-grid { grid-template-columns: 1fr; } }
 
-/* Item 25/45: en tema claro, los metadatos del bloque de código necesitan un cian más oscuro
+/* en tema claro, los metadatos del bloque de código necesitan un cian más oscuro
    para alcanzar AA sobre superficies claras. */
 :root[data-theme='light'] .codeblock-lang,
 :root[data-theme='light'] .codeblock-source { color: #0b5566; }
 
-/* Item 29: tira de estadísticas de GitHub (datos de build cacheados). */
+/* tira de estadísticas de GitHub (datos de build cacheados). */
 .github-stats { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; margin: 1.5rem 0 0; padding: 0; }
 .github-stats li { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 1rem 1.2rem; }
 .github-stats strong { color: var(--text); display: block; font-size: var(--fs-xl); font-variant-numeric: tabular-nums; letter-spacing: -.04em; }

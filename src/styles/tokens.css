@@ -17,7 +17,7 @@
   --text: #f4f8fb;
   --muted: #a8bbcc;
 
-  /* Item 3: tokens semánticos de superficie/borde que sustituyen rgba() literales dispersos. */
+  /* tokens semánticos de superficie/borde que sustituyen rgba() literales dispersos. */
   --surface-overlay: rgba(4, 10, 19, .84);
   --surface-sunken: rgba(4, 10, 19, .25);
   --surface-tint-cyan: rgba(103, 232, 249, .08);
@@ -29,7 +29,7 @@
   --border-orange-soft: rgba(246, 181, 108, .3);
   --accent-contrast: var(--ink); /* texto legible sobre fondos de marca (cyan/lime) */
 
-  /* Item 1: escala tipográfica fluida tokenizada (sustituye los clamp() ad hoc repetidos). */
+  /* escala tipográfica fluida tokenizada (sustituye los clamp() ad hoc repetidos). */
   --fs-3xs: .62rem;
   --fs-2xs: .68rem;
   --fs-xs: .74rem;
@@ -59,7 +59,7 @@
   --header-height: 5.5rem;
   --anchor-offset: calc(var(--header-height) + var(--space-md));
 
-  /* Item 2: escala de espaciado tokenizada. */
+  /* escala de espaciado tokenizada. */
   --space-3xs: .25rem;
   --space-2xs: .4rem;
   --space-xs: .55rem;
@@ -70,28 +70,26 @@
   --space-2xl: 3.5rem;
   --space-3xl: clamp(4rem, 8vw, 6.5rem);
 
-  /* Item 6: tokens de radio por tamaño. */
+  /* tokens de radio por tamaño. */
   --radius-xs: .4rem;
   --radius-sm: .55rem;
   --radius-md: .75rem;
   --radius-lg: 1.25rem;
   --radius-pill: 999px;
-  --radius: var(--radius-lg); /* alias heredado */
 
-  /* Item 4: niveles de elevación tokenizados. */
+  /* niveles de elevación tokenizados. */
   --elevation-1: 0 16px 60px rgba(0, 0, 0, .12);
   --elevation-2: 0 24px 80px rgba(0, 0, 0, .22);
   --elevation-3: 0 28px 100px rgba(0, 0, 0, .28);
-  --shadow: var(--elevation-3); /* alias heredado */
 
-  /* Item 7: tokens de duración y easing. */
+  /* tokens de duración y easing. */
   --dur-fast: .12s;
   --dur-base: .18s;
   --dur-slow: .3s;
   --ease-standard: ease;
   --ease-emphasized: cubic-bezier(.2, .8, .2, 1);
 
-  /* Item 5: token de anillo de foco. */
+  /* token de anillo de foco. */
   --focus-ring-color: var(--lime);
   --focus-ring-width: 3px;
   --focus-ring-offset: 3px;
@@ -111,10 +109,17 @@
   --surface-scrim: rgba(4, 10, 19, .62);
   --plate-neutral: rgba(255, 255, 255, .92);
 
+  /* Paleta FIJA de la obra gráfica (ilustraciones de curso y diagramas). Es deliberadamente
+     independiente del tema: las ilustraciones conservan su propia superficie oscura, que el
+     tema claro fija aparte. Viven como tokens para que ninguna capa declare color literal. */
+  --artwork-grid: rgba(168, 187, 204, .18);
+  --artwork-wash-a: rgba(103, 232, 249, .14);
+  --artwork-wash-b: rgba(196, 242, 105, .06);
+
   --max: 1180px;
 }
 
-/* Item 8: tema claro. Se activa SOLO por el conmutador persistente (data-theme='light').
+/* tema claro. Se activa SOLO por el conmutador persistente (data-theme='light').
    No se auto-activa por prefers-color-scheme: el diseño publicado es oscuro y las superficies
    translúcidas heredadas se re-mapean explícitamente abajo únicamente cuando el usuario opta
    por el tema claro, evitando texto de bajo contraste en modo claro automático. */

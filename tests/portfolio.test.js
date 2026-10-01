@@ -19,7 +19,7 @@ test('identidad, tipografías e iconos se sirven localmente', () => {
   assert.match(read('src/components/BrandMark.astro'), /fill="currentColor"/);
   assert.doesNotMatch(read('src/components/SiteHeader.astro'), /<img[^>]*brand\/logo\.svg/);
   assert.match(read('src/styles/global.css'), /fonts\.css/);
-  // Item 16: los iconos ya no usan webfont de Font Awesome, sino un sprite SVG inline.
+  // los iconos ya no usan webfont de Font Awesome, sino un sprite SVG inline.
   assert.match(read('src/components/IconSprite.astro'), /<symbol id="icon-/);
   assert.match(read('src/components/Icon.astro'), /#icon-/);
   assert.doesNotMatch(read('src/styles/global.css'), /fonts\.googleapis|fontawesome\/css\/all|icons\.css/);

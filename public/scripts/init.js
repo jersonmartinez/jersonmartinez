@@ -1,5 +1,5 @@
 document.documentElement.classList.add('js');
-/* Item 8: aplica el tema persistido antes del primer pintado para evitar FOUC.
+/* aplica el tema persistido antes del primer pintado para evitar FOUC.
    Script externo (CSP estricta sin unsafe-inline). Si no hay elección explícita,
    el tema sigue prefers-color-scheme vía CSS y no se fija data-theme. */
 (function () {
