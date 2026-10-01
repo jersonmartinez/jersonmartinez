@@ -1,6 +1,17 @@
-name: Site quality audit
+name: Site quality gate
 
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'astro.config.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.lighthouserc.json'
+      - '.pa11yci.json'
+      - '.github/workflows/site-quality.yml'
   schedule:
     - cron: '0 7 * * 1'
   workflow_dispatch:
@@ -11,23 +22,7 @@ permissions:
 jobs:
   quality:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - slug: home
-            route: /
-          - slug: projects
-            route: /projects.html/
-          - slug: courses
-            route: /courses.html/
-          - slug: certifications
-            route: /certifications.html/
-          - slug: experience
-            route: /experience.html/
-          - slug: about
-            route: /about.html/
+    timeout-minutes: 25
     steps:
       - name: Check out repository
         uses: actions/checkout@v4.2.2
@@ -40,24 +35,51 @@ jobs:
         run: npm ci
       - name: Build Astro site
         run: npm run build
-      - name: Start built static server
+      # Herramientas fijadas sin tocar el lockfile y SIN npx --yes: se instalan
+      # versiones exactas y se invoca el binario local con npx --no-install.
+      - name: Install pinned quality tools
+        run: npm install --no-save --no-package-lock @lhci/cli@0.15.1 pa11y-ci@4.1.1 @playwright/test@1.63.0 http-server@14.1.1 wait-on@8.0.1
+      - name: Install compatible Chromium headless shell
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Resolve Chromium headless shell
         run: |
-          python3 -m http.server 8765 --bind 127.0.0.1 --directory dist > server-${{ matrix.slug }}.log 2>&1 &
-          echo $! > server-${{ matrix.slug }}.pid
-          sleep 2
-      - name: Run Lighthouse
-        run: npx --yes lighthouse@12.8.2 "http://127.0.0.1:8765${{ matrix.route }}" --output=json --output-path="./lighthouse-${{ matrix.slug }}.json" --chrome-flags="--headless --no-sandbox"
-      - name: Run accessibility audit
-        run: npx --yes pa11y@8.0.0 "http://127.0.0.1:8765${{ matrix.route }}"
+          chrome_path="$(find "$HOME/.cache/ms-playwright" -type f -path '*chromium_headless_shell*/chrome-headless-shell-linux64/chrome-headless-shell' -print -quit)"
+          test -n "$chrome_path"
+          echo "CHROME_PATH=$chrome_path" >> "$GITHUB_ENV"
+      - name: Serve built site
+        run: |
+          npx --no-install http-server dist -p 4321 -a 127.0.0.1 --silent &
+          echo $! > server.pid
+          npx --no-install wait-on http://127.0.0.1:4321/ -t 20000 || sleep 3
+      - name: Lighthouse CI (explicit budgets)
+        run: |
+          npx --no-install lhci autorun \
+            --collect.url=http://127.0.0.1:4321/ \
+            --collect.url=http://127.0.0.1:4321/projects.html/ \
+            --collect.url=http://127.0.0.1:4321/courses.html/ \
+            --collect.url=http://127.0.0.1:4321/certifications.html/ \
+            --collect.url=http://127.0.0.1:4321/experience.html/ \
+            --collect.url=http://127.0.0.1:4321/about.html/ \
+            --collect.settings.chromeFlags="--no-sandbox --headless=new" \
+            --upload.target=filesystem \
+            --upload.outputDir=./.lighthouseci
+      - name: Accessibility gate (pa11y-ci, WCAG2AA)
+        run: |
+          npx --no-install pa11y-ci --config .pa11yci.json \
+            http://127.0.0.1:4321/ \
+            http://127.0.0.1:4321/projects.html/ \
+            http://127.0.0.1:4321/courses.html/ \
+            http://127.0.0.1:4321/certifications.html/ \
+            http://127.0.0.1:4321/experience.html/ \
+            http://127.0.0.1:4321/about.html/
       - name: Upload quality reports
         if: always()
         uses: actions/upload-artifact@v4.6.2
         with:
-          name: site-quality-${{ matrix.slug }}
+          name: site-quality-reports
           path: |
-            lighthouse-${{ matrix.slug }}.json
-            server-${{ matrix.slug }}.log
+            .lighthouseci/**
           retention-days: 14
-      - name: Stop local static server
+      - name: Stop local server
         if: always()
-        run: kill "$(cat server-${{ matrix.slug }}.pid)" || true
+        run: kill "$(cat server.pid)" || true

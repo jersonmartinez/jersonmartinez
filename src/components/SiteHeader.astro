@@ -1,25 +1,17 @@
 ---
 import { profile } from '../data/portfolio.js';
 const navItems = [
-  ['Inicio', '/', 'home', 'fa-home'],
-  ['Impacto', '/#impacto', 'impacto', 'fa-chart-line'],
-  ['Proyectos', '/projects.html', 'proyectos', 'fa-project-diagram'],
-  ['Cursos', '/courses.html', 'cursos', 'fa-graduation-cap'],
-  ['Certificaciones', '/certifications.html', 'certificaciones', 'fa-certificate'],
-  ['Trayectoria', '/experience.html', 'trayectoria', 'fa-route'],
-  ['Sobre mí', '/about.html', 'sobre-mi', 'fa-user'],
-  ['Contacto', '/#contacto', 'contacto', 'fa-comment-dots']
+  ['Inicio', '/', 'fa-home'],
+  ['Proyectos', '/projects.html', 'fa-project-diagram'],
+  ['Cursos', '/courses.html', 'fa-graduation-cap'],
+  ['Certificaciones', '/certifications.html', 'fa-certificate'],
+  ['Trayectoria', '/experience.html', 'fa-route'],
+  ['Sobre mí', '/about.html', 'fa-user'],
 ];
-const pathname = Astro.url.pathname;
-const normalize = (p) => (p || '/').replace(/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '') || '/';
-const here = normalize(pathname);
-const isCurrent = (href) => {
-  const [path, hash] = href.split('#');
-  if (hash) return false;
-  return here === normalize(path || '/');
-};
+const normalize = (value) => (value || '/').replace(/index\.html$/, '').replace(/\/$/, '').replace(/\.html$/, '') || '/';
+const here = normalize(Astro.url.pathname);
 ---
-<header class="site-header">
+<header class="site-header" data-site-header>
   <div class="header-inner container">
     <a class="brand" href="/" aria-label="Jerson Martínez, inicio">
       <img src="/brand/logo.svg" width="230" height="56" alt="Jerson Martínez" fetchpriority="high" decoding="async" />
@@ -28,35 +20,11 @@ const isCurrent = (href) => {
       <span></span><span></span><span></span>
     </button>
     <nav class="site-nav" id="site-nav" data-site-nav aria-label="Navegación principal">
-      {navItems.map(([label, href, key, icon]) => <a href={href} data-nav-key={key} data-nav-href={href} class={isCurrent(href) ? 'is-current' : ''} aria-current={isCurrent(href) ? 'page' : undefined}><i class={`fas ${icon}`} aria-hidden="true"></i><span class="nav-label">{label}</span></a>)}
-      <a class="nav-contact" href={profile.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Escribir a Jerson por WhatsApp (abre en nueva pestaña)" data-tooltip="Abrir WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
+      {navItems.map(([label, href, icon]) => {
+        const current = here === normalize(href);
+        return <a href={href} class={current ? 'is-current' : ''} aria-current={current ? 'page' : undefined}><i class={`fas ${icon}`} aria-hidden="true"></i><span class="nav-label">{label}</span></a>;
+      })}
+      <a class="nav-contact" href={profile.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Escribir a Jerson por WhatsApp, abre en nueva pestaña" data-tooltip="Abrir WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
     </nav>
   </div>
 </header>
-<script>
-  const toggle = document.querySelector('[data-nav-toggle]');
-  const nav = document.querySelector('[data-site-nav]');
-  const close = ({ returnFocus = false } = {}) => { nav?.classList.remove('is-open'); document.body.classList.remove('nav-locked'); toggle?.setAttribute('aria-expanded', 'false'); toggle?.setAttribute('aria-label', 'Abrir menú'); if (returnFocus) toggle?.focus(); };
-  toggle?.addEventListener('click', (event) => { event.stopPropagation(); const open = nav?.classList.toggle('is-open') ?? false; document.body.classList.toggle('nav-locked', open); toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú'); if (open) nav?.querySelector('a')?.focus(); });
-  nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => close()));
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && nav?.classList.contains('is-open')) close({ returnFocus: true }); });
-  // Item 26: cerrar el menú móvil al hacer clic fuera del nav (backdrop) y bloquear el scroll mientras is-open.
-  document.addEventListener('click', (event) => { if (!nav?.classList.contains('is-open')) return; const target = event.target; if (nav.contains(target) || toggle?.contains(target)) return; close(); });
-
-  // Item 38: en el home, sincroniza is-current de los enlaces de ancla ('/#seccion') con la sección visible.
-  const isHome = location.pathname === '/' || location.pathname === '/index.html';
-  if (isHome) {
-    const anchorLinks = [...(nav?.querySelectorAll('a[data-nav-href*="#"]') ?? [])];
-    if (anchorLinks.length) {
-      const hashOf = (link) => (link.getAttribute('data-nav-href') || '').split('#')[1];
-      const sections = anchorLinks.map((l) => document.getElementById(hashOf(l))).filter(Boolean);
-      const setActive = (id) => anchorLinks.forEach((link) => {
-        const active = hashOf(link) === id;
-        link.classList.toggle('is-current', active);
-        if (active) link.setAttribute('aria-current', 'true'); else link.removeAttribute('aria-current');
-      });
-      const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) setActive(entry.target.id); }), { rootMargin: '-45% 0px -50% 0px' });
-      sections.forEach((section) => observer.observe(section));
-    }
-  }
-</script>

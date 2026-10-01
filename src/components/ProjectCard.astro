@@ -1,0 +1,16 @@
+---
+import { projectSlug } from '../data/portfolio.js';
+const { project, featured = false } = Astro.props;
+const metadata = [project.role, project.language, project.license && `Licencia ${project.license}`, project.updatedAt && `Actualizado ${project.updatedAt}`].filter(Boolean);
+---
+<article id={projectSlug(project.name)} class={`card project-case ${project.href ? 'card--interactive' : ''} ${featured ? 'project-case--featured' : ''}`} data-category={project.categories.join(' ')}>
+  <header class="project-case-head"><span class="repo-kind">{project.kind}</span><span class="project-theme">{project.theme}</span><h3>{project.name}</h3><p>{project.description}</p></header>
+  <dl class="project-case-story">
+    <div><dt>Problema</dt><dd>{project.problem}</dd></div>
+    <div><dt>Contribución</dt><dd>{project.contribution}</dd></div>
+    <div><dt>Resultado</dt><dd>{project.outcome}</dd></div>
+  </dl>
+  <ul class="project-facts" aria-label={`Datos de ${project.name}`}>{metadata.map((item) => <li>{item}</li>)}</ul>
+  <div class="project-meta">{project.tags.map((tag) => <span>{tag}</span>)}</div>
+  <div class="project-bottom">{project.href ? <a class="card-link" href={project.href} target="_blank" rel="noopener noreferrer">{project.cta}<span class="sr-only"> (abre en nueva pestaña)</span></a> : <span class="status">Proyecto documentado</span>}</div>
+</article>

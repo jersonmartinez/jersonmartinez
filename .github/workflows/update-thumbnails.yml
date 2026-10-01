@@ -2,7 +2,11 @@ name: Update README YouTube content
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    # Reducido de cada hora (0 * * * *, hasta 24 ejecuciones/PRs al día) a dos
+    # veces al día (07:20 y 19:20 UTC). El contenido de YouTube no cambia con
+    # frecuencia horaria; dos pasadas diarias mantienen la frescura (el gate de
+    # content-health exige < 45 días) sin inundar el repo de PRs automáticos.
+    - cron: '20 7,19 * * *'
   workflow_dispatch:
     inputs:
       channel:

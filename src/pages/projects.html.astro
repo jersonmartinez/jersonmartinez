@@ -1,54 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { projects, profile, projectSlug } from '../data/portfolio.js';
-const filters = [['all', 'Todos'], ['personal', 'Personales'], ['open-source', 'Open source'], ['teaching', 'Contenido']];
-function filterFor(project) {
-  if (project.name === 'Factib' || project.name === 'Crashell') return 'personal';
-  if (project.name.includes('YouTube')) return 'teaching';
-  return 'open-source';
-}
-const counts = projects.reduce((acc, project) => {
-  const key = filterFor(project);
-  acc[key] = (acc[key] || 0) + 1;
-  acc.all += 1;
-  return acc;
-}, { all: 0 });
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects, profile } from '../data/portfolio.js';
+const filters = [['all', 'Todos'], ['personal', 'Personales'], ['open-source', 'Open source'], ['teaching', 'Contenido y formación']];
+const counts = Object.fromEntries(filters.map(([key]) => [key, key === 'all' ? projects.length : projects.filter((project) => project.categories.includes(key)).length]));
+const projectSchema = {
+  '@context': 'https://schema.org', '@type': 'ItemList', name: 'Proyectos de Jerson Martínez',
+  itemListElement: projects.map((project, index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': project.name === 'Factib' ? 'WebApplication' : 'SoftwareSourceCode', name: project.name, description: project.description, ...(project.href ? { url: project.href } : {}), ...(project.language ? { programmingLanguage: project.language } : {}), ...(project.license ? { license: project.license } : {}) } })),
+};
 ---
-<BaseLayout title="Proyectos | Jerson Martínez" description="Productos personales, open source, automatizaciones y contenido técnico de Jerson Martínez." canonical={`${profile.website}/projects.html`} breadcrumb={[['Inicio', '/'], ['Proyectos', '/projects.html']]}>
-  <section class="page-hero"><div class="container"><nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="/">Inicio</a></li><li><span aria-current="page">Proyectos</span></li></ol></nav><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Proyectos / sistemas verificables</p><h1>Una trayectoria contada como sistemas.</h1><p class="lede">Productos personales, repositorios públicos, automatizaciones y contenido técnico: cada proyecto muestra una forma concreta de resolver problemas.</p><div class="page-hero-meta" role="list" aria-label="Resumen de proyectos"><span role="listitem">{projects.length} proyectos</span><span role="listitem">Factib · producto personal</span><span role="listitem">Crashell · publicaciones</span><span role="listitem">MCPs · automatización</span><span role="listitem">IA + DevOps · gobernanza</span></div></div></section>
-  <section class="section" aria-labelledby="projects-list-title"><div class="container"><div class="section-heading"><p class="section-kicker">01 / portfolio técnico</p><h2 id="projects-list-title">Elige el tipo de trabajo que quieres recorrer.</h2><p class="lede">Los proyectos personales y los repositorios públicos están separados para que el contexto sea claro.</p></div><div class="filter-bar" role="group" aria-label="Filtrar proyectos">{filters.map(([value, label], index) => <button class={`filter-button ${index === 0 ? 'is-active' : ''}`} type="button" data-filter={value} aria-pressed={index === 0 ? 'true' : 'false'}>{label} <span class="filter-count" aria-hidden="true">({counts[value] || 0})</span></button>)}</div><p class="filter-status" data-filter-status role="status" aria-live="polite">Mostrando {counts.all} de {counts.all} proyectos</p><noscript><p class="data-note">Con JavaScript desactivado se muestran todos los proyectos; los filtros por categoría requieren JavaScript.</p></noscript><div class="repo-grid" data-repo-grid>{projects.map((project) => <article id={projectSlug(project.name)} class="card repo-card" style="scroll-margin-top: 96px" data-category={filterFor(project)}><span class="repo-kind">{project.kind}</span><h3 style="margin-top: .8rem">{project.name}</h3><p style="margin-top: .8rem">{project.description}</p><div class="project-meta">{project.tags.map((tag) => <span>{tag}</span>)}</div>{project.href ? <a class="card-link" href={project.href} target="_blank" rel="noopener noreferrer">{project.cta} <span class="sr-only"> (abre en nueva pestaña)</span></a> : <span class="status">Producto personal</span>}</article>)}</div><p class="repo-empty" data-repo-empty hidden>No hay proyectos en esta categoría todavía.</p><p class="data-note" style="margin-top: 1.3rem">Los repositorios enlazados son públicos en el perfil de GitHub consultado. Factib se presenta como producto personal porque no aparece como repositorio público en ese perfil.</p></div></section>
-  <section class="section section--line"><div class="container"><div class="contact-panel"><div><p class="section-kicker">02 / colaboración</p><h2>¿Quieres hablar de plataforma, gobernanza o automatización?</h2></div><a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i> Contactar por WhatsApp</a></div></div></section>
+<BaseLayout title="Proyectos DevOps y Cloud | Jerson Martínez" description="Casos de producto, automatización, open source, cloud y formación desarrollados por Jerson Martínez." canonical={`${profile.website}/projects.html`} breadcrumb={[['Inicio', '/'], ['Proyectos', '/projects.html']]} structuredData={[projectSchema]}>
+  <section class="page-hero"><div class="container"><nav class="breadcrumb" aria-label="Ruta de navegación"><ol><li><a href="/">Inicio</a></li><li><span aria-current="page">Proyectos</span></li></ol></nav><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Proyectos / casos verificables</p><h1>Sistemas que muestran cómo convierto problemas en operación.</h1><p class="lede">Productos personales, repositorios públicos, automatizaciones y contenido técnico explicados por problema, contribución y resultado.</p><ul class="page-hero-meta" aria-label="Resumen de proyectos"><li>{projects.length} proyectos</li><li>Producto</li><li>Open source</li><li>Automatización</li><li>Formación</li></ul></div></section>
+  <section class="section" aria-labelledby="projects-list-title"><div class="container"><div class="section-heading"><p class="section-kicker">01 / portfolio técnico</p><h2 id="projects-list-title">Filtra por el tipo de valor que buscas.</h2><p class="lede">Un proyecto puede pertenecer a más de un recorrido: producto, open source o formación.</p></div><div class="filter-bar" role="group" aria-label="Filtrar proyectos">{filters.map(([value, label], index) => <button class={`filter-button ${index === 0 ? 'is-active' : ''}`} type="button" data-filter={value} aria-pressed={index === 0 ? 'true' : 'false'}>{label} <span class="filter-count" aria-hidden="true">({counts[value]})</span></button>)}</div><p class="filter-status" data-filter-status role="status" aria-live="polite">Mostrando {projects.length} de {projects.length} proyectos</p><noscript><p class="data-note">La lista completa permanece disponible; activa JavaScript para filtrar por categoría.</p></noscript><div class="repo-grid">{projects.map((project) => <ProjectCard project={project} />)}</div><p class="repo-empty" data-repo-empty hidden>No hay proyectos para este filtro.</p></div></section>
+  <section class="section section--line" aria-labelledby="projects-next-title"><div class="container"><div class="contact-panel"><div><p class="section-kicker">02 / siguiente paso</p><h2 id="projects-next-title">¿Quieres profundizar en experiencia o conversar sobre una solución?</h2></div><div class="contact-actions"><a class="button button--ghost" href="/experience.html">Ver trayectoria</a><a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i> Contactar por WhatsApp</a></div></div></div></section>
 </BaseLayout>
-<script>
-  const buttons = [...document.querySelectorAll('[data-filter]')];
-  const cards = [...document.querySelectorAll('[data-category]')];
-  const status = document.querySelector('[data-filter-status]');
-  const empty = document.querySelector('[data-repo-empty]');
-  const total = cards.length;
-
-  const applyFilter = (filter) => {
-    let visible = 0;
-    cards.forEach((card) => {
-      const isHidden = filter !== 'all' && card.getAttribute('data-category') !== filter;
-      card.setAttribute('data-hidden', String(isHidden));
-      card.hidden = isHidden;
-      if (!isHidden) visible += 1;
-    });
-    if (status) status.textContent = `Mostrando ${visible} de ${total} proyectos`;
-    if (empty) empty.hidden = visible !== 0;
-  };
-
-  buttons.forEach((button) => button.addEventListener('click', () => { const filter = button.getAttribute('data-filter'); buttons.forEach((item) => { const active = item === button; item.classList.toggle('is-active', active); item.setAttribute('aria-pressed', String(active)); }); applyFilter(filter); }));
-
-  // Navegación cruzada: al llegar con #proyecto-<slug>, asegura el filtro 'Todos' para que la ficha sea visible y despláza a ella.
-  const focusHashProject = () => {
-    const hash = decodeURIComponent(location.hash || '');
-    if (!hash.startsWith('#proyecto-')) return;
-    const target = document.getElementById(hash.slice(1));
-    if (!target) return;
-    buttons.find((b) => b.getAttribute('data-filter') === 'all')?.click();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-  window.addEventListener('hashchange', focusHashProject);
-  focusHashProject();
-</script>

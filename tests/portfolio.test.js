@@ -5,117 +5,116 @@ const test = require('node:test');
 
 const root = path.resolve(__dirname, '..');
 const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
+const exists = (file) => fs.existsSync(path.join(root, file));
+const pages = ['index.astro', 'projects.html.astro', 'experience.html.astro', 'certifications.html.astro', 'courses.html.astro', 'about.html.astro', '404.astro'];
 
-test('Astro expone las seis rutas y el layout compartido', () => {
-  for (const page of ['src/pages/index.astro', 'src/pages/projects.html.astro', 'src/pages/experience.html.astro', 'src/pages/certifications.html.astro', 'src/pages/courses.html.astro', 'src/pages/about.html.astro']) {
-    const source = read(page);
-    assert.match(source, /BaseLayout/);
-    assert.match(source, /Jerson Martínez|profile|projects|experience|certifications|courses/);
-  }
+test('Astro expone siete rutas con layout compartido', () => {
+  for (const page of pages) assert.match(read(`src/pages/${page}`), /BaseLayout/);
 });
 
-test('la identidad visual tiene wordmark, favicon y librería de iconos local', () => {
+test('identidad, tipografías e iconos se sirven localmente', () => {
   assert.match(read('src/components/SiteHeader.astro'), /brand\/logo\.svg/);
-  assert.match(read('src/components/SiteHeader.astro'), /fa-whatsapp/);
-  assert.match(read('src/layouts/BaseLayout.astro'), /brand\/favicon\.svg/);
-  assert.match(read('src/styles/global.css'), /fontawesome\/css\/all\.css/);
-  assert.match(read('public/brand/logo.svg'), /Jerson/);
-  assert.match(read('public/brand/logo.svg'), /circle/);
-  assert.match(read('public/brand/favicon.svg'), /viewBox="0 0 64 64"/);
+  assert.match(read('src/styles/global.css'), /fonts\.css/);
+  assert.match(read('src/styles/global.css'), /icons\.css/);
+  assert.doesNotMatch(read('src/styles/global.css'), /fonts\.googleapis|fontawesome\/css\/all/);
+  for (const file of ['public/fonts/manrope-latin.woff2', 'public/fonts/dm-mono-400-latin.woff2', 'public/fonts/fa-solid-900.woff2', 'public/fonts/fa-brands-400.woff2']) assert.ok(exists(file), `Falta ${file}`);
+  assert.ok(!exists('src/libs'), 'Las librerías legacy no deben volver al árbol activo');
 });
 
-test('el contenido destaca productos, repositorios, IA y gobernanza', () => {
+test('antigüedad y cronología tienen una sola fuente', () => {
   const data = read('src/data/portfolio.js');
-  for (const value of ['Factib', 'Crashell', 'IA + DevOps', 'Governance', 'MCP GitHub Projects', 'MCP Monday Projects', 'Kiro Crew']) assert.match(data, new RegExp(value.replace(/[+]/g, '\\+')));
+  const about = read('src/pages/about.html.astro');
+  assert.match(data, /careerStartYear: 2016/);
+  assert.match(data, /yearsExperience: 10/);
+  assert.match(data, /continuousLearningSince: '2017-12'/);
+  assert.match(data, /Proyectos tecnológicos independientes/);
+  assert.doesNotMatch(about, /\+8|8\+ años/);
 });
 
-test('la navegación sigue un recorrido ordenado y tiene interacción', () => {
-  const home = read('src/pages/index.astro');
+test('header tiene un único estado de página y el menú gestiona foco', () => {
   const header = read('src/components/SiteHeader.astro');
-  assert.match(home, /01.*Impacto/);
-  assert.match(home, /02.*Skills/);
-  assert.match(home, /03.*Proyectos/);
-  assert.match(home, /06.*Contacto/);
-  assert.doesNotMatch(header, /String\(index \+ 1\)/);
-  assert.match(header, /fa-home/);
-  assert.match(header, /aria-expanded/);
-  assert.match(home, /IntersectionObserver/);
+  const script = read('public/scripts/site.js');
+  assert.match(header, /aria-current=\{current \? 'page'/);
+  assert.doesNotMatch(header, /\/#impacto|\/#contacto/);
+  assert.match(script, /aria-current', 'location'/);
+  assert.match(script, /element\.inert = value/);
+  assert.match(script, /event\.key !== 'Tab'/);
 });
 
-test('las estadísticas y skills corresponden al CV actualizado', () => {
+test('skills incluyen evidencia, navegación por teclado y WSL Container', () => {
   const data = read('src/data/portfolio.js');
-  const home = read('src/pages/index.astro');
-  for (const value of ['+10', 'Cloud Providers', '100+', '60+', 'Google Cloud Platform (GCP)', 'IA generativa']) assert.match(data, new RegExp(value.replace(/[+()]/g, '\\$&')));
-  assert.match(home, /SkillsExplorer/);
-  assert.match(read('src/components/SkillsExplorer.astro'), /role="tablist"/);
-  assert.match(read('src/components/SkillsExplorer.astro'), /ArrowDown/);
+  const component = read('src/components/SkillsExplorer.astro');
+  const script = read('public/scripts/site.js');
+  assert.match(data, /WSL Container/);
+  assert.match(data, /evidence:/);
+  assert.match(component, /Capacidad aplicada/);
+  assert.match(component, /role="tablist"/);
+  assert.match(script, /ArrowDown/);
 });
 
-test('cursos, canales y credenciales exponen métricas y enlaces verificables', () => {
+test('proyectos usan categorías declaradas y casos de estudio', () => {
   const data = read('src/data/portfolio.js');
-  const courses = read('src/pages/courses.html.astro');
-  const certifications = read('src/pages/certifications.html.astro');
-  assert.match(data, /Más de 77 mil/);
-  assert.match(data, /\+14K/);
-  assert.match(data, /\+5K/);
-  assert.match(data, /\+60 artículos y cursos/);
-  assert.match(courses, /Mis cursos \(7\)/);
-  assert.match(courses, /Más de 77 mil/);
-  assert.match(data, /\+14K/);
-  assert.match(certifications, /credential-link/);
-  assert.match(data, /cp\.certmetrics\.com/);
-  assert.match(data, /learn\.microsoft\.com\/api\/credentials/);
-  assert.match(data, /credly\.com\/badges/);
-  assert.match(data, /brands\/openwebinars\.svg/);
+  const card = read('src/components/ProjectCard.astro');
+  const page = read('src/pages/projects.html.astro');
+  assert.match(data, /categories: \['personal', 'teaching'\]/);
+  assert.match(data, /https:\/\/factib\.com/);
+  for (const value of ['problem:', 'contribution:', 'outcome:', 'language:', 'license:']) assert.match(data, new RegExp(value));
+  assert.match(card, /Problema/);
+  assert.doesNotMatch(page, /function filterFor/);
 });
 
-// Item 43: los VALORES PROTEGIDOS confirmados por el usuario deben existir
-// textualmente en portfolio.js. Previene regresiones de contenido: si alguien
-// edita una de estas cifras por error, este test falla.
-test('los valores protegidos existen textualmente en portfolio.js', () => {
+test('métricas confirmadas incluyen fecha y OpenWebinars separado', () => {
   const data = read('src/data/portfolio.js');
-  const protectedValues = [
-    'Más de 77 mil estudiantes', // Udemy
-    '+14K',                       // DevOpsea
-    '+5K',                        // Side Master
-    '+60 artículos y cursos'      // OpenWebinars
-  ];
-  for (const value of protectedValues) {
-    assert.ok(data.includes(value), `Valor protegido ausente o alterado: "${value}"`);
-  }
+  for (const value of ['Más de 77 mil estudiantes', '+14K suscriptores', '+5K suscriptores', '+60 artículos', '7 cursos impartidos', 'lastVerifiedAt']) assert.ok(data.includes(value), `Falta ${value}`);
+  assert.doesNotMatch(data, /\+60 artículos y cursos/);
 });
 
-// Items 126-128: los artefactos de SEO/PWA y datos estructurados existen y son coherentes.
-test('SEO/PWA: robots, sitemap, manifest, humans y JSON-LD existen', () => {
-  assert.match(read('public/robots.txt'), /Sitemap:\s*https:\/\/www\.jersonmartinez\.com\/sitemap\.xml/);
-  const sitemap = read('public/sitemap.xml');
-  for (const route of ['/', '/projects.html', '/courses.html', '/certifications.html', '/experience.html', '/about.html']) {
-    assert.ok(sitemap.includes(`https://www.jersonmartinez.com${route}`), `Ruta ausente en sitemap: ${route}`);
-  }
-  const manifest = JSON.parse(read('public/site.webmanifest'));
-  assert.equal(manifest.start_url, '/');
-  assert.equal(manifest.theme_color, '#07111f');
-  assert.match(read('public/humans.txt'), /github\.com\/jersonmartinez/);
-  const layout = read('src/layouts/BaseLayout.astro');
-  assert.match(layout, /application\/ld\+json/);
-  assert.match(layout, /schema\.org/);
-  assert.match(layout, /rel="manifest"/);
-});
-
-
-test('las certificaciones exponen nombres enlazados y no etiquetas accesorias', () => {
+test('solo se publican diez certificaciones oficiales', () => {
+  const data = read('src/data/portfolio.js');
   const page = read('src/pages/certifications.html.astro');
-  assert.match(page, /credential-link/);
-  assert.doesNotMatch(page, /Verificar/);
-  assert.doesNotMatch(page, /credential-verify/);
-  assert.match(page, /target="_blank"/);
+  const credentialLinks = (data.match(/credentialId:/g) || []).length;
+  assert.equal(credentialLinks, 10);
+  assert.match(page, /CredentialCard/);
+  assert.match(page, /Diez credenciales/);
+  assert.match(data, /GitHub Foundations/);
+  const githubBlock = data.slice(data.indexOf("provider: 'GitHub'"), data.indexOf('export const youtubeChannels'));
+  assert.doesNotMatch(githubBlock, /GitHub Actions|Gobernanza de repositorios/);
 });
 
-test('el smoke de producción conserva las cinco rutas y el dominio canónico', () => {
-  const smoke = read('tools/check-production.js');
-  assert.match(smoke, /www\.jersonmartinez\.com/);
-  for (const route of ['/projects.html/', '/courses.html/', '/certifications.html/', '/experience.html/', '/about.html/']) {
-    assert.match(smoke, new RegExp(route.replace(/[/.]/g, '\\$&')));
-  }
-  assert.match(smoke, /canonical/);
+test('cursos y OpenWebinars exponen rutas verificables', () => {
+  const data = read('src/data/portfolio.js');
+  assert.equal((data.match(/openwebinars\.net\/cursos\//g) || []).length, 7);
+  assert.equal((data.match(/www\.udemy\.com\/course\//g) || []).length, 7);
+  assert.match(read('src/components/CourseCard.astro'), /Al completar esta etapa/);
+  assert.doesNotMatch(read('src/pages/courses.html.astro'), /ficha pública consultada/);
+});
+
+test('CV, imágenes responsive, OG y PWA existen', () => {
+  for (const file of ['public/cv/jerson-martinez-cv-es.pdf', 'public/cv/jerson-martinez-cv-en.pdf', 'public/images/profile-v2-320.avif', 'public/images/profile-v2-640.webp', 'public/images/profile-v2-960.jpg', 'public/social/home.png', 'public/social/projects.png', 'public/brand/favicon-192.png', 'public/brand/favicon-512.png', 'public/brand/apple-touch-icon.png']) assert.ok(exists(file), `Falta ${file}`);
+  const manifest = JSON.parse(read('public/site.webmanifest'));
+  assert.equal(manifest.icons.length, 2);
+  assert.match(read('src/layouts/BaseLayout.astro'), /1200/);
+});
+
+test('CSP no usa unsafe-inline y no quedan dependencias visuales remotas', () => {
+  const vercel = read('vercel.json');
+  const sources = pages.map((page) => read(`src/pages/${page}`)).join('\n') + read('src/layouts/BaseLayout.astro');
+  assert.doesNotMatch(vercel, /unsafe-inline/);
+  assert.match(vercel, /script-src 'self'/);
+  assert.doesNotMatch(sources, /style="|cdn\.simpleicons|fonts\.googleapis/);
+});
+
+test('SEO y sitemap cubren rutas reales con lastmod', () => {
+  const sitemap = read('public/sitemap.xml');
+  for (const route of ['/', '/projects.html', '/courses.html', '/certifications.html', '/experience.html', '/about.html']) assert.ok(sitemap.includes(`https://www.jersonmartinez.com${route}`));
+  assert.match(sitemap, /<lastmod>2026-09-30<\/lastmod>/);
+  assert.match(read('src/layouts/BaseLayout.astro'), /application\/ld\+json/);
+  assert.match(read('src/pages/courses.html.astro'), /'@type': 'Course'/);
+  assert.match(read('src/pages/certifications.html.astro'), /EducationalOccupationalCredential/);
+});
+
+test('la generación de assets y documentación técnica están versionadas', () => {
+  assert.ok(exists('tools/generate-visual-assets.py'));
+  assert.ok(exists('SECURITY-HEADERS.md'));
+  assert.ok(exists('docs/PORTFOLIO-INTEGRITY-2026.md'));
 });

@@ -1,41 +1,57 @@
 ---
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
-import { profile } from '../data/portfolio.js';
-const { title, description, canonical = profile.website + '/', breadcrumb, preloadImage } = Astro.props;
-const absoluteImage = profile.website + '/images/profile.jpg';
-// Item 85: structured data JSON-LD (schema.org/Person) construido solo con datos ya verificados del perfil.
-const personJsonLd = {
+import { contentMeta, profile } from '../data/portfolio.js';
+
+const {
+  title,
+  description,
+  canonical = `${profile.website}/`,
+  breadcrumb,
+  preloadImage,
+  structuredData = [],
+  socialImage,
+  robots = 'index, follow, max-image-preview:large',
+} = Astro.props;
+const pathKey = Astro.url.pathname.replace(/^\//, '').replace(/\.html\/?$/, '').replace(/\/$/, '') || 'home';
+const socialImagePath = socialImage || `/social/${pathKey}.png`;
+const absoluteImage = `${profile.website}${socialImagePath}`;
+const portrait = `${profile.website}/images/profile-v2-960.jpg`;
+const isProfilePage = ['/', '/about.html', '/about.html/'].includes(Astro.url.pathname);
+
+const personJsonLd = isProfilePage && {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: profile.name,
   url: profile.website,
-  image: absoluteImage,
-  email: `mailto:${profile.email}`,
+  image: portrait,
   jobTitle: 'DevOps Tech Lead',
   description: profile.intro,
-  sameAs: [profile.github, profile.linkedin, 'https://www.youtube.com/@DevOpsea', 'https://www.udemy.com/user/side-master/']
+  sameAs: [profile.github, profile.linkedin, 'https://www.youtube.com/@DevOpsea', 'https://www.udemy.com/user/side-master/'],
+  knowsAbout: ['DevOps', 'SRE', 'DevSecOps', 'AWS', 'Microsoft Azure', 'Google Cloud Platform', 'Infrastructure as Code', 'GitOps', 'FinOps'],
 };
-// Item 88: BreadcrumbList JSON-LD opcional en páginas internas (breadcrumb = [[nombre, ruta], ...]).
+const websiteJsonLd = Astro.url.pathname === '/' && {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Jerson Martínez',
+  url: profile.website,
+  inLanguage: 'es',
+  dateModified: contentMeta.lastReviewed,
+};
 const breadcrumbJsonLd = breadcrumb && {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: breadcrumb.map(([name, path], index) => ({
-    '@type': 'ListItem',
-    position: index + 1,
-    name,
-    item: profile.website + path
-  }))
+    '@type': 'ListItem', position: index + 1, name, item: profile.website + path,
+  })),
 };
-// Item 99: resalta en el pie el enlace de la página actual (aria-current + estado visual).
+const jsonLdBlocks = [personJsonLd, websiteJsonLd, breadcrumbJsonLd, ...structuredData].filter(Boolean);
 const footerLinks = [
-  ['/projects.html', 'Proyectos'],
-  ['/courses.html', 'Cursos'],
-  ['/certifications.html', 'Certificaciones'],
-  ['/experience.html', 'Trayectoria'],
-  ['/about.html', 'Sobre mí']
+  ['/projects.html', 'Proyectos'], ['/courses.html', 'Cursos'], ['/certifications.html', 'Certificaciones'],
+  ['/experience.html', 'Trayectoria'], ['/about.html', 'Sobre mí'],
 ];
-const here = Astro.url.pathname.replace(/\/$/, '') || '/';
+const normalize = (value) => (value || '/').replace(/\/$/, '').replace(/\.html$/, '') || '/';
+const here = normalize(Astro.url.pathname);
 ---
 <!doctype html>
 <html lang="es">
@@ -46,41 +62,39 @@ const here = Astro.url.pathname.replace(/\/$/, '') || '/';
     <meta name="theme-color" content="#07111f" />
     <meta name="color-scheme" content="dark" />
     <meta name="author" content="Jerson Martínez" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="robots" content={robots} />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="application-name" content="Jerson Martínez" />
     <meta name="apple-mobile-web-app-title" content="Jerson Martínez" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="generator" content="Astro" />
     <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/brand/favicon.svg" />
+    <link rel="icon" href="/brand/favicon-192.png" sizes="192x192" type="image/png" />
+    <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" sizes="180x180" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="author" href="/humans.txt" />
     <link rel="canonical" href={canonical} />
-    <link rel="preconnect" href="https://cdn.simpleicons.org" crossorigin />
-    <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
-    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
-    <meta property="og:type" content="website" />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} type="image/webp" fetchpriority="high" />}
+    <meta property="og:type" content={isProfilePage ? 'profile' : 'website'} />
     <meta property="og:site_name" content="Jerson Martínez" />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={absoluteImage} />
-    <meta property="og:image:alt" content="Retrato de Jerson Martínez" />
-    <meta property="og:image:width" content="1568" />
-    <meta property="og:image:height" content="1568" />
+    <meta property="og:image:secure_url" content={absoluteImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content={`Vista previa de ${title}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="es_ES" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteImage} />
-    <meta name="twitter:image:alt" content="Retrato de Jerson Martínez" />
+    <meta name="twitter:image:alt" content={`Vista previa de ${title}`} />
     <title>{title}</title>
-    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
-    {breadcrumbJsonLd && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />}
+    {jsonLdBlocks.map((block) => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}
+    <script is:inline src="/scripts/init.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -90,18 +104,16 @@ const here = Astro.url.pathname.replace(/\/$/, '') || '/';
       <div class="container footer-inner">
         <div><strong>Jerson Martínez</strong><span>DevOps · SRE · DevSecOps · Cloud</span></div>
         <nav class="footer-links" aria-label="Secciones del sitio">
-          {footerLinks.map(([href, label]) => <a href={href} class={here === href.replace(/\.html$/, '') || here === href ? 'is-current' : ''} aria-current={here === href.replace(/\.html$/, '') || here === href ? 'page' : undefined}>{label}</a>)}
+          {footerLinks.map(([href, label]) => { const current = here === normalize(href); return <a href={href} class={current ? 'is-current' : ''} aria-current={current ? 'page' : undefined}>{label}</a>; })}
         </nav>
         <nav class="footer-social" aria-label="Perfiles sociales">
           <a href={profile.github} target="_blank" rel="me noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span></a>
           <a href={profile.linkedin} target="_blank" rel="me noopener noreferrer"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="sr-only">LinkedIn</span></a>
-          <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i><span class="sr-only">WhatsApp</span></a>
+          <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i><span class="sr-only">WhatsApp</span></a>
         </nav>
       </div>
-      <div class="container footer-legal">
-        <p class="footer-copy">© {new Date().getFullYear()} Jerson Martínez. Todos los derechos reservados.</p>
-        <a class="footer-top" href="#contenido"><i class="fas fa-arrow-up" aria-hidden="true"></i> Volver arriba</a>
-      </div>
+      <div class="container footer-legal"><p class="footer-copy">© {new Date().getFullYear()} Jerson Martínez. Todos los derechos reservados.</p><a class="footer-top" href="#contenido"><i class="fas fa-arrow-up" aria-hidden="true"></i> Volver arriba</a></div>
     </footer>
+    <script is:inline src="/scripts/site.js" defer></script>
   </body>
 </html>

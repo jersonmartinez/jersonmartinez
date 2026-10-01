@@ -35,6 +35,7 @@ Componentes compartidos: `src/layouts/BaseLayout.astro` (envoltura común, usa
 (render de `skills` en el home) y `LogoCloud.astro` (nube de logos del home).
 
 Notas de derivación (evitan cifras divergentes):
+
 - `profile.facts[0]` (años de experiencia) se deriva de `profile.yearsExperience`.
 - Las métricas de suscriptores de YouTube en `teaching` se derivan de `youtubeChannels`.
 
@@ -65,15 +66,15 @@ final, de modo que el estado activo del menú funciona en ambas formas.
 
 - `public/brand/logo.svg` is the simplified horizontal **Jerson + terminal dot** wordmark; the isotipo was removed from the header.
 - `public/brand/favicon.svg` is the compact J-and-dot favicon.
-- `public/images/profile.jpg` is the public profile image used by the site.
-- The site uses the repository's local **Font Awesome 5.9** assets as its single reusable UI icon library. Header actions, navigation entries, CTA buttons, social links, tooltips, skill categories and external-link affordances all use the same icon system.
+- `public/images/profile-v2-*` contains the responsive AVIF, WebP and optimized JPEG portrait variants generated from the approved profile image.
+- The site uses a curated local **Font Awesome 5.9 subset** (`src/styles/icons.css` plus two WOFF2 files) as its reusable UI icon system. Header actions, navigation, social links, skill categories and CTA buttons use this same set without loading the full legacy library.
 - `public/brands/aws.svg`, `public/brands/azure.svg`, `public/brands/github.svg` and `public/brands/openwebinars.svg` remain provider/content logos, separate from UI iconography.
 
 ## CV-driven content
 
 Content in `src/data/portfolio.js` is restricted to information confirmed in the supplied updated Spanish/English CVs, the public GitHub profile and the existing README:
 
-- Hero facts now show `+10` years of experience, `3` Cloud Providers, `100+` courses and certifications, and `60+` published articles, following the requested presentation copy.
+- Hero facts show `+10` years of experience, `3` Cloud Providers, `100+` certifications obtained through continuous learning, and `60+` published articles. OpenWebinars separately presents seven courses taught.
 - `skills` contains the updated CV taxonomy: infrastructure, cloud, virtualization, containers, IaC, DevOps/CI/CD, observability, storage/backup, security/governance, generative AI, development, databases and languages.
 - The home page renders those categories through `SkillsExplorer.astro`, with click, arrow-key, Home and End navigation and ARIA tab/tabpanel state.
 - Factib and Crashell are presented as personal products.
@@ -81,7 +82,7 @@ Content in `src/data/portfolio.js` is restricted to information confirmed in the
 - Udemy, DevOpsea, Side Master and OpenWebinars are shown as teaching/content work. The Udemy catalog contains 7 courses and more than 77 thousand students; DevOpsea uses more than 15K subscribers and Side Master keeps its independent rounded public figure.
 - AWS, Microsoft Azure and GitHub verification links are extracted from the updated PDF annotations and remain public per credential.
 - Factib has no public repository link in the consulted profile, so the portfolio does not invent one.
-- Certification names and professional metrics are marked as CV-based; they are not presented as independently verified by this site.
+- Certification names link directly to official verification sources. GitHub Actions and repository governance are competencies, not certifications.
 
 ## Local workflow
 
@@ -100,10 +101,10 @@ The GitHub Actions validation workflow builds `dist`, validates the generated as
 
 Todo el contenido nuevo reutiliza datos ya verificados; no se añaden cifras, proyectos ni enlaces inventados.
 
-- **Datos estructurados**: `BaseLayout.astro` emite JSON-LD `schema.org/Person` (nombre, URL, imagen, email, `sameAs` a GitHub/LinkedIn/YouTube/Udemy) y, en páginas internas, `BreadcrumbList` (prop `breadcrumb`).
+- **Datos estructurados**: `BaseLayout.astro` emite JSON-LD contextual sin exponer el correo. El inicio usa `Person` y `WebSite`; las páginas internas añaden `BreadcrumbList`, `ProfilePage`, `ItemList`, `Course` o `EducationalOccupationalCredential` según corresponda.
 - **Metadatos**: `author`, `robots` (`index, follow, max-image-preview:large`), `referrer`, `application-name`, `apple-touch-icon`, metas `apple-mobile-web-app-*` / `mobile-web-app-capable`, `og:image:alt/width/height` y `twitter:image:alt`.
-- **Rendimiento**: `preconnect`/`dns-prefetch` a `cdn.simpleicons.org`; `decoding="async"` en imágenes y `fetchpriority="high"` en el retrato y el wordmark.
-- **PWA/indexación**: `public/robots.txt` (con `Sitemap:`), `public/sitemap.xml` (6 rutas reales), `public/site.webmanifest` (`<link rel="manifest">`) y `public/humans.txt` (`<link rel="author">`).
+- **Rendimiento**: fuentes y logos autoalojados, foto responsive AVIF/WebP/JPEG, CSS de iconos reducido y caché inmutable solo para assets versionados.
+- **PWA/indexación**: `public/robots.txt`, `public/sitemap.xml` (6 rutas indexables), `public/site.webmanifest`, `public/humans.txt` y una séptima ruta Astro `404.html` no incluida en el sitemap.
 - **Accesibilidad**: migas de pan visibles con `aria-current`, `aria-labelledby` en secciones, `<main tabindex="-1">`, avisos `sr-only` "(abre en nueva pestaña)" en enlaces externos, `hreflang` en los CV, `lang="en"` en ítems en inglés, `rel="me"` en redes del pie, y timeline como `<ol>/<li>` con `<time datetime>` legible por máquina.
 - **UX**: hoja de impresión (`@media print`), pie con año dinámico y "Volver arriba", enlace de pie de la página actual, `scroll-margin-top` para anclas, resaltado `:target` y `<noscript>` que aclara el filtro de proyectos.
 
@@ -125,9 +126,9 @@ en [`docs/IMPROVEMENTS-RECORD.md`](./IMPROVEMENTS-RECORD.md).
 
 ## Mantenimiento post-merge y auditorías reales
 
-- `npm run production:smoke` comprueba el dominio canónico, la redirección desde el dominio raíz, las seis rutas públicas, la marca, el contenido principal y el `canonical` generado en producción. Acepta `PRODUCTION_BASE_URL` y `PRODUCTION_APEX_URL` para validar otro entorno.
+- `npm run production:smoke` comprueba el dominio canónico, la redirección desde el dominio raíz, las seis rutas indexables, redirects limpios, metadata, cabeceras de seguridad y la respuesta 404.
 - `.github/workflows/production-smoke.yml` ejecuta ese smoke de lunes a viernes y también permite lanzarlo manualmente.
-- `site-quality.yml` instala dependencias, construye `dist` y ejecuta Lighthouse y pa11y sobre las seis rutas generadas por Astro; no sirve la raíz del repositorio.
+- `site-quality.yml` construye `dist` y aplica Lighthouse con presupuestos y pa11y WCAG2AA como gates de PR sobre las seis rutas indexables; `e2e.yml` valida menú, tabs, filtros, hashes y foco con Playwright.
 - `certificates.yml` construye `dist` antes de que `tools/check-certificates.js` extraiga hosts TLS. El checker usa HTML generado y, si no existe build, usa las fuentes Astro y los datos del portfolio como fallback. `api.whatsapp.com` queda explícitamente fuera del umbral de expiración porque es un endpoint de borde gestionado por WhatsApp; el enlace conserva el número y el mensaje del CV.
 - Los nombres de AWS, Microsoft Learn, Credly y GitHub se muestran como enlaces directos a sus fuentes públicas; no se añade una etiqueta distinta al nombre.
 - El manifest habilita instalación básica, pero no se anuncia soporte offline porque el portfolio todavía no incluye service worker.
