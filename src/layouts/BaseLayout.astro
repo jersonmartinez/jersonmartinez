@@ -73,6 +73,9 @@ const here = normalize(Astro.url.pathname);
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" sizes="180x180" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="author" href="/humans.txt" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/manrope-latin.woff2" crossorigin="anonymous" />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/fa-solid-900.woff2" crossorigin="anonymous" />
     <link rel="canonical" href={canonical} />
     {preloadImage && <link rel="preload" as="image" href={preloadImage} type="image/webp" fetchpriority="high" />}
     <meta property="og:type" content={isProfilePage ? 'profile' : 'website'} />
@@ -87,6 +90,7 @@ const here = normalize(Astro.url.pathname);
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
