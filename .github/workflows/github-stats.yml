@@ -1,0 +1,60 @@
+name: Refresh GitHub stats cache
+
+on:
+  schedule:
+    # Una vez al día (08:40 UTC). Las cifras públicas cambian despacio; una pasada
+    # diaria mantiene el cache fresco sin inundar el repo de PRs.
+    - cron: '40 8 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Solo refrescar el archivo sin abrir PR'
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: github-stats-cache
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh-stats:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - name: Refresh GitHub stats cache
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node tools/update-github-stats.js
+      - name: Create update pull request
+        if: ${{ inputs.dry_run != true }}
+        uses: peter-evans/create-pull-request@v7.0.8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: refresh GitHub stats cache'
+          title: 'chore: refresh GitHub stats cache'
+          body: |
+            ## Automated GitHub stats refresh
+
+            Updates `data/github-state.json` from the public GitHub API.
+
+            - The build reads this cached file, never the network.
+            - A failed fetch keeps the previous valid cache (no invented figures).
+          branch: automation/github-stats
+          delete-branch: true
+          labels: automation
+          assignees: jersonmartinez
+          draft: false

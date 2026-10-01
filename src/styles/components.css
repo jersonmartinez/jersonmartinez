@@ -189,9 +189,12 @@
   body { background: #fff; color: #000; }
   body::before, body::after, .hero::before, .page-hero::before { display: none !important; }
   .site-header, .nav-toggle, .skip-link, .footer-top, .filter-bar, .hero-actions, .contact-actions { display: none !important; }
+  .command-palette, .command-open, .theme-toggle, .scroll-progress, .codeblock-copy { display: none !important; }
   a { color: #000; text-decoration: underline; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .75em; word-break: break-all; }
-  .card, .timeline-card, .skills-panel { background: #fff; border: 1px solid #999; box-shadow: none; }
+  .card, .timeline-card, .skills-panel, .codeblock, .evidence-figure { background: #fff; border: 1px solid #999; box-shadow: none; }
+  .codeblock-pre { color: #000; }
+  .codeblock-pre .tok-comment, .codeblock-pre .tok-key, .codeblock-pre .tok-string, .codeblock-pre .tok-number { color: #000; }
   .section { padding-block: 1rem; }
 }
 
@@ -581,3 +584,49 @@ section[id], article[id] { scroll-margin-top: 84px; }
 .command-item:hover, .command-item:focus-visible { background: var(--surface-tint-cyan-strong); color: var(--text); }
 .command-empty { color: var(--muted); margin: 1rem 0 0; padding: .65rem .75rem; }
 .command-empty[hidden] { display: none; }
+
+/* Item 25: bloque de código con resaltado por clases (sin estilos inline, CSP-safe). */
+.codeblock { border: 1px solid var(--line); border-radius: var(--radius-md); margin: 0; overflow: hidden; }
+.codeblock-caption { align-items: center; background: var(--surface-sunken); border-bottom: 1px solid var(--line); color: var(--muted); display: flex; flex-wrap: wrap; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-2xs); gap: .6rem; padding: .6rem .85rem; }
+.codeblock-lang { background: var(--surface-tint-cyan-strong); border-radius: var(--radius-xs); color: var(--cyan); padding: .1rem .4rem; text-transform: uppercase; }
+.codeblock-source { color: var(--cyan); margin-left: auto; text-decoration: none; }
+.codeblock-source:hover, .codeblock-source:focus-visible { text-decoration: underline; }
+.codeblock-body { position: relative; }
+.codeblock-copy { align-items: center; background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-xs); color: var(--muted); display: inline-flex; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-3xs); gap: .3rem; padding: .25rem .45rem; position: absolute; right: .6rem; top: .6rem; }
+.codeblock-copy:hover, .codeblock-copy:focus-visible { border-color: var(--line-strong); color: var(--text); }
+.codeblock-copy[data-copied='true'] { border-color: var(--border-lime-soft); color: var(--lime); }
+.codeblock-copy[hidden] { display: none; }
+.codeblock-pre { color: var(--text); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-xs); line-height: 1.7; margin: 0; overflow-x: auto; padding: 1rem 1.1rem; }
+.codeblock-pre .tok-comment { color: var(--muted); font-style: italic; }
+.codeblock-pre .tok-key { color: var(--cyan); }
+.codeblock-pre .tok-string { color: var(--lime); }
+.codeblock-pre .tok-number { color: var(--orange); }
+
+/* Item 27/28: diagrama de arquitectura y cadena de entrega accesibles. El SVG es decorativo
+   (aria-hidden) y la alternativa textual estructurada vive en una lista descrita por aria. */
+.evidence-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.evidence-figure { border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
+.evidence-figure svg { display: block; height: auto; width: 100%; }
+.evidence-figcaption { color: var(--muted); font-size: var(--fs-xs); padding: .85rem 1rem; }
+.delivery-chain { display: grid; gap: .6rem; list-style: none; margin: 1rem 0 0; padding: 0; }
+.delivery-chain li { align-items: baseline; border-left: 2px solid var(--cyan); display: grid; gap: .5rem; grid-template-columns: 1.4rem 1fr; padding: .45rem .75rem; }
+.delivery-chain li strong { color: var(--text); }
+.delivery-chain-step { color: var(--lime); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-2xs); }
+.diagram-base { fill: var(--surface-sunken); }
+.diagram-node { fill: var(--surface-raised); stroke: var(--line-strong); stroke-width: 1.5; }
+.diagram-node-label { fill: var(--text); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: 11px; }
+.diagram-edge { fill: none; stroke: var(--cyan); stroke-width: 1.5; }
+.diagram-accent { fill: none; stroke: var(--lime); stroke-dasharray: 4 3; stroke-width: 1.5; }
+@media (max-width: 820px) { .evidence-grid { grid-template-columns: 1fr; } }
+
+/* Item 25/45: en tema claro, los metadatos del bloque de código necesitan un cian más oscuro
+   para alcanzar AA sobre superficies claras. */
+:root[data-theme='light'] .codeblock-lang,
+:root[data-theme='light'] .codeblock-source { color: #0b5566; }
+
+/* Item 29: tira de estadísticas de GitHub (datos de build cacheados). */
+.github-stats { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; margin: 1.5rem 0 0; padding: 0; }
+.github-stats li { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 1rem 1.2rem; }
+.github-stats strong { color: var(--text); display: block; font-size: var(--fs-xl); font-variant-numeric: tabular-nums; letter-spacing: -.04em; }
+.github-stats span { color: var(--muted); font-size: var(--fs-xs); }
+@media (max-width: 680px) { .github-stats { grid-template-columns: 1fr; } }

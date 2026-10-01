@@ -18,6 +18,8 @@
     "sync:static:check": "node tools/sync-public-root.js --check",
     "content:health": "node tools/check-content-health.js",
     "youtube:dry-run": "node src/js/update-youtube-sections.js --dry-run --offline",
+    "github:stats": "node tools/update-github-stats.js",
+    "github:stats:check": "node tools/update-github-stats.js --check",
     "production:smoke": "node tools/check-production.js"
   },
   "engines": {

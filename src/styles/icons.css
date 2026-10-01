@@ -33,3 +33,5 @@
 .fa-language::before { content: '\f1ab'; }
 .fa-info-circle::before { content: '\f05a'; }
 .fa-adjust::before { content: '\f042'; }
+.fa-copy::before { content: '\f0c5'; }
+.fa-check::before { content: '\f00c'; }

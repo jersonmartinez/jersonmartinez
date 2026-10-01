@@ -4,7 +4,42 @@ import LogoCloud from '../components/LogoCloud.astro';
 import SkillsExplorer from '../components/SkillsExplorer.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import CredentialCard from '../components/CredentialCard.astro';
+import CodeBlock from '../components/CodeBlock.astro';
 import { collaborationModes, profile, projects, teaching, certifications, skills } from '../data/portfolio.js';
+import fs from 'node:fs';
+import path from 'node:path';
+// Item 29: datos de GitHub leídos del cache en build (data/github-state.json), con degradación:
+// si el cache falta o es inválido, githubStats queda null y la tira no se renderiza (no se inventan cifras).
+let githubStats = null;
+try {
+  const raw = fs.readFileSync(path.resolve(process.cwd(), 'data/github-state.json'), 'utf8');
+  const parsed = JSON.parse(raw);
+  if (parsed && typeof parsed.publicRepos === 'number' && typeof parsed.stars === 'number') {
+    githubStats = [
+      [`${parsed.publicRepos}`, 'repositorios públicos'],
+      [`${parsed.stars}`, 'estrellas acumuladas'],
+      [`${parsed.followers}`, 'seguidores en GitHub'],
+    ];
+  }
+} catch { githubStats = null; }
+// Item 25/28: extracto REAL del workflow de validación del repo (.github/workflows/validate.yml),
+// mostrado como evidencia de la cadena de entrega del propio sitio. No es contenido inventado.
+const validateExcerpt = `# .github/workflows/validate.yml (extracto)
+- run: npm ci
+- run: npm run build
+- name: Tests sobre el build compilado
+  run: VALIDATE_BUILD=1 npm test
+- run: VALIDATE_BUILD=1 npm run validate
+- run: npm run links`;
+// Item 28: cadena de entrega real derivada de los workflows existentes del repositorio.
+const deliveryChain = [
+  ['01', 'validate.yml', 'Build Astro, tests fuente+compilados, validación de datos y enlaces internos.'],
+  ['02', 'site-quality.yml', 'Lighthouse con presupuestos y pa11y-ci (WCAG2AA) sobre el dist servido.'],
+  ['03', 'e2e.yml', 'Playwright + axe-core 4.13 en las seis rutas públicas.'],
+  ['04', 'external-links.yml', 'Auditoría de enlaces externos (HEAD con reintento GET).'],
+  ['05', 'preview.yml', 'Artefacto de vista previa por pull request.'],
+  ['06', 'deploy-pages.yml', 'Publicación del sitio estático tras pasar los gates.'],
+];
 const featuredProjects = projects.filter((project) => project.featured);
 const logos = [
   { name: 'AWS', logo: '/brands/aws.svg' }, { name: 'Azure', logo: '/brands/azure.svg' },
@@ -49,6 +84,46 @@ const logos = [
   <section class="section section--line" id="ensenanza" data-section="ensenanza" aria-labelledby="ensenanza-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">04 / conocimiento</p><h2 id="ensenanza-title">La enseñanza también es una plataforma.</h2><p class="lede">Cursos, artículos y canales convierten experiencia de operación en conocimiento reutilizable.</p></div><div class="head-row-actions"><a class="button button--ghost" href="/courses.html"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Ver cursos</a><a class="button button--ghost" href="/courses.html#canales"><i class="fas fa-play" aria-hidden="true"></i> Ver canales</a></div></div><div class="teaching-grid">{teaching.map((item) => <article class="card teaching-card card--interactive"><img src={item.logo} width="40" height="40" alt="" loading="lazy" decoding="async" /><div><h3>{item.name}</h3><div class="teaching-metrics">{item.metrics.map((metric) => <strong>{metric}</strong>)}</div><p>{item.description}</p></div><a href={item.href} target="_blank" rel="noopener noreferrer">{item.cta}<span class="sr-only"> (abre en nueva pestaña)</span></a></article>)}</div></div></section>
 
   <section class="section" id="certificaciones" data-section="certificaciones" aria-labelledby="certificaciones-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">05 / evidencia</p><h2 id="certificaciones-title">Diez credenciales oficiales y verificables.</h2><p class="lede">AWS, Microsoft Azure y GitHub Foundations respaldan arquitectura, seguridad, delivery y operación multi-cloud.</p></div><a class="button button--ghost" href="/certifications.html"><i class="fas fa-certificate" aria-hidden="true"></i> Ver credenciales</a></div><div class="cert-grid cert-grid--badges cert-grid--summary">{certifications.map((cert) => <CredentialCard certification={cert} summary limit={3} />)}</div></div></section>
+
+  <section class="section section--line" id="evidencia-tecnica" aria-labelledby="evidencia-title">
+    <div class="container">
+      <div class="section-heading"><p class="section-kicker">Evidencia técnica</p><h2 id="evidencia-title">Este sitio se entrega como una plataforma.</h2><p class="lede">El propio portfolio pasa por una cadena de build, pruebas y gates antes de publicarse.</p></div>
+      <div class="evidence-grid">
+        <div>
+          <CodeBlock code={validateExcerpt} lang="yaml" label="Pipeline de validación (repo)" href="https://github.com/jersonmartinez/jersonmartinez/blob/main/.github/workflows/validate.yml" />
+        </div>
+        <figure class="evidence-figure">
+          <svg viewBox="0 0 320 180" role="img" aria-labelledby="arch-title arch-desc">
+            <title id="arch-title">Arquitectura de entrega del sitio</title>
+            <desc id="arch-desc">El código fuente pasa por GitHub Actions, que ejecuta build y gates de calidad, y publica el sitio estático servido tras una CDN.</desc>
+            <rect class="diagram-base" x="0" y="0" width="320" height="180" rx="8" />
+            <rect class="diagram-node" x="16" y="70" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="53" y="94" text-anchor="middle">Fuente</text>
+            <rect class="diagram-node" x="123" y="40" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="160" y="64" text-anchor="middle">CI gates</text>
+            <rect class="diagram-node" x="123" y="100" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="160" y="124" text-anchor="middle">Build</text>
+            <rect class="diagram-node" x="230" y="70" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="267" y="94" text-anchor="middle">CDN</text>
+            <path class="diagram-edge" d="M90 90 H110 V60 H123" />
+            <path class="diagram-edge" d="M90 90 H110 V120 H123" />
+            <path class="diagram-edge" d="M197 60 H214 V90 H230" />
+            <path class="diagram-accent" d="M197 120 H214 V90 H230" />
+          </svg>
+          <figcaption class="evidence-figcaption">Diagrama de arquitectura (decorativo); la descripción textual está en el <code>&lt;desc&gt;</code> y en la cadena de entrega siguiente.</figcaption>
+        </figure>
+      </div>
+      <h3 class="sr-only">Cadena de entrega, paso a paso</h3>
+      <ol class="delivery-chain" aria-label="Cadena de entrega del sitio basada en los workflows del repositorio">
+        {deliveryChain.map(([step, file, detail]) => <li><span class="delivery-chain-step">{step}</span><span><strong>{file}</strong> — {detail}</span></li>)}
+      </ol>
+      {githubStats && (
+        <ul class="github-stats" aria-label="Actividad pública en GitHub (datos de build en caché)">
+          {githubStats.map(([value, label]) => <li><strong>{value}</strong><span>{label}</span></li>)}
+        </ul>
+      )}
+    </div>
+  </section>
 
   <section class="section section--tight" id="contacto" data-section="contacto" aria-labelledby="contacto-title"><div class="container"><div class="contact-panel"><div><p class="section-kicker">06 / siguiente paso</p><h2 id="contacto-title">¿Qué plataforma necesitas hacer confiable?</h2><p>Podemos conversar sobre una oportunidad profesional, consultoría o formación técnica.</p></div><div class="contact-actions"><a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i> Escribir por WhatsApp</a><a class="button button--ghost" href="/about.html">Conocer mi perfil</a></div></div></div></section>
 </BaseLayout>

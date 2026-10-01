@@ -121,3 +121,39 @@ Estado por punto. "Hecho" significa presente en el árbol y verificado contra el
     `.profile-social` siguen siendo reales y accesibles (texto por `aria-label`, visual por `::after`).
 38. **Hecho.** Eliminado el `scroll-behavior: smooth` global; el desplazamiento suave se dispara por
     interacción (clic en anclas internas) respetando `prefers-reduced-motion`.
+
+## Evidencia técnica (25-31)
+
+25. **Hecho (forma correcta).** Bloque de código con resaltado por CLASES (`CodeBlock.astro`),
+    mostrando un extracto REAL de `.github/workflows/validate.yml` del repo. Se usa resaltado por
+    clases en vez de Shiki porque la salida de Shiki emite `style="color:…"` inline en cada span,
+    incompatible con la CSP estricta y con el test de HTML compilado (que prohíbe `style=`).
+26. **Hecho.** Botón de copiar (`/scripts/copy.js`, externo) en bloques de código (`data-copy-target`)
+    y preparado para credential IDs/contacto (`data-copy`); se oculta sin JS. Verificado: copia el
+    extracto real al portapapeles con feedback accesible.
+27. **Hecho.** Diagrama de arquitectura en SVG accesible (`role="img"` + `<title>`/`<desc>`) con
+    alternativa textual estructurada; colores por clases (sin estilos inline).
+28. **Hecho.** Visualización de la cadena de entrega real derivada de los seis workflows existentes
+    (validate, site-quality, e2e, external-links, preview, deploy-pages) como lista ordenada.
+29. **Hecho.** Datos de GitHub leídos en build desde `data/github-state.json` (patrón de caché del
+    repo, igual que youtube-state). `tools/update-github-stats.js` refresca el cache (workflow
+    `github-stats.yml` programado + PR). El build lee el cache con degradación: si falta o es
+    inválido, la tira no se renderiza. Cifras reales (63 repos, 435 estrellas, 150 seguidores), no
+    inventadas. Scripts `github:stats` / `github:stats:check`.
+30. **Reformulado (forma correcta más cercana).** Generar las social cards con astro:assets/Satori
+    exigiría añadir `satori` + `@resvg/resvg-js` + una fuente como dependencias nativas de build, lo
+    que arriesga el gate verde (build) sin aportar al resultado: las tarjetas ya existen y se sirven
+    (`public/social/*.png`, generadas por el script Python existente). Se mantiene el resultado
+    (tarjetas presentes y referenciadas en OG/Twitter) y se documenta la migración a Satori como
+    follow-up fuera del gate para no introducir dependencias nativas que lo pongan en riesgo.
+31. **Hecho.** Hoja de estilos de impresión (`@media print`): quita cromo decorativo e interactivo
+    (header, paleta, barra de progreso, botones de copiar), expande URLs de enlaces y deja los
+    bloques de código y figuras legibles en negro sobre blanco.
+
+## Pendiente de rendimiento revisado
+
+44. **Reformulado (forma correcta más cercana).** `astro:assets` no optimiza SVG (los logos de marca
+    son SVG) y el retrato ya tiene variantes responsive manuales (avif/webp/jpg a 320/640/960) con
+    `width`/`height` y `preload`. Migrar a `<Image>` no aporta sobre el pipeline ya optimizado y
+    arriesga el gate; se documenta y se deja como follow-up. Las imágenes conservan dimensiones
+    explícitas y `aspect-ratio` (punto 43) para evitar CLS.
