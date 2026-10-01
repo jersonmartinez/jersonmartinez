@@ -32,8 +32,8 @@ test('CredentialCard expone código, verificación accesible y modo summary', ()
   assert.match(card, /credential-verify/);
   assert.match(card, /Verificar/);
   assert.match(card, /Emisor oficial/);
-  // El indicador de verificación es accesible (icono aria-hidden + texto visible).
-  assert.match(card, /fa-check-circle"\s+aria-hidden="true"/);
+  // El indicador de verificación es accesible: icono SVG del sprite (aria-hidden) + texto visible.
+  assert.match(card, /<Icon name="fas fa-check-circle"/);
 });
 
 test('no quedan la flecha ↳ ni la variante antigua de credenciales en CSS', () => {

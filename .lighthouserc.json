@@ -16,7 +16,13 @@
         "first-contentful-paint": ["error", { "maxNumericValue": 2800 }],
         "total-blocking-time": ["error", { "maxNumericValue": 300 }],
         "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }],
-        "largest-contentful-paint": ["error", { "maxNumericValue": 3500 }]
+        "largest-contentful-paint": ["error", { "maxNumericValue": 3500 }],
+        "resource-summary:total:size": ["error", { "maxNumericValue": 1600000 }],
+        "resource-summary:script:size": ["error", { "maxNumericValue": 120000 }],
+        "resource-summary:stylesheet:size": ["error", { "maxNumericValue": 120000 }],
+        "resource-summary:font:size": ["error", { "maxNumericValue": 400000 }],
+        "resource-summary:image:size": ["error", { "maxNumericValue": 1100000 }],
+        "resource-summary:document:size": ["error", { "maxNumericValue": 120000 }]
       }
     }
   }

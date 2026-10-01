@@ -15,9 +15,14 @@ test('Astro expone siete rutas con layout compartido', () => {
 test('identidad, tipografías e iconos se sirven localmente', () => {
   assert.match(read('src/components/SiteHeader.astro'), /brand\/logo\.svg/);
   assert.match(read('src/styles/global.css'), /fonts\.css/);
-  assert.match(read('src/styles/global.css'), /icons\.css/);
-  assert.doesNotMatch(read('src/styles/global.css'), /fonts\.googleapis|fontawesome\/css\/all/);
-  for (const file of ['public/fonts/manrope-latin.woff2', 'public/fonts/dm-mono-400-latin.woff2', 'public/fonts/fa-solid-900.woff2', 'public/fonts/fa-brands-400.woff2']) assert.ok(exists(file), `Falta ${file}`);
+  // Item 16: los iconos ya no usan webfont de Font Awesome, sino un sprite SVG inline.
+  assert.match(read('src/components/IconSprite.astro'), /<symbol id="icon-/);
+  assert.match(read('src/components/Icon.astro'), /#icon-/);
+  assert.doesNotMatch(read('src/styles/global.css'), /fonts\.googleapis|fontawesome\/css\/all|icons\.css/);
+  for (const file of ['public/fonts/manrope-latin.woff2', 'public/fonts/dm-mono-400-latin.woff2']) assert.ok(exists(file), `Falta ${file}`);
+  // Los WOFF2 de Font Awesome ya no se envían.
+  assert.ok(!exists('public/fonts/fa-solid-900.woff2'), 'El WOFF2 de FA solid no debe enviarse');
+  assert.ok(!exists('public/fonts/fa-brands-400.woff2'), 'El WOFF2 de FA brands no debe enviarse');
   assert.ok(!exists('src/libs'), 'Las librerías legacy no deben volver al árbol activo');
 });
 

@@ -1,0 +1,39 @@
+---
+import Icon from './Icon.astro';
+// Item 25: bloque de código real con resaltado por CLASES (no estilos inline, que violarían la
+// CSP estricta y el test de HTML compilado). El resaltado de Shiki emite style="color:…" en cada
+// span, incompatible con el gate; por eso se usa un resaltador ligero basado en clases sobre tokens.
+// `code` debe ser contenido real y verificable (p. ej. un extracto de un workflow del repo).
+const { code, lang = 'yaml', label, href } = Astro.props;
+
+const escapeHtml = (value) => value
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+// Resaltado mínimo y determinista por clases para YAML/HCL/sh. No ejecuta nada; sólo envuelve
+// comentarios, claves, cadenas y números en <span class="tok-*">.
+function highlight(src) {
+  return src.split('\n').map((rawLine) => {
+    const line = escapeHtml(rawLine);
+    // comentario de línea completa
+    if (/^\s*#/.test(rawLine)) return `<span class="tok-comment">${line}</span>`;
+    let out = line;
+    // cadenas entre comillas
+    out = out.replace(/(&quot;|&#39;|["'])(.*?)\1/g, '<span class="tok-string">$1$2$1</span>');
+    // clave: al inicio (YAML)
+    out = out.replace(/^(\s*)([\w.-]+)(:)(\s|$)/, '$1<span class="tok-key">$2</span>$3$4');
+    // números
+    out = out.replace(/\b(\d+(?:\.\d+)?)\b/g, '<span class="tok-number">$1</span>');
+    return out;
+  }).join('\n');
+}
+
+const highlighted = highlight(code);
+const codeId = `code-${Math.random().toString(36).slice(2, 8)}`;
+---
+<figure class="codeblock">
+  {label && <figcaption class="codeblock-caption"><span class="codeblock-lang">{lang}</span> {label}{href && <a class="codeblock-source" href={href} target="_blank" rel="noopener noreferrer">Ver fuente<span class="sr-only"> (abre en nueva pestaña)</span></a>}</figcaption>}
+  <div class="codeblock-body">
+    <button class="codeblock-copy" type="button" data-copy-target={codeId} aria-label="Copiar bloque de código" hidden><Icon name="fas fa-copy" /><span class="codeblock-copy-label">Copiar</span></button>
+    <pre class="codeblock-pre" tabindex="0"><code id={codeId} class={`language-${lang}`} set:html={highlighted}></code></pre>
+  </div>
+</figure>

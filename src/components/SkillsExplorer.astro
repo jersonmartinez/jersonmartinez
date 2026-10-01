@@ -1,15 +1,17 @@
 ---
+import Icon from './Icon.astro';
 const { skills } = Astro.props;
+const slugify = (value) => String(value).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 ---
 <div class="skills-explorer" data-skills-explorer>
   <div class="skills-tabs" role="tablist" aria-label="Categorías de habilidades" aria-orientation="vertical">
-    {skills.map((skill, index) => <button class={`skill-tab ${index === 0 ? 'is-active' : ''}`} type="button" role="tab" id={`skill-tab-${index}`} aria-selected={index === 0 ? 'true' : 'false'} aria-controls={`skill-panel-${index}`} data-skill-tab={index} tabindex={index === 0 ? '0' : '-1'}><i class={`fas ${skill.icon}`} aria-hidden="true"></i><span>{skill.name}</span><i class="fas fa-chevron-right skill-tab-arrow" aria-hidden="true"></i></button>)}
+    {skills.map((skill, index) => <button class={`skill-tab ${index === 0 ? 'is-active' : ''}`} type="button" role="tab" id={`skill-tab-${index}`} aria-selected={index === 0 ? 'true' : 'false'} aria-controls={`skill-panel-${index}`} data-skill-tab={index} data-skill-slug={slugify(skill.name)} tabindex={index === 0 ? '0' : '-1'}><Icon name={skill.icon} /><span>{skill.name}</span><Icon name="fas fa-chevron-right skill-tab-arrow" /></button>)}
   </div>
   <div class="skills-panels">
     {skills.map((skill, index) => <section class={`skills-panel ${index === 0 ? 'is-active' : ''}`} id={`skill-panel-${index}`} role="tabpanel" aria-labelledby={`skill-tab-${index}`} data-skill-panel={index} tabindex="0" hidden={index !== 0}>
-      <div class="skills-panel-heading"><span class="skill-panel-icon" aria-hidden="true"><i class={`fas ${skill.icon}`}></i></span><div><p class="section-kicker">Capacidad aplicada</p><h3>{skill.name}</h3></div></div>
+      <div class="skills-panel-heading"><span class="skill-panel-icon" aria-hidden="true"><Icon name={skill.icon} /></span><div><p class="section-kicker">Capacidad aplicada</p><h3>{skill.name}</h3></div></div>
       <p class="skill-summary">{skill.summary}</p>
-      <div class="skill-evidence"><span><i class="fas fa-check-circle" aria-hidden="true"></i> Evidencia</span><p>{skill.evidence}</p></div>
+      <div class="skill-evidence"><span><Icon name="fas fa-check-circle" /> Evidencia</span><p>{skill.evidence}</p></div>
       <ul class="skill-list">{skill.items.map((item) => <li lang={/English|Professional Working Proficiency/.test(item) ? 'en' : undefined}>{item}</li>)}</ul>
       <a class="card-link" href={skill.relatedHref}>{skill.relatedLabel}</a>
     </section>)}

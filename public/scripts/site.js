@@ -58,7 +58,7 @@
   const explorer = document.querySelector('[data-skills-explorer]');
   const tabs = explorer ? [...explorer.querySelectorAll('[data-skill-tab]')] : [];
   const panels = explorer ? [...explorer.querySelectorAll('[data-skill-panel]')] : [];
-  const activateSkill = (index, focus = false) => {
+  const activateSkill = (index, focus = false, updateUrl = false) => {
     tabs.forEach((tab, tabIndex) => {
       const active = tabIndex === index;
       tab.classList.toggle('is-active', active);
@@ -71,18 +71,33 @@
       panel.hidden = !active;
       panel.classList.toggle('is-active', active);
     });
+    // Item 35: refleja la tab activa en la URL (?skill=slug) sin ensuciar el historial.
+    if (updateUrl && tabs[index]) {
+      const slug = tabs[index].getAttribute('data-skill-slug') || String(index);
+      const url = new URL(location.href);
+      url.searchParams.set('skill', slug);
+      history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+    }
   };
   tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => activateSkill(index));
+    tab.addEventListener('click', () => activateSkill(index, false, true));
     tab.addEventListener('keydown', (event) => {
       let next = index;
       if (event.key === 'ArrowDown' || event.key === 'ArrowRight') next = (index + 1) % tabs.length;
       if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
       if (event.key === 'Home') next = 0;
       if (event.key === 'End') next = tabs.length - 1;
-      if (next !== index) { event.preventDefault(); activateSkill(next, true); }
+      if (next !== index) { event.preventDefault(); activateSkill(next, true, true); }
     });
   });
+  // Item 35: restaura la tab desde la URL al cargar.
+  if (tabs.length) {
+    const requestedSkill = new URL(location.href).searchParams.get('skill');
+    if (requestedSkill) {
+      const idx = tabs.findIndex((tab, i) => (tab.getAttribute('data-skill-slug') || String(i)) === requestedSkill);
+      if (idx >= 0) activateSkill(idx);
+    }
+  }
 
   const railLinks = [...document.querySelectorAll('.journey-rail a[href^="#"]')];
   const railSections = railLinks.map((link) => document.querySelector(link.getAttribute('href'))).filter(Boolean);
@@ -140,4 +155,94 @@
   };
   window.addEventListener('hashchange', focusHashProject);
   focusHashProject();
+
+  /* Item 8: conmutador de tema persistente y accesible. El botón sólo se muestra con JS
+     (progressive enhancement); sin JS el sitio sigue prefers-color-scheme. */
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  if (themeToggle) {
+    const root = document.documentElement;
+    const systemLight = window.matchMedia('(prefers-color-scheme: light)');
+    const effectiveTheme = () => {
+      const explicit = root.getAttribute('data-theme');
+      if (explicit === 'light' || explicit === 'dark') return explicit;
+      return systemLight.matches ? 'light' : 'dark';
+    };
+    const reflect = () => {
+      const isLight = effectiveTheme() === 'light';
+      themeToggle.setAttribute('aria-pressed', String(isLight));
+      themeToggle.setAttribute('aria-label', isLight ? 'Activar tema oscuro' : 'Activar tema claro');
+    };
+    themeToggle.hidden = false;
+    reflect();
+    themeToggle.addEventListener('click', () => {
+      const next = effectiveTheme() === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) { /* sin persistencia */ }
+      reflect();
+    });
+    /* Si el usuario no ha elegido explícitamente, seguir los cambios del sistema. */
+    systemLight.addEventListener('change', () => { if (!localStorage.getItem('theme')) reflect(); });
+  }
+
+  /* Item 38: desplazamiento suave disparado por interacción (no global). Un clic en un enlace
+     interno de ancla hace scroll suave salvo que el usuario prefiera movimiento reducido. */
+  document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link) return;
+    const id = decodeURIComponent(link.getAttribute('href').slice(1));
+    if (!id) return;
+    const target = document.getElementById(id);
+    if (!target) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+    history.pushState(null, '', `#${id}`);
+    target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+  });
+
+  /* Item 36: indicador de progreso de lectura en páginas largas. Barra fija alimentada por el
+     scroll; se oculta en páginas cortas y respeta prefers-reduced-motion (sin transición). */
+  const progressBar = document.querySelector('[data-scroll-progress]');
+  if (progressBar) {
+    const updateProgress = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const ratio = max > 0 ? Math.min(1, doc.scrollTop / max) : 0;
+      progressBar.style.transform = `scaleX(${ratio})`;
+      progressBar.parentElement?.setAttribute('aria-valuenow', String(Math.round(ratio * 100)));
+    };
+    const longEnough = (document.documentElement.scrollHeight - document.documentElement.clientHeight) > 800;
+    if (longEnough) {
+      progressBar.parentElement?.removeAttribute('hidden');
+      updateProgress();
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      window.addEventListener('resize', updateProgress, { passive: true });
+    }
+  }
+
+  /* Item 33: prefetch de rutas internas DISPARADO POR INTENCIÓN (hover/focus), no en la carga
+     inicial. Un prefetch estático de varias páginas competía con la imagen LCP y empeoraba el
+     Largest Contentful Paint; hacerlo al pasar el ratón/foco mantiene el beneficio sin coste en el
+     primer render. CSP-safe (inyecta <link rel="prefetch">, no ejecuta scripts remotos). */
+  const prefetched = new Set();
+  const prefetch = (href) => {
+    if (!href || prefetched.has(href)) return;
+    prefetched.add(href);
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = href;
+    document.head.appendChild(link);
+  };
+  const isInternal = (anchor) => {
+    try { const u = new URL(anchor.href, location.href); return u.origin === location.origin && !u.hash && u.pathname !== location.pathname; }
+    catch { return false; }
+  };
+  const onIntent = (event) => {
+    const anchor = event.target.closest('a[href]');
+    if (anchor && isInternal(anchor)) prefetch(anchor.href);
+  };
+  if (!window.matchMedia('(prefers-reduced-data: reduce)').matches) {
+    document.addEventListener('pointerover', onIntent, { passive: true });
+    document.addEventListener('focusin', onIntent, { passive: true });
+  }
 })();

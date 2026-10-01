@@ -1,10 +1,48 @@
 ---
+import Icon from '../components/Icon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LogoCloud from '../components/LogoCloud.astro';
 import SkillsExplorer from '../components/SkillsExplorer.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import CredentialCard from '../components/CredentialCard.astro';
+import CodeBlock from '../components/CodeBlock.astro';
 import { collaborationModes, profile, projects, teaching, certifications, skills } from '../data/portfolio.js';
+import fs from 'node:fs';
+import path from 'node:path';
+// Item 29: datos de GitHub leídos del cache en build (data/github-state.json), con degradación:
+// si el cache falta o es inválido, githubStats queda null y la tira no se renderiza (no se inventan cifras).
+let githubStats: string[][] | null = null;
+try {
+  const raw = fs.readFileSync(path.resolve(process.cwd(), 'data/github-state.json'), 'utf8');
+  const parsed = JSON.parse(raw);
+  if (parsed && typeof parsed.publicRepos === 'number' && typeof parsed.stars === 'number') {
+    githubStats = [
+      [`${parsed.publicRepos}`, 'repositorios públicos'],
+      [`${parsed.stars}`, 'estrellas acumuladas'],
+      [`${parsed.followers}`, 'seguidores en GitHub'],
+    ];
+  }
+} catch { githubStats = null; }
+// Item 48: narrowing seguro del meta heterogéneo de profile.facts para astro check.
+const factLink = (meta) => (meta && typeof meta === 'object' && 'href' in meta ? meta : null);
+// Item 25/28: extracto REAL del workflow de validación del repo (.github/workflows/validate.yml),
+// mostrado como evidencia de la cadena de entrega del propio sitio. No es contenido inventado.
+const validateExcerpt = `# .github/workflows/validate.yml (extracto)
+- run: npm ci
+- run: npm run build
+- name: Tests sobre el build compilado
+  run: VALIDATE_BUILD=1 npm test
+- run: VALIDATE_BUILD=1 npm run validate
+- run: npm run links`;
+// Item 28: cadena de entrega real derivada de los workflows existentes del repositorio.
+const deliveryChain = [
+  ['01', 'validate.yml', 'Build Astro, tests fuente+compilados, validación de datos y enlaces internos.'],
+  ['02', 'site-quality.yml', 'Lighthouse con presupuestos y pa11y-ci (WCAG2AA) sobre el dist servido.'],
+  ['03', 'e2e.yml', 'Playwright + axe-core 4.13 en las seis rutas públicas.'],
+  ['04', 'external-links.yml', 'Auditoría de enlaces externos (HEAD con reintento GET).'],
+  ['05', 'preview.yml', 'Artefacto de vista previa por pull request.'],
+  ['06', 'deploy-pages.yml', 'Publicación del sitio estático tras pasar los gates.'],
+];
 const featuredProjects = projects.filter((project) => project.featured);
 const logos = [
   { name: 'AWS', logo: '/brands/aws.svg' }, { name: 'Azure', logo: '/brands/azure.svg' },
@@ -20,19 +58,19 @@ const logos = [
         <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> DEVOPS · SRE · DEVSECOPS · CLOUD</p>
         <h1>Plataformas cloud confiables para equipos que necesitan <em>avanzar.</em></h1>
         <p class="lede">{profile.intro} Conecto automatización, seguridad, costes y experiencia operativa para que los equipos puedan entregar con confianza.</p>
-        <div class="hero-actions"><a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i> Hablemos por WhatsApp</a><a class="button button--ghost" href="#recorridos"><i class="fas fa-arrow-down" aria-hidden="true"></i> Elegir un recorrido</a></div>
-        <ul class="hero-facts" aria-label="Resumen profesional">{profile.facts.map(([value, label, meta]) => <li>{meta?.href ? <a class="hero-fact-link" href={meta.href} {...(meta.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={meta.label}><strong>{value}</strong><span>{label}</span></a> : <><strong>{value}</strong><span>{label}</span></>}</li>)}</ul>
+        <div class="hero-actions"><a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="fab fa-whatsapp" /> Hablemos por WhatsApp</a><a class="button button--ghost" href="#recorridos"><Icon name="fas fa-arrow-down" /> Elegir un recorrido</a></div>
+        <ul class="hero-facts" aria-label="Resumen profesional">{profile.facts.map(([value, label, meta]) => { const link = factLink(meta); return <li>{link ? <a class="hero-fact-link" href={link.href} {...('external' in link && link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={link.label}><strong>{value}</strong><span>{label}</span></a> : <><strong>{value}</strong><span>{label}</span></>}</li>; })}</ul>
       </div>
       <aside class="profile-panel" aria-label="Perfil de Jerson Martínez">
         <div class="profile-image"><picture><source srcset="/images/profile-v2-320.webp 320w, /images/profile-v2-640.webp 640w, /images/profile-v2-960.webp 960w" sizes="(max-width: 640px) 88vw, 38vw" type="image/webp"/><img src="/images/profile-v2-640.jpg" srcset="/images/profile-v2-320.jpg 320w, /images/profile-v2-640.jpg 640w, /images/profile-v2-960.jpg 960w" sizes="(max-width: 640px) 88vw, 38vw" width="960" height="960" alt="Retrato de Jerson Martínez" fetchpriority="high" decoding="async" /></picture></div>
         <div class="profile-meta"><div><a class="profile-name" href="/about.html">Jerson Martínez</a><span>Sr. DevOps Engineer</span></div><span class="profile-tag">MULTI-CLOUD</span></div>
-        <nav class="profile-links" aria-label="Perfiles públicos"><a class="profile-social" href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub, abre en nueva pestaña" data-tooltip="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a><a class="profile-social" href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn, abre en nueva pestaña" data-tooltip="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a><a class="profile-social" href="https://www.youtube.com/@DevOpsea" target="_blank" rel="noopener noreferrer" aria-label="DevOpsea en YouTube, abre en nueva pestaña" data-tooltip="DevOpsea"><i class="fab fa-youtube" aria-hidden="true"></i></a></nav>
+        <nav class="profile-links" aria-label="Perfiles públicos"><a class="profile-social" href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub, abre en nueva pestaña" data-tooltip="GitHub"><Icon name="fab fa-github" /></a><a class="profile-social" href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn, abre en nueva pestaña" data-tooltip="LinkedIn"><Icon name="fab fa-linkedin-in" /></a><a class="profile-social" href="https://www.youtube.com/@DevOpsea" target="_blank" rel="noopener noreferrer" aria-label="DevOpsea en YouTube, abre en nueva pestaña" data-tooltip="DevOpsea"><Icon name="fab fa-youtube" /></a></nav>
       </aside>
     </div>
   </section>
 
   <section class="section section--tight intent-section" id="recorridos" aria-labelledby="recorridos-title">
-    <div class="container"><div class="section-heading"><p class="section-kicker">Elige tu recorrido</p><h2 id="recorridos-title">La evidencia adecuada para cada conversación.</h2><p class="lede">Accede directamente a experiencia profesional, soluciones técnicas o formación.</p></div><div class="intent-grid">{collaborationModes.map((mode) => <article class="card card--interactive intent-card"><span class="intent-icon" aria-hidden="true"><i class={`fas ${mode.icon}`}></i></span><h3>{mode.title}</h3><p>{mode.description}</p><a class="card-link" href={mode.href}>{mode.cta}</a></article>)}</div></div>
+    <div class="container"><div class="section-heading"><p class="section-kicker">Elige tu recorrido</p><h2 id="recorridos-title">La evidencia adecuada para cada conversación.</h2><p class="lede">Accede directamente a experiencia profesional, soluciones técnicas o formación.</p></div><div class="intent-grid">{collaborationModes.map((mode) => <article class="card card--interactive intent-card"><span class="intent-icon" aria-hidden="true"><Icon name={mode.icon} /></span><h3>{mode.title}</h3><p>{mode.description}</p><a class="card-link" href={mode.href}>{mode.cta}</a></article>)}</div></div>
   </section>
 
   <section class="section section--line" id="impacto" data-section="impacto" aria-labelledby="impacto-title">
@@ -44,11 +82,51 @@ const logos = [
 
   <section class="section section--line" id="skills" data-section="skills" aria-labelledby="skills-title"><div class="container"><div class="section-heading"><p class="section-kicker">02 / habilidades</p><h2 id="skills-title">Capacidades técnicas conectadas con evidencia.</h2><p class="lede">Selecciona un dominio para ver tecnologías, contexto de uso y experiencias relacionadas.</p></div><SkillsExplorer skills={skills} /></div></section>
 
-  <section class="section" id="proyectos" data-section="proyectos" aria-labelledby="proyectos-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">03 / sistemas</p><h2 id="proyectos-title">Proyectos que explican cómo trabajo.</h2><p class="lede">Cada ficha conecta un problema, una contribución y un resultado verificable.</p></div><a class="button button--ghost" href="/projects.html"><i class="fas fa-arrow-right" aria-hidden="true"></i> Explorar todos</a></div><div class="featured-grid">{featuredProjects.map((project) => <ProjectCard project={project} featured />)}</div></div></section>
+  <section class="section" id="proyectos" data-section="proyectos" aria-labelledby="proyectos-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">03 / sistemas</p><h2 id="proyectos-title">Proyectos que explican cómo trabajo.</h2><p class="lede">Cada ficha conecta un problema, una contribución y un resultado verificable.</p></div><a class="button button--ghost" href="/projects.html"><Icon name="fas fa-arrow-right" /> Explorar todos</a></div><div class="featured-grid">{featuredProjects.map((project) => <ProjectCard project={project} featured />)}</div></div></section>
 
-  <section class="section section--line" id="ensenanza" data-section="ensenanza" aria-labelledby="ensenanza-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">04 / conocimiento</p><h2 id="ensenanza-title">La enseñanza también es una plataforma.</h2><p class="lede">Cursos, artículos y canales convierten experiencia de operación en conocimiento reutilizable.</p></div><div class="head-row-actions"><a class="button button--ghost" href="/courses.html"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Ver cursos</a><a class="button button--ghost" href="/courses.html#canales"><i class="fas fa-play" aria-hidden="true"></i> Ver canales</a></div></div><div class="teaching-grid">{teaching.map((item) => <article class="card teaching-card card--interactive"><img src={item.logo} width="40" height="40" alt="" loading="lazy" decoding="async" /><div><h3>{item.name}</h3><div class="teaching-metrics">{item.metrics.map((metric) => <strong>{metric}</strong>)}</div><p>{item.description}</p></div><a href={item.href} target="_blank" rel="noopener noreferrer">{item.cta}<span class="sr-only"> (abre en nueva pestaña)</span></a></article>)}</div></div></section>
+  <section class="section section--line" id="ensenanza" data-section="ensenanza" aria-labelledby="ensenanza-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">04 / conocimiento</p><h2 id="ensenanza-title">La enseñanza también es una plataforma.</h2><p class="lede">Cursos, artículos y canales convierten experiencia de operación en conocimiento reutilizable.</p></div><div class="head-row-actions"><a class="button button--ghost" href="/courses.html"><Icon name="fas fa-graduation-cap" /> Ver cursos</a><a class="button button--ghost" href="/courses.html#canales"><Icon name="fas fa-play" /> Ver canales</a></div></div><div class="teaching-grid">{teaching.map((item) => <article class="card teaching-card card--interactive"><img src={item.logo} width="40" height="40" alt="" loading="lazy" decoding="async" /><div><h3>{item.name}</h3><div class="teaching-metrics">{item.metrics.map((metric) => <strong>{metric}</strong>)}</div><p>{item.description}</p></div><a href={item.href} target="_blank" rel="noopener noreferrer">{item.cta}<span class="sr-only"> (abre en nueva pestaña)</span></a></article>)}</div></div></section>
 
-  <section class="section" id="certificaciones" data-section="certificaciones" aria-labelledby="certificaciones-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">05 / evidencia</p><h2 id="certificaciones-title">Diez credenciales oficiales y verificables.</h2><p class="lede">AWS, Microsoft Azure y GitHub Foundations respaldan arquitectura, seguridad, delivery y operación multi-cloud.</p></div><a class="button button--ghost" href="/certifications.html"><i class="fas fa-certificate" aria-hidden="true"></i> Ver credenciales</a></div><div class="cert-grid cert-grid--badges cert-grid--summary">{certifications.map((cert) => <CredentialCard certification={cert} summary limit={3} />)}</div></div></section>
+  <section class="section" id="certificaciones" data-section="certificaciones" aria-labelledby="certificaciones-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">05 / evidencia</p><h2 id="certificaciones-title">Diez credenciales oficiales y verificables.</h2><p class="lede">AWS, Microsoft Azure y GitHub Foundations respaldan arquitectura, seguridad, delivery y operación multi-cloud.</p></div><a class="button button--ghost" href="/certifications.html"><Icon name="fas fa-certificate" /> Ver credenciales</a></div><div class="cert-grid cert-grid--badges cert-grid--summary">{certifications.map((cert) => <CredentialCard certification={cert} summary limit={3} />)}</div></div></section>
 
-  <section class="section section--tight" id="contacto" data-section="contacto" aria-labelledby="contacto-title"><div class="container"><div class="contact-panel"><div><p class="section-kicker">06 / siguiente paso</p><h2 id="contacto-title">¿Qué plataforma necesitas hacer confiable?</h2><p>Podemos conversar sobre una oportunidad profesional, consultoría o formación técnica.</p></div><div class="contact-actions"><a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i> Escribir por WhatsApp</a><a class="button button--ghost" href="/about.html">Conocer mi perfil</a></div></div></div></section>
+  <section class="section section--line" id="evidencia-tecnica" aria-labelledby="evidencia-title">
+    <div class="container">
+      <div class="section-heading"><p class="section-kicker">Evidencia técnica</p><h2 id="evidencia-title">Este sitio se entrega como una plataforma.</h2><p class="lede">El propio portfolio pasa por una cadena de build, pruebas y gates antes de publicarse.</p></div>
+      <div class="evidence-grid">
+        <div>
+          <CodeBlock code={validateExcerpt} lang="yaml" label="Pipeline de validación (repo)" href="https://github.com/jersonmartinez/jersonmartinez/blob/main/.github/workflows/validate.yml" />
+        </div>
+        <figure class="evidence-figure">
+          <svg viewBox="0 0 320 180" role="img" aria-labelledby="arch-title arch-desc">
+            <title id="arch-title">Arquitectura de entrega del sitio</title>
+            <desc id="arch-desc">El código fuente pasa por GitHub Actions, que ejecuta build y gates de calidad, y publica el sitio estático servido tras una CDN.</desc>
+            <rect class="diagram-base" x="0" y="0" width="320" height="180" rx="8" />
+            <rect class="diagram-node" x="16" y="70" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="53" y="94" text-anchor="middle">Fuente</text>
+            <rect class="diagram-node" x="123" y="40" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="160" y="64" text-anchor="middle">CI gates</text>
+            <rect class="diagram-node" x="123" y="100" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="160" y="124" text-anchor="middle">Build</text>
+            <rect class="diagram-node" x="230" y="70" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="267" y="94" text-anchor="middle">CDN</text>
+            <path class="diagram-edge" d="M90 90 H110 V60 H123" />
+            <path class="diagram-edge" d="M90 90 H110 V120 H123" />
+            <path class="diagram-edge" d="M197 60 H214 V90 H230" />
+            <path class="diagram-accent" d="M197 120 H214 V90 H230" />
+          </svg>
+          <figcaption class="evidence-figcaption">Diagrama de arquitectura (decorativo); la descripción textual está en el <code>&lt;desc&gt;</code> y en la cadena de entrega siguiente.</figcaption>
+        </figure>
+      </div>
+      <h3 class="sr-only">Cadena de entrega, paso a paso</h3>
+      <ol class="delivery-chain" aria-label="Cadena de entrega del sitio basada en los workflows del repositorio">
+        {deliveryChain.map(([step, file, detail]) => <li><span class="delivery-chain-step">{step}</span><span><strong>{file}</strong> — {detail}</span></li>)}
+      </ol>
+      {githubStats && (
+        <ul class="github-stats" aria-label="Actividad pública en GitHub (datos de build en caché)">
+          {githubStats.map(([value, label]) => <li><strong>{value}</strong><span>{label}</span></li>)}
+        </ul>
+      )}
+    </div>
+  </section>
+
+  <section class="section section--tight" id="contacto" data-section="contacto" aria-labelledby="contacto-title"><div class="container"><div class="contact-panel"><div><p class="section-kicker">06 / siguiente paso</p><h2 id="contacto-title">¿Qué plataforma necesitas hacer confiable?</h2><p>Podemos conversar sobre una oportunidad profesional, consultoría o formación técnica.</p></div><div class="contact-actions"><a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="fab fa-whatsapp" /> Escribir por WhatsApp</a><a class="button button--ghost" href="/about.html">Conocer mi perfil</a></div></div></div></section>
 </BaseLayout>

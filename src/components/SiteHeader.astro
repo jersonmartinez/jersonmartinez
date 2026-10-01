@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { profile } from '../data/portfolio.js';
 const navItems = [
   ['Inicio', '/', 'fa-home'],
@@ -22,9 +23,50 @@ const here = normalize(Astro.url.pathname);
     <nav class="site-nav" id="site-nav" data-site-nav aria-label="Navegación principal">
       {navItems.map(([label, href, icon]) => {
         const current = here === normalize(href);
-        return <a href={href} class={current ? 'is-current' : ''} aria-current={current ? 'page' : undefined}><i class={`fas ${icon}`} aria-hidden="true"></i><span class="nav-label">{label}</span></a>;
+        return (
+          <a
+            href={href}
+            class={current ? 'is-current' : ''}
+            aria-current={current ? 'page' : undefined}
+          >
+            <Icon name={icon} />
+            <span class="nav-label">{label}</span>
+          </a>
+        );
       })}
-      <a class="nav-contact" href={profile.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Escribir a Jerson por WhatsApp, abre en nueva pestaña" data-tooltip="Abrir WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
+      <button
+        class="theme-toggle"
+        type="button"
+        data-theme-toggle
+        aria-label="Cambiar entre tema claro y oscuro"
+        aria-pressed="false"
+        hidden
+      >
+        <Icon name="fas fa-adjust" />
+        <span class="theme-toggle-label">Tema</span>
+      </button>
+      <button
+        class="command-open"
+        type="button"
+        data-command-open
+        aria-label="Abrir paleta de comandos (Ctrl o Cmd + K)"
+        aria-keyshortcuts="Control+K Meta+K"
+        hidden
+      >
+        <Icon name="fas fa-terminal" />
+        <span class="command-open-label">Buscar</span>
+        <kbd class="command-open-kbd">⌘K</kbd>
+      </button>
+      <a
+        class="nav-contact"
+        href={profile.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Escribir a Jerson por WhatsApp, abre en nueva pestaña"
+      >
+        <Icon name="fab fa-whatsapp" />
+        <span>WhatsApp</span>
+      </a>
     </nav>
   </div>
 </header>
