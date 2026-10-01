@@ -213,7 +213,7 @@ Estos valores están cubiertos por el test `tests/portfolio.test.js`
 | 118 | #44 | `tests/data-links.test.js` | Validador de formato de todos los href de portfolio.js (https/mailto/ruta interna; sin vacíos, "#" ni placeholders). | `07bca7e` |
 | 119 | #45 | `tests/compiled-html.test.js` | Validador del HTML compilado: un único <h1> por página y jerarquía de headings sin saltos (VALIDATE_BUILD=1). | `07bca7e` |
 | 120 | #83 | `tools/validate-site.js` | Validador: anclas internas del home (#impacto..#contacto) existen como id; sin enlaces de ancla rotos. | `07bca7e` |
-| 121 | #84 | `tests/compiled-html.test.js` | Validador: toda <img> del build tiene atributo alt. | `07bca7e` |
+| 121 | #84 | `tests/compiled-html.test.js` | Validador: toda `<img>` del build tiene atributo alt. | `07bca7e` |
 | 122 | #126 | `tests/portfolio.test.js` | Test de regresión que valida robots/sitemap/manifest/humans + JSON-LD y rel=manifest. | `ed085f3` |
 | 123 | #128 | `tests/portfolio.test.js` | Cobertura de coherencia de start_url/theme_color del manifest y rutas del sitemap. | `ed085f3` |
 

@@ -106,7 +106,7 @@ const IMPROVEMENTS = [
   [45, 'Testing', 'tests/compiled-html.test.js', 'Validador del HTML compilado: un único <h1> por página y jerarquía de headings sin saltos (VALIDATE_BUILD=1).', '07bca7e'],
   [82, 'Documentación', 'docs/PORTFOLIO-ASTRO.md', 'Convención de nombres .html.astro -> /*.html y por qué las URLs internas conservan el sufijo .html.', '07bca7e'],
   [83, 'Testing', 'tools/validate-site.js', 'Validador: anclas internas del home (#impacto..#contacto) existen como id; sin enlaces de ancla rotos.', '07bca7e'],
-  [84, 'Testing', 'tests/compiled-html.test.js', 'Validador: toda <img> del build tiene atributo alt.', '07bca7e'],
+  [84, 'Testing', 'tests/compiled-html.test.js', 'Validador: toda `<img>` del build tiene atributo alt.', '07bca7e'],
   // --- 2646f97 breadcrumbs ---
   [67, 'Navegación', 'src/layouts/BaseLayout.astro', 'Prop breadcrumb que emite schema.org/BreadcrumbList JSON-LD en páginas internas.', '2646f97'],
   [68, 'Navegación', 'src/pages/projects.html.astro', 'Migas de pan accesibles (aria-current=page) en projects.', '2646f97'],

@@ -11,14 +11,19 @@
     "test": "node --test",
     "validate": "node tools/validate-site.js",
     "links": "node tools/check-links.js",
+    "links:external": "node tools/check-links.js --external",
+    "assets:generate": "python3 tools/generate-visual-assets.py",
+    "headers": "node tools/check-headers.js",
+    "sync:static": "node tools/sync-public-root.js",
+    "sync:static:check": "node tools/sync-public-root.js --check",
     "content:health": "node tools/check-content-health.js",
     "youtube:dry-run": "node src/js/update-youtube-sections.js --dry-run --offline",
     "production:smoke": "node tools/check-production.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "devDependencies": {
-    "astro": "5.13.5"
+    "astro": "7.3.5"
   }
 }

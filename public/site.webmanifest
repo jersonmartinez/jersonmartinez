@@ -1,7 +1,7 @@
 {
   "name": "Jerson Martínez — Cloud, DevOps y automatización",
   "short_name": "Jerson Martínez",
-  "description": "Portafolio de Jerson Martínez: plataformas cloud, DevOps, DevSecOps y automatización.",
+  "description": "Portfolio de Jerson Martínez: plataformas cloud, DevOps, DevSecOps y automatización.",
   "lang": "es",
   "start_url": "/",
   "scope": "/",
@@ -9,6 +9,12 @@
   "background_color": "#07111f",
   "theme_color": "#07111f",
   "icons": [
-    { "src": "/brand/favicon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" }
+    { "src": "/brand/favicon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
+    { "src": "/brand/favicon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Proyectos", "url": "/projects.html" },
+    { "name": "Trayectoria", "url": "/experience.html" },
+    { "name": "Contacto", "url": "/#contacto" }
   ]
 }

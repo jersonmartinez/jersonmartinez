@@ -11,7 +11,7 @@
 
 ## About me
 
-I’m a **DevOps Engineer with 8+ years of experience** in automation, cloud infrastructure (**AWS**, **Azure**, **GCP**) and full-stack development. I help teams adopt DevOps practices and deliver scalable, secure and maintainable solutions with **Terraform**, **GitHub Actions**, **Docker** and **Kubernetes**.
+I’m a **DevOps Engineer with 10+ years of experience** in technical projects, automation and cloud infrastructure (**AWS**, **Azure**, **GCP**), with continuous professional learning since 2017. I help teams adopt DevOps practices and deliver scalable, secure and maintainable solutions with **Terraform**, **GitHub Actions**, **Docker** and **Kubernetes**.
 
 - 🌐 [Personal website](https://jersonmartinez.com/)
 - 🎓 [Udemy profile](https://www.udemy.com/user/side-master/) — more than 77k students
@@ -81,6 +81,8 @@ The personal site is built with [Astro](https://astro.build/) and deployed as a 
 This profile is maintained by reproducible checks and scheduled workflows:
 
 - [Automation runbook](docs/AUTOMATION.md): sources, fallbacks, recovery and operations.
+- [Astro portfolio architecture](docs/PORTFOLIO-ASTRO.md): routes, shared components, data and validation.
+- [2026 integrity and experience refresh](docs/PORTFOLIO-INTEGRITY-2026.md): verified sources, UX, accessibility, performance, SEO and security.
 - Pull requests run tests, metadata/resource checks, local link checks and Markdown validation.
 - A weekly audit reports external link failures without changing content automatically.
 - YouTube updates arrive as reviewable pull requests; no scheduled job writes directly to `main`.

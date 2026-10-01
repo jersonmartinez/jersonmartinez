@@ -1,17 +1,31 @@
 ---
-const { course, index, total } = Astro.props;
+const { course, index } = Astro.props;
+const visualClass = course.framework.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 ---
-<article class="card course-card" aria-label={`Curso ${index + 1} de ${total}: ${course.name}`}>
-  <div class={`course-visual course-visual--${course.visual.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} aria-hidden="true">
-    <svg viewBox="0 0 420 180" role="img" aria-label="">
-      <defs><linearGradient id={`course-gradient-${index}`} x1="0" x2="1" y1="0" y2="1"><stop stop-color="#67e8f9"/><stop offset="1" stop-color="#c4f269"/></linearGradient></defs>
-      <path d="M0 145 110 35l70 65L295 0l125 90v90H0Z" fill={`url(#course-gradient-${index})`} opacity=".15"/>
-      <circle cx="330" cy="48" r="40" fill="none" stroke="#67e8f9" stroke-width="2" opacity=".65"/>
-      <circle cx="330" cy="48" r="24" fill="none" stroke="#c4f269" stroke-width="2" opacity=".65"/>
-      <text x="28" y="102" fill="#f4f8fb" font-family="Arial,sans-serif" font-size="48" font-weight="800">{course.visual}</text>
-      <text x="30" y="134" fill="#a8bbcc" font-family="monospace" font-size="12">GO / {course.framework}</text>
+<article class="card course-card card--interactive">
+  <div class={`course-visual course-visual--${visualClass}`} aria-hidden="true">
+    <svg viewBox="0 0 420 210" focusable="false">
+      <defs>
+        <linearGradient id={`course-gradient-${index}`} x1="0" x2="1" y1="0" y2="1"><stop class="course-gradient-start"/><stop offset="1" class="course-gradient-end"/></linearGradient>
+        <pattern id={`course-grid-${index}`} width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" class="course-grid-line"/></pattern>
+      </defs>
+      <rect width="420" height="210" class="course-visual-base" />
+      <rect width="420" height="210" fill={`url(#course-grid-${index})`} />
+      <path d="M0 174 92 78l58 48 82-92 72 58 116-70v188H0Z" fill={`url(#course-gradient-${index})`} class="course-mountain"/>
+      <circle cx="344" cy="56" r="34" class="course-orbit" />
+      <circle cx="344" cy="56" r="19" class="course-orbit course-orbit--inner" />
+      <path d="M32 38h118M32 52h74M32 66h96" class="course-code-lines" />
     </svg>
+    <div class="course-visual-copy"><strong>{course.visual}</strong><span>GO / {course.framework.toUpperCase()}</span></div>
+    <span class="course-path-step">PASO {String(course.pathStep).padStart(2, '0')}</span>
     {course.free && <span class="course-access course-access--free">Gratis</span>}
   </div>
-  <div class="course-card-body"><span class="card-label">CURSO / {String(index + 1).padStart(2, '0')}</span><h3>{course.name}</h3><p>{course.summary}</p><span class={`course-access-label ${course.free ? 'is-free' : ''}`}>{course.access}</span><a class="card-link" href={course.href} target="_blank" rel="noopener noreferrer">Ver ficha del curso<span class="sr-only"> (abre en nueva pestaña)</span></a></div>
+  <div class="course-card-body">
+    <span class="card-label">RUTA DE APRENDIZAJE / {String(course.pathStep).padStart(2, '0')}</span>
+    <h3>{course.name}</h3>
+    <p>{course.summary}</p>
+    <div class="course-outcome"><strong>Al completar esta etapa</strong><span>{course.outcome}</span></div>
+    <span class={`course-access-label ${course.free ? 'is-free' : ''}`}>{course.access}</span>
+    <a class="card-link" href={course.href} target="_blank" rel="noopener noreferrer">Ver ficha del curso<span class="sr-only"> (abre en nueva pestaña)</span></a>
+  </div>
 </article>
