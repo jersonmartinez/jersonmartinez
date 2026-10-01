@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { profile } from '../data/portfolio.js';
+
+// Item 22: guía visual interna que renderiza los tokens y componentes del sistema de diseño.
+// No se enlaza desde la navegación ni el sitemap; se marca noindex. Sin estilos inline (CSP).
+const colorTokens = [
+  ['--cyan', 'swatch--cyan'], ['--lime', 'swatch--lime'], ['--orange', 'swatch--orange'],
+  ['--text', 'swatch--text'], ['--muted', 'swatch--muted'], ['--surface', 'swatch--surface'],
+  ['--surface-raised', 'swatch--surface-raised'], ['--ink', 'swatch--ink'],
+];
+const typeScale = [
+  ['--fs-display', 'tsample--display', 'Display'], ['--fs-3xl', 'tsample--3xl', 'Encabezado 3xl'],
+  ['--fs-2xl', 'tsample--2xl', 'Encabezado 2xl'], ['--fs-xl', 'tsample--xl', 'Encabezado xl'],
+  ['--fs-lg', 'tsample--lg', 'Título lg'], ['--fs-md', 'tsample--md', 'Lede md'], ['--fs-base', 'tsample--base', 'Cuerpo base'],
+];
+const spacing = ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'];
+const radii = ['xs', 'sm', 'md', 'lg', 'pill'];
+const elevations = ['1', '2', '3'];
+---
+<BaseLayout
+  title="Guía visual del sistema de diseño | Jerson Martínez"
+  description="Referencia interna de tokens y componentes del portfolio."
+  canonical={`${profile.website}/guia-visual`}
+  robots="noindex, nofollow"
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> SISTEMA DE DISEÑO</p>
+      <h1>Guía visual</h1>
+      <p class="lede">Referencia viva de los tokens y componentes. Página interna, no indexada.</p>
+    </div>
+  </section>
+
+  <section class="section section--line" aria-labelledby="guide-colors">
+    <div class="container">
+      <div class="section-heading"><p class="section-kicker">Tokens</p><h2 id="guide-colors">Color</h2></div>
+      <ul class="guide-swatches" role="list">
+        {colorTokens.map(([token, cls]) => (
+          <li class="guide-swatch">
+            <span class={`guide-swatch-chip ${cls}`} aria-hidden="true"></span>
+            <code>{token}</code>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--line" aria-labelledby="guide-type">
+    <div class="container">
+      <div class="section-heading"><p class="section-kicker">Tokens</p><h2 id="guide-type">Escala tipográfica</h2></div>
+      <ul class="guide-type-list" role="list">
+        {typeScale.map(([token, cls, label]) => (
+          <li><span class={`guide-type ${cls}`}>{label}</span> <code>{token}</code></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--line" aria-labelledby="guide-space">
+    <div class="container">
+      <div class="section-heading"><p class="section-kicker">Tokens</p><h2 id="guide-space">Espaciado</h2></div>
+      <ul class="guide-space-list" role="list">
+        {spacing.map((step) => (
+          <li><span class={`guide-space-bar guide-space-bar--${step}`} aria-hidden="true"></span> <code>--space-{step}</code></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--line" aria-labelledby="guide-radius">
+    <div class="container">
+      <div class="section-heading"><p class="section-kicker">Tokens</p><h2 id="guide-radius">Radios</h2></div>
+      <ul class="guide-radius-list" role="list">
+        {radii.map((r) => (
+          <li><span class={`guide-radius-box guide-radius-box--${r}`} aria-hidden="true"></span> <code>--radius-{r}</code></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--line" aria-labelledby="guide-elevation">
+    <div class="container">
+      <div class="section-heading"><p class="section-kicker">Tokens</p><h2 id="guide-elevation">Elevación</h2></div>
+      <ul class="guide-elevation-list" role="list">
+        {elevations.map((e) => (
+          <li><span class={`guide-elevation-box guide-elevation-box--${e}`} aria-hidden="true"></span> <code>--elevation-{e}</code></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--line" aria-labelledby="guide-components">
+    <div class="container">
+      <div class="section-heading"><p class="section-kicker">Componentes</p><h2 id="guide-components">Estados de botón y tarjeta</h2></div>
+      <div class="guide-components">
+        <a class="button" href="#guide-components">Botón primario</a>
+        <a class="button button--ghost" href="#guide-components">Botón fantasma</a>
+      </div>
+      <div class="cards guide-cards-sample">
+        <article class="card card--interactive"><span class="card-label">Tarjeta</span><h3>Interactiva</h3><p>Reposo, hover, foco y activo documentados en el sistema.</p><a class="card-link" href="#guide-components">Acción</a></article>
+        <article class="card"><span class="card-label">Tarjeta</span><h3>Estática</h3><p>Variante no interactiva sin elevación en hover.</p></article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

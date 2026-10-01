@@ -2,7 +2,11 @@
 html { scroll-behavior: smooth; }
 body { background: var(--ink); color: var(--text); font-family: 'Manrope', 'Manrope Fallback', ui-sans-serif, system-ui, sans-serif; line-height: 1.65; margin: 0; min-width: 320px; }
 body::before { background: radial-gradient(circle at 82% 3%, rgba(103,232,249,.12), transparent 31rem), radial-gradient(circle at 7% 36%, rgba(196,242,105,.06), transparent 28rem); content: ''; inset: 0; pointer-events: none; position: fixed; z-index: -2; }
-body::after { background-image: linear-gradient(rgba(186,213,231,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(186,213,231,.04) 1px, transparent 1px); background-size: 4rem 4rem; content: ''; inset: 0; mask-image: linear-gradient(to bottom, #000, transparent 78%); opacity: .28; pointer-events: none; position: fixed; z-index: -1; }
+/* Item 17: la rejilla decorativa se limita a las cabeceras hero (home y páginas internas)
+   en vez de cubrir todo el viewport de forma fija. Lenguaje gráfico de infraestructura
+   (Item 18): la rejilla evoca topología/diagramas de plataforma. */
+.hero, .page-hero { isolation: isolate; position: relative; }
+.hero::before, .page-hero::before { background-image: linear-gradient(rgba(186,213,231,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(186,213,231,.05) 1px, transparent 1px); background-size: 3.25rem 3.25rem; content: ''; inset: 0; mask-image: radial-gradient(circle at 78% 18%, #000, transparent 70%); opacity: .5; pointer-events: none; position: absolute; z-index: -1; }
 img { display: block; max-width: 100%; }
 a { color: inherit; }
 button { cursor: pointer; font: inherit; }

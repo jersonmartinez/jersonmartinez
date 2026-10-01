@@ -22,7 +22,10 @@
 
 
 /* Item 28: estado hover/focus perceptible y uniforme para cards; el foco de teclado recibe el mismo tratamiento que el hover. */
-.card--interactive:hover, .card--interactive:focus-within { border-color: var(--line-strong); box-shadow: 0 24px 80px rgba(0,0,0,.22); transform: translateY(-3px); }
+.card--interactive:hover, .card--interactive:focus-within { border-color: var(--line-strong); box-shadow: var(--elevation-2); transform: translateY(-3px); }
+/* Item 19: estado activo (pulsación) y no interactivo documentados y perceptibles. */
+.card--interactive:active { box-shadow: var(--elevation-1); transform: translateY(-1px); }
+.card[aria-disabled='true'], .card--static { cursor: default; opacity: .85; }
 .card-label { color: var(--cyan); display: block; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .68rem; letter-spacing: .04em; margin-bottom: 2rem; min-height: 2.2rem; text-transform: uppercase; }
 .card h3 { margin-bottom: .7rem; }
 .card p { font-size: .9rem; }
@@ -184,7 +187,7 @@
 /* Item 87: estilos de impresión — quita fondos decorativos, expande enlaces y ahorra tinta. */
 @media print {
   body { background: #fff; color: #000; }
-  body::before, body::after { display: none !important; }
+  body::before, body::after, .hero::before, .page-hero::before { display: none !important; }
   .site-header, .nav-toggle, .skip-link, .footer-top, .filter-bar, .hero-actions, .contact-actions { display: none !important; }
   a { color: #000; text-decoration: underline; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .75em; word-break: break-all; }
@@ -473,3 +476,84 @@ section[id], article[id] { scroll-margin-top: 84px; }
 :root[data-theme='light'] .filter-button.is-active .filter-count[aria-hidden='true'] { color: #e6f4f9; opacity: 1; }
 :root[data-theme='light'] .filter-count,
 :root[data-theme='light'] .filter-count[aria-hidden='true'] { color: #2c3a49; opacity: 1; }
+
+/* Item 20: cifras tabulares en métricas y credential IDs para alineación vertical consistente. */
+.hero-facts strong,
+.impact-item strong,
+.learning-summary .card > strong,
+.course-summary strong,
+.credential-code,
+.credential-copy small,
+.teaching-metrics strong,
+.teaching-metric { font-variant-numeric: tabular-nums; }
+
+/* Item 21: separadores y bordes derivados con color-mix() desde tokens, con fallback para
+   navegadores sin color-mix (la declaración previa var(--line) permanece como respaldo). */
+.section--line { border-top-color: var(--line); }
+@supports (border-top-color: color-mix(in srgb, red, blue)) {
+  .section--line { border-top-color: color-mix(in srgb, var(--cyan) 22%, transparent); }
+  .timeline-card header { border-bottom: 1px solid color-mix(in srgb, var(--line-strong) 40%, transparent); }
+}
+
+/* Item 23: backdrop-filter sólo cuando el navegador lo soporta; si no, fondo sólido de respaldo. */
+.site-header { background: var(--surface); }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header { backdrop-filter: blur(18px); background: var(--surface-overlay); }
+}
+
+/* Item 24: respeta prefers-reduced-transparency usando superficies totalmente opacas. */
+@media (prefers-reduced-transparency: reduce) {
+  .site-header { backdrop-filter: none; background: var(--surface); }
+  .skills-explorer, .skills-panel, .card, .credential-badge, .logo-pill, .profile-panel, .contact-panel { background: var(--surface-raised); }
+}
+
+/* Item 22: estilos de la guía visual interna (/guia-visual). Clases dedicadas para evitar
+   estilos inline bajo CSP estricta. */
+.guide-swatches { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr)); list-style: none; margin: 0; padding: 0; }
+.guide-swatch { display: grid; gap: .4rem; }
+.guide-swatch code { color: var(--muted); font-size: var(--fs-2xs); }
+.guide-swatch-chip { border: 1px solid var(--line); border-radius: var(--radius-sm); display: block; height: 3.5rem; width: 100%; }
+.swatch--cyan { background: var(--cyan); }
+.swatch--lime { background: var(--lime); }
+.swatch--orange { background: var(--orange); }
+.swatch--text { background: var(--text); }
+.swatch--muted { background: var(--muted); }
+.swatch--surface { background: var(--surface); }
+.swatch--surface-raised { background: var(--surface-raised); }
+.swatch--ink { background: var(--ink); }
+.guide-type-list { display: grid; gap: .8rem; list-style: none; margin: 0; padding: 0; }
+.guide-type-list li { align-items: baseline; display: flex; flex-wrap: wrap; gap: .8rem; }
+.guide-type-list code { color: var(--muted); font-size: var(--fs-2xs); }
+.guide-type { color: var(--text); font-weight: 700; line-height: 1.1; }
+.tsample--display { font-size: var(--fs-display); }
+.tsample--3xl { font-size: var(--fs-3xl); }
+.tsample--2xl { font-size: var(--fs-2xl); }
+.tsample--xl { font-size: var(--fs-xl); }
+.tsample--lg { font-size: var(--fs-lg); }
+.tsample--md { font-size: var(--fs-md); }
+.tsample--base { font-size: var(--fs-base); }
+.guide-space-list, .guide-radius-list, .guide-elevation-list { display: grid; gap: .9rem; list-style: none; margin: 0; padding: 0; }
+.guide-space-list li, .guide-radius-list li, .guide-elevation-list li { align-items: center; display: flex; gap: 1rem; }
+.guide-space-list code, .guide-radius-list code, .guide-elevation-list code { color: var(--muted); font-size: var(--fs-2xs); }
+.guide-space-bar { background: var(--cyan); border-radius: var(--radius-xs); height: 1rem; }
+.guide-space-bar--3xs { width: var(--space-3xs); }
+.guide-space-bar--2xs { width: var(--space-2xs); }
+.guide-space-bar--xs { width: var(--space-xs); }
+.guide-space-bar--sm { width: var(--space-sm); }
+.guide-space-bar--md { width: var(--space-md); }
+.guide-space-bar--lg { width: var(--space-lg); }
+.guide-space-bar--xl { width: var(--space-xl); }
+.guide-space-bar--2xl { width: var(--space-2xl); }
+.guide-radius-box { background: var(--surface-raised); border: 1px solid var(--line-strong); height: 3rem; width: 3rem; }
+.guide-radius-box--xs { border-radius: var(--radius-xs); }
+.guide-radius-box--sm { border-radius: var(--radius-sm); }
+.guide-radius-box--md { border-radius: var(--radius-md); }
+.guide-radius-box--lg { border-radius: var(--radius-lg); }
+.guide-radius-box--pill { border-radius: var(--radius-pill); }
+.guide-elevation-box { background: var(--surface-raised); border-radius: var(--radius-md); height: 3rem; width: 6rem; }
+.guide-elevation-box--1 { box-shadow: var(--elevation-1); }
+.guide-elevation-box--2 { box-shadow: var(--elevation-2); }
+.guide-elevation-box--3 { box-shadow: var(--elevation-3); }
+.guide-components { display: flex; flex-wrap: wrap; gap: .8rem; margin-bottom: 1.6rem; }
+.guide-cards-sample { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 680px) { .guide-cards-sample { grid-template-columns: 1fr; } }

@@ -76,3 +76,25 @@ Estado por punto. "Hecho" significa presente en el árbol y verificado contra el
 46. **Hecho.** `.profile-social` ampliado a 2.75rem (44 px) de objetivo táctil.
 47. **Hecho.** `.cert-grid--badges` con columnas fluidas (`auto-fit`/`minmax`) bajo 1200px: la rejilla
     de credenciales refluye a una sola columna sin scroll horizontal ni recortes a 200/400% de zoom.
+
+## Identidad visual (17-24)
+
+17. **Hecho.** La rejilla decorativa deja de cubrir todo el viewport (`body::after` eliminado) y se
+    limita a las cabeceras hero (`.hero::before` / `.page-hero::before`) con máscara radial.
+18. **Hecho (forma correcta).** Lenguaje gráfico de infraestructura en el hero mediante la rejilla
+    de topología/diagrama con máscara radial sobre la cabecera. No se fabricó un diagrama con datos
+    inventados; el motivo es decorativo (`aria-hidden`) y evoca una malla de plataforma.
+19. **Hecho.** Estados de tarjeta completos y documentados: reposo (`.card`), hover/foco
+    (`.card--interactive:hover/:focus-within`), activo (`.card--interactive:active`) y no interactivo
+    (`.card--static` / `[aria-disabled]`). Renderizados en la guía visual.
+20. **Hecho.** `font-variant-numeric: tabular-nums` en métricas (hero-facts, impacto, learning-summary,
+    course-summary, teaching-metrics) y credential IDs (`.credential-code`, `.credential-copy small`).
+21. **Hecho.** `color-mix()` desde tokens para separadores/bordes (`.section--line`, cabecera de
+    `.timeline-card`) bajo `@supports`, con la declaración `var(--line)` previa como fallback.
+22. **Hecho.** Página interna `/guia-visual` (noindex, no enlazada) que renderiza color, escala
+    tipográfica, espaciado, radios, elevación y muestras de componentes; sin estilos inline (CSP),
+    con clases dedicadas. Verificada axe 0 violaciones.
+23. **Hecho.** `@supports ((backdrop-filter) or (-webkit-backdrop-filter))` en `.site-header`; si no
+    hay soporte, fondo sólido `var(--surface)` de respaldo.
+24. **Hecho.** `@media (prefers-reduced-transparency: reduce)`: header y superficies translúcidas
+    pasan a opacas (`--surface`/`--surface-raised`) y se desactiva `backdrop-filter`.
