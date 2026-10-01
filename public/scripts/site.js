@@ -162,26 +162,44 @@
   if (themeToggle) {
     const root = document.documentElement;
     const systemLight = window.matchMedia('(prefers-color-scheme: light)');
+    const status = document.querySelector('[data-theme-status]');
+    /* Las dos <meta name="theme-color"> del documento están condicionadas por
+       prefers-color-scheme, así que el color del cromo del navegador NO seguía al tema
+       elegido: un usuario con sistema oscuro que escogía el tema claro conservaba la barra
+       oscura. Se fija una meta propia, sin media, que gana sobre las condicionadas. */
+    const CHROME = { light: '#ffffff', dark: '#07111f' };
+    let chromeMeta = document.querySelector('meta[name="theme-color"]:not([media])');
+    const syncChrome = (theme) => {
+      if (!chromeMeta) {
+        chromeMeta = document.createElement('meta');
+        chromeMeta.setAttribute('name', 'theme-color');
+        document.head.appendChild(chromeMeta);
+      }
+      chromeMeta.setAttribute('content', CHROME[theme]);
+    };
     const effectiveTheme = () => {
       const explicit = root.getAttribute('data-theme');
       if (explicit === 'light' || explicit === 'dark') return explicit;
       return systemLight.matches ? 'light' : 'dark';
     };
-    const reflect = () => {
-      const isLight = effectiveTheme() === 'light';
+    const reflect = (announce) => {
+      const theme = effectiveTheme();
+      const isLight = theme === 'light';
       themeToggle.setAttribute('aria-pressed', String(isLight));
       themeToggle.setAttribute('aria-label', isLight ? 'Activar tema oscuro' : 'Activar tema claro');
+      syncChrome(theme);
+      if (announce && status) status.textContent = isLight ? 'Tema claro activado.' : 'Tema oscuro activado.';
     };
     themeToggle.hidden = false;
-    reflect();
+    reflect(false);
     themeToggle.addEventListener('click', () => {
       const next = effectiveTheme() === 'light' ? 'dark' : 'light';
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('theme', next); } catch (e) { /* sin persistencia */ }
-      reflect();
+      reflect(true);
     });
     /* Si el usuario no ha elegido explícitamente, seguir los cambios del sistema. */
-    systemLight.addEventListener('change', () => { if (!localStorage.getItem('theme')) reflect(); });
+    systemLight.addEventListener('change', () => { if (!localStorage.getItem('theme')) reflect(false); });
   }
 
   /* Item 38: desplazamiento suave disparado por interacción (no global). Un clic en un enlace

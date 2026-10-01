@@ -130,13 +130,15 @@
   .site-nav a { font-size: .78rem; padding-inline: .48rem; }
   .site-nav .nav-contact { margin-left: .3rem; }
 }
-/* El colapso del header se eleva de 680 a 820 px: con los dos controles nuevos la fila
-   desbordaba horizontalmente entre 681 y ~780 px (scrollWidth > clientWidth, medido). */
-@media (max-width: 820px) {
+/* El colapso del header sube de 820 a 1000 px. Al sacar los controles de tema y paleta del
+   <nav> para que sigan alcanzables en móvil, la fila pasó a tener cuatro ítems flex que no
+   se comprimen, y entre 821 y 999 px desbordaba (medido: 75 px a 840 px, 15 px a 900 px).
+   A partir de 1000 px la navegación completa cabe sin desbordar. */
+@media (max-width: 999px) {
   .nav-toggle { display: block; }
-  .site-nav { align-items: stretch; background: var(--surface); border: 1px solid var(--line); border-radius: .9rem; box-shadow: var(--shadow); display: none; flex-direction: column; left: .75rem; padding: .65rem; position: absolute; right: .75rem; top: calc(100% + 1px); }
+  .site-nav { align-items: stretch; background: var(--surface); border: 1px solid var(--line); border-radius: .9rem; box-shadow: var(--elevation-3); display: none; flex-direction: column; left: .75rem; padding: .65rem; position: absolute; right: .75rem; top: calc(100% + 1px); }
   .site-nav.is-open { display: flex; }
-  .site-nav a { font-size: .82rem; justify-content: space-between; padding: .8rem; }
+  .site-nav a { font-size: var(--fs-sm); justify-content: space-between; padding: .8rem; }
   .site-nav .nav-contact { margin: .35rem 0 0; }
 }
 @media (max-width: 900px) {
@@ -179,6 +181,13 @@
 @media (max-width: 460px) {
   .hero-actions { align-items: stretch; flex-direction: column; }
   .hero-actions .button { width: 100%; }
+}
+/* Suelo de diseño: body tiene min-width 320 px y la marca de 12rem junto a los tres
+   controles desbordaba 4 px a ese ancho (medido). Se estrecha la marca, no se oculta
+   ningún control. */
+@media (max-width: 420px) {
+  .brand { width: 8.75rem; }
+  .header-controls { gap: .3rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }
@@ -238,8 +247,7 @@ section[id], article[id] { scroll-margin-top: 84px; }
 @media (max-width: 680px) { .verification-steps { grid-template-columns: 1fr; } }
 
 /* Portfolio recruiter + consulting UX refresh */
-.brand { width: 9.9rem; }
-.profile-name { color: var(--text); display: block; font-size: 1.1rem; font-weight: 800; letter-spacing: -.03em; margin-bottom: .25rem; text-decoration: none; }
+.profile-name { color: var(--text); display: block; font-size: 1.1rem; font-weight: 800; letter-spacing: -.03em; margin-bottom: var(--space-3xs); text-decoration: none; }
 .profile-name:hover, .profile-name:focus-visible { color: var(--cyan); text-decoration: underline; text-underline-offset: .25em; }
 .profile-meta > div > span { display: block; }
 .hero .eyebrow { max-width: 48rem; }
@@ -394,9 +402,9 @@ section[id], article[id] { scroll-margin-top: 84px; }
 .error-hero { align-items: center; display: grid; min-height: 65vh; }
 
 /* Navegación progresiva: sin JS el menú móvil permanece visible y usable.
-   Mismo punto de corte que el colapso del header (820 px), si no entre 681 y 820 px
+   Mismo punto de corte que el colapso del header (1000 px); si no, en la franja colapsada
    el desplegable quedaría display:none y la navegación sería inalcanzable sin JS. */
-@media (max-width: 820px) {
+@media (max-width: 999px) {
   html:not(.js) .header-inner { align-items: flex-start; flex-direction: column; padding-block: .8rem; }
   html:not(.js) .nav-toggle { display: none; }
   html:not(.js) .site-nav { box-shadow: none; display: flex; position: static; width: 100%; }

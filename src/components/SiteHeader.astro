@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import BrandMark from './BrandMark.astro';
 import { profile } from '../data/portfolio.js';
 const navItems = [
   ['Inicio', '/', 'fa-home'],
@@ -15,11 +16,8 @@ const here = normalize(Astro.url.pathname);
 <header class="site-header" data-site-header>
   <div class="header-inner container">
     <a class="brand" href="/" aria-label="Jerson Martínez, inicio">
-      <img src="/brand/logo.svg" width="230" height="56" alt="Jerson Martínez" fetchpriority="high" decoding="async" />
+      <BrandMark />
     </a>
-    <button class="nav-toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Abrir menú">
-      <span></span><span></span><span></span>
-    </button>
     <nav class="site-nav" id="site-nav" data-site-nav aria-label="Navegación principal">
       {navItems.map(([label, href, icon]) => {
         const current = here === normalize(href);
@@ -34,6 +32,21 @@ const here = normalize(Astro.url.pathname);
           </a>
         );
       })}
+      <a
+        class="nav-contact"
+        href={profile.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Escribir a Jerson por WhatsApp, abre en nueva pestaña"
+      >
+        <Icon name="fab fa-whatsapp" />
+        <span>WhatsApp</span>
+      </a>
+    </nav>
+    {/* El conmutador de tema y la paleta son CONTROLES, no enlaces de navegación: vivían
+        dentro de <nav>, de modo que al colapsar el menú en móvil quedaban inalcanzables
+        (medido: rect 0x0 con el menú cerrado). Ahora son un grupo propio, siempre visible. */}
+    <div class="header-controls">
       <button
         class="theme-toggle"
         type="button"
@@ -57,16 +70,12 @@ const here = normalize(Astro.url.pathname);
         <span class="command-open-label">Buscar</span>
         <kbd class="command-open-kbd">⌘K</kbd>
       </button>
-      <a
-        class="nav-contact"
-        href={profile.whatsapp}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Escribir a Jerson por WhatsApp, abre en nueva pestaña"
-      >
-        <Icon name="fab fa-whatsapp" />
-        <span>WhatsApp</span>
-      </a>
-    </nav>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    {/* El cambio de tema se anuncia a lectores de pantalla: antes sólo mutaba aria-pressed,
+        que no genera aviso en todos los lectores. */}
+    <p class="sr-only" role="status" aria-live="polite" data-theme-status></p>
   </div>
 </header>

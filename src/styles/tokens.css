@@ -41,6 +41,17 @@
   --fs-2xl: clamp(2rem, 4.5vw, 4.1rem);
   --fs-3xl: clamp(2.8rem, 4.8vw, 5.2rem);
   --fs-display: clamp(3rem, 8vw, 7.25rem);
+  /* Escala de encabezados de tercer nivel. Tres pasos deliberados en lugar de los siete
+     tamaños ad hoc que convivían antes (1.05 a 1.55rem) sin relación entre sí. */
+  --fs-h3-sm: 1.1rem;
+  --fs-h3: 1.35rem;
+  --fs-h3-lg: 1.55rem;
+
+  /* Medida de lectura: tope de ancho para texto corrido. El cuerpo de la timeline y la
+     cadena de entrega llegaban a 152 y 140 caracteres por línea (medido), muy por encima
+     del rango legible de 45-75. */
+  --measure: 44rem;
+  --measure-wide: 68ch;
 
   /* Item 2: escala de espaciado tokenizada. */
   --space-3xs: .25rem;
@@ -79,6 +90,16 @@
   --focus-ring-width: 3px;
   --focus-ring-offset: 3px;
 
+  /* Capas DECORATIVAS tokenizadas. Antes eran literales rgba() calculados para fondo
+     oscuro, de modo que en tema claro la rejilla del hero y los resplandores
+     desaparecían (medido: rgba(186,213,231,.05) sobre #eef3f8 es invisible). */
+  --glow-cyan: rgba(103, 232, 249, .12);
+  --glow-lime: rgba(196, 242, 105, .06);
+  --grid-line: rgba(186, 213, 231, .05);
+  --ring-lime: rgba(196, 242, 105, .12);
+  --ring-lime-strong: rgba(196, 242, 105, .55);
+  --tooltip-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+
   --max: 1180px;
 }
 
@@ -113,4 +134,12 @@
   --elevation-1: 0 16px 40px rgba(13, 29, 48, .08);
   --elevation-2: 0 24px 60px rgba(13, 29, 48, .12);
   --elevation-3: 0 28px 80px rgba(13, 29, 48, .16);
+  /* Equivalentes claros de las capas decorativas: mantienen la rejilla y los resplandores
+     perceptibles sobre fondo claro en vez de desaparecer. */
+  --glow-cyan: rgba(14, 116, 144, .1);
+  --glow-lime: rgba(77, 124, 15, .07);
+  --grid-line: rgba(13, 29, 48, .07);
+  --ring-lime: rgba(77, 124, 15, .14);
+  --ring-lime-strong: rgba(77, 124, 15, .45);
+  --tooltip-shadow: 0 10px 25px rgba(13, 29, 48, .18);
 }
