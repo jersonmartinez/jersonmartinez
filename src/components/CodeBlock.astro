@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 // Item 25: bloque de código real con resaltado por CLASES (no estilos inline, que violarían la
 // CSP estricta y el test de HTML compilado). El resaltado de Shiki emite style="color:…" en cada
 // span, incompatible con el gate; por eso se usa un resaltador ligero basado en clases sobre tokens.
@@ -32,7 +33,7 @@ const codeId = `code-${Math.random().toString(36).slice(2, 8)}`;
 <figure class="codeblock">
   {label && <figcaption class="codeblock-caption"><span class="codeblock-lang">{lang}</span> {label}{href && <a class="codeblock-source" href={href} target="_blank" rel="noopener noreferrer">Ver fuente<span class="sr-only"> (abre en nueva pestaña)</span></a>}</figcaption>}
   <div class="codeblock-body">
-    <button class="codeblock-copy" type="button" data-copy-target={codeId} aria-label="Copiar bloque de código" hidden><i class="fas fa-copy" aria-hidden="true"></i><span class="codeblock-copy-label">Copiar</span></button>
+    <button class="codeblock-copy" type="button" data-copy-target={codeId} aria-label="Copiar bloque de código" hidden><Icon name="fas fa-copy" /><span class="codeblock-copy-label">Copiar</span></button>
     <pre class="codeblock-pre" tabindex="0"><code id={codeId} class={`language-${lang}`} set:html={highlighted}></code></pre>
   </div>
 </figure>

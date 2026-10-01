@@ -17,8 +17,8 @@ const count = (html, re) => (html.match(re) || []).length;
 
 test('el inicio renderiza la navegación con iconos y una sola página actual', { skip }, () => {
   const home = load('index.html');
-  // Iconos renderizados como elementos reales (no sólo clases en el fuente).
-  assert.ok(count(home, /<i class="fa[sb] fa-/g) >= 6, 'faltan iconos de navegación renderizados');
+  // Iconos renderizados como sprite SVG (<use href="#icon-...">), no como webfont.
+  assert.ok(count(home, /href="#icon-[a-z-]+"/g) >= 6, 'faltan iconos SVG de navegación renderizados');
   assert.equal(count(home, /aria-current="page"/g), 1, 'el inicio debe marcar exactamente una página actual');
 });
 

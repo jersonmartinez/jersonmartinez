@@ -1,0 +1,13 @@
+---
+// Item 16: componente de icono que referencia el sprite SVG inline (#icon-NAME) en vez de un
+// webfont de Font Awesome. Acepta el mismo nombre que antes (p. ej. "fa-home", "fas fa-home",
+// "fab fa-github" o "fa-chevron-right skill-tab-arrow") para no tocar la capa de datos.
+const { name, class: extra } = Astro.props;
+const tokens = String(name).trim().split(/\s+/);
+// Primer token fa-xxx (ignora fas/fab); el resto son clases extra a conservar.
+const iconToken = tokens.find((t) => t.startsWith('fa-')) || '';
+const iconId = iconToken.replace(/^fa-/, '');
+const passthrough = tokens.filter((t) => t !== iconToken && t !== 'fas' && t !== 'fab').join(' ');
+const cls = ['icon', passthrough, extra].filter(Boolean).join(' ');
+---
+<svg class={cls} aria-hidden="true" focusable="false"><use href={`#icon-${iconId}`}></use></svg>

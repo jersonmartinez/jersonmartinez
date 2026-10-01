@@ -1,4 +1,6 @@
 ---
+import Icon from '../components/Icon.astro';
+import IconSprite from '../components/IconSprite.astro';
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import { contentMeta, profile } from '../data/portfolio.js';
@@ -76,7 +78,6 @@ const here = normalize(Astro.url.pathname);
     <link rel="author" href="/humans.txt" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/manrope-latin.woff2" crossorigin="anonymous" />
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/fa-solid-900.woff2" crossorigin="anonymous" />
     <link rel="canonical" href={canonical} />
     {preloadImage && <link rel="preload" as="image" href={preloadImage} type="image/webp" fetchpriority="high" />}
     <meta property="og:type" content={isProfilePage ? 'profile' : 'website'} />
@@ -102,6 +103,7 @@ const here = normalize(Astro.url.pathname);
     <script is:inline src="/scripts/init.js"></script>
   </head>
   <body>
+    <IconSprite />
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <div class="scroll-progress" role="progressbar" aria-label="Progreso de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="scroll-progress-bar" data-scroll-progress></span></div>
     <SiteHeader />
@@ -113,12 +115,12 @@ const here = normalize(Astro.url.pathname);
           {footerLinks.map(([href, label]) => { const current = here === normalize(href); return <a href={href} class={current ? 'is-current' : ''} aria-current={current ? 'page' : undefined}>{label}</a>; })}
         </nav>
         <nav class="footer-social" aria-label="Perfiles sociales">
-          <a href={profile.github} target="_blank" rel="me noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span></a>
-          <a href={profile.linkedin} target="_blank" rel="me noopener noreferrer"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="sr-only">LinkedIn</span></a>
-          <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i><span class="sr-only">WhatsApp</span></a>
+          <a href={profile.github} target="_blank" rel="me noopener noreferrer"><Icon name="fab fa-github" /><span class="sr-only">GitHub</span></a>
+          <a href={profile.linkedin} target="_blank" rel="me noopener noreferrer"><Icon name="fab fa-linkedin-in" /><span class="sr-only">LinkedIn</span></a>
+          <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="fab fa-whatsapp" /><span class="sr-only">WhatsApp</span></a>
         </nav>
       </div>
-      <div class="container footer-legal"><p class="footer-copy">© {new Date().getFullYear()} Jerson Martínez. Todos los derechos reservados.</p><a class="footer-top" href="#contenido"><i class="fas fa-arrow-up" aria-hidden="true"></i> Volver arriba</a></div>
+      <div class="container footer-legal"><p class="footer-copy">© {new Date().getFullYear()} Jerson Martínez. Todos los derechos reservados.</p><a class="footer-top" href="#contenido"><Icon name="fas fa-arrow-up" /> Volver arriba</a></div>
     </footer>
     <!-- Item 34: paleta de comandos accesible. Oculta sin JS (degradación: la navegación normal
          sigue disponible). El script externo la activa con Cmd/Ctrl+K o el botón del header. -->

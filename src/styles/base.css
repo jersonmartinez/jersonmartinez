@@ -34,22 +34,25 @@ body.nav-locked { overflow: hidden; }
 .brand img { height: auto; width: 100%; }
 .site-nav { align-items: center; display: flex; gap: .3rem; }
 .site-nav a { align-items: center; border: 1px solid transparent; border-radius: .7rem; color: var(--muted); display: inline-flex; font-size: .82rem; font-weight: 700; gap: .48rem; padding: .72rem .76rem; text-decoration: none; transition: color .18s ease, background .18s ease, border-color .18s ease, transform .18s ease; }
-.site-nav a i { color: var(--cyan); font-size: .78rem; text-align: center; width: 1rem; }
+.site-nav a .icon { color: var(--cyan); font-size: .78rem; text-align: center; width: 1rem; }
 .site-nav a:hover, .site-nav a.is-current { background: rgba(103,232,249,.08); border-color: var(--line); color: var(--text); transform: translateY(-1px); }
 .site-nav .nav-contact { background: var(--cyan); border-color: transparent; color: var(--accent-contrast); margin-left: .6rem; }
-.site-nav .nav-contact i { color: var(--accent-contrast); }
+.site-nav .nav-contact .icon { color: var(--accent-contrast); }
 .site-nav .nav-contact:hover { background: var(--lime); color: var(--accent-contrast); }
 .nav-toggle { background: transparent; border: 1px solid var(--line); border-radius: var(--radius-md); display: none; height: 2.8rem; padding: .65rem; width: 2.8rem; }
 .nav-toggle span { background: var(--text); display: block; height: 2px; margin: 4px 0; }
 .nav-toggle:focus-visible { border-color: var(--cyan); outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
 /* Item 8: botón conmutador de tema, alineado con el estilo de la navegación. */
 .theme-toggle { align-items: center; background: transparent; border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--muted); display: inline-flex; font-size: var(--fs-sm); font-weight: 700; gap: .48rem; min-height: 2.6rem; padding: .55rem .7rem; transition: color var(--dur-base) var(--ease-standard), background var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard); }
-.theme-toggle i { color: var(--cyan); font-size: .9rem; }
+.theme-toggle .icon { color: var(--cyan); font-size: .9rem; }
 .theme-toggle:hover { background: var(--surface-tint-cyan); border-color: var(--line-strong); color: var(--text); }
 .theme-toggle[hidden] { display: none; }
 
 .sr-only { border: 0; clip: rect(0, 0, 0, 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; white-space: nowrap; width: 1px; }
-.icon { display: inline-block; line-height: 1; }
+/* Item 16: iconos SVG inline (sprite) que reemplazan el webfont de Font Awesome.
+   Se dimensionan como un glyph de texto: 1em, color heredado (currentColor). */
+.icon { display: inline-block; fill: currentColor; height: 1em; line-height: 1; vertical-align: -.125em; width: 1em; }
+.icon-sprite { height: 0; overflow: hidden; position: absolute; width: 0; }
 .profile-links { display: flex; flex-wrap: wrap; gap: .55rem; padding: .5rem; }
 .profile-social { border: 1px solid var(--line); border-radius: .7rem; color: var(--muted); display: inline-grid; font-size: 1rem; height: 2.75rem; place-items: center; position: relative; text-decoration: none; transition: color .18s ease, border-color .18s ease, background .18s ease, transform .18s ease; width: 2.75rem; }
 .profile-social:hover, .profile-social:focus-visible { background: var(--cyan); border-color: var(--cyan); color: var(--ink); transform: translateY(-2px); }
@@ -90,7 +93,7 @@ p { color: var(--muted); margin: 0; }
 .hero-fact-link { border-radius: .5rem; color: inherit; display: block; text-decoration: none; transition: color .18s ease, transform .18s ease; }
 .hero-fact-link:hover, .hero-fact-link:focus-visible { color: var(--text); transform: translateY(-2px); }
 .hero-fact-link:hover span, .hero-fact-link:focus-visible span { color: var(--lime); }
-.hero-fact-link span i { font-size: .62rem; opacity: .7; }
+.hero-fact-link span .icon { font-size: .62rem; opacity: .7; }
 .profile-panel { background: linear-gradient(145deg, rgba(17,41,67,.92), rgba(7,17,31,.86)); border: 1px solid var(--line-strong); border-radius: 1.65rem; box-shadow: var(--shadow); padding: .7rem; position: relative; }
 .profile-panel::before { border: 1px solid rgba(196,242,105,.55); border-radius: 50%; content: ''; height: 5rem; position: absolute; right: 1.8rem; top: -1.4rem; width: 5rem; }
 .profile-image { aspect-ratio: 1; background: var(--surface-raised); border-radius: 1.15rem; overflow: hidden; }

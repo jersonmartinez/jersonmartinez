@@ -79,6 +79,18 @@ Estado por punto. "Hecho" significa presente en el árbol y verificado contra el
 
 ## Identidad visual (17-24)
 
+16. **Hecho (migración completa).** Font Awesome webfont → sprite SVG inline. Se extrajeron los 32
+    glyphs REALES usados desde los propios WOFF2 que el repo ya enviaba (fontTools, con flip Y y
+    viewBox por advance), produciendo `src/components/IconSprite.astro` (sprite oculto, inyectado una
+    vez desde el layout) y `src/components/Icon.astro` (`<svg><use href="#icon-NAME">`), que acepta el
+    mismo nombre `fa-*` para no tocar la capa de datos. Se reemplazaron las 27+ etiquetas `<i class>`,
+    se eliminaron los dos WOFF2 de FA (~150 KB), su preload, `src/styles/icons.css` y el `@import`.
+    Elimina el FOUT de iconos y el fallo silencioso de nombre inexistente (el sprite sólo contiene los
+    iconos usados y `Icon` resuelve por id exacto). CSP sin cambios (sprite same-origin, sin estilos
+    inline). Resultado verificado: iconos renderizados (86 `<use>`, 16×12 px, `fill` currentColor),
+    axe 0 en ambos temas, pa11y 6/6, E2E 19/19; Lighthouse MEJORA — LCP ~3.16s→~2.56s, perf 0.90→0.95,
+    bytes de fuente ~180 KB→55 KB. Tests actualizados (sprite en lugar de WOFF2 de FA).
+
 17. **Hecho.** La rejilla decorativa deja de cubrir todo el viewport (`body::after` eliminado) y se
     limita a las cabeceras hero (`.hero::before` / `.page-hero::before`) con máscara radial.
 18. **Hecho (forma correcta).** Lenguaje gráfico de infraestructura en el hero mediante la rejilla

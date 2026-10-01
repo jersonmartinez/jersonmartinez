@@ -1,10 +1,10 @@
 .skills-explorer { background: rgba(17,41,67,.36); border: 1px solid var(--line); border-radius: var(--radius); display: grid; gap: 1rem; grid-template-columns: minmax(13rem, .34fr) minmax(0, 1fr); padding: 1rem; }
 .skills-tabs { align-content: start; display: grid; gap: .35rem; }
 .skill-tab { align-items: center; background: transparent; border: 1px solid transparent; border-radius: .65rem; color: var(--muted); display: flex; font-size: .78rem; font-weight: 700; gap: .7rem; min-height: 2.8rem; padding: .65rem .75rem; text-align: left; transition: color .18s ease, background .18s ease, border-color .18s ease, transform .18s ease; }
-.skill-tab > i:first-child { color: var(--cyan); text-align: center; width: 1.1rem; }
+.skill-tab > .icon:first-child { color: var(--cyan); text-align: center; width: 1.1rem; }
 .skill-tab:hover { border-color: var(--line); color: var(--text); transform: translateX(2px); }
 .skill-tab.is-active { background: rgba(103,232,249,.16); border-color: var(--line-strong); color: var(--text); transform: translateX(2px); }
-.skill-tab.is-active > i:first-child { color: var(--lime); }
+.skill-tab.is-active > .icon:first-child { color: var(--lime); }
 .skill-tab-arrow { color: var(--muted); font-size: .62rem; margin-left: auto; opacity: 0; transform: translateX(-.25rem); transition: opacity .18s ease, transform .18s ease, color .18s ease; }
 .skill-tab:hover .skill-tab-arrow, .skill-tab:focus-visible .skill-tab-arrow { opacity: .7; transform: translateX(0); }
 .skill-tab.is-active .skill-tab-arrow { color: var(--lime); opacity: 1; transform: translateX(0); }
@@ -351,7 +351,7 @@ section[id], article[id] { scroll-margin-top: 84px; }
 .credential-copy small { color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .57rem; margin-top: .2rem; }
 /* Verificación oficial: etiqueta clara con icono accesible, sin flecha de salto. */
 .credential-verify { align-items: center; color: var(--lime); display: inline-flex; flex: 0 0 auto; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .6rem; gap: .35rem; letter-spacing: .04em; text-transform: uppercase; }
-.credential-verify i { color: var(--lime); font-size: .85rem; }
+.credential-verify .icon { color: var(--lime); font-size: .85rem; }
 .credential-badge:hover .credential-verify, .credential-badge:focus-visible .credential-verify { text-decoration: underline; text-underline-offset: .2em; }
 .cert-provider--summary .credential-badge { min-height: 3.6rem; }
 .credential-more { align-items: center; color: var(--cyan); display: inline-flex; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .68rem; gap: .4rem; margin-top: .85rem; text-decoration: none; }
@@ -362,7 +362,7 @@ section[id], article[id] { scroll-margin-top: 84px; }
 .card-actions { display: flex; flex-wrap: wrap; gap: .8rem; }
 
 .timeline-context { background: rgba(103,232,249,.06); border-radius: .55rem; display: flex; font-size: .78rem !important; gap: .45rem; margin-top: .8rem; padding: .65rem .75rem; }
-.timeline-context i { color: var(--cyan); margin-top: .25rem; }
+.timeline-context .icon { color: var(--cyan); margin-top: .25rem; }
 .timeline-links { display: flex; flex-wrap: wrap; gap: .75rem; }
 
 .about-portrait { aspect-ratio: 16 / 8; border-radius: var(--radius) var(--radius) 0 0; display: block; margin: -1.45rem -1.45rem .5rem; overflow: hidden; }
@@ -384,7 +384,7 @@ section[id], article[id] { scroll-margin-top: 84px; }
   .intent-grid, .learning-summary, .openwebinars-grid, .cert-grid--badges { grid-template-columns: 1fr; }
   .project-case-story div { gap: .25rem; grid-template-columns: 1fr; }
   .credential-badge { grid-template-columns: auto 1fr; }
-  .credential-badge > i { display: none; }
+  .credential-badge > .icon { display: none; }
 }
 @media (min-width: 681px) and (max-width: 1000px) {
   .intent-grid, .learning-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -454,7 +454,7 @@ section[id], article[id] { scroll-margin-top: 84px; }
 :root[data-theme='light'] .logo-pill span { color: var(--text); }
 :root[data-theme='light'] .credential-copy small { color: var(--muted); }
 :root[data-theme='light'] .credential-verify,
-:root[data-theme='light'] .credential-verify i { color: var(--lime); }
+:root[data-theme='light'] .credential-verify .icon { color: var(--lime); }
 :root[data-theme='light'] .filter-count { color: var(--muted); opacity: 1; }
 :root[data-theme='light'] .site-nav a.is-current,
 :root[data-theme='light'] .site-nav a:hover { background: var(--surface-tint-cyan-strong); color: var(--text); }
@@ -569,7 +569,7 @@ section[id], article[id] { scroll-margin-top: 84px; }
 
 /* Item 34: botón disparador y diálogo de la paleta de comandos. */
 .command-open { align-items: center; background: transparent; border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--muted); display: inline-flex; font-size: var(--fs-sm); font-weight: 700; gap: .45rem; min-height: 2.6rem; padding: .55rem .7rem; transition: border-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard); }
-.command-open i { color: var(--cyan); }
+.command-open .icon { color: var(--cyan); }
 .command-open:hover { border-color: var(--line-strong); color: var(--text); }
 .command-open[hidden] { display: none; }
 .command-open-kbd { border: 1px solid var(--line); border-radius: var(--radius-xs); color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-3xs); padding: .1rem .3rem; }
