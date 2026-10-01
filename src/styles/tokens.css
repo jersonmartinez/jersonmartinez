@@ -1,0 +1,144 @@
+:root {
+  color-scheme: dark;
+
+  /* ---- Marca (hues base, independientes del tema) ---- */
+  --cyan: #67e8f9;
+  --lime: #c4f269;
+  --orange: #f6b56c;
+
+  /* ---- Superficies y texto (tema oscuro, por defecto) ---- */
+  --ink: #07111f;
+  --ink-deep: #040a13;
+  --surface: #0d1d30;
+  --surface-raised: #112943;
+  --surface-soft: rgba(17, 41, 67, .64);
+  --line: rgba(186, 213, 231, .17);
+  --line-strong: rgba(103, 232, 249, .55);
+  --text: #f4f8fb;
+  --muted: #a8bbcc;
+
+  /* Item 3: tokens semánticos de superficie/borde que sustituyen rgba() literales dispersos. */
+  --surface-overlay: rgba(4, 10, 19, .84);
+  --surface-sunken: rgba(4, 10, 19, .25);
+  --surface-tint-cyan: rgba(103, 232, 249, .08);
+  --surface-tint-cyan-strong: rgba(103, 232, 249, .16);
+  --surface-tint-lime: rgba(196, 242, 105, .06);
+  --surface-tint-orange: rgba(246, 181, 108, .06);
+  --border-cyan-soft: rgba(103, 232, 249, .4);
+  --border-lime-soft: rgba(196, 242, 105, .35);
+  --border-orange-soft: rgba(246, 181, 108, .3);
+  --accent-contrast: var(--ink); /* texto legible sobre fondos de marca (cyan/lime) */
+
+  /* Item 1: escala tipográfica fluida tokenizada (sustituye los clamp() ad hoc repetidos). */
+  --fs-3xs: .62rem;
+  --fs-2xs: .68rem;
+  --fs-xs: .74rem;
+  --fs-sm: .82rem;
+  --fs-base: 1rem;
+  --fs-md: clamp(1rem, 1.45vw, 1.2rem);
+  --fs-lg: clamp(1.2rem, 2.4vw, 1.55rem);
+  --fs-xl: clamp(1.8rem, 4vw, 2.8rem);
+  --fs-2xl: clamp(2rem, 4.5vw, 4.1rem);
+  --fs-3xl: clamp(2.8rem, 4.8vw, 5.2rem);
+  --fs-display: clamp(3rem, 8vw, 7.25rem);
+
+  /* Item 2: escala de espaciado tokenizada. */
+  --space-3xs: .25rem;
+  --space-2xs: .4rem;
+  --space-xs: .55rem;
+  --space-sm: .75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.25rem;
+  --space-2xl: 3.5rem;
+  --space-3xl: clamp(4rem, 8vw, 6.5rem);
+
+  /* Item 6: tokens de radio por tamaño. */
+  --radius-xs: .4rem;
+  --radius-sm: .55rem;
+  --radius-md: .75rem;
+  --radius-lg: 1.25rem;
+  --radius-pill: 999px;
+  --radius: var(--radius-lg); /* alias heredado */
+
+  /* Item 4: niveles de elevación tokenizados. */
+  --elevation-1: 0 16px 60px rgba(0, 0, 0, .12);
+  --elevation-2: 0 24px 80px rgba(0, 0, 0, .22);
+  --elevation-3: 0 28px 100px rgba(0, 0, 0, .28);
+  --shadow: var(--elevation-3); /* alias heredado */
+
+  /* Item 7: tokens de duración y easing. */
+  --dur-fast: .12s;
+  --dur-base: .18s;
+  --dur-slow: .3s;
+  --ease-standard: ease;
+  --ease-emphasized: cubic-bezier(.2, .8, .2, 1);
+
+  /* Item 5: token de anillo de foco. */
+  --focus-ring-color: var(--lime);
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 3px;
+
+  --max: 1180px;
+}
+
+/* Item 8: tema claro. Se activa por conmutador persistente (data-theme) o por preferencia
+   del sistema cuando el usuario no ha elegido explícitamente (html sin data-theme). */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --ink: #eef3f8;
+  --ink-deep: #e2eaf2;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-soft: rgba(255, 255, 255, .82);
+  --line: rgba(13, 29, 48, .16);
+  --line-strong: rgba(13, 110, 130, .5);
+  --text: #0b1b2d;
+  --muted: #42566b;
+  --cyan: #0e7490;
+  --lime: #4d7c0f;
+  --orange: #b45309;
+  --accent-contrast: #ffffff;
+  --surface-overlay: rgba(255, 255, 255, .9);
+  --surface-sunken: rgba(13, 29, 48, .05);
+  --surface-tint-cyan: rgba(14, 116, 144, .08);
+  --surface-tint-cyan-strong: rgba(14, 116, 144, .14);
+  --surface-tint-lime: rgba(77, 124, 15, .08);
+  --surface-tint-orange: rgba(180, 83, 9, .08);
+  --border-cyan-soft: rgba(14, 116, 144, .4);
+  --border-lime-soft: rgba(77, 124, 15, .35);
+  --border-orange-soft: rgba(180, 83, 9, .3);
+  --elevation-1: 0 16px 40px rgba(13, 29, 48, .08);
+  --elevation-2: 0 24px 60px rgba(13, 29, 48, .12);
+  --elevation-3: 0 28px 80px rgba(13, 29, 48, .16);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --ink: #eef3f8;
+    --ink-deep: #e2eaf2;
+    --surface: #ffffff;
+    --surface-raised: #ffffff;
+    --surface-soft: rgba(255, 255, 255, .82);
+    --line: rgba(13, 29, 48, .16);
+    --line-strong: rgba(13, 110, 130, .5);
+    --text: #0b1b2d;
+    --muted: #42566b;
+    --cyan: #0e7490;
+    --lime: #4d7c0f;
+    --orange: #b45309;
+    --accent-contrast: #ffffff;
+    --surface-overlay: rgba(255, 255, 255, .9);
+    --surface-sunken: rgba(13, 29, 48, .05);
+    --surface-tint-cyan: rgba(14, 116, 144, .08);
+    --surface-tint-cyan-strong: rgba(14, 116, 144, .14);
+    --surface-tint-lime: rgba(77, 124, 15, .08);
+    --surface-tint-orange: rgba(180, 83, 9, .08);
+    --border-cyan-soft: rgba(14, 116, 144, .4);
+    --border-lime-soft: rgba(77, 124, 15, .35);
+    --border-orange-soft: rgba(180, 83, 9, .3);
+    --elevation-1: 0 16px 40px rgba(13, 29, 48, .08);
+    --elevation-2: 0 24px 60px rgba(13, 29, 48, .12);
+    --elevation-3: 0 28px 80px rgba(13, 29, 48, .16);
+  }
+}

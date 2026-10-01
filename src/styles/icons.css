@@ -1,6 +1,6 @@
-@font-face { font-family: 'Font Awesome 5 Free'; font-style: normal; font-weight: 900; font-display: block; src: url('/fonts/fa-solid-900.woff2') format('woff2'); }
-@font-face { font-family: 'Font Awesome 5 Brands'; font-style: normal; font-weight: 400; font-display: block; src: url('/fonts/fa-brands-400.woff2') format('woff2'); }
-.fas, .fab { display: inline-block; font-style: normal; font-variant: normal; text-rendering: auto; line-height: 1; }
+@font-face { font-display: block; font-family: 'Font Awesome 5 Free'; font-style: normal; font-weight: 900; src: url('/fonts/fa-solid-900.woff2') format('woff2'); }
+@font-face { font-display: block; font-family: 'Font Awesome 5 Brands'; font-style: normal; font-weight: 400; src: url('/fonts/fa-brands-400.woff2') format('woff2'); }
+.fas, .fab { display: inline-block; font-style: normal; font-variant: normal; line-height: 1; text-rendering: auto; }
 .fas { font-family: 'Font Awesome 5 Free'; font-weight: 900; }
 .fab { font-family: 'Font Awesome 5 Brands'; font-weight: 400; }
 .fa-home::before { content: '\f015'; }

@@ -67,4 +67,10 @@ jobs:
         run: npm install --no-save --no-package-lock markdownlint-cli2@0.23.3
       - name: Lint markdown (README + docs)
         run: npx --no-install markdownlint-cli2 "README.md" "SECURITY-HEADERS.md" "docs/**/*.md"
+      # Item 15: stylelint fijado (sin tocar el lockfile) con orden de propiedades y
+      # prohibición de colores literales fuera de tokens en el orquestador/fuentes/iconos.
+      - name: Install pinned stylelint
+        run: npm install --no-save --no-package-lock stylelint@16.10.0 stylelint-order@6.0.4
+      - name: Lint CSS (stylelint)
+        run: npx --no-install stylelint "src/styles/*.css"
       - run: docker run --rm -v "$GITHUB_WORKSPACE:/repo" -w /repo rhysd/actionlint:1.7.7 .github/workflows/*.yml

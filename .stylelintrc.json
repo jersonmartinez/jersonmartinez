@@ -1,0 +1,18 @@
+{
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "order/properties-alphabetical-order": true,
+    "color-no-invalid-hex": true,
+    "color-named": "never",
+    "declaration-block-no-duplicate-properties": [true, { "ignore": ["consecutive-duplicates-with-different-values"] }]
+  },
+  "overrides": [
+    {
+      "files": ["src/styles/global.css", "src/styles/fonts.css", "src/styles/icons.css"],
+      "rules": {
+        "color-no-hex": true,
+        "function-disallowed-list": ["rgb", "rgba", "hsl", "hsla"]
+      }
+    }
+  ]
+}
