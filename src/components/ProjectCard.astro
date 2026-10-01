@@ -11,6 +11,6 @@ const metadata = [project.role, project.language, project.license && `Licencia $
     <div><dt>Resultado</dt><dd>{project.outcome}</dd></div>
   </dl>
   <ul class="project-facts" aria-label={`Datos de ${project.name}`}>{metadata.map((item) => <li>{item}</li>)}</ul>
-  <div class="project-meta">{project.tags.map((tag) => <span>{tag}</span>)}</div>
+  <div class="project-meta" role="list" aria-label={`Tecnologías de ${project.name}`}>{project.tags.map((tag) => <span role="listitem">{tag}</span>)}</div>
   <div class="project-bottom">{project.href ? <a class="card-link" href={project.href} target="_blank" rel="noopener noreferrer">{project.cta}<span class="sr-only"> (abre en nueva pestaña)</span></a> : <span class="status">Proyecto documentado</span>}</div>
 </article>

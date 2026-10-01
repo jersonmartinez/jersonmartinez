@@ -50,7 +50,7 @@ button { font: inherit; cursor: pointer; }
 ::selection { color: var(--ink); background: var(--cyan); }
 :focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
 /* Item 27: foco de teclado consistente y perceptible en enlaces, botones, filtros y tabs. */
-a:focus-visible, button:focus-visible, .filter-button:focus-visible, .skill-tab:focus-visible, [role='tab']:focus-visible, .card-link:focus-visible, .credential-link:focus-visible, .card[href]:focus-visible {
+a:focus-visible, button:focus-visible, .filter-button:focus-visible, .skill-tab:focus-visible, [role='tab']:focus-visible, .card-link:focus-visible, .credential-badge:focus-visible, .credential-more:focus-visible, .card[href]:focus-visible {
   outline: 3px solid var(--lime);
   outline-offset: 3px;
   border-radius: .55rem;
@@ -193,22 +193,6 @@ p { margin: 0; color: var(--muted); }
 .company { display: block; margin-top: .3rem; color: var(--lime); font-size: .83rem; font-weight: 800; }
 
 .cert-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: start; }
-.cert-card { min-height: 21rem; }
-.cert-card-head { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.5rem; }
-.cert-card-head img { width: 2.2rem; height: 2.2rem; object-fit: contain; }
-.cert-card h2, .cert-card h3 { font-size: 1.45rem; letter-spacing: -.035em; }
-.cert-list { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
-.cert-list li { color: var(--muted); font-size: .86rem; }
-.cert-list li::before { margin-right: .5rem; color: var(--cyan); content: '↳'; }
-.credential-more { margin-top: .65rem; font-family: 'DM Mono', monospace; font-size: .72rem; }
-.credential-more a { color: var(--cyan); }
-/* Item 29: enlace de cada certificación con hover/focus claro y contraste suficiente. */
-.credential-link { display: flex; align-items: center; justify-content: space-between; gap: .8rem; color: inherit; text-decoration: none; }
-.credential-link:hover, .credential-link:focus-visible { color: var(--cyan); }
-.credential-link:hover .credential-verify, .credential-link:focus-visible .credential-verify { text-decoration: underline; text-underline-offset: .2em; }
-.credential-verify { display: inline-flex; align-items: center; gap: .35rem; flex: 0 0 auto; color: var(--cyan); font-family: 'DM Mono', monospace; font-size: .64rem; }
-.credential-verify i { color: var(--cyan); font-size: .6rem; }
-.credential-link:hover .credential-verify i, .credential-link:focus-visible .credential-verify i { color: var(--lime); }
 .disclaimer { padding: 1rem 1.2rem; border: 1px solid rgba(246,181,108,.3); border-radius: .75rem; color: var(--orange); background: rgba(246,181,108,.06); font-family: 'DM Mono', monospace; font-size: .72rem; }
 
 .filter-bar { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
@@ -303,7 +287,7 @@ p { margin: 0; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
-  .button:hover, .site-nav a:hover, .site-nav a.is-current, .profile-social:hover, .profile-social:focus-visible { transform: none !important; }
+  .button:hover, .site-nav a:hover, .site-nav a.is-current, .profile-social:hover, .profile-social:focus-visible, .credential-badge:hover { transform: none !important; }
 }
 
 /* Item 86: pie legal con año dinámico y enlace de vuelta arriba. */
@@ -366,9 +350,6 @@ section[id], article[id] { scroll-margin-top: 84px; }
 .teaching-card img[src*="openwebinars"] { width: 8.8rem; height: 2.75rem; object-fit: contain; object-position: left center; }
 .teaching-card a, .card-link { text-underline-offset: .22em; }
 .teaching-card a:hover, .teaching-card a:focus-visible { text-decoration: underline; }
-.credential-link { justify-content: flex-start; }
-.credential-link span:first-child { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: .22em; transition: color .18s ease, text-decoration-color .18s ease; }
-.credential-link:hover span:first-child, .credential-link:focus-visible span:first-child { text-decoration-color: currentColor; }
 .course-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
 .course-card { display: flex; flex-direction: column; min-height: 100%; padding: 0; overflow: hidden; }
 .course-visual { position: relative; min-height: 10.8rem; overflow: hidden; border-bottom: 1px solid var(--line); background: linear-gradient(135deg, rgba(103,232,249,.14), rgba(196,242,105,.06)); }
@@ -460,20 +441,32 @@ section[id], article[id] { scroll-margin-top: 84px; }
 .compact-course h3 { font-size: 1.05rem; }
 
 .cert-grid--badges { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.cert-provider { min-width: 0; }
+.cert-provider { min-width: 0; display: flex; flex-direction: column; }
+/* Item: título alineado con el icono en una sola fila (align-items:center). */
 .cert-provider-head { display: flex; align-items: center; gap: .85rem; margin-bottom: 1rem; }
-.cert-provider-head .card-label { min-height: 0; margin: 0 0 .25rem; }
-.cert-provider-logo { display: grid; width: 4rem; height: 4rem; place-items: center; border: 1px solid var(--line); border-radius: .85rem; background: rgba(255,255,255,.92); }
+.cert-provider-id { min-width: 0; }
+.cert-provider-head .card-label { min-height: 0; margin: 0 0 .2rem; }
+.cert-provider-id h3 { margin: 0; line-height: 1.1; font-size: 1.3rem; letter-spacing: -.03em; }
+.cert-provider-count { margin: .2rem 0 0; color: var(--muted); font-family: 'DM Mono', monospace; font-size: .62rem; }
+.cert-provider-logo { display: grid; width: 4rem; height: 4rem; flex: 0 0 auto; place-items: center; border: 1px solid var(--line); border-radius: .85rem; background: rgba(255,255,255,.92); }
 .cert-provider-logo img { max-width: 2.8rem; max-height: 2.8rem; object-fit: contain; }
 .credential-badges { display: grid; gap: .65rem; margin: 0; padding: 0; list-style: none; }
-.credential-badge { display: grid; grid-template-columns: auto 1fr auto; gap: .7rem; align-items: center; min-height: 4.2rem; padding: .75rem; border: 1px solid var(--line); border-radius: .75rem; text-decoration: none; background: rgba(4,10,19,.25); }
+.credential-badge { display: grid; grid-template-columns: auto 1fr auto; gap: .7rem; align-items: center; min-height: 4.2rem; padding: .75rem; border: 1px solid var(--line); border-radius: .75rem; text-decoration: none; background: rgba(4,10,19,.25); transition: border-color .18s ease, background .18s ease, transform .18s ease; }
 .credential-badge:hover, .credential-badge:focus-visible { border-color: var(--cyan); background: rgba(103,232,249,.07); }
+@media (hover: hover) { .credential-badge:hover { transform: translateY(-1px); } }
 .credential-code { display: grid; min-width: 3.2rem; min-height: 2.4rem; place-items: center; padding: .35rem; border-radius: .5rem; color: var(--ink); background: var(--cyan); font-family: 'DM Mono', monospace; font-size: .63rem; font-weight: 500; }
 .credential-copy { min-width: 0; }
 .credential-copy strong, .credential-copy small { display: block; overflow-wrap: anywhere; }
 .credential-copy strong { color: var(--text); font-size: .78rem; line-height: 1.35; }
 .credential-copy small { margin-top: .2rem; color: var(--muted); font-family: 'DM Mono', monospace; font-size: .57rem; }
-.credential-badge > i { color: var(--lime); }
+/* Verificación oficial: etiqueta clara con icono accesible, sin flecha de salto. */
+.credential-verify { display: inline-flex; align-items: center; gap: .35rem; flex: 0 0 auto; color: var(--lime); font-family: 'DM Mono', monospace; font-size: .6rem; text-transform: uppercase; letter-spacing: .04em; }
+.credential-verify i { color: var(--lime); font-size: .85rem; }
+.credential-badge:hover .credential-verify, .credential-badge:focus-visible .credential-verify { text-decoration: underline; text-underline-offset: .2em; }
+.cert-provider--summary .credential-badge { min-height: 3.6rem; }
+.credential-more { display: inline-flex; align-items: center; gap: .4rem; margin-top: .85rem; color: var(--cyan); font-family: 'DM Mono', monospace; font-size: .68rem; text-decoration: none; }
+.credential-more::after { content: ''; width: .5rem; height: .5rem; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); }
+.credential-more:hover, .credential-more:focus-visible { text-decoration: underline; text-underline-offset: .2em; }
 .learning-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .learning-summary .card > strong { display: block; margin-bottom: .35rem; color: var(--lime); font-size: clamp(1.8rem, 4vw, 3rem); }
 .card-actions { display: flex; flex-wrap: wrap; gap: .8rem; }

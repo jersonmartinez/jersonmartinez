@@ -1,6 +1,6 @@
 ---
 const { items } = Astro.props;
 ---
-<ul class="logo-cloud" aria-label="Ecosistema tecnológico">
+<ul class="logo-cloud" role="list" aria-label="Ecosistema tecnológico">
   {items.map((item) => <li class="logo-pill"><img src={item.logo} alt="" width="28" height="28" loading="lazy" decoding="async" /><span>{item.name}</span></li>)}
 </ul>

@@ -232,7 +232,7 @@ export const experience = [
 
 export const certifications = [
   {
-    provider: 'AWS', logo: '/brands/aws.svg',
+    provider: 'AWS', logo: '/brands/aws.svg', issuerUrl: 'https://aws.amazon.com/certification/',
     items: [
       { name: 'AWS Certified Cloud Practitioner', code: 'CCP', level: 'Foundational', credentialId: '2HHK4HSBFFF118SH', href: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/2HHK4HSBFFF118SH' },
       { name: 'AWS Certified Solutions Architect — Associate', code: 'SAA', level: 'Associate', credentialId: '9d4c32d819004186b71dd30d50cf81f8', href: 'https://cp.certmetrics.com/amazon/en/public/verify/credential/9d4c32d819004186b71dd30d50cf81f8' },
@@ -240,7 +240,7 @@ export const certifications = [
     ],
   },
   {
-    provider: 'Microsoft Azure', logo: '/brands/azure.svg',
+    provider: 'Microsoft Azure', logo: '/brands/azure.svg', issuerUrl: 'https://learn.microsoft.com/credentials/',
     items: [
       { name: 'Microsoft Azure Fundamentals', code: 'AZ-900', level: 'Fundamentals', credentialId: '44AAF997D4FC41F1', href: 'https://learn.microsoft.com/api/credentials/share/en-us/jersonmartinezsm/44AAF997D4FC41F1?sharingId=DD110D69941D2F8B' },
       { name: 'Microsoft Azure Data Fundamentals', code: 'DP-900', level: 'Fundamentals', credentialId: '8093C64EDF8D16D1', href: 'https://learn.microsoft.com/api/credentials/share/en-us/jersonmartinezsm/8093C64EDF8D16D1?sharingId=DD110D69941D2F8B' },
@@ -251,7 +251,7 @@ export const certifications = [
     ],
   },
   {
-    provider: 'GitHub', logo: '/brands/github.svg',
+    provider: 'GitHub', logo: '/brands/github.svg', issuerUrl: 'https://resources.github.com/learn/certifications/',
     items: [
       { name: 'GitHub Foundations', code: 'Foundations', level: 'Foundational', credentialId: '3e8cf8d4-00d5-4390-a338-d3a43a6f001e', href: 'https://www.credly.com/badges/3e8cf8d4-00d5-4390-a338-d3a43a6f001e/linked_in?t=sjzzbr' },
     ],
@@ -292,7 +292,7 @@ export const teaching = [
 
 export const cvLinks = [
   { label: 'CV en español', href: 'https://docs.google.com/document/d/1r-Hpl-3WV1qDlLiUWJZkZ_7XFxrU1WgezGiaQnSrSkw/edit?usp=sharing', downloadHref: '/cv/jerson-martinez-cv-es.pdf', lang: 'es' },
-  { label: 'CV in English', href: 'https://docs.google.com/document/d/1aYwQcfaZAgsv0OWtSb56qzilAySD_xYH7YJbdNMnRl0/edit?usp=sharing', downloadHref: '/cv/jerson-martinez-cv-en.pdf', lang: 'en' },
+  { label: 'CV in English', href: 'https://docs.google.com/document/d/18q3xhTd7bmymk-ZeMM_BHhJT6Qp4rLcxu05DozMQRYo/edit?usp=drive_link', downloadHref: '/cv/jerson-martinez-cv-en.pdf', lang: 'en' },
 ];
 
 export const collaborationModes = [

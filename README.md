@@ -67,7 +67,7 @@ I’m a **DevOps Engineer with 10+ years of experience** in technical projects, 
       <a href="https://docs.google.com/document/d/1r-Hpl-3WV1qDlLiUWJZkZ_7XFxrU1WgezGiaQnSrSkw/edit?usp=sharing" target="_blank">📄 Ver CV en Español</a>
     </li>
     <li>
-      <a href="https://docs.google.com/document/d/1aYwQcfaZAgsv0OWtSb56qzilAySD_xYH7YJbdNMnRl0/edit?usp=sharing" target="_blank">📄 View CV in English</a>
+      <a href="https://docs.google.com/document/d/18q3xhTd7bmymk-ZeMM_BHhJT6Qp4rLcxu05DozMQRYo/edit?usp=drive_link" target="_blank">📄 View CV in English</a>
     </li>
   </ul>
 </details>
@@ -83,6 +83,7 @@ This profile is maintained by reproducible checks and scheduled workflows:
 - [Automation runbook](docs/AUTOMATION.md): sources, fallbacks, recovery and operations.
 - [Astro portfolio architecture](docs/PORTFOLIO-ASTRO.md): routes, shared components, data and validation.
 - [2026 integrity and experience refresh](docs/PORTFOLIO-INTEGRITY-2026.md): verified sources, UX, accessibility, performance, SEO and security.
+- [2026 credentials, home and CV refinement](docs/PORTFOLIO-CREDENTIALS-REFINEMENT-2026.md): shared credential component, home summary mode, CV links and cross-cutting hardening.
 - Pull requests run tests, metadata/resource checks, local link checks and Markdown validation.
 - A weekly audit reports external link failures without changing content automatically.
 - YouTube updates arrive as reviewable pull requests; no scheduled job writes directly to `main`.
