@@ -53,6 +53,12 @@
   --measure: 44rem;
   --measure-wide: 68ch;
 
+  /* Desplazamiento de ancla. El header mide 89 px (5.5rem + 1 px de borde) y el valor
+     anterior era 84 px, así que todo encabezado enlazado quedaba 5 px por debajo del
+     header. Se deriva de la altura real y añade holgura para que respire. */
+  --header-height: 5.5rem;
+  --anchor-offset: calc(var(--header-height) + var(--space-md));
+
   /* Item 2: escala de espaciado tokenizada. */
   --space-3xs: .25rem;
   --space-2xs: .4rem;
@@ -99,6 +105,11 @@
   --ring-lime: rgba(196, 242, 105, .12);
   --ring-lime-strong: rgba(196, 242, 105, .55);
   --tooltip-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+  /* Velo del diálogo de la paleta de comandos y placa neutra de los logos de emisor
+     (esta última se mantiene clara en ambos temas: los logotipos oficiales de AWS, Azure
+     y GitHub están diseñados para fondo claro). */
+  --surface-scrim: rgba(4, 10, 19, .62);
+  --plate-neutral: rgba(255, 255, 255, .92);
 
   --max: 1180px;
 }
@@ -142,4 +153,6 @@
   --ring-lime: rgba(77, 124, 15, .14);
   --ring-lime-strong: rgba(77, 124, 15, .45);
   --tooltip-shadow: 0 10px 25px rgba(13, 29, 48, .18);
+  --surface-scrim: rgba(13, 29, 48, .45);
+  --plate-neutral: #ffffff;
 }

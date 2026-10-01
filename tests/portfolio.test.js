@@ -13,7 +13,11 @@ test('Astro expone siete rutas con layout compartido', () => {
 });
 
 test('identidad, tipografías e iconos se sirven localmente', () => {
-  assert.match(read('src/components/SiteHeader.astro'), /brand\/logo\.svg/);
+  // La marca se incrusta como SVG inline y hereda currentColor. Servida como <img> con
+  // un fill fijo quedaba invisible sobre el header claro, y un <img> no hereda el color.
+  assert.match(read('src/components/SiteHeader.astro'), /BrandMark/);
+  assert.match(read('src/components/BrandMark.astro'), /fill="currentColor"/);
+  assert.doesNotMatch(read('src/components/SiteHeader.astro'), /<img[^>]*brand\/logo\.svg/);
   assert.match(read('src/styles/global.css'), /fonts\.css/);
   // Item 16: los iconos ya no usan webfont de Font Awesome, sino un sprite SVG inline.
   assert.match(read('src/components/IconSprite.astro'), /<symbol id="icon-/);

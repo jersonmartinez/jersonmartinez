@@ -28,7 +28,10 @@ body.nav-locked { overflow: hidden; }
 .skip-link { background: var(--cyan); border-radius: var(--radius-pill); color: var(--accent-contrast); left: .8rem; padding: var(--space-xs) var(--space-sm); position: fixed; top: .8rem; transform: translateY(-150%); transition: transform var(--dur-slow) var(--ease-standard); z-index: 99; }
 .skip-link:focus { transform: translateY(0); }
 
-.site-header { backdrop-filter: blur(18px); background: var(--surface-overlay); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 30; }
+/* Fondo SÓLIDO de base; el desenfoque y la superficie translúcida se añaden en el layer de
+   componentes bajo @supports. Así un navegador sin backdrop-filter no queda con un header
+   semitransparente sin desenfoque, que dejaría el contenido moviéndose detrás del texto. */
+.site-header { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 30; }
 .header-inner { align-items: center; display: flex; gap: var(--space-md); justify-content: space-between; min-height: 5.5rem; }
 /* La marca y los controles NO se comprimen. Al separar los controles del <nav> la fila
    pasó a tener cuatro ítems flex y la marca se encogía de 158 px a 67 px (medido). */
