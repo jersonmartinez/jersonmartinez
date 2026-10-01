@@ -10,7 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 // Item 29: datos de GitHub leídos del cache en build (data/github-state.json), con degradación:
 // si el cache falta o es inválido, githubStats queda null y la tira no se renderiza (no se inventan cifras).
-let githubStats = null;
+let githubStats: string[][] | null = null;
 try {
   const raw = fs.readFileSync(path.resolve(process.cwd(), 'data/github-state.json'), 'utf8');
   const parsed = JSON.parse(raw);
@@ -22,6 +22,8 @@ try {
     ];
   }
 } catch { githubStats = null; }
+// Item 48: narrowing seguro del meta heterogéneo de profile.facts para astro check.
+const factLink = (meta) => (meta && typeof meta === 'object' && 'href' in meta ? meta : null);
 // Item 25/28: extracto REAL del workflow de validación del repo (.github/workflows/validate.yml),
 // mostrado como evidencia de la cadena de entrega del propio sitio. No es contenido inventado.
 const validateExcerpt = `# .github/workflows/validate.yml (extracto)
@@ -56,7 +58,7 @@ const logos = [
         <h1>Plataformas cloud confiables para equipos que necesitan <em>avanzar.</em></h1>
         <p class="lede">{profile.intro} Conecto automatización, seguridad, costes y experiencia operativa para que los equipos puedan entregar con confianza.</p>
         <div class="hero-actions"><a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i> Hablemos por WhatsApp</a><a class="button button--ghost" href="#recorridos"><i class="fas fa-arrow-down" aria-hidden="true"></i> Elegir un recorrido</a></div>
-        <ul class="hero-facts" aria-label="Resumen profesional">{profile.facts.map(([value, label, meta]) => <li>{meta?.href ? <a class="hero-fact-link" href={meta.href} {...(meta.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={meta.label}><strong>{value}</strong><span>{label}</span></a> : <><strong>{value}</strong><span>{label}</span></>}</li>)}</ul>
+        <ul class="hero-facts" aria-label="Resumen profesional">{profile.facts.map(([value, label, meta]) => { const link = factLink(meta); return <li>{link ? <a class="hero-fact-link" href={link.href} {...('external' in link && link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={link.label}><strong>{value}</strong><span>{label}</span></a> : <><strong>{value}</strong><span>{label}</span></>}</li>; })}</ul>
       </div>
       <aside class="profile-panel" aria-label="Perfil de Jerson Martínez">
         <div class="profile-image"><picture><source srcset="/images/profile-v2-320.webp 320w, /images/profile-v2-640.webp 640w, /images/profile-v2-960.webp 960w" sizes="(max-width: 640px) 88vw, 38vw" type="image/webp"/><img src="/images/profile-v2-640.jpg" srcset="/images/profile-v2-320.jpg 320w, /images/profile-v2-640.jpg 640w, /images/profile-v2-960.jpg 960w" sizes="(max-width: 640px) 88vw, 38vw" width="960" height="960" alt="Retrato de Jerson Martínez" fetchpriority="high" decoding="async" /></picture></div>

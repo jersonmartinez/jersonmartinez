@@ -219,4 +219,30 @@
       window.addEventListener('resize', updateProgress, { passive: true });
     }
   }
+
+  /* Item 33: prefetch de rutas internas DISPARADO POR INTENCIÓN (hover/focus), no en la carga
+     inicial. Un prefetch estático de varias páginas competía con la imagen LCP y empeoraba el
+     Largest Contentful Paint; hacerlo al pasar el ratón/foco mantiene el beneficio sin coste en el
+     primer render. CSP-safe (inyecta <link rel="prefetch">, no ejecuta scripts remotos). */
+  const prefetched = new Set();
+  const prefetch = (href) => {
+    if (!href || prefetched.has(href)) return;
+    prefetched.add(href);
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.href = href;
+    document.head.appendChild(link);
+  };
+  const isInternal = (anchor) => {
+    try { const u = new URL(anchor.href, location.href); return u.origin === location.origin && !u.hash && u.pathname !== location.pathname; }
+    catch { return false; }
+  };
+  const onIntent = (event) => {
+    const anchor = event.target.closest('a[href]');
+    if (anchor && isInternal(anchor)) prefetch(anchor.href);
+  };
+  if (!window.matchMedia('(prefers-reduced-data: reduce)').matches) {
+    document.addEventListener('pointerover', onIntent, { passive: true });
+    document.addEventListener('focusin', onIntent, { passive: true });
+  }
 })();

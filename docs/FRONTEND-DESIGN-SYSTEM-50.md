@@ -107,6 +107,10 @@ Estado por punto. "Hecho" significa presente en el árbol y verificado contra el
     (CSP-safe). Las *reglas de especulación* (`<script type="speculationrules">`) exigen un script
     inline JSON que viola `script-src 'self'` y que además el test de HTML compilado marca como script
     inline ejecutable; por eso se usa `prefetch` en su lugar y se documenta la razón.
+    NOTA (corrección de rendimiento): un prefetch ESTÁTICO de 5 páginas en el `<head>` competía con la
+    imagen LCP y hacía fallar el presupuesto de Lighthouse (LCP ~3.9s > 3.5s). Se cambió a prefetch
+    DISPARADO POR INTENCIÓN (hover/focus, en `site.js`), respetando `prefers-reduced-data`; LCP vuelve a
+    ~3.16s y el presupuesto pasa. Verificado con lhci (3 corridas).
 34. **Hecho.** Paleta de comandos accesible (`/scripts/command-palette.js`, externo): se abre con
     Cmd/Ctrl+K o el botón del header, diálogo `role="dialog" aria-modal`, focus trap, flechas para
     navegar, Escape para cerrar y restauración de foco. Degradación sin JS: el diálogo y el botón
@@ -157,3 +161,20 @@ Estado por punto. "Hecho" significa presente en el árbol y verificado contra el
     `width`/`height` y `preload`. Migrar a `<Image>` no aporta sobre el pipeline ya optimizado y
     arriesga el gate; se documenta y se deja como follow-up. Las imágenes conservan dimensiones
     explícitas y `aspect-ratio` (punto 43) para evitar CLS.
+
+## Calidad (48-50)
+
+48. **Hecho.** TypeScript con `astro check` sobre datos y props de componentes, integrado en el
+    workflow `validate` (instala `@astrojs/check` + `typescript` + `@types/node` fijados). `tsconfig.json`
+    extiende `astro/tsconfigs/base` con `strictNullChecks`. Se corrigieron 7 errores reales
+    (tipos de `node:fs`/`node:path`/`process`, narrowing del meta de `profile.facts`, tipo de
+    `githubStats`). Script `npm run check`. Resultado: 0 errores.
+49. **Hecho.** Nueva suite `tests/dom-assertions.test.js` que verifica el DOM COMPILADO (`dist/`) en
+    vez de regex sobre el código fuente: iconos de navegación renderizados, tablist accesible de
+    skills, ≥10 credenciales renderizadas, sección de evidencia con código real y SVG accesible,
+    scripts externos enlazados (CSP) y controles de tema/paleta accesibles. 6 pruebas nuevas (46 total).
+50. **Hecho.** Presupuestos de peso por ruta en `.lighthouserc.json` (`resource-summary` de total,
+    script, stylesheet, font, image y document) verificados contra el peso real del `dist`. Comparación
+    visual automática por PR vía `tests/e2e/visual.e2e.spec.js`: capturas viewport-only de las 6 rutas +
+    tema claro + móvil adjuntas como artefactos del PR (se suben en `e2e.yml`). No se usa pixel-diff duro
+    por la variabilidad de render entre entornos; el artefacto permite la comparación en cada PR.

@@ -52,6 +52,12 @@ jobs:
       # Construir ANTES de los tests para que la suite con VALIDATE_BUILD=1 valide
       # el HTML compilado real (dist/), no sólo las fuentes.
       - run: npm run build
+      # Item 48: astro check (TypeScript) sobre datos y props de componentes. Herramientas
+      # fijadas sin tocar el lockfile.
+      - name: Install pinned astro check + TypeScript
+        run: npm install --no-save --no-package-lock @astrojs/check@0.9.4 typescript@5.6.3 @types/node@22.7.4
+      - name: Type-check (astro check)
+        run: npx --no-install astro check
       - name: Run tests against the compiled build
         run: VALIDATE_BUILD=1 npm test
       - run: VALIDATE_BUILD=1 npm run validate
