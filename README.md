@@ -9,10 +9,9 @@
 [![GitHub Foundations](https://img.shields.io/badge/GitHub-Foundations-181717?logo=github&logoColor=white)](https://www.credly.com/badges/3e8cf8d4-00d5-4390-a338-d3a43a6f001e/linked_in?t=sjzzbr)
 [![Correo](https://img.shields.io/badge/Correo-jersonmartinezsm@gmail.com-EA4335?logo=gmail&logoColor=white)](mailto:jersonmartinezsm@gmail.com)
 
-| | | |
+| +10 años de experiencia | 3 proveedores cloud | 10 certificaciones oficiales vigentes |
 | --- | --- | --- |
-| **+10** años de experiencia | **3** proveedores cloud | **10** certificaciones oficiales vigentes |
-| **100+** certificaciones obtenidas | **60+** artículos publicados | **+77K** estudiantes en Udemy |
+| 100+ certificaciones obtenidas | 60+ artículos publicados | +77K estudiantes en Udemy |
 
 Latinoamérica · GMT-6 · Español nativo, inglés B1 profesional.
 
