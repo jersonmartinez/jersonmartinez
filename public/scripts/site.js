@@ -140,4 +140,32 @@
   };
   window.addEventListener('hashchange', focusHashProject);
   focusHashProject();
+
+  /* Item 8: conmutador de tema persistente y accesible. El botón sólo se muestra con JS
+     (progressive enhancement); sin JS el sitio sigue prefers-color-scheme. */
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  if (themeToggle) {
+    const root = document.documentElement;
+    const systemLight = window.matchMedia('(prefers-color-scheme: light)');
+    const effectiveTheme = () => {
+      const explicit = root.getAttribute('data-theme');
+      if (explicit === 'light' || explicit === 'dark') return explicit;
+      return systemLight.matches ? 'light' : 'dark';
+    };
+    const reflect = () => {
+      const isLight = effectiveTheme() === 'light';
+      themeToggle.setAttribute('aria-pressed', String(isLight));
+      themeToggle.setAttribute('aria-label', isLight ? 'Activar tema oscuro' : 'Activar tema claro');
+    };
+    themeToggle.hidden = false;
+    reflect();
+    themeToggle.addEventListener('click', () => {
+      const next = effectiveTheme() === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) { /* sin persistencia */ }
+      reflect();
+    });
+    /* Si el usuario no ha elegido explícitamente, seguir los cambios del sistema. */
+    systemLight.addEventListener('change', () => { if (!localStorage.getItem('theme')) reflect(); });
+  }
 })();

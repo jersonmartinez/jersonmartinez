@@ -59,8 +59,9 @@ const here = normalize(Astro.url.pathname);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#07111f" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#07111f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="author" content="Jerson Martínez" />
     <meta name="robots" content={robots} />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
