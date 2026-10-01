@@ -557,3 +557,27 @@ section[id], article[id] { scroll-margin-top: 84px; }
 .guide-components { display: flex; flex-wrap: wrap; gap: .8rem; margin-bottom: 1.6rem; }
 .guide-cards-sample { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 680px) { .guide-cards-sample { grid-template-columns: 1fr; } }
+
+/* Item 36: indicador de progreso de lectura fijo bajo el borde superior en páginas largas. */
+.scroll-progress { background: transparent; height: 3px; left: 0; position: fixed; right: 0; top: 0; z-index: 40; }
+.scroll-progress[hidden] { display: none; }
+.scroll-progress-bar { background: linear-gradient(90deg, var(--cyan), var(--lime)); display: block; height: 100%; transform: scaleX(0); transform-origin: left; width: 100%; }
+@media (prefers-reduced-motion: no-preference) { .scroll-progress-bar { transition: transform .1s linear; } }
+
+/* Item 34: botón disparador y diálogo de la paleta de comandos. */
+.command-open { align-items: center; background: transparent; border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--muted); display: inline-flex; font-size: var(--fs-sm); font-weight: 700; gap: .45rem; min-height: 2.6rem; padding: .55rem .7rem; transition: border-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard); }
+.command-open i { color: var(--cyan); }
+.command-open:hover { border-color: var(--line-strong); color: var(--text); }
+.command-open[hidden] { display: none; }
+.command-open-kbd { border: 1px solid var(--line); border-radius: var(--radius-xs); color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-3xs); padding: .1rem .3rem; }
+.command-palette { align-items: flex-start; background: rgba(4, 10, 19, .62); display: flex; inset: 0; justify-content: center; padding: 12vh 1rem 1rem; position: fixed; z-index: 60; }
+.command-palette[hidden] { display: none; }
+.command-panel { background: var(--surface-raised); border: 1px solid var(--line-strong); border-radius: var(--radius-lg); box-shadow: var(--elevation-3); max-width: 34rem; overflow: hidden; padding: 1rem; width: 100%; }
+.command-input { background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--text); font-size: var(--fs-base); padding: .75rem .85rem; width: 100%; }
+.command-input:focus-visible { border-color: var(--line-strong); outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: 2px; }
+.command-list { display: grid; gap: .25rem; list-style: none; margin: 1rem 0 0; padding: 0; }
+.command-item { border-radius: var(--radius-sm); color: var(--text); display: block; font-weight: 700; padding: .65rem .75rem; text-decoration: none; }
+.command-item[hidden] { display: none; }
+.command-item:hover, .command-item:focus-visible { background: var(--surface-tint-cyan-strong); color: var(--text); }
+.command-empty { color: var(--muted); margin: 1rem 0 0; padding: .65rem .75rem; }
+.command-empty[hidden] { display: none; }

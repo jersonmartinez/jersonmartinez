@@ -1,5 +1,9 @@
+/* Item 32: transiciones de navegación entre documentos cuando el navegador las soporta. */
+@view-transition { navigation: auto; }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+/* Item 38: sin scroll-behavior global; el desplazamiento suave se dispara por interacción
+   desde el script (anclas, rail, paleta), respetando prefers-reduced-motion. */
+html { scroll-behavior: auto; }
 body { background: var(--ink); color: var(--text); font-family: 'Manrope', 'Manrope Fallback', ui-sans-serif, system-ui, sans-serif; line-height: 1.65; margin: 0; min-width: 320px; }
 body::before { background: radial-gradient(circle at 82% 3%, rgba(103,232,249,.12), transparent 31rem), radial-gradient(circle at 7% 36%, rgba(196,242,105,.06), transparent 28rem); content: ''; inset: 0; pointer-events: none; position: fixed; z-index: -2; }
 /* Item 17: la rejilla decorativa se limita a las cabeceras hero (home y páginas internas)

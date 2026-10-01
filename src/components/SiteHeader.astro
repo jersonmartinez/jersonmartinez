@@ -44,6 +44,18 @@ const here = normalize(Astro.url.pathname);
         <i class="fas fa-adjust" aria-hidden="true"></i>
         <span class="theme-toggle-label">Tema</span>
       </button>
+      <button
+        class="command-open"
+        type="button"
+        data-command-open
+        aria-label="Abrir paleta de comandos (Ctrl o Cmd + K)"
+        aria-keyshortcuts="Control+K Meta+K"
+        hidden
+      >
+        <i class="fas fa-terminal" aria-hidden="true"></i>
+        <span class="command-open-label">Buscar</span>
+        <kbd class="command-open-kbd">⌘K</kbd>
+      </button>
       <a
         class="nav-contact"
         href={profile.whatsapp}

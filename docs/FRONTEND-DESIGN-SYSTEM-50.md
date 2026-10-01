@@ -98,3 +98,26 @@ Estado por punto. "Hecho" significa presente en el árbol y verificado contra el
     hay soporte, fondo sólido `var(--surface)` de respaldo.
 24. **Hecho.** `@media (prefers-reduced-transparency: reduce)`: header y superficies translúcidas
     pasan a opacas (`--surface`/`--surface-raised`) y se desactiva `backdrop-filter`.
+
+## Interacción (32-38)
+
+32. **Hecho.** `@view-transition { navigation: auto }` para transiciones entre documentos donde el
+    navegador lo soporta.
+33. **Hecho (forma correcta).** `prefetch` de las rutas internas con `<link rel="prefetch">`
+    (CSP-safe). Las *reglas de especulación* (`<script type="speculationrules">`) exigen un script
+    inline JSON que viola `script-src 'self'` y que además el test de HTML compilado marca como script
+    inline ejecutable; por eso se usa `prefetch` en su lugar y se documenta la razón.
+34. **Hecho.** Paleta de comandos accesible (`/scripts/command-palette.js`, externo): se abre con
+    Cmd/Ctrl+K o el botón del header, diálogo `role="dialog" aria-modal`, focus trap, flechas para
+    navegar, Escape para cerrar y restauración de foco. Degradación sin JS: el diálogo y el botón
+    quedan `hidden` y la navegación normal sigue disponible. Verificado funcionalmente (abre, filtra
+    "cert"→Certificaciones, cierra) y axe 0.
+35. **Hecho.** El estado de las tabs de Skills se refleja en la URL (`?skill=slug`, `data-skill-slug`)
+    y se restaura al cargar. Verificado: clic en tab 3 → `?skill=…`; recarga restaura esa tab.
+36. **Hecho.** Indicador de progreso de lectura (`.scroll-progress` + `data-scroll-progress`) que sólo
+    aparece en páginas largas; actualizado por scroll (CSSOM, no estilo inline en el HTML), con
+    `role="progressbar"` y `aria-valuenow`.
+37. **Hecho.** Retirado el `data-tooltip` huérfano de `.nav-contact` (checkpoint 1). Los tooltips de
+    `.profile-social` siguen siendo reales y accesibles (texto por `aria-label`, visual por `::after`).
+38. **Hecho.** Eliminado el `scroll-behavior: smooth` global; el desplazamiento suave se dispara por
+    interacción (clic en anclas internas) respetando `prefers-reduced-motion`.

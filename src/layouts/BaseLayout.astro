@@ -78,6 +78,13 @@ const here = normalize(Astro.url.pathname);
     <link rel="preload" as="font" type="font/woff2" href="/fonts/manrope-latin.woff2" crossorigin="anonymous" />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/fa-solid-900.woff2" crossorigin="anonymous" />
     <link rel="canonical" href={canonical} />
+    {/* Item 33: prefetch de las rutas internas principales (CSP-safe, sin script inline ni
+        reglas de especulación que violarían script-src). El navegador descarga en baja prioridad. */}
+    <link rel="prefetch" href="/projects.html" />
+    <link rel="prefetch" href="/experience.html" />
+    <link rel="prefetch" href="/certifications.html" />
+    <link rel="prefetch" href="/courses.html" />
+    <link rel="prefetch" href="/about.html" />
     {preloadImage && <link rel="preload" as="image" href={preloadImage} type="image/webp" fetchpriority="high" />}
     <meta property="og:type" content={isProfilePage ? 'profile' : 'website'} />
     <meta property="og:site_name" content="Jerson Martínez" />
@@ -103,6 +110,7 @@ const here = normalize(Astro.url.pathname);
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <div class="scroll-progress" role="progressbar" aria-label="Progreso de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="scroll-progress-bar" data-scroll-progress></span></div>
     <SiteHeader />
     <main id="contenido" tabindex="-1"><slot /></main>
     <footer class="site-footer">
@@ -119,6 +127,25 @@ const here = normalize(Astro.url.pathname);
       </div>
       <div class="container footer-legal"><p class="footer-copy">© {new Date().getFullYear()} Jerson Martínez. Todos los derechos reservados.</p><a class="footer-top" href="#contenido"><i class="fas fa-arrow-up" aria-hidden="true"></i> Volver arriba</a></div>
     </footer>
+    <!-- Item 34: paleta de comandos accesible. Oculta sin JS (degradación: la navegación normal
+         sigue disponible). El script externo la activa con Cmd/Ctrl+K o el botón del header. -->
+    <div class="command-palette" data-command-palette role="dialog" aria-modal="true" aria-label="Paleta de comandos: ir a una sección" hidden>
+      <div class="command-panel">
+        <label class="sr-only" for="command-input">Buscar sección o página</label>
+        <input class="command-input" id="command-input" type="text" data-command-input placeholder="Ir a… (proyectos, cursos, certificaciones)" autocomplete="off" />
+        <ul class="command-list" data-command-list role="list">
+          <li><a class="command-item" data-command-item data-command-text="inicio home" href="/">Inicio</a></li>
+          <li><a class="command-item" data-command-item data-command-text="proyectos soluciones" href="/projects.html">Proyectos</a></li>
+          <li><a class="command-item" data-command-item data-command-text="cursos formacion" href="/courses.html">Cursos</a></li>
+          <li><a class="command-item" data-command-item data-command-text="certificaciones credenciales" href="/certifications.html">Certificaciones</a></li>
+          <li><a class="command-item" data-command-item data-command-text="trayectoria experiencia" href="/experience.html">Trayectoria</a></li>
+          <li><a class="command-item" data-command-item data-command-text="sobre mi about" href="/about.html">Sobre mí</a></li>
+          <li><a class="command-item" data-command-item data-command-text="contacto whatsapp" href={profile.whatsapp} target="_blank" rel="noopener noreferrer">Contacto (WhatsApp)</a></li>
+        </ul>
+        <p class="command-empty" data-command-empty hidden>Sin coincidencias.</p>
+      </div>
+    </div>
     <script is:inline src="/scripts/site.js" defer></script>
+    <script is:inline src="/scripts/command-palette.js" defer></script>
   </body>
 </html>
