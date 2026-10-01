@@ -116,6 +116,29 @@
   .hero h1 { font-size: clamp(2.6rem, 4.2vw, 3.8rem); }
   .hero-facts { gap: .6rem; }
 }
+/* Corrección de layout del header: los controles de tema y paleta (puntos 8 y 34) añaden
+   ~230 px a la fila y "Sobre mí" se partía en dos líneas ya a 1280 px. Las etiquetas de
+   navegación nunca se parten (white-space) y por debajo de 1320 px los dos controles pasan
+   a modo icono; su nombre accesible lo aporta aria-label, no el texto oculto. */
+@media (max-width: 1320px) {
+  .header-inner { gap: 1.25rem; }
+  .theme-toggle-label, .command-open-label, .command-open-kbd { display: none; }
+  .site-nav a { padding-inline: .62rem; }
+}
+@media (min-width: 681px) and (max-width: 1080px) {
+  .site-nav { gap: .1rem; }
+  .site-nav a { font-size: .78rem; padding-inline: .48rem; }
+  .site-nav .nav-contact { margin-left: .3rem; }
+}
+/* El colapso del header se eleva de 680 a 820 px: con los dos controles nuevos la fila
+   desbordaba horizontalmente entre 681 y ~780 px (scrollWidth > clientWidth, medido). */
+@media (max-width: 820px) {
+  .nav-toggle { display: block; }
+  .site-nav { align-items: stretch; background: var(--surface); border: 1px solid var(--line); border-radius: .9rem; box-shadow: var(--shadow); display: none; flex-direction: column; left: .75rem; padding: .65rem; position: absolute; right: .75rem; top: calc(100% + 1px); }
+  .site-nav.is-open { display: flex; }
+  .site-nav a { font-size: .82rem; justify-content: space-between; padding: .8rem; }
+  .site-nav .nav-contact { margin: .35rem 0 0; }
+}
 @media (max-width: 900px) {
   .site-nav a { font-size: .75rem; padding-inline: .55rem; }
   .hero-grid, .impact { gap: 3rem; grid-template-columns: 1fr; }
@@ -131,21 +154,7 @@
 @media (max-width: 680px) {
   .container { width: min(calc(100% - 1.5rem), var(--max)); }
   .header-inner { min-height: 4.7rem; }
-.teaching-metric { color: var(--lime); display: block; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .7rem; margin: .35rem 0 .55rem; }
-.course-summary { align-items: baseline; background: rgba(196,242,105,.06); border: 1px solid rgba(196,242,105,.3); border-radius: .8rem; display: flex; flex-wrap: wrap; gap: .8rem; margin-bottom: 1.4rem; padding: 1.2rem 1.4rem; }
-.course-summary strong { color: var(--lime); font-size: clamp(1.35rem, 3vw, 1.75rem); letter-spacing: -.04em; }
-.course-summary span { color: var(--muted); font-size: .8rem; }
-.course-grid { align-items: start; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); }
-.course-card { display: flex; flex-direction: column; min-height: 13rem; }
-.course-card h2, .course-card h3 { font-size: 1.25rem; letter-spacing: -.035em; }
-.course-card p { margin-top: .8rem; }
-.course-card .card-link { margin-top: auto; }
   .brand { width: 12rem; }
-  .nav-toggle { display: block; }
-  .site-nav { align-items: stretch; background: var(--surface); border: 1px solid var(--line); border-radius: .9rem; box-shadow: var(--shadow); display: none; flex-direction: column; left: .75rem; padding: .65rem; position: absolute; right: .75rem; top: calc(100% + 1px); }
-  .site-nav.is-open { display: flex; }
-  .site-nav a { justify-content: space-between; padding: .8rem; }
-  .site-nav .nav-contact { margin: .35rem 0 0; }
   .skill-list li { font-size: .66rem; }
   .hero { padding-top: 4.3rem; }
   .hero h1 { font-size: clamp(2.8rem, 14vw, 5rem); max-width: 12ch; }
@@ -240,6 +249,14 @@ section[id], article[id] { scroll-margin-top: 84px; }
 .teaching-card img[src*="openwebinars"] { height: 2.75rem; object-fit: contain; object-position: left center; width: 8.8rem; }
 .teaching-card a, .card-link { text-underline-offset: .22em; }
 .teaching-card a:hover, .teaching-card a:focus-visible { text-decoration: underline; }
+/* Corrección estructural: al dividir global.css (punto 9) nueve reglas de Cursos quedaron
+   dentro de `@media (max-width: 680px)`, sin indentar. `.course-summary` no tenía otra
+   definición, así que por encima de 680 px perdía fondo, borde, padding y flex (verificado
+   en el DOM: background transparent, padding 0, display block). Las demás estaban duplicadas
+   y superadas por las reglas de abajo, por lo que se eliminan en lugar de reponerse. */
+.course-summary { align-items: baseline; background: rgba(196,242,105,.06); border: 1px solid rgba(196,242,105,.3); border-radius: .8rem; display: flex; flex-wrap: wrap; gap: .8rem; margin-bottom: 1.4rem; padding: 1.2rem 1.4rem; }
+.course-summary strong { color: var(--lime); font-size: clamp(1.35rem, 3vw, 1.75rem); letter-spacing: -.04em; }
+.course-summary span { color: var(--muted); font-size: .8rem; }
 .course-grid { align-items: stretch; display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .course-card { display: flex; flex-direction: column; min-height: 100%; overflow: hidden; padding: 0; }
 .course-visual { background: linear-gradient(135deg, rgba(103,232,249,.14), rgba(196,242,105,.06)); border-bottom: 1px solid var(--line); min-height: 10.8rem; overflow: hidden; position: relative; }
@@ -376,11 +393,15 @@ section[id], article[id] { scroll-margin-top: 84px; }
 .contact-panel--spaced { margin-top: 1rem; }
 .error-hero { align-items: center; display: grid; min-height: 65vh; }
 
-/* Navegación progresiva: sin JS el menú móvil permanece visible y usable. */
-@media (max-width: 680px) {
+/* Navegación progresiva: sin JS el menú móvil permanece visible y usable.
+   Mismo punto de corte que el colapso del header (820 px), si no entre 681 y 820 px
+   el desplegable quedaría display:none y la navegación sería inalcanzable sin JS. */
+@media (max-width: 820px) {
   html:not(.js) .header-inner { align-items: flex-start; flex-direction: column; padding-block: .8rem; }
   html:not(.js) .nav-toggle { display: none; }
   html:not(.js) .site-nav { box-shadow: none; display: flex; position: static; width: 100%; }
+}
+@media (max-width: 680px) {
   .intent-grid, .learning-summary, .openwebinars-grid, .cert-grid--badges { grid-template-columns: 1fr; }
   .project-case-story div { gap: .25rem; grid-template-columns: 1fr; }
   .credential-badge { grid-template-columns: auto 1fr; }
@@ -568,7 +589,7 @@ section[id], article[id] { scroll-margin-top: 84px; }
 @media (prefers-reduced-motion: no-preference) { .scroll-progress-bar { transition: transform .1s linear; } }
 
 /* Item 34: botón disparador y diálogo de la paleta de comandos. */
-.command-open { align-items: center; background: transparent; border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--muted); display: inline-flex; font-size: var(--fs-sm); font-weight: 700; gap: .45rem; min-height: 2.6rem; padding: .55rem .7rem; transition: border-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard); }
+.command-open { align-items: center; background: transparent; border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--muted); display: inline-flex; font-size: var(--fs-sm); font-weight: 700; gap: .45rem; min-height: 2.6rem; padding: .55rem .7rem; transition: border-color var(--dur-base) var(--ease-standard), color var(--dur-base) var(--ease-standard); white-space: nowrap; }
 .command-open .icon { color: var(--cyan); }
 .command-open:hover { border-color: var(--line-strong); color: var(--text); }
 .command-open[hidden] { display: none; }

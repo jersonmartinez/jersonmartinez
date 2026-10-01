@@ -174,6 +174,31 @@ Estado por punto. "Hecho" significa presente en el árbol y verificado contra el
     arriesga el gate; se documenta y se deja como follow-up. Las imágenes conservan dimensiones
     explícitas y `aspect-ratio` (punto 43) para evitar CLS.
 
+## Correcciones de la revisión independiente (posteriores a los checkpoints)
+
+Revisión ciega del diff y del `dist` reconstruido, no del resumen de ejecución. Tres defectos
+reales encontrados y corregidos; ningún gate los detectaba (Lighthouse, pa11y y axe no juzgan
+geometría de iconos ni pérdida de reglas CSS).
+
+51. **Sprite SVG desplazado y recortado (punto 16).** La extracción desde los WOFF2 dejó los 32
+    glyphs en `y ∈ [64, 576]` mientras el `viewBox` abría en `0 0 W 512`. Medido con un parser de
+    paths con extremos de curvas: 23 de 32 iconos perdían entre 26 y 64 unidades por abajo (hasta el
+    12,5 % del glyph) y todos quedaban descentrados. Corregido a `viewBox="0 64 W 512"` en los 32
+    símbolos; verificado con render comparativo antes/después.
+52. **Header desbordado (puntos 8 y 34).** Los controles de tema y paleta añaden ~230 px a la fila:
+    "Sobre mí" se partía en dos líneas ya a 1280 px y entre 681 y 780 px el header desbordaba
+    horizontalmente. Corregido con `white-space: nowrap` en los enlaces y los dos controles, modo
+    icono por debajo de 1320 px (nombre accesible por `aria-label`, no por texto visible), holguras
+    más ajustadas entre 681 y 1080 px, y colapso al menú de hamburguesa elevado de 680 a 820 px
+    (incluido el camino sin JavaScript, que si no quedaba inalcanzable en esa franja). Verificado en
+    11 anchos: sin partición de línea y sin desbordamiento en ninguno.
+53. **Reglas de Cursos atrapadas en el bloque móvil (punto 9).** Al dividir `global.css` nueve
+    reglas quedaron dentro de `@media (max-width: 680px)` sin indentar. `.course-summary` no tenía
+    otra definición, así que por encima de 680 px el panel perdía fondo, borde, padding y `flex`
+    (comprobado en el DOM: `background: transparent`, `padding: 0px`, `display: block`). Hoistadas al
+    nivel superior; las otras seis estaban duplicadas y superadas por las reglas vigentes, así que se
+    eliminaron en vez de reponerse.
+
 ## Calidad (48-50)
 
 48. **Hecho.** TypeScript con `astro check` sobre datos y props de componentes, integrado en el
