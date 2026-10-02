@@ -1,4 +1,4 @@
-/* Item 26: botón de copiar en snippets, credential IDs y contacto. Script externo (CSP).
+/* botón de copiar en snippets, credential IDs y contacto. Script externo (CSP).
    - [data-copy-target="id"]: copia el textContent del elemento con ese id (bloques de código).
    - [data-copy="texto"]: copia el valor del atributo (IDs de credencial, email/teléfono).
    Degradación sin JS: los botones están hidden y el contenido sigue siendo seleccionable/visible. */

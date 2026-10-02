@@ -1,0 +1,36 @@
+---
+/**
+ * Marca tipográfica inline.
+ *
+ * Antes se servía como <img src="/brand/logo.svg">, cuyo texto llevaba un fill casi blanco
+ * fijo en el propio SVG: sobre el header blanco del tema claro el logotipo quedaba
+ * prácticamente invisible (comprobado en el render). Un <img> no hereda currentColor, así
+ * que la única forma de que la marca siga al tema es incrustar el SVG.
+ */
+---
+<svg
+  class="brand-mark"
+  viewBox="0 0 170 56"
+  width="230"
+  height="56"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <linearGradient id="brand-dot" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#67e8f9" />
+      <stop offset="1" stop-color="#c4f269" />
+    </linearGradient>
+  </defs>
+  <text
+    x="4"
+    y="39"
+    fill="currentColor"
+    font-family="Manrope,Arial,sans-serif"
+    font-size="38"
+    font-weight="800"
+    letter-spacing="-1.8"
+  >Jerson</text>
+  <circle cx="139" cy="38" r="6.5" fill="url(#brand-dot)" />
+  <circle cx="139" cy="38" r="2.8" fill="var(--ink)" opacity=".55" />
+</svg>

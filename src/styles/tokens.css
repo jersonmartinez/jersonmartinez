@@ -17,7 +17,7 @@
   --text: #f4f8fb;
   --muted: #a8bbcc;
 
-  /* Item 3: tokens semánticos de superficie/borde que sustituyen rgba() literales dispersos. */
+  /* tokens semánticos de superficie/borde que sustituyen rgba() literales dispersos. */
   --surface-overlay: rgba(4, 10, 19, .84);
   --surface-sunken: rgba(4, 10, 19, .25);
   --surface-tint-cyan: rgba(103, 232, 249, .08);
@@ -29,7 +29,7 @@
   --border-orange-soft: rgba(246, 181, 108, .3);
   --accent-contrast: var(--ink); /* texto legible sobre fondos de marca (cyan/lime) */
 
-  /* Item 1: escala tipográfica fluida tokenizada (sustituye los clamp() ad hoc repetidos). */
+  /* escala tipográfica fluida tokenizada (sustituye los clamp() ad hoc repetidos). */
   --fs-3xs: .62rem;
   --fs-2xs: .68rem;
   --fs-xs: .74rem;
@@ -41,8 +41,25 @@
   --fs-2xl: clamp(2rem, 4.5vw, 4.1rem);
   --fs-3xl: clamp(2.8rem, 4.8vw, 5.2rem);
   --fs-display: clamp(3rem, 8vw, 7.25rem);
+  /* Escala de encabezados de tercer nivel. Tres pasos deliberados en lugar de los siete
+     tamaños ad hoc que convivían antes (1.05 a 1.55rem) sin relación entre sí. */
+  --fs-h3-sm: 1.1rem;
+  --fs-h3: 1.35rem;
+  --fs-h3-lg: 1.55rem;
 
-  /* Item 2: escala de espaciado tokenizada. */
+  /* Medida de lectura: tope de ancho para texto corrido. El cuerpo de la timeline y la
+     cadena de entrega llegaban a 152 y 140 caracteres por línea (medido), muy por encima
+     del rango legible de 45-75. */
+  --measure: 44rem;
+  --measure-wide: 68ch;
+
+  /* Desplazamiento de ancla. El header mide 89 px (5.5rem + 1 px de borde) y el valor
+     anterior era 84 px, así que todo encabezado enlazado quedaba 5 px por debajo del
+     header. Se deriva de la altura real y añade holgura para que respire. */
+  --header-height: 5.5rem;
+  --anchor-offset: calc(var(--header-height) + var(--space-md));
+
+  /* escala de espaciado tokenizada. */
   --space-3xs: .25rem;
   --space-2xs: .4rem;
   --space-xs: .55rem;
@@ -53,36 +70,56 @@
   --space-2xl: 3.5rem;
   --space-3xl: clamp(4rem, 8vw, 6.5rem);
 
-  /* Item 6: tokens de radio por tamaño. */
+  /* tokens de radio por tamaño. */
   --radius-xs: .4rem;
   --radius-sm: .55rem;
   --radius-md: .75rem;
   --radius-lg: 1.25rem;
   --radius-pill: 999px;
-  --radius: var(--radius-lg); /* alias heredado */
 
-  /* Item 4: niveles de elevación tokenizados. */
+  /* niveles de elevación tokenizados. */
   --elevation-1: 0 16px 60px rgba(0, 0, 0, .12);
   --elevation-2: 0 24px 80px rgba(0, 0, 0, .22);
   --elevation-3: 0 28px 100px rgba(0, 0, 0, .28);
-  --shadow: var(--elevation-3); /* alias heredado */
 
-  /* Item 7: tokens de duración y easing. */
+  /* tokens de duración y easing. */
   --dur-fast: .12s;
   --dur-base: .18s;
   --dur-slow: .3s;
   --ease-standard: ease;
   --ease-emphasized: cubic-bezier(.2, .8, .2, 1);
 
-  /* Item 5: token de anillo de foco. */
+  /* token de anillo de foco. */
   --focus-ring-color: var(--lime);
   --focus-ring-width: 3px;
   --focus-ring-offset: 3px;
 
+  /* Capas DECORATIVAS tokenizadas. Antes eran literales rgba() calculados para fondo
+     oscuro, de modo que en tema claro la rejilla del hero y los resplandores
+     desaparecían (medido: rgba(186,213,231,.05) sobre #eef3f8 es invisible). */
+  --glow-cyan: rgba(103, 232, 249, .12);
+  --glow-lime: rgba(196, 242, 105, .06);
+  --grid-line: rgba(186, 213, 231, .05);
+  --ring-lime: rgba(196, 242, 105, .12);
+  --ring-lime-strong: rgba(196, 242, 105, .55);
+  --tooltip-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+  /* Velo del diálogo de la paleta de comandos y placa neutra de los logos de emisor
+     (esta última se mantiene clara en ambos temas: los logotipos oficiales de AWS, Azure
+     y GitHub están diseñados para fondo claro). */
+  --surface-scrim: rgba(4, 10, 19, .62);
+  --plate-neutral: rgba(255, 255, 255, .92);
+
+  /* Paleta FIJA de la obra gráfica (ilustraciones de curso y diagramas). Es deliberadamente
+     independiente del tema: las ilustraciones conservan su propia superficie oscura, que el
+     tema claro fija aparte. Viven como tokens para que ninguna capa declare color literal. */
+  --artwork-grid: rgba(168, 187, 204, .18);
+  --artwork-wash-a: rgba(103, 232, 249, .14);
+  --artwork-wash-b: rgba(196, 242, 105, .06);
+
   --max: 1180px;
 }
 
-/* Item 8: tema claro. Se activa SOLO por el conmutador persistente (data-theme='light').
+/* tema claro. Se activa SOLO por el conmutador persistente (data-theme='light').
    No se auto-activa por prefers-color-scheme: el diseño publicado es oscuro y las superficies
    translúcidas heredadas se re-mapean explícitamente abajo únicamente cuando el usuario opta
    por el tema claro, evitando texto de bajo contraste en modo claro automático. */
@@ -113,4 +150,14 @@
   --elevation-1: 0 16px 40px rgba(13, 29, 48, .08);
   --elevation-2: 0 24px 60px rgba(13, 29, 48, .12);
   --elevation-3: 0 28px 80px rgba(13, 29, 48, .16);
+  /* Equivalentes claros de las capas decorativas: mantienen la rejilla y los resplandores
+     perceptibles sobre fondo claro en vez de desaparecer. */
+  --glow-cyan: rgba(14, 116, 144, .1);
+  --glow-lime: rgba(77, 124, 15, .07);
+  --grid-line: rgba(13, 29, 48, .07);
+  --ring-lime: rgba(77, 124, 15, .14);
+  --ring-lime-strong: rgba(77, 124, 15, .45);
+  --tooltip-shadow: 0 10px 25px rgba(13, 29, 48, .18);
+  --surface-scrim: rgba(13, 29, 48, .45);
+  --plate-neutral: #ffffff;
 }

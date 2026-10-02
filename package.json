@@ -10,7 +10,10 @@
     "check": "astro check",
     "preview": "astro preview",
     "test": "node --test",
+    "lint:css": "stylelint \"src/styles/*.css\"",
     "validate": "node tools/validate-site.js",
+    "validate:sprite": "node tools/check-sprite-geometry.js",
+    "validate:design": "node tools/check-design-metrics.cjs",
     "links": "node tools/check-links.js",
     "links:external": "node tools/check-links.js --external",
     "assets:generate": "python3 tools/generate-visual-assets.py",
@@ -27,6 +30,10 @@
     "node": ">=22"
   },
   "devDependencies": {
-    "astro": "7.3.5"
+    "@astrojs/check": "0.9.4",
+    "astro": "7.3.5",
+    "stylelint": "16.10.0",
+    "stylelint-order": "6.0.4",
+    "typescript": "5.6.3"
   }
 }

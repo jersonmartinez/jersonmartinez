@@ -8,7 +8,20 @@
   },
   "overrides": [
     {
-      "files": ["src/styles/global.css", "src/styles/fonts.css", "src/styles/icons.css"],
+      "comment": "tokens.css es el UNICO sitio donde se define un color literal: ahi viven los valores por tema. El resto de capas debe consumir tokens.",
+      "files": ["src/styles/base.css", "src/styles/components.css"],
+      "rules": {
+        "declaration-property-value-disallowed-list": {
+          "/^(background|background-color|color|border|border-color|border-.*-color|box-shadow|outline-color|fill|stroke)$/": [
+            "/rgba?\\(/",
+            "/hsla?\\(/"
+          ]
+        }
+      }
+    },
+    {
+      "comment": "global.css solo orquesta @import y fonts.css no declara color.",
+      "files": ["src/styles/global.css", "src/styles/fonts.css"],
       "rules": {
         "color-no-hex": true,
         "function-disallowed-list": ["rgb", "rgba", "hsl", "hsla"]

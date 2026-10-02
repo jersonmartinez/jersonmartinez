@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Item 29: obtiene estadísticas públicas de GitHub y las guarda en data/github-state.json.
+/* obtiene estadísticas públicas de GitHub y las guarda en data/github-state.json.
    Patrón de caché del repo (igual que youtube-state.json): un workflow programado ejecuta este
    script y commitea el estado; el BUILD lee el estado cacheado, nunca la red. Si la red falla,
    el estado previo se conserva (no se inventan cifras). Sin dependencias externas: usa fetch.

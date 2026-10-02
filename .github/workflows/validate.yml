@@ -56,12 +56,15 @@ jobs:
       # Construir ANTES de los tests para que la suite con VALIDATE_BUILD=1 valide
       # el HTML compilado real (dist/), no sólo las fuentes.
       - run: npm run build
-      # Item 48: astro check (TypeScript) sobre datos y props de componentes. Herramientas
-      # fijadas sin tocar el lockfile.
-      - name: Install pinned astro check + TypeScript
-        run: npm install --no-save --no-package-lock @astrojs/check@0.9.4 typescript@5.6.3 @types/node@22.7.4
+      # astro check, TypeScript y stylelint viven ahora en devDependencies, asi que npm ci
+      # los reproduce con integridad verificada y Dependabot los ve. Antes se instalaban con
+      # npm install --no-save, fuera del lockfile y sin verificacion de sus transitivas.
       - name: Type-check (astro check)
-        run: npx --no-install astro check
+        run: npm run check
+      # Geometria del sprite de iconos: ningun otro gate compara geometria, y un glifo
+      # recortado por un viewBox mal encajado sobrevivio a Lighthouse, pa11y, axe y la suite.
+      - name: Validate icon sprite geometry
+        run: npm run validate:sprite
       - name: Run tests against the compiled build
         run: VALIDATE_BUILD=1 npm test
       - run: VALIDATE_BUILD=1 npm run validate
@@ -77,10 +80,10 @@ jobs:
         run: npm install --no-save --no-package-lock markdownlint-cli2@0.23.3
       - name: Lint markdown (README + docs)
         run: npx --no-install markdownlint-cli2 "README.md" "SECURITY-HEADERS.md" "docs/**/*.md"
-      # Item 15: stylelint fijado (sin tocar el lockfile) con orden de propiedades y
-      # prohibición de colores literales fuera de tokens en el orquestador/fuentes/iconos.
-      - name: Install pinned stylelint
-        run: npm install --no-save --no-package-lock stylelint@16.10.0 stylelint-order@6.0.4
+      # stylelint con orden de propiedades y prohibicion de color literal en las capas que
+      # SI declaran color (base.css y components.css). El alcance anterior apuntaba a
+      # global.css, fonts.css y un icons.css inexistente, ninguno con colores: la guarda
+      # estaba vacia y por eso sobrevivieron 55 literales rgba().
       - name: Lint CSS (stylelint)
-        run: npx --no-install stylelint "src/styles/*.css"
+        run: npm run lint:css
       - run: docker run --rm -v "$GITHUB_WORKSPACE:/repo" -w /repo rhysd/actionlint:1.7.7 .github/workflows/*.yml

@@ -71,7 +71,7 @@
       panel.hidden = !active;
       panel.classList.toggle('is-active', active);
     });
-    // Item 35: refleja la tab activa en la URL (?skill=slug) sin ensuciar el historial.
+    // refleja la tab activa en la URL (?skill=slug) sin ensuciar el historial.
     if (updateUrl && tabs[index]) {
       const slug = tabs[index].getAttribute('data-skill-slug') || String(index);
       const url = new URL(location.href);
@@ -90,7 +90,7 @@
       if (next !== index) { event.preventDefault(); activateSkill(next, true, true); }
     });
   });
-  // Item 35: restaura la tab desde la URL al cargar.
+  // restaura la tab desde la URL al cargar.
   if (tabs.length) {
     const requestedSkill = new URL(location.href).searchParams.get('skill');
     if (requestedSkill) {
@@ -156,35 +156,53 @@
   window.addEventListener('hashchange', focusHashProject);
   focusHashProject();
 
-  /* Item 8: conmutador de tema persistente y accesible. El botón sólo se muestra con JS
+  /* conmutador de tema persistente y accesible. El botón sólo se muestra con JS
      (progressive enhancement); sin JS el sitio sigue prefers-color-scheme. */
   const themeToggle = document.querySelector('[data-theme-toggle]');
   if (themeToggle) {
     const root = document.documentElement;
     const systemLight = window.matchMedia('(prefers-color-scheme: light)');
+    const status = document.querySelector('[data-theme-status]');
+    /* Las dos <meta name="theme-color"> del documento están condicionadas por
+       prefers-color-scheme, así que el color del cromo del navegador NO seguía al tema
+       elegido: un usuario con sistema oscuro que escogía el tema claro conservaba la barra
+       oscura. Se fija una meta propia, sin media, que gana sobre las condicionadas. */
+    const CHROME = { light: '#ffffff', dark: '#07111f' };
+    let chromeMeta = document.querySelector('meta[name="theme-color"]:not([media])');
+    const syncChrome = (theme) => {
+      if (!chromeMeta) {
+        chromeMeta = document.createElement('meta');
+        chromeMeta.setAttribute('name', 'theme-color');
+        document.head.appendChild(chromeMeta);
+      }
+      chromeMeta.setAttribute('content', CHROME[theme]);
+    };
     const effectiveTheme = () => {
       const explicit = root.getAttribute('data-theme');
       if (explicit === 'light' || explicit === 'dark') return explicit;
       return systemLight.matches ? 'light' : 'dark';
     };
-    const reflect = () => {
-      const isLight = effectiveTheme() === 'light';
+    const reflect = (announce) => {
+      const theme = effectiveTheme();
+      const isLight = theme === 'light';
       themeToggle.setAttribute('aria-pressed', String(isLight));
       themeToggle.setAttribute('aria-label', isLight ? 'Activar tema oscuro' : 'Activar tema claro');
+      syncChrome(theme);
+      if (announce && status) status.textContent = isLight ? 'Tema claro activado.' : 'Tema oscuro activado.';
     };
     themeToggle.hidden = false;
-    reflect();
+    reflect(false);
     themeToggle.addEventListener('click', () => {
       const next = effectiveTheme() === 'light' ? 'dark' : 'light';
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('theme', next); } catch (e) { /* sin persistencia */ }
-      reflect();
+      reflect(true);
     });
     /* Si el usuario no ha elegido explícitamente, seguir los cambios del sistema. */
-    systemLight.addEventListener('change', () => { if (!localStorage.getItem('theme')) reflect(); });
+    systemLight.addEventListener('change', () => { if (!localStorage.getItem('theme')) reflect(false); });
   }
 
-  /* Item 38: desplazamiento suave disparado por interacción (no global). Un clic en un enlace
+  /* desplazamiento suave disparado por interacción (no global). Un clic en un enlace
      interno de ancla hace scroll suave salvo que el usuario prefiera movimiento reducido. */
   document.addEventListener('click', (event) => {
     const link = event.target.closest('a[href^="#"]');
@@ -200,7 +218,7 @@
     target.focus({ preventScroll: true });
   });
 
-  /* Item 36: indicador de progreso de lectura en páginas largas. Barra fija alimentada por el
+  /* indicador de progreso de lectura en páginas largas. Barra fija alimentada por el
      scroll; se oculta en páginas cortas y respeta prefers-reduced-motion (sin transición). */
   const progressBar = document.querySelector('[data-scroll-progress]');
   if (progressBar) {
@@ -220,7 +238,7 @@
     }
   }
 
-  /* Item 33: prefetch de rutas internas DISPARADO POR INTENCIÓN (hover/focus), no en la carga
+  /* prefetch de rutas internas DISPARADO POR INTENCIÓN (hover/focus), no en la carga
      inicial. Un prefetch estático de varias páginas competía con la imagen LCP y empeoraba el
      Largest Contentful Paint; hacerlo al pasar el ratón/foco mantiene el beneficio sin coste en el
      primer render. CSP-safe (inyecta <link rel="prefetch">, no ejecuta scripts remotos). */

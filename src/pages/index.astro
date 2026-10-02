@@ -9,7 +9,7 @@ import CodeBlock from '../components/CodeBlock.astro';
 import { collaborationModes, profile, projects, teaching, certifications, skills } from '../data/portfolio.js';
 import fs from 'node:fs';
 import path from 'node:path';
-// Item 29: datos de GitHub leídos del cache en build (data/github-state.json), con degradación:
+// datos de GitHub leídos del cache en build (data/github-state.json), con degradación:
 // si el cache falta o es inválido, githubStats queda null y la tira no se renderiza (no se inventan cifras).
 let githubStats: string[][] | null = null;
 try {
@@ -23,9 +23,9 @@ try {
     ];
   }
 } catch { githubStats = null; }
-// Item 48: narrowing seguro del meta heterogéneo de profile.facts para astro check.
+// narrowing seguro del meta heterogéneo de profile.facts para astro check.
 const factLink = (meta) => (meta && typeof meta === 'object' && 'href' in meta ? meta : null);
-// Item 25/28: extracto REAL del workflow de validación del repo (.github/workflows/validate.yml),
+// extracto REAL del workflow de validación del repo (.github/workflows/validate.yml),
 // mostrado como evidencia de la cadena de entrega del propio sitio. No es contenido inventado.
 const validateExcerpt = `# .github/workflows/validate.yml (extracto)
 - run: npm ci
@@ -34,7 +34,7 @@ const validateExcerpt = `# .github/workflows/validate.yml (extracto)
   run: VALIDATE_BUILD=1 npm test
 - run: VALIDATE_BUILD=1 npm run validate
 - run: npm run links`;
-// Item 28: cadena de entrega real derivada de los workflows existentes del repositorio.
+// cadena de entrega real derivada de los workflows existentes del repositorio.
 const deliveryChain = [
   ['01', 'validate.yml', 'Build Astro, tests fuente+compilados, validación de datos y enlaces internos.'],
   ['02', 'site-quality.yml', 'Lighthouse con presupuestos y pa11y-ci (WCAG2AA) sobre el dist servido.'],
@@ -64,7 +64,7 @@ const logos = [
       <aside class="profile-panel" aria-label="Perfil de Jerson Martínez">
         <div class="profile-image"><picture><source srcset="/images/profile-v2-320.webp 320w, /images/profile-v2-640.webp 640w, /images/profile-v2-960.webp 960w" sizes="(max-width: 640px) 88vw, 38vw" type="image/webp"/><img src="/images/profile-v2-640.jpg" srcset="/images/profile-v2-320.jpg 320w, /images/profile-v2-640.jpg 640w, /images/profile-v2-960.jpg 960w" sizes="(max-width: 640px) 88vw, 38vw" width="960" height="960" alt="Retrato de Jerson Martínez" fetchpriority="high" decoding="async" /></picture></div>
         <div class="profile-meta"><div><a class="profile-name" href="/about.html">Jerson Martínez</a><span>Sr. DevOps Engineer</span></div><span class="profile-tag">MULTI-CLOUD</span></div>
-        <nav class="profile-links" aria-label="Perfiles públicos"><a class="profile-social" href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub, abre en nueva pestaña" data-tooltip="GitHub"><Icon name="fab fa-github" /></a><a class="profile-social" href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn, abre en nueva pestaña" data-tooltip="LinkedIn"><Icon name="fab fa-linkedin-in" /></a><a class="profile-social" href="https://www.youtube.com/@DevOpsea" target="_blank" rel="noopener noreferrer" aria-label="DevOpsea en YouTube, abre en nueva pestaña" data-tooltip="DevOpsea"><Icon name="fab fa-youtube" /></a></nav>
+        <nav class="profile-links" aria-label="Perfiles públicos"><a class="profile-social" href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub, abre en nueva pestaña" data-tooltip="GitHub"><Icon name="fab fa-github" /><span class="profile-social-name">GitHub</span></a><a class="profile-social" href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn, abre en nueva pestaña" data-tooltip="LinkedIn"><Icon name="fab fa-linkedin-in" /><span class="profile-social-name">LinkedIn</span></a><a class="profile-social" href="https://www.youtube.com/@DevOpsea" target="_blank" rel="noopener noreferrer" aria-label="DevOpsea en YouTube, abre en nueva pestaña" data-tooltip="DevOpsea"><Icon name="fab fa-youtube" /><span class="profile-social-name">DevOpsea</span></a></nav>
       </aside>
     </div>
   </section>

@@ -1,8 +1,8 @@
 /* Orquestador de estilos del portfolio.
-   Item 9: estilos divididos por dominios (tokens, base, componentes).
-   Item 13: los tokens preceden a los componentes mediante el orden de @layer.
-   Item 10: cascada determinista con @layer; se eliminó el !important de .skill-tab-arrow.
-   Item 12: ya no hay bloques de override al final que dependan de la posición. */
+   estilos divididos por dominios (tokens, base, componentes).
+   los tokens preceden a los componentes mediante el orden de @layer.
+   cascada determinista con @layer; se eliminó el !important de .skill-tab-arrow.
+   ya no hay bloques de override al final que dependan de la posición. */
 @layer tokens, base, components;
 
 @import './fonts.css';

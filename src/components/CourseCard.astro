@@ -1,6 +1,53 @@
 ---
 const { course, index } = Astro.props;
 const visualClass = course.framework.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+/**
+ * Las siete ilustraciones eran la MISMA composición (cresta + rejilla + dos órbitas +
+ * tres líneas de código), variando sólo el color del degradado y el rótulo: en la
+ * cuadrícula se leían como relleno repetido. Ahora la silueta cambia por etapa de la
+ * ruta, de forma determinista, así que cada tarjeta es reconocible sin inventar
+ * contenido ni añadir peso (sigue siendo un SVG inline con la misma paleta).
+ */
+const VARIANTS = [
+  {
+    // Cresta: fundamentos, el punto de partida.
+    silhouette: 'M0 174 92 78l58 48 82-92 72 58 116-70v188H0Z',
+    accents: [
+      { shape: 'circle', cx: 344, cy: 56, r: 34 },
+      { shape: 'circle', cx: 344, cy: 56, r: 19, inner: true },
+    ],
+    lines: 'M32 38h118M32 52h74M32 66h96',
+  },
+  {
+    // Bloques apilados: comparación entre enfoques.
+    silhouette: 'M0 210V132h84v-34h84v-38h84v46h84v104Z',
+    accents: [
+      { shape: 'rect', x: 300, y: 28, w: 46, h: 46 },
+      { shape: 'rect', x: 316, y: 44, w: 46, h: 46, inner: true },
+    ],
+    lines: 'M32 38h96M32 52h126M32 66h68',
+  },
+  {
+    // Nodos conectados: servicios y rutas.
+    silhouette: 'M0 210V150l70-30 76 34 74-52 90 38 110-26v96Z',
+    accents: [
+      { shape: 'circle', cx: 328, cy: 44, r: 13 },
+      { shape: 'circle', cx: 372, cy: 72, r: 13, inner: true },
+      { shape: 'path', d: 'M328 44 372 72' },
+    ],
+    lines: 'M32 38h74M32 52h112M32 66h88',
+  },
+  {
+    // Onda: rendimiento y concurrencia.
+    silhouette: 'M0 210v-52c56-42 84 34 140-6s84-62 140-20 84 18 140-12v90Z',
+    accents: [
+      { shape: 'path', d: 'M298 62c18-26 40-26 58 0' },
+      { shape: 'path', d: 'M310 44c14-20 34-20 48 0', inner: true },
+    ],
+    lines: 'M32 38h106M32 52h62M32 66h118',
+  },
+];
+const variant = VARIANTS[(Number(course.pathStep) - 1) % VARIANTS.length];
 ---
 <article class="card course-card card--interactive">
   <div class={`course-visual course-visual--${visualClass}`} aria-hidden="true">
@@ -11,10 +58,15 @@ const visualClass = course.framework.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       </defs>
       <rect width="420" height="210" class="course-visual-base" />
       <rect width="420" height="210" fill={`url(#course-grid-${index})`} />
-      <path d="M0 174 92 78l58 48 82-92 72 58 116-70v188H0Z" fill={`url(#course-gradient-${index})`} class="course-mountain"/>
-      <circle cx="344" cy="56" r="34" class="course-orbit" />
-      <circle cx="344" cy="56" r="19" class="course-orbit course-orbit--inner" />
-      <path d="M32 38h118M32 52h74M32 66h96" class="course-code-lines" />
+      <path d={variant.silhouette} fill={`url(#course-gradient-${index})`} class="course-mountain"/>
+      {variant.accents.map((a) => (
+        a.shape === 'circle'
+          ? <circle cx={a.cx} cy={a.cy} r={a.r} class={`course-orbit ${a.inner ? 'course-orbit--inner' : ''}`} />
+          : a.shape === 'rect'
+            ? <rect x={a.x} y={a.y} width={a.w} height={a.h} rx="6" class={`course-orbit ${a.inner ? 'course-orbit--inner' : ''}`} />
+            : <path d={a.d} class={`course-orbit ${a.inner ? 'course-orbit--inner' : ''}`} />
+      ))}
+      <path d={variant.lines} class="course-code-lines" />
     </svg>
     <div class="course-visual-copy"><strong>{course.visual}</strong><span>GO / {course.framework.toUpperCase()}</span></div>
     <span class="course-path-step">PASO {String(course.pathStep).padStart(2, '0')}</span>

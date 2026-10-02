@@ -47,6 +47,14 @@ jobs:
           npx --no-install http-server dist -p 4321 -a 127.0.0.1 --silent &
           echo $! > server.pid
           npx --no-install wait-on http://127.0.0.1:4321/ -t 20000 || sleep 3
+      # Medidas de diseno sobre el dist servido: desbordamiento, compresion del header,
+      # desplazamiento de ancla frente a la altura real del header, separacion del
+      # encabezado, medida de lectura, alineacion de tarjetas, CTA en el primer viewport
+      # movil y contraste de la marca en AMBOS temas.
+      - name: Validate design metrics
+        env:
+          BASE_URL: http://127.0.0.1:4321
+        run: npm run validate:design -- "$BASE_URL"
       - name: Run E2E
         env:
           E2E_BASE_URL: http://127.0.0.1:4321
