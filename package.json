@@ -30,7 +30,7 @@
     "node": ">=22"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.4",
+    "@astrojs/check": "0.9.10",
     "astro": "7.3.5",
     "stylelint": "16.10.0",
     "stylelint-order": "6.0.4",
