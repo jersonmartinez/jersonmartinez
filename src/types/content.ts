@@ -81,3 +81,22 @@ export interface LogoItem {
 
 /** Entrada de miga de pan: [nombre visible, ruta]. */
 export type BreadcrumbEntry = [string, string];
+
+/** Medio o espacio donde se publica contenido escrito. */
+export interface WritingOutlet {
+  name: string;
+  role: string;
+  metric?: string;
+  description: string;
+  href: string;
+  cta: string;
+  external?: boolean;
+}
+
+/** Proof point de valor de negocio con su contexto verificable. */
+export interface ValueProp {
+  metric: string;
+  label: string;
+  detail: string;
+  href: string;
+}

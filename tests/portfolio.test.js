@@ -99,7 +99,7 @@ test('cursos y OpenWebinars exponen rutas verificables', () => {
 });
 
 test('CV, imágenes responsive, OG y PWA existen', () => {
-  for (const file of ['public/cv/jerson-martinez-cv-es.pdf', 'public/cv/jerson-martinez-cv-en.pdf', 'public/images/profile-v2-320.avif', 'public/images/profile-v2-640.webp', 'public/images/profile-v2-960.jpg', 'public/social/home.png', 'public/social/projects.png', 'public/brand/favicon-192.png', 'public/brand/favicon-512.png', 'public/brand/apple-touch-icon.png']) assert.ok(exists(file), `Falta ${file}`);
+  for (const file of ['public/cv/jerson-martinez-cv-es.pdf', 'public/cv/jerson-martinez-cv-en.pdf', 'public/images/profile-v2-320.avif', 'public/images/profile-v2-640.webp', 'public/images/profile-v2-960.jpg', 'public/social/home.jpg', 'public/social/projects.jpg', 'public/brand/favicon-192.png', 'public/brand/favicon-512.png', 'public/brand/apple-touch-icon.png']) assert.ok(exists(file), `Falta ${file}`);
   const manifest = JSON.parse(read('public/site.webmanifest'));
   assert.equal(manifest.icons.length, 2);
   assert.match(read('src/layouts/BaseLayout.astro'), /1200/);

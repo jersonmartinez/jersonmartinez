@@ -300,3 +300,30 @@ export const collaborationModes = [
   { title: 'Consultoría técnica', description: 'Gobierno cloud, automatización, CI/CD, IaC, observabilidad y mejora operativa.', href: '/projects.html', cta: 'Ver soluciones', icon: 'fa-project-diagram' },
   { title: 'Formación y contenido', description: 'Cursos, materiales y acompañamiento técnico sobre DevOps, Python y Go.', href: '/courses.html', cta: 'Explorar formación', icon: 'fa-graduation-cap' },
 ];
+
+// Faceta de ESCRITOR y creador de contenido. Solo fuentes reales y verificables:
+// el perfil público de autor en OpenWebinars (+60 artículos confirmados), los temas
+// sobre los que escribe y los espacios propios. No se inventan títulos de artículos.
+export const writing = {
+  kicker: 'Escritura y divulgación',
+  title: 'Escribo para que otros operen con criterio.',
+  lede: 'Más de 60 artículos técnicos publicados y contenido propio sobre cloud, observabilidad, Git, Go y DevOps, convirtiendo experiencia de operación en material reutilizable.',
+  topics: ['Cloud', 'Observabilidad', 'Git', 'Go', 'DevOps', 'Automatización'],
+  outlets: [
+    { name: 'OpenWebinars', role: 'Autor e instructor', metric: audienceMetrics.openWebinarsArticles.label, description: 'Artículos y cursos sobre cloud, Git, Go y DevOps en una plataforma de referencia en español.', href: 'https://openwebinars.net/profesores/antoniomorenosm/', cta: 'Ver perfil de autor', external: true },
+    { name: 'Crashell', role: 'Cofundador · publicaciones', description: 'Espacio propio para publicar conocimiento práctico sobre cloud, sistemas, Docker, Git y automatización.', href: 'https://www.crashell.com/estudio', cta: 'Visitar Crashell', external: true },
+  ],
+};
+
+// Valor hacia las empresas: resultados REPORTADOS ya documentados en la trayectoria,
+// traducidos a lenguaje de negocio. Cada uno enlaza a su contexto verificable.
+export const valueProps = [
+  { metric: '−60%', label: 'costes de infraestructura', detail: 'Rediseño arquitectónico y uso eficiente de recursos.', href: '/experience.html#hotaka-ikhodi' },
+  { metric: '+80%', label: 'calidad de backend', detail: 'Automatización, seguridad avanzada y mejora de procesos.', href: '/experience.html#elite-online-media' },
+  { metric: '+60%', label: 'trazabilidad y seguridad', detail: 'Gobierno interno con GitHub Actions, Terraform y Ansible.', href: '/experience.html#pliret-prb' },
+  { metric: '+77K', label: 'estudiantes formados', detail: 'Formación técnica en Udemy, OpenWebinars y YouTube.', href: '/courses.html' },
+];
+
+// Metodologías y marcos de gobierno aplicados (faceta de defensor de metodologías).
+// Derivado de skills ya declarados; no añade nodos nuevos, solo los nombra juntos.
+export const methodologies = ['GitOps', 'FinOps', 'DevSecOps', 'IaC', 'ITIL', 'ISO 27001', 'CI/CD', 'SRE'];
