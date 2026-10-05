@@ -1,4 +1,9 @@
 ---
+import type { Course } from '../types/content';
+interface Props {
+  course: Course;
+  index: number;
+}
 const { course, index } = Astro.props;
 const visualClass = course.framework.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 /**
@@ -8,7 +13,22 @@ const visualClass = course.framework.toLowerCase().replace(/[^a-z0-9]+/g, '-');
  * ruta, de forma determinista, así que cada tarjeta es reconocible sin inventar
  * contenido ni añadir peso (sigue siendo un SVG inline con la misma paleta).
  */
-const VARIANTS = [
+/**
+ * Unión DISCRIMINADA por `shape`. Sin ella, `shape` se infiere como `string` y
+ * TypeScript no puede estrechar la cadena de ternarios de abajo, así que leer
+ * `a.cx` / `a.w` / `a.d` quedaba sin verificar (el ternario sí discrimina en
+ * tiempo de ejecución; lo que faltaba era el tipo literal que lo demuestra).
+ */
+type Accent =
+  | { shape: 'circle'; cx: number; cy: number; r: number; inner?: boolean }
+  | { shape: 'rect'; x: number; y: number; w: number; h: number; inner?: boolean }
+  | { shape: 'path'; d: string; inner?: boolean };
+interface Variant {
+  silhouette: string;
+  accents: Accent[];
+  lines: string;
+}
+const VARIANTS: Variant[] = [
   {
     // Cresta: fundamentos, el punto de partida.
     silhouette: 'M0 174 92 78l58 48 82-92 72 58 116-70v188H0Z',

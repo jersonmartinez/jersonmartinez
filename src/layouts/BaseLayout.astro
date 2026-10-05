@@ -4,6 +4,19 @@ import IconSprite from '../components/IconSprite.astro';
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import { contentMeta, profile } from '../data/portfolio.js';
+import type { BreadcrumbEntry } from '../types/content';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  breadcrumb?: BreadcrumbEntry[];
+  preloadImage?: string;
+  /** Bloques JSON-LD extra de la página, serializados tal cual. */
+  structuredData?: unknown[];
+  socialImage?: string;
+  robots?: string;
+}
 
 const {
   title,
@@ -52,7 +65,7 @@ const footerLinks = [
   ['/projects.html', 'Proyectos'], ['/courses.html', 'Cursos'], ['/certifications.html', 'Certificaciones'],
   ['/experience.html', 'Trayectoria'], ['/about.html', 'Sobre mí'],
 ];
-const normalize = (value) => (value || '/').replace(/\/$/, '').replace(/\.html$/, '') || '/';
+const normalize = (value: string | null | undefined) => (value || '/').replace(/\/$/, '').replace(/\.html$/, '') || '/';
 const here = normalize(Astro.url.pathname);
 ---
 <!doctype html>

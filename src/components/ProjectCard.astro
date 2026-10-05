@@ -1,5 +1,10 @@
 ---
 import { projectSlug } from '../data/portfolio.js';
+import type { Project } from '../types/content';
+interface Props {
+  project: Project;
+  featured?: boolean;
+}
 const { project, featured = false } = Astro.props;
 const metadata = [project.role, project.language, project.license && `Licencia ${project.license}`, project.updatedAt && `Actualizado ${project.updatedAt}`].filter(Boolean);
 ---
