@@ -1,17 +1,24 @@
 ---
 import Icon from './Icon.astro';
+import { createHash } from 'node:crypto';
 // bloque de código real con resaltado por CLASES (no estilos inline, que violarían la
 // CSP estricta y el test de HTML compilado). El resaltado de Shiki emite style="color:…" en cada
 // span, incompatible con el gate; por eso se usa un resaltador ligero basado en clases sobre tokens.
-// `code` debe ser contenido real y verificable (p. ej. un extracto de un workflow del repo).
+interface Props {
+  /** Contenido real y verificable a mostrar (p. ej. un extracto de un workflow del repo). */
+  code: string;
+  lang?: string;
+  label?: string;
+  href?: string;
+}
 const { code, lang = 'yaml', label, href } = Astro.props;
 
-const escapeHtml = (value) => value
+const escapeHtml = (value: string) => value
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 // Resaltado mínimo y determinista por clases para YAML/HCL/sh. No ejecuta nada; sólo envuelve
 // comentarios, claves, cadenas y números en <span class="tok-*">.
-function highlight(src) {
+function highlight(src: string) {
   return src.split('\n').map((rawLine) => {
     const line = escapeHtml(rawLine);
     // comentario de línea completa
@@ -28,7 +35,17 @@ function highlight(src) {
 }
 
 const highlighted = highlight(code);
-const codeId = `code-${Math.random().toString(36).slice(2, 8)}`;
+/**
+ * Id DETERMINISTA, derivado del contenido.
+ *
+ * Antes era `Math.random()`, así que dos builds del MISMO commit producían un
+ * `dist` distinto (comprobado: el hash de `index.html` cambia entre dos builds
+ * seguidos). Eso impide verificar por comparación de bytes que una subida de
+ * dependencias no altera la salida, que es justo la comprobación que hace falta
+ * al actualizar el toolchain. El sufijo aleatorio no aportaba nada: sólo tiene
+ * que ser único y estable dentro de la página.
+ */
+const codeId = `code-${createHash('sha256').update(`${lang}\u0000${label ?? ''}\u0000${code}`).digest('hex').slice(0, 8)}`;
 ---
 <figure class="codeblock">
   {label && <figcaption class="codeblock-caption"><span class="codeblock-lang">{lang}</span> {label}{href && <a class="codeblock-source" href={href} target="_blank" rel="noopener noreferrer">Ver fuente<span class="sr-only"> (abre en nueva pestaña)</span></a>}</figcaption>}

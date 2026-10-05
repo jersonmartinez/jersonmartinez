@@ -30,10 +30,11 @@
     "node": ">=22"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.4",
+    "@astrojs/check": "0.9.10",
+    "@types/node": "22.20.5",
     "astro": "7.3.5",
-    "stylelint": "16.10.0",
-    "stylelint-order": "6.0.4",
-    "typescript": "5.6.3"
+    "stylelint": "17.16.0",
+    "stylelint-order": "8.1.1",
+    "typescript": "6.0.3"
   }
 }

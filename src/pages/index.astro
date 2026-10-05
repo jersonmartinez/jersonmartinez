@@ -24,7 +24,12 @@ try {
   }
 } catch { githubStats = null; }
 // narrowing seguro del meta heterogéneo de profile.facts para astro check.
-const factLink = (meta) => (meta && typeof meta === 'object' && 'href' in meta ? meta : null);
+// El dato es JS sin tipar y sólo ALGUNAS entradas llevan enlace (otras llevan
+// `{ source: … }` o nada), así que la guarda de runtime comprueba `href` y el
+// tipo describe exactamente lo que se consume después.
+type FactLink = { href: string; label?: string; external?: boolean };
+const factLink = (meta: unknown): FactLink | null =>
+  (meta && typeof meta === 'object' && 'href' in meta ? (meta as FactLink) : null);
 // extracto REAL del workflow de validación del repo (.github/workflows/validate.yml),
 // mostrado como evidencia de la cadena de entrega del propio sitio. No es contenido inventado.
 const validateExcerpt = `# .github/workflows/validate.yml (extracto)

@@ -10,7 +10,7 @@ const navItems = [
   ['Trayectoria', '/experience.html', 'fa-route'],
   ['Sobre mí', '/about.html', 'fa-user'],
 ];
-const normalize = (value) => (value || '/').replace(/index\.html$/, '').replace(/\/$/, '').replace(/\.html$/, '') || '/';
+const normalize = (value: string | null | undefined) => (value || '/').replace(/index\.html$/, '').replace(/\/$/, '').replace(/\.html$/, '') || '/';
 const here = normalize(Astro.url.pathname);
 ---
 <header class="site-header" data-site-header>

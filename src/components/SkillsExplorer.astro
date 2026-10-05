@@ -1,7 +1,11 @@
 ---
 import Icon from './Icon.astro';
+import type { Skill } from '../types/content';
+interface Props {
+  skills: Skill[];
+}
 const { skills } = Astro.props;
-const slugify = (value) => String(value).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+const slugify = (value: string) => String(value).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 ---
 <div class="skills-explorer" data-skills-explorer>
   <div class="skills-tabs" role="tablist" aria-label="Categorías de habilidades" aria-orientation="vertical">

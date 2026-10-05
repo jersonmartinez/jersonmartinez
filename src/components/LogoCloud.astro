@@ -1,4 +1,8 @@
 ---
+import type { LogoItem } from '../types/content';
+interface Props {
+  items: LogoItem[];
+}
 const { items } = Astro.props;
 ---
 <ul class="logo-cloud" role="list" aria-label="Ecosistema tecnológico">

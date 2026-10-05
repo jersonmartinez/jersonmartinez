@@ -43,6 +43,16 @@ updates:
     assignees:
       - jersonmartinez
     groups:
+      # `typescript` y `@astrojs/check` están acoplados por dependencia de PAR:
+      # @astrojs/check declara `peerDependencies.typescript`, así que moverlos en
+      # PRs distintas produce dos ramas que NINGUNA puede estar verde por separado
+      # (una sube typescript fuera del rango del par; la otra deja el par sin su
+      # typescript). Van en un solo grupo para que la actualización sea atómica.
+      astro-typecheck:
+        patterns:
+          - 'typescript'
+          - '@astrojs/check'
+          - '@types/node'
       # Parches y menores juntos: ruido mínimo y revisión rápida.
       npm-minor-patch:
         update-types:
@@ -52,3 +62,18 @@ updates:
       npm-major:
         update-types:
           - major
+    ignore:
+      # TypeScript 7 NO es instalable aquí: @astrojs/check (0.9.10, la última
+      # publicada) declara `peerDependencies.typescript: "^5.0.0 || ^6.0.0"`, así
+      # que `npm install` falla con ERESOLVE antes de compilar nada — es un techo
+      # AGUAS ARRIBA, no una preferencia. Se levanta en cuanto @astrojs/check
+      # publique soporte para 7.
+      - dependency-name: typescript
+        versions:
+          - '>=7.0.0'
+      # @types/node debe seguir la línea del runtime declarado en `engines.node`
+      # (>=22) y la que usan los workflows; un mayor por delante del runtime
+      # describiría APIs que no existen en ejecución.
+      - dependency-name: '@types/node'
+        update-types:
+          - version-update:semver-major
