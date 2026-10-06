@@ -14,6 +14,24 @@ function validateSources() {
     if (!read(page).includes('<BaseLayout')) fail(`${page}: no usa BaseLayout`);
   }
   for (const file of ASSETS) if (!exists(file)) fail(`Falta asset ${file}`);
+  // Sin assets huérfanos en public/brands: cada logo debe estar referenciado en el sitio.
+  const brandRefs = fs.readdirSync(path.join(ROOT, 'src/components')).map((f) => read(`src/components/${f}`)).join('\n')
+    + read('src/data/portfolio.js') + SOURCE_PAGES.map(read).join('\n');
+  for (const file of fs.readdirSync(path.join(ROOT, 'public/brands'))) {
+    if (!brandRefs.includes(`brands/${file}`)) fail(`Asset huérfano: public/brands/${file} no se referencia en el sitio.`);
+  }
+  // security.txt presente y no caducado (RFC 9116).
+  const securityTxt = 'public/.well-known/security.txt';
+  if (!exists(securityTxt)) fail(`Falta ${securityTxt}`);
+  const expires = read(securityTxt).match(/^Expires:\s*(.+)$/m);
+  if (!expires) fail('security.txt: falta el campo Expires (RFC 9116).');
+  if (!(new Date(expires[1]).getTime() > Date.now())) fail('security.txt: el campo Expires está caducado o es inválido.');
+  // Cada página indexable declara title y description en BaseLayout.
+  for (const page of SOURCE_PAGES) {
+    const text = read(page);
+    if (!/\btitle=("|\{|`)/.test(text)) fail(`${page}: BaseLayout sin title.`);
+    if (!/\bdescription=("|\{|`)/.test(text)) fail(`${page}: BaseLayout sin description.`);
+  }
   const data = read('src/data/portfolio.js');
   for (const value of ['careerStartYear: 2016', 'yearsExperience: 10', 'Más de 77 mil estudiantes', '+14K suscriptores', '+5K suscriptores', '+60 artículos', '7 cursos impartidos', 'WSL Container', 'GitHub Foundations', 'Infralytics']) if (!data.includes(value)) fail(`Falta dato: ${value}`);
   if ((data.match(/credentialId:/g) || []).length !== 10) fail('Se esperaban exactamente 10 credenciales oficiales.');
@@ -33,6 +51,20 @@ function validateDist() {
     if (/\sstyle="/.test(html)) fail(`dist/${route}: contiene style inline`);
     if (!html.includes('property="og:image"')) fail(`dist/${route}: metadata social incompleta`);
     if (route !== '404.html' && !html.includes('application/ld+json')) fail(`dist/${route}: schema.org ausente`);
+    // Cabecera SEO mínima: title y description no vacíos; canonical en rutas indexables.
+    if (!/<title>[^<]+<\/title>/.test(html)) fail(`dist/${route}: <title> vacío`);
+    if (!/name="description" content="[^"]+"/.test(html)) fail(`dist/${route}: description vacía`);
+    if (route !== '404.html' && !/rel="canonical" href="[^"]+"/.test(html)) fail(`dist/${route}: canonical ausente`);
+    // CLS: toda imagen renderizada declara width y height.
+    for (const match of html.matchAll(/<img\b[^>]*>/g)) {
+      const tag = match[0];
+      if (!/\swidth=/.test(tag) || !/\sheight=/.test(tag)) fail(`dist/${route}: <img> sin width/height (CLS): ${tag.slice(0, 90)}`);
+    }
+    // Integridad: toda imagen local referenciada existe en el build.
+    for (const match of html.matchAll(/\ssrc="(\/[^"']+\.(?:svg|png|jpe?g|webp|avif|gif))"/g)) {
+      const rel = match[1].replace(/^\//, '');
+      if (!exists(`dist/${rel}`)) fail(`dist/${route}: imagen local inexistente ${match[1]}`);
+    }
   }
   const home = read('dist/index.html');
   for (const anchor of ['recorridos', 'impacto', 'skills', 'proyectos', 'ensenanza', 'certificaciones', 'contacto']) if (!home.includes(`id="${anchor}"`)) fail(`Falta #${anchor}`);

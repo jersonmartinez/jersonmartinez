@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contacto directo (WhatsApp)
+    url: https://api.whatsapp.com/send?phone=50589630866
+    about: Para colaboraciones o consultas profesionales.
+  - name: Sitio web
+    url: https://www.jersonmartinez.com
+    about: Portfolio, proyectos, certificaciones y trayectoria.
+  - name: Reporte de seguridad
+    url: https://github.com/jersonmartinez/jersonmartinez/security/advisories/new
+    about: Divulgación privada de vulnerabilidades (no abras un issue público).

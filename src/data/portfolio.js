@@ -3,7 +3,7 @@
 // de OpenWebinars y de cifras confirmadas directamente por Jerson.
 
 export const contentMeta = {
-  lastReviewed: '2026-09-30',
+  lastReviewed: '2026-10-06',
   careerStartYear: 2016,
   continuousLearningSince: '2017-12',
 };

@@ -4,6 +4,30 @@
   "version": "2.0.0",
   "description": "Astro portfolio for Jerson Martínez — DevOps Engineer, SRE, DevSecOps and Cloud Architect.",
   "type": "commonjs",
+  "homepage": "https://www.jersonmartinez.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jersonmartinez/jersonmartinez.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jersonmartinez/jersonmartinez/issues"
+  },
+  "author": {
+    "name": "Jerson Martínez",
+    "email": "jersonmartinezsm@gmail.com",
+    "url": "https://www.jersonmartinez.com"
+  },
+  "keywords": [
+    "devops",
+    "sre",
+    "devsecops",
+    "cloud",
+    "aws",
+    "azure",
+    "terraform",
+    "astro",
+    "portfolio"
+  ],
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -16,6 +40,8 @@
     "validate:design": "node tools/check-design-metrics.cjs",
     "links": "node tools/check-links.js",
     "links:external": "node tools/check-links.js --external",
+    "sitemap": "node tools/gen-sitemap.js",
+    "sitemap:check": "node tools/gen-sitemap.js --check",
     "assets:generate": "python3 tools/generate-visual-assets.py",
     "headers": "node tools/check-headers.js",
     "sync:static": "node tools/sync-public-root.js",

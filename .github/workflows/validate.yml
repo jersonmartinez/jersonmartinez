@@ -73,13 +73,15 @@ jobs:
         run: npm run headers
       - name: Ensure root robots/sitemap stay in sync with public/
         run: npm run sync:static:check
+      - name: Ensure sitemap matches the real routes and review date
+        run: npm run sitemap:check
       - run: npm run youtube:dry-run
       # markdownlint fijado (sin npx --yes): se instala la versión exacta sin
       # tocar el lockfile y se invoca el binario local, cubriendo README y docs/**.
       - name: Install pinned markdownlint
         run: npm install --no-save --no-package-lock markdownlint-cli2@0.23.3
       - name: Lint markdown (README + docs)
-        run: npx --no-install markdownlint-cli2 "README.md" "SECURITY-HEADERS.md" "docs/**/*.md"
+        run: npx --no-install markdownlint-cli2 "README.md" "SECURITY.md" "SECURITY-HEADERS.md" "CONTRIBUTING.md" "docs/**/*.md"
       # stylelint con orden de propiedades y prohibicion de color literal en las capas que
       # SI declaran color (base.css y components.css). El alcance anterior apuntaba a
       # global.css, fonts.css y un icons.css inexistente, ninguno con colores: la guarda

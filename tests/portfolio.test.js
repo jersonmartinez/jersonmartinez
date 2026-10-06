@@ -116,7 +116,9 @@ test('CSP no usa unsafe-inline y no quedan dependencias visuales remotas', () =>
 test('SEO y sitemap cubren rutas reales con lastmod', () => {
   const sitemap = read('public/sitemap.xml');
   for (const route of ['/', '/projects.html', '/courses.html', '/certifications.html', '/experience.html', '/about.html']) assert.ok(sitemap.includes(`https://www.jersonmartinez.com${route}`));
-  assert.match(sitemap, /<lastmod>2026-09-30<\/lastmod>/);
+  const lastReviewed = (read('src/data/portfolio.js').match(/lastReviewed:\s*'(\d{4}-\d{2}-\d{2})'/) || [])[1];
+  assert.ok(lastReviewed, 'contentMeta.lastReviewed presente');
+  assert.match(sitemap, new RegExp(`<lastmod>${lastReviewed}</lastmod>`));
   assert.match(read('src/layouts/BaseLayout.astro'), /application\/ld\+json/);
   assert.match(read('src/pages/courses.html.astro'), /'@type': 'Course'/);
   assert.match(read('src/pages/certifications.html.astro'), /EducationalOccupationalCredential/);

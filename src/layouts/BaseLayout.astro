@@ -12,6 +12,10 @@ interface Props {
   canonical?: string;
   breadcrumb?: BreadcrumbEntry[];
   preloadImage?: string;
+  /** srcset del preload de imagen, para que el candidato precargado coincida con el <source> elegido. */
+  preloadImageSrcset?: string;
+  /** sizes del preload de imagen; debe reflejar el `sizes` del <source>/<img> del héroe. */
+  preloadImageSizes?: string;
   /** Bloques JSON-LD extra de la página, serializados tal cual. */
   structuredData?: unknown[];
   socialImage?: string;
@@ -24,6 +28,8 @@ const {
   canonical = `${profile.website}/`,
   breadcrumb,
   preloadImage,
+  preloadImageSrcset,
+  preloadImageSizes,
   structuredData = [],
   socialImage,
   robots = 'index, follow, max-image-preview:large',
@@ -42,6 +48,12 @@ const personJsonLd = isProfilePage && {
   image: portrait,
   jobTitle: 'DevOps Tech Lead',
   description: profile.intro,
+  email: `mailto:${profile.email}`,
+  knowsLanguage: ['es', 'en'],
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Universidad Nacional Autónoma de Nicaragua, León (UNAN-León)',
+  },
   sameAs: [profile.github, profile.linkedin, 'https://www.youtube.com/@DevOpsea', 'https://www.udemy.com/user/side-master/', 'https://openwebinars.net/profesores/antoniomorenosm/', 'https://www.crashell.com/estudio'],
   knowsAbout: ['DevOps', 'SRE', 'DevSecOps', 'AWS', 'Microsoft Azure', 'Google Cloud Platform', 'Infrastructure as Code', 'GitOps', 'FinOps'],
 };
@@ -92,7 +104,7 @@ const here = normalize(Astro.url.pathname);
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/manrope-latin.woff2" crossorigin="anonymous" />
     <link rel="canonical" href={canonical} />
-    {preloadImage && <link rel="preload" as="image" href={preloadImage} type="image/webp" fetchpriority="high" />}
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} imagesrcset={preloadImageSrcset} imagesizes={preloadImageSizes} type="image/webp" fetchpriority="high" />}
     <meta property="og:type" content={isProfilePage ? 'profile' : 'website'} />
     <meta property="og:site_name" content="Jerson Martínez" />
     <meta property="og:url" content={canonical} />
@@ -105,7 +117,6 @@ const here = normalize(Astro.url.pathname);
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="es_ES" />
-    <meta property="og:locale:alternate" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -128,9 +139,9 @@ const here = normalize(Astro.url.pathname);
           {footerLinks.map(([href, label]) => { const current = here === normalize(href); return <a href={href} class={current ? 'is-current' : ''} aria-current={current ? 'page' : undefined}>{label}</a>; })}
         </nav>
         <nav class="footer-social" aria-label="Perfiles sociales">
-          <a href={profile.github} target="_blank" rel="me noopener noreferrer"><Icon name="fab fa-github" /><span class="sr-only">GitHub</span></a>
-          <a href={profile.linkedin} target="_blank" rel="me noopener noreferrer"><Icon name="fab fa-linkedin-in" /><span class="sr-only">LinkedIn</span></a>
-          <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="fab fa-whatsapp" /><span class="sr-only">WhatsApp</span></a>
+          <a href={profile.github} target="_blank" rel="me noopener noreferrer"><Icon name="fab fa-github" /><span class="sr-only">GitHub (abre en nueva pestaña)</span></a>
+          <a href={profile.linkedin} target="_blank" rel="me noopener noreferrer"><Icon name="fab fa-linkedin-in" /><span class="sr-only">LinkedIn (abre en nueva pestaña)</span></a>
+          <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="fab fa-whatsapp" /><span class="sr-only">WhatsApp (abre en nueva pestaña)</span></a>
         </nav>
       </div>
       <div class="container footer-legal"><p class="footer-copy">© {new Date().getFullYear()} Jerson Martínez. Todos los derechos reservados.</p><a class="footer-top" href="#contenido"><Icon name="fas fa-arrow-up" /> Volver arriba</a></div>

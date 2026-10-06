@@ -1,0 +1,23 @@
+name: Corrección de contenido
+description: Un dato, enlace o texto del portfolio está desactualizado o es incorrecto.
+labels: ["content"]
+body:
+  - type: textarea
+    id: current
+    attributes:
+      label: Contenido actual
+      description: Qué dice o muestra hoy el sitio.
+    validations:
+      required: true
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Corrección propuesta
+      description: Qué debería decir o mostrar, con la fuente si aplica.
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Dónde
+      placeholder: /certifications.html — sección AWS

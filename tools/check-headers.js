@@ -67,7 +67,9 @@ function validateSitemap() {
     const loc = `https://www.jersonmartinez.com${route}`;
     if (!sitemap.includes(`<loc>${loc}</loc>`)) fail(`Sitemap no incluye ${loc}.`);
   }
-  if ((sitemap.match(/<lastmod>2026-09-30<\/lastmod>/g) || []).length !== 6) fail('Cada URL indexable debe declarar lastmod.');
+  const lastReviewed = (read('src/data/portfolio.js').match(/lastReviewed:\s*'(\d{4}-\d{2}-\d{2})'/) || [])[1];
+  if (!lastReviewed) fail('No se pudo leer contentMeta.lastReviewed.');
+  if ((sitemap.match(new RegExp(`<lastmod>${lastReviewed}</lastmod>`, 'g')) || []).length !== 6) fail('Cada URL indexable debe declarar lastmod con la fecha de revisión.');
   if (sitemap.includes('/404')) fail('La 404 no debe incluirse en sitemap.');
   if (!read('robots.txt').includes('Sitemap: https://www.jersonmartinez.com/sitemap.xml')) fail('robots no referencia sitemap.');
 }

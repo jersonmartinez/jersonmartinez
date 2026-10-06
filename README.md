@@ -299,6 +299,7 @@ certificaciones y proyectos de esta página son los mismos que publica el sitio.
 [![validate](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/validate.yml/badge.svg)](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/validate.yml)
 [![e2e](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/e2e.yml/badge.svg)](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/e2e.yml)
 [![site quality](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/site-quality.yml/badge.svg)](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/site-quality.yml)
+[![CodeQL](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/codeql.yml/badge.svg)](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/codeql.yml)
 
 El sitio se construye con [Astro](https://astro.build/) como build estático: las páginas
 viven en `src/pages/`, la UI compartida en `src/components/` y los datos verificados de
