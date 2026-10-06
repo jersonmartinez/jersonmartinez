@@ -37,8 +37,6 @@
 .impact-item { background: var(--surface-tint-cyan); border-left: 2px solid var(--cyan); padding: 1.2rem; }
 .impact-item strong { color: var(--text); display: block; font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -.07em; }
 .impact-item span { color: var(--muted); font-size: .8rem; }
-.tag-list { display: flex; flex-wrap: wrap; gap: .45rem; list-style: none; margin: 1.5rem 0 0; padding: 0; }
-.tag-list li { border: 1px solid var(--line); border-radius: var(--radius-sm); color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .68rem; padding: .38rem .58rem; }
 
 .section-head-row { align-items: end; display: flex; gap: var(--space-xl); justify-content: space-between; margin-bottom: 2.8rem; }
 /* Las acciones de cabecera se apilan por debajo de 1000 px. Compartiendo la fila con el
@@ -59,11 +57,6 @@
 .featured-grid { display: grid; gap: 1rem; grid-template-columns: repeat(12, minmax(0, 1fr)); }
 .featured-grid .card:nth-child(1), .featured-grid .card:nth-child(2) { grid-column: span 6; }
 .featured-grid .card:nth-child(n+3) { grid-column: span 4; }
-.project-card { display: flex; flex-direction: column; min-height: 19rem; }
-.project-card .project-bottom { align-items: center; display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; margin-top: auto; }
-.card-link--soft { color: var(--muted); }
-.card-link--soft:hover { color: var(--cyan); }
-.project-card--accent { background: linear-gradient(145deg, var(--surface-tint-cyan-strong), var(--surface-soft)); min-width: 0; overflow: hidden; }
 .project-meta { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.2rem; }
 .project-meta span { border: 1px solid var(--line); border-radius: var(--radius-xs); color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .65rem; padding: .3rem .5rem; }
 .status { align-items: center; color: var(--lime); display: inline-flex; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .68rem; gap: .4rem; margin-top: 1rem; }
@@ -94,7 +87,6 @@
 .company { color: var(--lime); display: block; font-size: .83rem; font-weight: 800; margin-top: .3rem; }
 
 .cert-grid { align-items: start; display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.disclaimer { background: var(--surface-tint-orange); border: 1px solid var(--border-orange-soft); border-radius: var(--radius-md); color: var(--orange); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .72rem; padding: 1rem 1.2rem; }
 
 .filter-bar { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
 .filter-button { background: transparent; border: 1px solid var(--line); border-radius: var(--radius-sm); color: var(--muted); font-size: .76rem; padding: .55rem .7rem; }
@@ -110,8 +102,6 @@
 .repo-empty[hidden] { display: none; }
 .repo-grid { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 /* Un solo mecanismo de ocultado por filtro: el atributo [hidden]. */
-.repo-card[hidden] { display: none; }
-.repo-card h2, .repo-card h3 { font-size: var(--fs-h3-lg); letter-spacing: -.035em; }
 .repo-kind { color: var(--lime); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .68rem; }
 
 .contact-panel { align-items: center; background: linear-gradient(120deg, var(--surface-tint-cyan-strong), var(--surface-tint-lime)); border: 1px solid var(--line-strong); border-radius: var(--radius-lg); display: flex; gap: 2rem; justify-content: space-between; padding: 2rem; }
@@ -254,18 +244,8 @@
    Antes eran 84 px fijos frente a un header de 89 px, de modo que el encabezado enlazado
    quedaba parcialmente tapado. Un solo origen de verdad para secciones y :target. */
 section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
-.repo-card:target { border-radius: var(--radius-lg); outline: 2px solid var(--lime); outline-offset: 4px; }
 
 /* Post-merge design: makes credential verification a visible, scannable journey. */
-.verification-steps { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; margin: 0; padding: 0; }
-.verification-step { min-height: 15rem; }
-.verification-step-icon { background: var(--surface-tint-cyan); border: 1px solid var(--border-cyan-soft); border-radius: var(--radius-md); color: var(--cyan); display: inline-grid; height: 2.35rem; place-items: center; width: 2.35rem; }
-.verification-step .card-label { margin: 1.2rem 0 .65rem; min-height: auto; }
-.verification-step h3 { margin-bottom: .55rem; }
-.verification-step p { color: var(--muted); font-size: .88rem; margin: 0; }
-.verification-step strong { color: var(--text); }
-@media (max-width: 900px) { .verification-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 680px) { .verification-steps { grid-template-columns: 1fr; } }
 
 /* Portfolio recruiter + consulting UX refresh */
 .profile-name { color: var(--text); display: block; font-size: 1.1rem; font-weight: 800; letter-spacing: -.03em; margin-bottom: var(--space-3xs); text-decoration: none; }
@@ -310,8 +290,6 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .about-results strong { color: var(--text); }
 .about-aside { display: grid; gap: 1rem; }
 .about-stack-card h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); margin-bottom: 1.1rem; }
-.about-stack-list { display: flex; flex-wrap: wrap; gap: .45rem; }
-.about-stack-list span { border: 1px solid var(--line); border-radius: var(--radius-xs); color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .66rem; padding: .35rem .5rem; }
 .about-links { display: flex; flex-wrap: wrap; gap: .7rem; }
 .about-links .card-link { margin-top: 0; }
 @media (max-width: 900px) { .course-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .about-layout { grid-template-columns: 1fr; } }
@@ -363,8 +341,6 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .course-orbit { fill: none; opacity: .75; stroke: #67e8f9; stroke-width: 2; }
 .course-orbit--inner { stroke: #c4f269; }
 .course-code-lines { fill: none; opacity: .55; stroke: #a8bbcc; stroke-linecap: round; stroke-width: 3; }
-.course-visual-title { fill: #f4f8fb; font-family: 'Manrope', sans-serif; font-size: 38px; font-weight: 800; }
-.course-visual-subtitle { fill: #a8bbcc; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: 11px; }
 .course-visual--fundamentos .course-gradient-start, .course-visual--comparativa .course-gradient-end { stop-color: #f6b56c; }
 .course-visual--gin .course-gradient-end { stop-color: #38bdf8; }
 .course-visual--echo .course-gradient-end { stop-color: #a78bfa; }
@@ -681,3 +657,58 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .github-stats strong { color: var(--text); display: block; font-size: var(--fs-xl); font-variant-numeric: tabular-nums; letter-spacing: -.04em; }
 .github-stats span { color: var(--muted); font-size: var(--fs-xs); }
 @media (max-width: 680px) { .github-stats { grid-template-columns: 1fr; } }
+
+/* Señal de liderazgo del hero (faceta de líder de proyectos). */
+.hero-role { align-items: center; color: var(--muted); display: inline-flex; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-xs); gap: 0.5rem; margin: 0 0 var(--space-sm); }
+.hero-role strong { color: var(--text); }
+.hero-role .icon { color: var(--cyan); }
+
+/* Metodologías y marcos de gobierno (faceta de defensor de metodologías). */
+.methodology-strip { margin-top: var(--space-lg); }
+.methodology-label { color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-2xs); letter-spacing: 0.12em; margin: 0 0 var(--space-sm); text-transform: uppercase; }
+.methodology-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 0; padding: 0; }
+.methodology-chips li { background: var(--surface-soft); border: 1px solid var(--line); border-radius: var(--radius-pill); color: var(--text); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-2xs); padding: 0.35rem 0.7rem; }
+
+/* Banda de escritura y divulgación (faceta de escritor y creador de contenido). */
+.writing-band { margin-top: var(--space-2xl); }
+.writing-topics { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 0 0 var(--space-lg); padding: 0; }
+.writing-topics li { border: 1px solid var(--line); border-radius: var(--radius-pill); color: var(--muted); font-size: var(--fs-2xs); padding: 0.3rem 0.65rem; }
+.writing-grid { display: grid; gap: var(--space-md); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.writing-card-head { align-items: baseline; display: flex; gap: 0.65rem; justify-content: space-between; }
+.writing-card-head h4 { margin: 0; }
+.writing-metric { color: var(--cyan); display: block; font-family: 'DM Mono', 'DM Mono Fallback', monospace; margin: var(--space-xs) 0 0; }
+
+/* Proof points de valor hacia las empresas (resultados reportados con contexto). */
+.value-grid { display: grid; gap: var(--space-md); grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; margin: 0; padding: 0; }
+.value-card { background: var(--surface-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--elevation-1); display: flex; flex-direction: column; gap: 0.3rem; height: 100%; padding: 1.45rem; text-decoration: none; transition: border-color var(--dur-base) var(--ease-standard), transform var(--dur-base) var(--ease-standard); }
+.value-card:hover, .value-card:focus-visible { border-color: var(--lime); transform: translateY(-2px); }
+.value-metric { color: var(--lime); display: block; font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-2xl); }
+.value-label { color: var(--text); display: block; font-weight: 700; }
+.value-detail { color: var(--muted); display: block; font-size: var(--fs-sm); }
+
+@media (max-width: 900px) {
+  .value-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .writing-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .value-grid { grid-template-columns: 1fr; }
+}
+
+/* Rail de secciones FLOTANTE (P10): decoplado de .journey, que lo atrapaba en la
+   sección 01 y lo hacía desaparecer. Fijo al viewport en pantallas anchas (dots con
+   etiqueta en hover/focus), oculto donde solaparía el contenido. El scroll-spy de
+   site.js ya marca .is-active en estos enlaces. */
+.journey-rail--floating { display: none; }
+@media (min-width: 1180px) {
+  .journey-rail--floating { align-items: center; display: grid; gap: 0.85rem; justify-items: end; position: fixed; right: 1.1rem; top: 50%; transform: translateY(-50%); z-index: 20; }
+  .journey-rail--floating a { align-items: center; border: 0; color: var(--muted); display: inline-flex; gap: 0.5rem; justify-content: flex-end; min-height: 0; padding: 0; text-decoration: none; }
+  .journey-rail--floating .journey-dot { background: var(--line-strong); border-radius: var(--radius-pill); height: 10px; transition: background var(--dur-base) var(--ease-standard), transform var(--dur-base) var(--ease-standard); width: 10px; }
+  .journey-rail--floating a:hover .journey-dot, .journey-rail--floating a:focus-visible .journey-dot, .journey-rail--floating a.is-active .journey-dot { background: var(--lime); transform: scale(1.35); }
+  .journey-rail--floating .journey-text { background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-xs); box-shadow: var(--tooltip-shadow); color: var(--text); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: var(--fs-3xs); opacity: 0; padding: 0.2rem 0.5rem; pointer-events: none; transform: translateX(0.25rem); transition: opacity var(--dur-base) var(--ease-standard), transform var(--dur-base) var(--ease-standard); white-space: nowrap; }
+  .journey-rail--floating a:hover .journey-text, .journey-rail--floating a:focus-visible .journey-text, .journey-rail--floating a.is-active .journey-text { opacity: 1; transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-rail--floating .journey-dot, .journey-rail--floating .journey-text { transition: none; }
+}

@@ -65,7 +65,7 @@ body.nav-locked { overflow: hidden; }
    Se dimensionan como un glyph de texto: 1em, color heredado (currentColor). */
 .icon { display: inline-block; fill: currentColor; height: 1em; line-height: 1; vertical-align: -.125em; width: 1em; }
 .icon-sprite { height: 0; overflow: hidden; position: absolute; width: 0; }
-.profile-social { border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--muted); display: inline-grid; font-size: var(--fs-base); height: 2.75rem; place-items: center; position: relative; text-decoration: none; transition: color var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard), background var(--dur-base) var(--ease-standard), transform var(--dur-base) var(--ease-standard); width: 2.75rem; }
+.profile-social { border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--muted); display: inline-grid; font-size: var(--fs-base); height: 2.75rem; min-height: 44px; min-width: 44px; place-items: center; position: relative; text-decoration: none; transition: color var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard), background var(--dur-base) var(--ease-standard), transform var(--dur-base) var(--ease-standard); width: 2.75rem; }
 .profile-social:hover, .profile-social:focus-visible { background: var(--cyan); border-color: var(--cyan); color: var(--accent-contrast); transform: translateY(-2px); }
 /* El rótulo del perfil se expone como texto accesible real (.profile-social-name) en vez de
    depender de un tooltip ::after sólo por hover, inalcanzable en táctil y para lectores. */

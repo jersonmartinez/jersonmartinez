@@ -4,7 +4,9 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / 'public/images/profile.jpg'
+# La foto fuente vive FUERA de public/ para no publicarse (376K que nadie
+# solicita desde ninguna página); sigue versionada como insumo del generador.
+SOURCE = ROOT / 'tools/assets/profile-source.jpg'
 IMAGES = ROOT / 'public/images'
 SOCIAL = ROOT / 'public/social'
 BRAND = ROOT / 'public/brand'
@@ -66,7 +68,10 @@ def social_card(source, slug, title, subtitle):
     draw.multiline_text((108, 325), subtitle, font=font(FONT_REGULAR, 29), fill='#a8bbcc', spacing=10)
     draw.rounded_rectangle((105, 470, 350, 515), radius=18, fill='#67e8f9')
     draw.text((227, 493), 'jersonmartinez.com', font=font(FONT_BOLD, 18), fill='#07111f', anchor='mm')
-    canvas.save(SOCIAL / f'{slug}.png', 'PNG', optimize=True)
+    # Tarjeta social como JPEG: el contenido es fotográfico + degradados, que en PNG
+    # pesaban ~248K cada una (~2 MB en total). JPEG progresivo q86 las deja en ~70K
+    # sin pérdida perceptible y todos los scrapers sociales lo soportan.
+    canvas.save(SOCIAL / f'{slug}.jpg', 'JPEG', quality=86, optimize=True, progressive=True)
 
 
 def main():
