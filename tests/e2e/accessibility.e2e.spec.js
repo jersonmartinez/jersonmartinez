@@ -1,5 +1,4 @@
 const { test, expect } = require('@playwright/test');
-const path = require('node:path');
 const BASE = process.env.E2E_BASE_URL || 'http://127.0.0.1:4321';
 // Las doce rutas públicas. La versión inglesa declara su propio `lang`, sus
 // nombres accesibles y el conmutador de idioma, así que una violación puede

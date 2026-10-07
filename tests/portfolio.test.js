@@ -90,7 +90,7 @@ test('proyectos usan categorías declaradas y casos de estudio', () => {
   const ui = read('src/i18n/ui.ts');
   const page = read('src/components/pages/ProjectsPage.astro');
   assert.match(data, /categories: \['personal', 'teaching'\]/);
-  assert.match(data, /https:\/\/factib\.com/);
+  assert.ok(data.includes('https://factib.com'), 'Falta la URL de Factib en el dato.');
   for (const value of ['problem:', 'contribution:', 'outcome:', 'language:', 'license:']) assert.match(data, new RegExp(value));
   assert.match(card, /c\.projectProblem/);
   assert.match(ui, /projectProblem: 'Problema'/);

@@ -80,8 +80,8 @@ const SPANISH_MARKERS = [
 function visibleText(html) {
   // El <title> es texto que el visitante lee (la pestaña del navegador), así que
   // se conserva; el resto de <head> son metadatos y se descarta.
-  const title = (html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i) || [])[1] || '';
-  const body = (html.match(/<body\b[^>]*>([\s\S]*)<\/body\s*>/i) || [])[1] || html;
+  const title = (html.match(/<title\b[^>]*>([\s\S]*?)<\/title\b[^>]*>/i) || [])[1] || '';
+  const body = (html.match(/<body\b[^>]*>([\s\S]*)<\/body\b[^>]*>/i) || [])[1] || html;
   return `${title} ${body}`
     // Subárboles declarados explícitamente en español: los títulos de los cursos
     // son reales y se conservan a propósito, así que no son una fuga.
@@ -95,10 +95,14 @@ function visibleText(html) {
     // mayúsculas, así que un `<SCRIPT>` o un `lang='ES'` se colaba intacto y su
     // contenido se contaba como texto visible (CodeQL js/bad-tag-filter). El
     // `\b` evita además que `<svg…>` cubra una etiqueta que sólo empiece igual.
-    .replace(/<(h[1-6]|p|li|span|div|strong|em|a|small|td|dd|dt)\b[^>]*\blang\s*=\s*["']es["'][^>]*>[\s\S]*?<\/\1\s*>/gi, ' ')
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, ' ')
-    .replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, ' ')
-    .replace(/<svg\b[^>]*>[\s\S]*?<\/svg\s*>/gi, ' ')
+    //
+    // La etiqueta de CIERRE admite `[^>]*` y no `\s*`: el parser real acepta
+    // atributos y saltos de línea en un cierre (`</script\t\n bar>`) y los
+    // ignora, de modo que un `\s*` dejaba el bloque sin eliminar.
+    .replace(/<(h[1-6]|p|li|span|div|strong|em|a|small|td|dd|dt)\b[^>]*\blang\s*=\s*["']es["'][^>]*>[\s\S]*?<\/\1\b[^>]*>/gi, ' ')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\b[^>]*>/gi, ' ')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style\b[^>]*>/gi, ' ')
+    .replace(/<svg\b[^>]*>[\s\S]*?<\/svg\b[^>]*>/gi, ' ')
     // `--!>` cierra un comentario igual que `-->` en el parser real de HTML.
     .replace(/<!--[\s\S]*?--!?>/g, ' ')
     // Los atributos van fuera: contienen URLs (la de WhatsApp lleva texto en

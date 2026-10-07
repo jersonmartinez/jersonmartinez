@@ -1,7 +1,7 @@
 # Hallazgos de CodeQL y tipado del dato del portfolio
 
 Registro del lote que cierra las 18 alertas que CodeQL abrió sobre el PR de la
-auditoría (`chore/portfolio-audit-optimizations`, que integra las 30 mejoras del
+auditoría, más las ocho preexistentes que el análisis por diff nunca mostró, (`chore/portfolio-audit-optimizations`, que integra las 30 mejoras del
 repositorio y la versión inglesa del sitio).
 
 El workflow de CodeQL se añadió en ese mismo PR, así que estas alertas son el
@@ -136,6 +136,44 @@ quedaría ciego», que es la salvaguarda que se le puso al escribirlo. Corregido
 para tolerar la anotación, y comprobado que vuelve a ver el dato completo: 10
 proyectos, 13 skills, 8 etapas de trayectoria y 7 cursos.
 
+## 6. Ocho alertas preexistentes que el análisis por diff nunca mostró
+
+El check `CodeQL` de un PR sólo anota las alertas que caen dentro de su diff, así
+que las dos clases de arriba eran las únicas visibles. Al disparar el análisis
+sobre la rama completa (gracias al `workflow_dispatch` del punto 4) apareció el
+inventario entero: **ocho alertas más**, ninguna en el diff de #29 y por tanto
+ninguna bloqueante, pero todas reales. Se corrigen aquí porque descubrirlas y
+dejarlas abiertas sería peor que no haberlas visto.
+
+| Alerta | Severidad | Fichero | Corrección |
+| --- | --- | --- | --- |
+| `js/double-escaping` | alta | `src/js/update-youtube-sections.js` | `decodeXml` resolvía `&amp;` ANTES de `&lt;`, así que `&amp;lt;` acababa en `<`: un título que traía marcado escapado a propósito lo recuperaba. Pasa a una sola pasada con una expresión que cubre nombre, decimal y hexadecimal |
+| `js/file-access-to-http` | media | `src/js/update-youtube-sections.js` | Los identificadores y handles de canal llegan de un fichero y forman la URL, así que una entrada manipulada apuntaba la petición a otro destino. Lista blanca de hosts + exigencia de `https`, comprobada en el único punto de salida (`fetchWithRetry`) para que ninguna ruta de obtención la esquive |
+| `js/disabling-certificate-validation` | alta | `tools/check-certificates.js` | `rejectUnauthorized: false` es deliberado: un monitor de caducidad debe poder leer un certificado ya inválido, que es justo el caso a informar. La validación deja de descartarse y pasa a ser **explícita**: se lee `socket.authorized` y, en un host propio, una cadena no confiable es ahora un fallo duro en vez de un silencio |
+| `js/http-to-file-access` | media | `tools/update-github-stats.js` | Los valores de la API se escribían al cache que lee el build sin comprobar. Se coercionan a entero finito y no negativo, de modo que una respuesta malformada no puede meter `null`, `NaN` ni una cadena en el estado |
+| `js/bad-tag-filter` | alta | `tests/update-youtube-sections.test.js` | La aserción «el HTML no contiene una etiqueta `<script>` cruda» usaba `/<script>/`, que un `<SCRIPT>` atravesaba: la autoprueba quedaba hueca |
+| `js/regex/missing-regexp-anchor` ×2 | alta | `tests/data-links.test.js`, `tests/portfolio.test.js` | Clasificar un enlace por una subcadena de host deja que `https://evil.example/credly.com/badges` cuente como credencial. El emisor y el repositorio se deciden ahora por el `hostname` parseado; la aserción que sólo comprobaba presencia de una URL literal pasa a `includes` |
+| `js/unused-local-variable` ×2 | nota | `public/scripts/command-palette.js`, `tests/e2e/accessibility.e2e.spec.js` | Declaraciones sin uso, eliminadas |
+
+Tres de estos arreglos cambian comportamiento, así que llevan test propio: la
+lista blanca rechaza un host ajeno y `http`, y `&amp;lt;script&amp;gt;` debe
+decodificar a `&lt;script&gt;` y no a marcado.
+
+### El primer intento con el filtro de etiquetas no bastó
+
+La corrección del punto 1 cerraba las mayúsculas pero **no** la alerta: el
+mensaje real de CodeQL era «does not match script end tags like
+`</script\t\n bar>`». El parser de HTML acepta atributos y saltos de línea en una
+etiqueta de CIERRE y los ignora, así que un `<\/script\s*>` dejaba el bloque sin
+eliminar. Los cierres usan ahora `[^>]*`. Comprobado con dos controles directos:
+
+| Entrada | Texto visible resultante |
+| --- | --- |
+| `<body><SCRIPT>que los una</SCRIPT\tbar>hola</body>` | `hola` |
+| `<body><p lang='ES'>que los una para</p>hi</body>` | `hi` |
+
+Antes, ambas filtraban su español al texto contado.
+
 ## Validación
 
 `npm ci` limpio en contenedor Node 22:
@@ -144,7 +182,7 @@ proyectos, 13 skills, 8 etapas de trayectoria y 7 cursos.
 | --- | --- |
 | `astro check` | 0 errores · 0 avisos · 1 pista |
 | `npm run build` | 14 páginas |
-| `npm test` | 41/41 |
+| `npm test` | 48 pruebas · 0 fallos |
 | `validate` | 7 rutas Astro, datos, seguridad y assets |
 | `validate:sprite` | 32/32 símbolos |
 | `validate:i18n` | cobertura + 0 fugas (control: ES 19-24, EN 0) |

@@ -64,16 +64,25 @@ function parseArgs(argv = process.argv.slice(2)) {
   return args;
 }
 
+const XML_ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" };
+
+/**
+ * Decodifica entidades XML en UNA sola pasada.
+ *
+ * Hacerlo en cadena desescapaba dos veces: `&amp;` se resolvía primero, de modo
+ * que `&amp;lt;` quedaba en `&lt;` y el filtro siguiente lo convertía en `<`,
+ * reintroduciendo marcado desde un título que lo traía escapado a propósito
+ * (CodeQL js/double-escaping). Con una pasada, cada entidad se resuelve una vez
+ * y el resultado no vuelve a examinarse.
+ */
 function decodeXml(value) {
   return value
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;|&apos;/g, "'")
-    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
-    .replace(/&#x([\da-f]+);/gi, (_, code) => String.fromCodePoint(parseInt(code, 16)));
+    .replace(/&(?:(amp|lt|gt|quot|apos)|#(\d+)|#x([\da-f]+));/gi, (match, name, dec, hex) => {
+      if (name) return XML_ENTITIES[name.toLowerCase()] ?? match;
+      if (dec !== undefined) return String.fromCodePoint(Number(dec));
+      return String.fromCodePoint(parseInt(hex, 16));
+    });
 }
 
 function normalizeTitle(value) {
@@ -194,7 +203,29 @@ function classifyError(error) {
   return 'unknown';
 }
 
+/**
+ * Hosts a los que este script puede salir. Los identificadores y handles de
+ * canal llegan de un fichero de configuración, así que la URL que se construye
+ * depende de datos de fichero: una entrada manipulada podría apuntar la petición
+ * a otro destino (CodeQL js/file-access-to-http). La lista se comprueba en el
+ * ÚNICO punto de salida, de modo que ninguna ruta de obtención la esquiva.
+ */
+const ALLOWED_HOSTS = new Set(['www.youtube.com', 'youtube.com', 'www.googleapis.com']);
+
+function assertAllowedUrl(url) {
+  let parsed;
+  try {
+    parsed = new URL(String(url));
+  } catch {
+    throw new Error(`URL no válida: ${url}`);
+  }
+  if (parsed.protocol !== 'https:') throw new Error(`Sólo se permite https: ${parsed.protocol}`);
+  if (!ALLOWED_HOSTS.has(parsed.hostname)) throw new Error(`Host no permitido: ${parsed.hostname}`);
+  return parsed.toString();
+}
+
 async function fetchWithRetry(url, options = {}) {
+  const target = assertAllowedUrl(url);
   const timeoutMs = options.timeoutMs || options.requestTimeoutMs || 10000;
   const retries = options.retries ?? 3;
   const fetchImpl = options.fetchImpl || fetch;
@@ -203,7 +234,7 @@ async function fetchWithRetry(url, options = {}) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
-      const response = await fetchImpl(url, {
+      const response = await fetchImpl(target, {
         headers: { 'user-agent': DEFAULT_USER_AGENT, ...(options.headers || {}) },
         signal: controller.signal,
       });
