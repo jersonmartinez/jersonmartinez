@@ -69,6 +69,14 @@ const BUILD_SOURCES = [
   'dist/certifications.html/index.html',
   'dist/courses.html/index.html',
   'dist/about.html/index.html',
+  // Rutas inglesas: sus enlaces internos son DISTINTOS (llevan el prefijo /en),
+  // así que un prefijo mal construido sólo se ve auditando estas páginas.
+  'dist/en/index.html',
+  'dist/en/projects.html/index.html',
+  'dist/en/experience.html/index.html',
+  'dist/en/certifications.html/index.html',
+  'dist/en/courses.html/index.html',
+  'dist/en/about.html/index.html',
   'dist/404.html',
 ];
 const haveCompleteBuild = BUILD_SOURCES.every((source) => fs.existsSync(path.join(ROOT, source)));

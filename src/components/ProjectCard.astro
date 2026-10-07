@@ -1,23 +1,28 @@
 ---
 import { projectSlug } from '../data/portfolio.js';
 import type { Project } from '../types/content';
+import { DEFAULT_LOCALE, type Lang } from '../i18n/config';
+import { t } from '../i18n/ui';
 interface Props {
   project: Project;
   featured?: boolean;
+  lang?: Lang;
 }
-const { project, featured = false } = Astro.props;
-const metadata = [project.role, project.language, project.license && `Licencia ${project.license}`, project.updatedAt && `Actualizado ${project.updatedAt}`].filter(Boolean);
+const { project, featured = false, lang = DEFAULT_LOCALE } = Astro.props;
+const copy = t(lang);
+const c = copy.components;
+const metadata = [project.role, project.language, project.license && c.projectLicense(project.license), project.updatedAt && c.projectUpdated(project.updatedAt)].filter(Boolean);
 ---
 <article id={projectSlug(project.name)} class={`card project-case ${project.href ? 'card--interactive' : ''} ${featured ? 'project-case--featured' : ''}`} data-category={project.categories.join(' ')}>
   {/* Antes había DOS líneas de metadatos apiladas sobre el título (tipo y tema), que
       competían entre sí y con el encabezado. Ahora comparten una sola fila. */}
   <header class="project-case-head"><p class="project-case-tagline"><span class="repo-kind">{project.kind}</span><span class="project-theme">{project.theme}</span></p><h3>{project.name}</h3><p>{project.description}</p></header>
   <dl class="project-case-story">
-    <div><dt>Problema</dt><dd>{project.problem}</dd></div>
-    <div><dt>Contribución</dt><dd>{project.contribution}</dd></div>
-    <div><dt>Resultado</dt><dd>{project.outcome}</dd></div>
+    <div><dt>{c.projectProblem}</dt><dd>{project.problem}</dd></div>
+    <div><dt>{c.projectContribution}</dt><dd>{project.contribution}</dd></div>
+    <div><dt>{c.projectOutcome}</dt><dd>{project.outcome}</dd></div>
   </dl>
-  <ul class="project-facts" aria-label={`Datos de ${project.name}`}>{metadata.map((item) => <li>{item}</li>)}</ul>
-  <div class="project-meta" role="list" aria-label={`Tecnologías de ${project.name}`}>{project.tags.map((tag) => <span role="listitem">{tag}</span>)}</div>
-  <div class="project-bottom">{project.href ? <a class="card-link" href={project.href} target="_blank" rel="noopener noreferrer">{project.cta}<span class="sr-only"> (abre en nueva pestaña)</span></a> : <span class="status">Proyecto documentado</span>}</div>
+  <ul class="project-facts" aria-label={c.projectFactsAria(project.name)}>{metadata.map((item) => <li>{item}</li>)}</ul>
+  <div class="project-meta" role="list" aria-label={c.projectTagsAria(project.name)}>{project.tags.map((tag) => <span role="listitem">{tag}</span>)}</div>
+  <div class="project-bottom">{project.href ? <a class="card-link" href={project.href} target="_blank" rel="noopener noreferrer">{project.cta}<span class="sr-only">{copy.newTabSuffix}</span></a> : <span class="status">{c.projectDocumented}</span>}</div>
 </article>

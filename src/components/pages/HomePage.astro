@@ -1,0 +1,173 @@
+---
+/**
+ * Página de inicio en los dos idiomas.
+ *
+ * Los `id` de sección (`#impacto`, `#skills`, `#proyectos`…) se conservan
+ * IDÉNTICOS en ambos idiomas: son identificadores que consume el scroll-spy de
+ * `site.js` y a los que apuntan enlaces ya publicados, no texto visible.
+ * Traducirlos rompería los enlaces existentes sin beneficio para el lector.
+ */
+import Icon from '../Icon.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LogoCloud from '../LogoCloud.astro';
+import SkillsExplorer from '../SkillsExplorer.astro';
+import ProjectCard from '../ProjectCard.astro';
+import CredentialCard from '../CredentialCard.astro';
+import CodeBlock from '../CodeBlock.astro';
+import {
+  getCertifications, getCollaborationModes, getExperience, getProfile, getProjects,
+  getSkills, getTeaching, getValueProps, getWriting, methodologies,
+} from '../../i18n/content';
+import { DEFAULT_LOCALE, routePath, type Lang } from '../../i18n/config';
+import { t } from '../../i18n/ui';
+import fs from 'node:fs';
+import path from 'node:path';
+
+interface Props { lang?: Lang }
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const copy = t(lang);
+const page = copy.home;
+const profile = getProfile(lang);
+const projects = getProjects(lang);
+const skills = getSkills(lang);
+const certifications = getCertifications();
+const teaching = getTeaching(lang);
+const writing = getWriting(lang);
+const valueProps = getValueProps(lang);
+const collaborationModes = getCollaborationModes(lang);
+const experience = getExperience(lang);
+
+// datos de GitHub leídos del cache en build (data/github-state.json), con degradación:
+// si el cache falta o es inválido, githubStats queda null y la tira no se renderiza (no se inventan cifras).
+let githubStats: string[][] | null = null;
+try {
+  const raw = fs.readFileSync(path.resolve(process.cwd(), 'data/github-state.json'), 'utf8');
+  const parsed = JSON.parse(raw);
+  if (parsed && typeof parsed.publicRepos === 'number' && typeof parsed.stars === 'number') {
+    githubStats = [
+      [`${parsed.publicRepos}`, page.githubStatsLabels[0]],
+      [`${parsed.stars}`, page.githubStatsLabels[1]],
+      [`${parsed.followers}`, page.githubStatsLabels[2]],
+    ];
+  }
+} catch { githubStats = null; }
+
+// Rol actual para la señal de liderazgo del hero (faceta de líder de proyectos).
+const currentRole = experience[0];
+
+/**
+ * Extracto REAL del workflow de validación del repo. Se cita VERBATIM y por eso
+ * no se traduce: el nombre del paso es literalmente el que figura en
+ * `.github/workflows/validate.yml`, así que traducirlo convertiría una cita
+ * verificable en una paráfrasis inventada.
+ */
+const validateExcerpt = `# .github/workflows/validate.yml (extracto)
+- run: npm ci
+- run: npm run build
+- name: Run tests against the compiled build
+  run: VALIDATE_BUILD=1 npm test
+- run: VALIDATE_BUILD=1 npm run validate
+- run: npm run links`;
+
+// cadena de entrega real derivada de los workflows existentes del repositorio.
+const deliveryFiles = ['validate.yml', 'site-quality.yml', 'e2e.yml', 'external-links.yml', 'preview.yml', 'deploy-pages.yml'];
+const deliveryChain = deliveryFiles.map((file, index) => [
+  String(index + 1).padStart(2, '0'), file, page.deliveryChain[index],
+]);
+
+const featuredProjects = projects.filter((project) => project.featured);
+const logos = [
+  { name: 'AWS', logo: '/brands/aws.svg' }, { name: 'Azure', logo: '/brands/azure.svg' },
+  { name: 'GCP', logo: '/brands/googlecloud.svg' }, { name: 'Docker', logo: '/brands/docker.svg' },
+  { name: 'Terraform', logo: '/brands/terraform.svg' }, { name: 'Kubernetes', logo: '/brands/kubernetes.svg' },
+  { name: 'Python', logo: '/brands/python.svg' }, { name: 'Go', logo: '/brands/go.svg' },
+];
+
+const rail: [string, string][] = [
+  ['#impacto', page.rail.impact], ['#skills', page.rail.skills], ['#proyectos', page.rail.projects],
+  ['#ensenanza', page.rail.teaching], ['#certificaciones', page.rail.certifications],
+  ['#valor', page.rail.value], ['#contacto', page.rail.contact],
+];
+---
+<BaseLayout title={page.title} description={profile.intro} lang={lang} routeKey="home" preloadImage="/images/profile-v2-640.webp" preloadImageSrcset="/images/profile-v2-320.webp 320w, /images/profile-v2-640.webp 640w, /images/profile-v2-960.webp 960w" preloadImageSizes="(max-width: 640px) 88vw, 38vw">
+  <nav class="journey-rail journey-rail--floating" aria-label={page.railAria}>{rail.map(([href, label]) => <a href={href} aria-label={label}><span class="journey-dot" aria-hidden="true"></span><span class="journey-text">{label}</span></a>)}</nav>
+  <section class="hero" data-section="home">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> {page.eyebrow}</p>
+        <h1>{page.h1Before}<em>{page.h1Emphasis}</em></h1>
+        <p class="hero-role"><Icon name="fas fa-briefcase" /> <span>{page.currentlyPrefix} <strong>{currentRole.role}</strong> · {currentRole.company}</span></p>
+        <p class="lede">{profile.intro}{page.heroLedeTail}</p>
+        <div class="hero-actions"><a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="fab fa-whatsapp" /> {page.ctaWhatsapp}</a><a class="button button--ghost" href="#recorridos"><Icon name="fas fa-arrow-down" /> {page.ctaChoosePath}</a></div>
+        <ul class="hero-facts" aria-label={page.factsAria}>{profile.facts.map((fact) => <li>{fact.href ? <a class="hero-fact-link" href={fact.href} {...(fact.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={fact.linkLabel}><strong>{fact.value}</strong><span>{fact.label}</span></a> : <><strong>{fact.value}</strong><span>{fact.label}</span></>}</li>)}</ul>
+      </div>
+      <aside class="profile-panel" aria-label={page.profilePanelAria}>
+        <div class="profile-image"><picture><source srcset="/images/profile-v2-320.webp 320w, /images/profile-v2-640.webp 640w, /images/profile-v2-960.webp 960w" sizes="(max-width: 640px) 88vw, 38vw" type="image/webp"/><img src="/images/profile-v2-640.jpg" srcset="/images/profile-v2-320.jpg 320w, /images/profile-v2-640.jpg 640w, /images/profile-v2-960.jpg 960w" sizes="(max-width: 640px) 88vw, 38vw" width="960" height="960" alt={page.portraitAlt} fetchpriority="high" decoding="async" /></picture></div>
+        <div class="profile-meta"><div><a class="profile-name" href={routePath('about', lang)}>Jerson Martínez</a><span>{page.profileRole}</span></div><span class="profile-tag">MULTI-CLOUD</span></div>
+        <nav class="profile-links" aria-label={page.profileLinksAria}><a class="profile-social" href={profile.github} target="_blank" rel="noopener noreferrer" aria-label={`GitHub, ${copy.newTab}`} data-tooltip="GitHub"><Icon name="fab fa-github" /><span class="profile-social-name">GitHub</span></a><a class="profile-social" href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label={`LinkedIn, ${copy.newTab}`} data-tooltip="LinkedIn"><Icon name="fab fa-linkedin-in" /><span class="profile-social-name">LinkedIn</span></a><a class="profile-social" href="https://www.youtube.com/@DevOpsea" target="_blank" rel="noopener noreferrer" aria-label={`DevOpsea, YouTube, ${copy.newTab}`} data-tooltip="DevOpsea"><Icon name="fab fa-youtube" /><span class="profile-social-name">DevOpsea</span></a></nav>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--tight intent-section" id="recorridos" aria-labelledby="recorridos-title">
+    <div class="container"><div class="section-heading"><p class="section-kicker">{page.pathsKicker}</p><h2 id="recorridos-title">{page.pathsTitle}</h2><p class="lede">{page.pathsLede}</p></div><div class="intent-grid">{collaborationModes.map((mode) => <article class="card card--interactive intent-card"><span class="intent-icon" aria-hidden="true"><Icon name={mode.icon} /></span><h3>{mode.title}</h3><p>{mode.description}</p><a class="card-link" href={mode.href}>{mode.cta}</a></article>)}</div></div>
+  </section>
+
+  <section class="section section--line" id="impacto" data-section="impacto" aria-labelledby="impacto-title">
+    <div class="container">
+      <div class="journey-content"><div class="section-heading"><p class="section-kicker">{page.impactKicker}</p><h2 id="impacto-title">{page.impactTitle}</h2><p class="lede">{page.impactLede}</p></div><div class="cards impact-cards"><article class="card"><span class="card-label">{page.impactCards[0].label}</span><h3>{page.impactCards[0].title}</h3><p>{page.impactCards[0].body}</p><a class="card-link" href={routePath('experience', lang)}>{page.impactCards[0].cta}</a></article><article class="card"><span class="card-label">{page.impactCards[1].label}</span><h3>{page.impactCards[1].title}</h3><p>{page.impactCards[1].body}</p><a class="card-link" href={`${routePath('projects', lang)}#proyecto-kiro-crew`}>{page.impactCards[1].cta}</a></article><article class="card"><span class="card-label">{page.impactCards[2].label}</span><h3>{page.impactCards[2].title}</h3><p>{page.impactCards[2].body}</p><a class="card-link" href={`${routePath('experience', lang)}#pliret-prb`}>{page.impactCards[2].cta}</a></article></div><div class="methodology-strip"><p class="methodology-label">{page.methodologyLabel}</p><ul class="methodology-chips" role="list">{methodologies.map((m) => <li>{m}</li>)}</ul></div><div class="logo-cloud-wrap"><LogoCloud items={logos} lang={lang} /></div></div>
+    </div>
+  </section>
+
+  <section class="section section--line" id="skills" data-section="skills" aria-labelledby="skills-title"><div class="container"><div class="section-heading"><p class="section-kicker">{page.skillsKicker}</p><h2 id="skills-title">{page.skillsTitle}</h2><p class="lede">{page.skillsLede}</p></div><SkillsExplorer skills={skills} lang={lang} /></div></section>
+
+  <section class="section" id="proyectos" data-section="proyectos" aria-labelledby="proyectos-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">{page.projectsKicker}</p><h2 id="proyectos-title">{page.projectsTitle}</h2><p class="lede">{page.projectsLede}</p></div><a class="button button--ghost" href={routePath('projects', lang)}><Icon name="fas fa-arrow-right" /> {page.projectsCta}</a></div><div class="featured-grid">{featuredProjects.map((project) => <ProjectCard project={project} featured lang={lang} />)}</div></div></section>
+
+  <section class="section section--line" id="ensenanza" data-section="ensenanza" aria-labelledby="ensenanza-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">{page.teachingKicker}</p><h2 id="ensenanza-title">{page.teachingTitle}</h2><p class="lede">{page.teachingLede}</p></div><div class="head-row-actions"><a class="button button--ghost" href={routePath('courses', lang)}><Icon name="fas fa-graduation-cap" /> {page.teachingCtaCourses}</a><a class="button button--ghost" href={`${routePath('courses', lang)}#canales`}><Icon name="fas fa-play" /> {page.teachingCtaChannels}</a></div></div><div class="teaching-grid">{teaching.map((item) => <article class="card teaching-card card--interactive"><img src={item.logo} width="40" height="40" alt="" loading="lazy" decoding="async" /><div><h3>{item.name}</h3><div class="teaching-metrics">{item.metrics.map((metric) => <strong>{metric}</strong>)}</div><p>{item.description}</p></div><a href={item.href} target="_blank" rel="noopener noreferrer">{item.cta}<span class="sr-only">{copy.newTabSuffix}</span></a></article>)}</div><div class="writing-band"><div class="section-heading"><p class="section-kicker">{writing.kicker}</p><h3>{writing.title}</h3><p class="lede">{writing.lede}</p></div><ul class="writing-topics" role="list" aria-label={page.writingTopicsAria}>{writing.topics.map((topic) => <li>{topic}</li>)}</ul><div class="writing-grid">{writing.outlets.map((outlet) => <article class="card writing-card card--interactive"><div class="writing-card-head"><h4>{outlet.name}</h4><span class="card-label">{outlet.role}</span></div>{outlet.metric && <strong class="writing-metric">{outlet.metric}</strong>}<p>{outlet.description}</p><a class="card-link" href={outlet.href} target="_blank" rel="noopener noreferrer">{outlet.cta}<span class="sr-only">{copy.newTabSuffix}</span></a></article>)}</div></div></div></section>
+
+  <section class="section" id="certificaciones" data-section="certificaciones" aria-labelledby="certificaciones-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">{page.certsKicker}</p><h2 id="certificaciones-title">{page.certsTitle}</h2><p class="lede">{page.certsLede}</p></div><a class="button button--ghost" href={routePath('certifications', lang)}><Icon name="fas fa-certificate" /> {page.certsCta}</a></div><div class="cert-grid cert-grid--badges cert-grid--summary">{certifications.map((cert) => <CredentialCard certification={cert} summary limit={3} lang={lang} />)}</div></div></section>
+
+  <section class="section section--line" id="evidencia-tecnica" aria-labelledby="evidencia-title">
+    <div class="container">
+      <div class="section-heading"><p class="section-kicker">{page.evidenceKicker}</p><h2 id="evidencia-title">{page.evidenceTitle}</h2><p class="lede">{page.evidenceLede}</p></div>
+      <div class="evidence-grid">
+        <div>
+          <CodeBlock code={validateExcerpt} lang="yaml" uiLang={lang} label={page.pipelineLabel} href="https://github.com/jersonmartinez/jersonmartinez/blob/main/.github/workflows/validate.yml" />
+        </div>
+        <figure class="evidence-figure">
+          <svg viewBox="0 0 320 180" role="img" aria-labelledby="arch-title arch-desc">
+            <title id="arch-title">{page.diagramTitle}</title>
+            <desc id="arch-desc">{page.diagramDesc}</desc>
+            <rect class="diagram-base" x="0" y="0" width="320" height="180" rx="8" />
+            <rect class="diagram-node" x="16" y="70" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="53" y="94" text-anchor="middle">{page.diagramNodes.source}</text>
+            <rect class="diagram-node" x="123" y="40" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="160" y="64" text-anchor="middle">{page.diagramNodes.gates}</text>
+            <rect class="diagram-node" x="123" y="100" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="160" y="124" text-anchor="middle">{page.diagramNodes.build}</text>
+            <rect class="diagram-node" x="230" y="70" width="74" height="40" rx="6" />
+            <text class="diagram-node-label" x="267" y="94" text-anchor="middle">{page.diagramNodes.cdn}</text>
+            <path class="diagram-edge" d="M90 90 H110 V60 H123" />
+            <path class="diagram-edge" d="M90 90 H110 V120 H123" />
+            <path class="diagram-edge" d="M197 60 H214 V90 H230" />
+            <path class="diagram-accent" d="M197 120 H214 V90 H230" />
+          </svg>
+          <figcaption class="evidence-figcaption">{page.diagramCaptionBefore}<code>&lt;desc&gt;</code>{page.diagramCaptionAfter}</figcaption>
+        </figure>
+      </div>
+      <h3 class="sr-only">{page.deliveryChainSrTitle}</h3>
+      <ol class="delivery-chain" aria-label={page.deliveryChainAria}>
+        {deliveryChain.map(([step, file, detail]) => <li><span class="delivery-chain-step">{step}</span><span><strong>{file}</strong> — {detail}</span></li>)}
+      </ol>
+      {githubStats && (
+        <ul class="github-stats" aria-label={page.githubStatsAria}>
+          {githubStats.map(([value, label]) => <li><strong>{value}</strong><span>{label}</span></li>)}
+        </ul>
+      )}
+    </div>
+  </section>
+
+  <section class="section section--line" id="valor" data-section="valor" aria-labelledby="valor-title"><div class="container"><div class="section-heading"><p class="section-kicker">{page.valueKicker}</p><h2 id="valor-title">{page.valueTitle}</h2><p class="lede">{page.valueLede}</p></div><ul class="value-grid" role="list">{valueProps.map((v) => <li><a class="value-card" href={v.href}><strong class="value-metric">{v.metric}</strong><span class="value-label">{v.label}</span><span class="value-detail">{v.detail}</span></a></li>)}</ul></div></section>
+
+  <section class="section section--tight" id="contacto" data-section="contacto" aria-labelledby="contacto-title"><div class="container"><div class="contact-panel"><div><p class="section-kicker">{page.contactKicker}</p><h2 id="contacto-title">{page.contactTitle}</h2><p>{page.contactBody}</p></div><div class="contact-actions"><a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="fab fa-whatsapp" /> {page.contactCtaWhatsapp}</a><a class="button button--ghost" href={routePath('about', lang)}>{page.contactCtaAbout}</a></div></div></div></section>
+</BaseLayout>

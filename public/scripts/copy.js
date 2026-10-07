@@ -11,7 +11,9 @@
     const label = button.querySelector('[class$="-copy-label"], .copy-label');
     const prevIcon = icon ? icon.className : null;
     if (icon) icon.className = 'fas fa-check';
-    if (label) { label.dataset.prev = label.textContent; label.textContent = 'Copiado'; }
+    // Etiqueta servida en el idioma de la página; el fallback mantiene el texto anterior.
+    const copiedLabel = button.getAttribute('data-copied-label') || 'Copiado';
+    if (label) { label.dataset.prev = label.textContent; label.textContent = copiedLabel; }
     button.setAttribute('data-copied', 'true');
     window.setTimeout(() => {
       if (icon && prevIcon) icon.className = prevIcon;

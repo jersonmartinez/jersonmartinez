@@ -3,6 +3,7 @@
 **Ingeniero DevOps, SRE y DevSecOps especializado en plataformas cloud.** Diseño plataformas cloud confiables, automatizo operaciones y convierto la gobernanza en una ventaja para los equipos.
 
 [![Sitio web](https://img.shields.io/badge/Sitio_web-jersonmartinez.com-0F172A?logo=astro&logoColor=white)](https://www.jersonmartinez.com)
+[![English version](https://img.shields.io/badge/Read_in-English-1F6FEB)](https://www.jersonmartinez.com/en)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-jersonmartinezsm-0A66C2)](https://www.linkedin.com/in/jersonmartinezsm/)
 [![AWS certificado](https://img.shields.io/badge/AWS-3_certificaciones-FF9900)](https://www.jersonmartinez.com/certifications.html)
 [![Azure certificado](https://img.shields.io/badge/Azure-6_certificaciones-0078D4)](https://www.jersonmartinez.com/certifications.html)
@@ -14,6 +15,8 @@
 | 100+ certificaciones obtenidas | 60+ artículos publicados | +77K estudiantes en Udemy |
 
 Latinoamérica · GMT-6 · Español nativo, inglés B1 profesional.
+
+El sitio está disponible en español ([jersonmartinez.com](https://www.jersonmartinez.com)) y en inglés ([/en](https://www.jersonmartinez.com/en)), con las mismas seis secciones en ambos idiomas.
 
 ## Empieza por aquí
 

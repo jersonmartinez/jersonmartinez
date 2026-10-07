@@ -60,6 +60,17 @@ body.nav-locked { overflow: hidden; }
 .theme-toggle:hover { background: var(--surface-tint-cyan); border-color: var(--line-strong); color: var(--text); }
 .theme-toggle[hidden] { display: none; }
 
+/* Conmutador de idioma. Comparte la geometría EXACTA del conmutador de tema porque
+   son hermanos en la misma fila: darle un alto distinto (p. ej. un suelo de 44 px)
+   descuadraría visiblemente el grupo de controles. 2.6rem = 41.6 px supera el
+   mínimo de 24x24 px de WCAG 2.5.8 (AA).
+   A diferencia de sus hermanos, su etiqueta SÍ es visible: el icono de idioma no
+   dice a QUÉ idioma se cambia, así que «EN»/«ES» es la información, no decoración. */
+.lang-switch { align-items: center; background: transparent; border: 1px solid var(--line); border-radius: var(--radius-md); color: var(--muted); display: inline-flex; flex: 0 0 auto; font-size: var(--fs-sm); font-weight: 700; gap: .34rem; min-height: 2.6rem; padding: .55rem .5rem; text-decoration: none; transition: color var(--dur-base) var(--ease-standard), background var(--dur-base) var(--ease-standard), border-color var(--dur-base) var(--ease-standard); white-space: nowrap; }
+.lang-switch .icon { color: var(--cyan); font-size: .9rem; }
+.lang-switch:hover, .lang-switch:focus-visible { background: var(--surface-tint-cyan); border-color: var(--line-strong); color: var(--text); }
+.lang-switch-label { font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+
 .sr-only { border: 0; clip: rect(0, 0, 0, 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; white-space: nowrap; width: 1px; }
 /* iconos SVG inline (sprite) que reemplazan el webfont de Font Awesome.
    Se dimensionan como un glyph de texto: 1em, color heredado (currentColor). */

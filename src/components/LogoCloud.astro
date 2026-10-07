@@ -1,10 +1,13 @@
 ---
 import type { LogoItem } from '../types/content';
+import { DEFAULT_LOCALE, type Lang } from '../i18n/config';
+import { t } from '../i18n/ui';
 interface Props {
   items: LogoItem[];
+  lang?: Lang;
 }
-const { items } = Astro.props;
+const { items, lang = DEFAULT_LOCALE } = Astro.props;
 ---
-<ul class="logo-cloud" role="list" aria-label="Ecosistema tecnológico">
+<ul class="logo-cloud" role="list" aria-label={t(lang).components.logoCloudAria}>
   {items.map((item) => <li class="logo-pill"><img src={item.logo} alt="" width="28" height="28" loading="lazy" decoding="async" /><span>{item.name}</span></li>)}
 </ul>
