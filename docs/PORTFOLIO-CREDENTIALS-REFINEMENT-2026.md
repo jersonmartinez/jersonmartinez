@@ -78,7 +78,7 @@ byte-idénticos a los adjuntos aprobados (ver «Verificación de los PDF del CV�
 
 ### SEO / datos estructurados (16–20)
 
-16. **URL de emisor oficial en cada proveedor.** `src/data/portfolio.js` añade
+16. **URL de emisor oficial en cada proveedor.** `src/data/portfolio.ts` añade
     `issuerUrl` verificable (AWS, Microsoft Learn, GitHub) como fuente única.
 17. **`recognizedBy.url` en el schema de credenciales.** El JSON-LD
     `EducationalOccupationalCredential` enlaza al emisor oficial cuando existe.
@@ -109,7 +109,7 @@ byte-idénticos a los adjuntos aprobados (ver «Verificación de los PDF del CV�
 
 ### CV / enlaces (27–28)
 
-27. **Enlace EN del CV exacto en la app.** `src/data/portfolio.js` usa
+27. **Enlace EN del CV exacto en la app.** `src/data/portfolio.ts` usa
     exactamente la URL de Drive aprobada.
 28. **Enlace EN del CV exacto en el README.** `README.md` usa la misma URL EN
     exacta; se elimina la URL EN anterior.
@@ -120,7 +120,7 @@ byte-idénticos a los adjuntos aprobados (ver «Verificación de los PDF del CV�
     `tests/credential-refinement.test.js` fija el contrato: el home reutiliza
     `CredentialCard summary`; no reaparecen `↳`, `cert-list`, `credential-link`
     ni `cert-card`; `CredentialCard` expone código, verificación y modo summary;
-    la URL EN exacta vive en `portfolio.js` y `README.md`.
+    la URL EN exacta vive en `portfolio.ts` y `README.md`.
 30. **Contrato de emisores oficiales.** La misma suite verifica que haya
     exactamente 3 `issuerUrl` y que todas sean `https://`.
 
@@ -139,13 +139,13 @@ realiza ningún cambio binario (hacerlo sería fabricar un cambio inexistente).
 ## Estado de los enlaces del CV
 
 - **CV EN (inglés): resuelto.** El enlace apunta ya a la URL de Drive aprobada
-  en `src/data/portfolio.js` y en `README.md`:
+  en `src/data/portfolio.ts` y en `README.md`:
   [Google Doc EN aprobado](https://docs.google.com/document/d/18q3xhTd7bmymk-ZeMM_BHhJT6Qp4rLcxu05DozMQRYo/edit?usp=drive_link).
 - **CV ES (español): pendiente de una sola línea.** La URL ES exacta llegó
   redactada por el runtime (`[REDACTED: credential]`) y **no** está en las
   anotaciones del PDF. No se inventa ni se infiere: el `href` ES actual se
   conserva tal cual como estado temporal. El cambio pendiente es una única línea
-  en `cvLinks` (`src/data/portfolio.js`), reemplazando el `href` del elemento
+  en `cvLinks` (`src/data/portfolio.ts`), reemplazando el `href` del elemento
   `lang: 'es'` por la URL exacta cuando esté disponible; no requiere más ajustes
   de código, estilos ni pruebas.
 

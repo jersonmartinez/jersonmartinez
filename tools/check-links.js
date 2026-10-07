@@ -91,7 +91,7 @@ const sources = haveCompleteBuild
       'src/pages/courses.html.astro',
       'src/pages/about.html.astro',
       'src/pages/404.astro',
-      'src/data/portfolio.js',
+      'src/data/portfolio.ts',
       'src/layouts/BaseLayout.astro',
       'src/components/SiteHeader.astro',
     ];

@@ -54,7 +54,7 @@ test('no quedan la flecha ↳ ni la variante antigua de credenciales en CSS', ()
 });
 
 test('el enlace EN del CV usa exactamente la URL de Drive aprobada', () => {
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   const readme = read('README.md');
   assert.ok(data.includes(EN_CV_URL), 'portfolio.js debe usar la URL EN exacta');
   assert.ok(readme.includes(EN_CV_URL), 'README.md debe usar la URL EN exacta');
@@ -64,7 +64,7 @@ test('el enlace EN del CV usa exactamente la URL de Drive aprobada', () => {
 });
 
 test('cada proveedor de certificación declara una URL de emisor oficial verificable', () => {
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   const issuerUrls = [...data.matchAll(/issuerUrl:\s*'([^']+)'/g)].map((m) => m[1]);
   assert.equal(issuerUrls.length, 3, 'Se esperaban 3 issuerUrl (AWS, Azure, GitHub)');
   for (const url of issuerUrls) assert.match(url, /^https:\/\//, `issuerUrl debe ser https: ${url}`);

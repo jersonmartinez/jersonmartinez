@@ -1,5 +1,5 @@
 // Genera sitemap.xml desde las rutas INDEXABLES reales y una única fuente de fecha
-// (contentMeta.lastReviewed en src/data/portfolio.js), en lugar de mantenerlo a mano.
+// (contentMeta.lastReviewed en src/data/portfolio.ts), en lugar de mantenerlo a mano.
 // Excluye 404 y guia-visual (noindex). `--check` falla si el fichero commiteado difiere
 // (guarda contra drift: una ruta nueva o una fecha vieja se detectan en CI).
 const fs = require('node:fs');
@@ -35,14 +35,14 @@ function urlFor(base, loc, locale) {
 }
 
 function siteBase() {
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   const match = data.match(/website:\s*'([^']+)'/);
   if (!match) throw new Error('No se encontró profile.website en portfolio.js');
   return match[1].replace(/\/$/, '');
 }
 
 function lastmod() {
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   const match = data.match(/lastReviewed:\s*'(\d{4}-\d{2}-\d{2})'/);
   if (!match) throw new Error('No se encontró contentMeta.lastReviewed en portfolio.js');
   return match[1];

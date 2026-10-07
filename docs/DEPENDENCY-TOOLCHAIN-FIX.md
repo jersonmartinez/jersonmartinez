@@ -84,7 +84,7 @@ lo señalaba como pista; TypeScript 6 lo convierte en error.
   ejecución**: el ternario sí discrimina; lo que faltaba era el tipo literal que
   lo demuestra.
 - `Course.free` es opcional porque en el dato real sólo la etapa gratuita declara
-  el campo (comprobado en `src/data/portfolio.js`: 1 de 7).
+  el campo (comprobado en `src/data/portfolio.ts`: 1 de 7).
 
 Resultado: `astro check` pasa de «0 errores, 18 pistas» a **0 errores, 0 avisos,
 1 pista**. Las 18 pistas eran exactamente esos `any` implícitos.

@@ -1,6 +1,6 @@
 // Gate de internacionalización. Dos comprobaciones independientes:
 //
-//  1. COBERTURA del solapamiento inglés: cada registro de src/data/portfolio.js
+//  1. COBERTURA del solapamiento inglés: cada registro de src/data/portfolio.ts
 //     (proyecto, skill, experiencia, curso) debe tener su entrada en
 //     src/i18n/content.en.ts. El resolutor cae al español cuando falta una clave,
 //     que es lo correcto en ejecución (nunca rompe la página) pero significa que
@@ -24,11 +24,14 @@ const exists = (file) => fs.existsSync(path.join(ROOT, file));
 const failures = [];
 const fail = (message) => failures.push(message);
 
-/** Extrae el bloque de un `export const <name> = [...]` como texto. */
+/** Extrae el bloque de un `export const <name>[: Tipo] = [...]` como texto. */
 function block(source, name) {
-  const start = source.indexOf(`export const ${name} =`);
-  if (start === -1) return '';
-  const rest = source.slice(start + 1);
+  // La anotación de tipo es opcional porque el dato la lleva (`: Project[] = [`)
+  // y antes vivía sin ella: buscar `export const <name> =` literal dejaba el
+  // bloque vacío y el gate ciego, que es lo que cazó el aviso de abajo.
+  const match = new RegExp(`^export const ${name}\\s*(?::[^=]+)?=`, 'm').exec(source);
+  if (!match) return '';
+  const rest = source.slice(match.index + 1);
   const next = rest.indexOf('\nexport const ');
   return next === -1 ? rest : rest.slice(0, next);
 }
@@ -39,7 +42,7 @@ function values(text, key) {
 }
 
 function checkOverlayCoverage() {
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   const overlay = read('src/i18n/content.en.ts');
 
   const groups = [
@@ -51,7 +54,7 @@ function checkOverlayCoverage() {
 
   for (const { label, keys } of groups) {
     if (!keys.length) {
-      fail(`No se pudo extraer ningún ${label} de portfolio.js: el gate quedaría ciego.`);
+      fail(`No se pudo extraer ningún ${label} de portfolio.ts: el gate quedaría ciego.`);
       continue;
     }
     for (const key of keys) {
@@ -77,8 +80,8 @@ const SPANISH_MARKERS = [
 function visibleText(html) {
   // El <title> es texto que el visitante lee (la pestaña del navegador), así que
   // se conserva; el resto de <head> son metadatos y se descarta.
-  const title = (html.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || '';
-  const body = (html.match(/<body[^>]*>([\s\S]*)<\/body>/) || [])[1] || html;
+  const title = (html.match(/<title\b[^>]*>([\s\S]*?)<\/title\s*>/i) || [])[1] || '';
+  const body = (html.match(/<body\b[^>]*>([\s\S]*)<\/body\s*>/i) || [])[1] || html;
   return `${title} ${body}`
     // Subárboles declarados explícitamente en español: los títulos de los cursos
     // son reales y se conservan a propósito, así que no son una fuga.
@@ -87,11 +90,17 @@ function visibleText(html) {
     // cualquier `\w+` hacía que `<html lang="es">` coincidiera y el documento
     // español entero se borrara, de modo que el detector informaba «limpio»
     // sobre cualquier página. Lo detectó la prueba de control, no el gate.
-    .replace(/<(h[1-6]|p|li|span|div|strong|em|a|small|td|dd|dt)[^>]*\blang="es"[^>]*>[\s\S]*?<\/\1>/g, ' ')
-    .replace(/<script[\s\S]*?<\/script>/g, ' ')
-    .replace(/<style[\s\S]*?<\/style>/g, ' ')
-    .replace(/<svg[\s\S]*?<\/svg>/g, ' ')
-    .replace(/<!--[\s\S]*?-->/g, ' ')
+    //
+    // Todos los filtros van con `i` y con `\b` tras el nombre: HTML no distingue
+    // mayúsculas, así que un `<SCRIPT>` o un `lang='ES'` se colaba intacto y su
+    // contenido se contaba como texto visible (CodeQL js/bad-tag-filter). El
+    // `\b` evita además que `<svg…>` cubra una etiqueta que sólo empiece igual.
+    .replace(/<(h[1-6]|p|li|span|div|strong|em|a|small|td|dd|dt)\b[^>]*\blang\s*=\s*["']es["'][^>]*>[\s\S]*?<\/\1\s*>/gi, ' ')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, ' ')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, ' ')
+    .replace(/<svg\b[^>]*>[\s\S]*?<\/svg\s*>/gi, ' ')
+    // `--!>` cierra un comentario igual que `-->` en el parser real de HTML.
+    .replace(/<!--[\s\S]*?--!?>/g, ' ')
     // Los atributos van fuera: contienen URLs (la de WhatsApp lleva texto en
     // español por diseño) y no son texto leído por el visitante.
     .replace(/<[^>]+>/g, ' ')

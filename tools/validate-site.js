@@ -27,7 +27,7 @@ function validateSources() {
     .map((entry) => `src/components/${entry}`)
     .filter((file) => fs.statSync(path.join(ROOT, file)).isFile());
   const brandRefs = componentFiles.map(read).join('\n')
-    + read('src/data/portfolio.js') + SOURCE_PAGES.map(read).join('\n');
+    + read('src/data/portfolio.ts') + SOURCE_PAGES.map(read).join('\n');
   for (const file of fs.readdirSync(path.join(ROOT, 'public/brands'))) {
     if (!brandRefs.includes(`brands/${file}`)) fail(`Asset huérfano: public/brands/${file} no se referencia en el sitio.`);
   }
@@ -43,7 +43,7 @@ function validateSources() {
     if (!/\btitle=("|\{|`)/.test(text)) fail(`${page}: BaseLayout sin title.`);
     if (!/\bdescription=("|\{|`)/.test(text)) fail(`${page}: BaseLayout sin description.`);
   }
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   for (const value of ['careerStartYear: 2016', 'yearsExperience: 10', 'Más de 77 mil estudiantes', '+14K suscriptores', '+5K suscriptores', '+60 artículos', '7 cursos impartidos', 'WSL Container', 'GitHub Foundations', 'Infralytics']) if (!data.includes(value)) fail(`Falta dato: ${value}`);
   if ((data.match(/credentialId:/g) || []).length !== 10) fail('Se esperaban exactamente 10 credenciales oficiales.');
   if (data.includes('+60 artículos y cursos')) fail('OpenWebinars debe separar artículos y cursos.');

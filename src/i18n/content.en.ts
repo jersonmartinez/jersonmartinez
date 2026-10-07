@@ -1,7 +1,7 @@
 /**
  * Solapamiento INGLÉS del contenido con datos.
  *
- * `src/data/portfolio.js` sigue siendo la única fuente de verdad: aquí no se
+ * `src/data/portfolio.ts` sigue siendo la única fuente de verdad: aquí no se
  * duplica ni la estructura ni los enlaces ni las cifras, sólo el TEXTO legible.
  * Cada entrada se indexa por una clave que ya existe en el dato y que no es
  * texto visible (`experience.id`, `project.name`, el nombre de dominio de un

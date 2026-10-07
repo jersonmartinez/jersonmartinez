@@ -139,7 +139,7 @@ Estos valores están cubiertos por el test `tests/portfolio.test.js`
 | 74 | #38 | `src/components/SiteHeader.astro` | Lógica de estado activo del nav para anclas del home (SSR normalizado + sync por sección visible). | `c0dbd20` |
 | 75 | #39 | `src/pages/index.astro` | Nav 'Contacto' (#contacto) diferenciado del CTA de email ('Escríbeme'). | `c0dbd20` |
 | 76 | #51 | `src/layouts/BaseLayout.astro` | Menú de rutas internas agrupado en el footer (Proyectos/Cursos/Credenciales/Trayectoria). | `c0dbd20` |
-| 77 | #61 | `src/data/portfolio.js` | Verificado: CTA de Crashell idéntico en ambos sitios (fuente única en portfolio.js). | `c0dbd20` |
+| 77 | #61 | `src/data/portfolio.ts` | Verificado: CTA de Crashell idéntico en ambos sitios (fuente única en portfolio.js). | `c0dbd20` |
 | 78 | #67 | `src/layouts/BaseLayout.astro` | Prop breadcrumb que emite schema.org/BreadcrumbList JSON-LD en páginas internas. | `2646f97` |
 | 79 | #68 | `src/pages/projects.html.astro` | Migas de pan accesibles (aria-current=page) en projects. | `2646f97` |
 | 80 | #69 | `src/pages/courses.html.astro` | Migas de pan accesibles (aria-current=page) en courses. | `2646f97` |
@@ -149,13 +149,13 @@ Estos valores están cubiertos por el test `tests/portfolio.test.js`
 
 | # | Ref. audit | Archivo / área | Mejora | Commit |
 | --- | --- | --- | --- | --- |
-| 82 | #1 | `src/data/portfolio.js` | profile.yearsExperience como fuente única; el hero de experiencia y los facts derivan de él (sin cifras divergentes). | `fd0c9ce` |
-| 83 | #3 | `src/data/portfolio.js` | Eliminada la cifra estática '122 estrellas' del kind de docker-lamp (dato no verificable en tiempo de build). | `fd0c9ce` |
+| 82 | #1 | `src/data/portfolio.ts` | profile.yearsExperience como fuente única; el hero de experiencia y los facts derivan de él (sin cifras divergentes). | `fd0c9ce` |
+| 83 | #3 | `src/data/portfolio.ts` | Eliminada la cifra estática '122 estrellas' del kind de docker-lamp (dato no verificable en tiempo de build). | `fd0c9ce` |
 | 84 | #18 | `src/pages/index.astro` | hero-facts verificables enlazan a su fuente (100+ -> /certifications.html; 60+ -> OpenWebinars). | `fd0c9ce` |
 | 85 | #33 | `src/pages/courses.html.astro` | Descripción de cada course-card derivada del framework real del nombre del curso. | `fd0c9ce` |
-| 86 | #36 | `src/data/portfolio.js` | Métrica de YouTube derivada de un único campo subscribers (copy confirmado intacto). | `fd0c9ce` |
+| 86 | #36 | `src/data/portfolio.ts` | Métrica de YouTube derivada de un único campo subscribers (copy confirmado intacto). | `fd0c9ce` |
 | 87 | #37 | `src/pages/index.astro` | Métricas de suscriptores en teaching derivadas de youtubeChannels (fuente única). | `fd0c9ce` |
-| 88 | #42 | `src/data/portfolio.js` | Comentario de cabecera declarando los VALORES PROTEGIDOS confirmados (Udemy "Más de 77 mil estudiantes", DevOpsea "+14K suscriptores", Side Master "+5K suscriptores", OpenWebinars "+60 artículos y cursos"). | `07bca7e` |
+| 88 | #42 | `src/data/portfolio.ts` | Comentario de cabecera declarando los VALORES PROTEGIDOS confirmados (Udemy "Más de 77 mil estudiantes", DevOpsea "+14K suscriptores", Side Master "+5K suscriptores", OpenWebinars "+60 artículos y cursos"). | `07bca7e` |
 | 89 | #101 | `src/pages/projects.html.astro` | Chip "{projects.length} proyectos" (conteo real desde datos). | `e1befd2` |
 
 ### SEO (16)

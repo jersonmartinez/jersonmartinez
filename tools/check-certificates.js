@@ -27,7 +27,7 @@ const buildSources = [
 ];
 const sourceFallback = [
   'README.md',
-  'src/data/portfolio.js',
+  'src/data/portfolio.ts',
   'src/layouts/BaseLayout.astro',
   'src/pages/index.astro',
   'src/pages/projects.html.astro',

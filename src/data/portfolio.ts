@@ -1,14 +1,25 @@
 // Fuente única de verdad del portfolio.
 // Los datos públicos proceden del CV ES/EN actualizado, del perfil de GitHub,
 // de OpenWebinars y de cifras confirmadas directamente por Jerson.
+//
+// Cada export lleva su tipo de `src/types/content.ts`, así que el COMPILADOR
+// verifica el dato contra su contrato: un campo que falte, sobre o cambie de
+// tipo rompe `astro check`. Se sigue editando igual (objetos literales); lo que
+// antes no existía era la comprobación.
 
-export const contentMeta = {
+import type {
+  AudienceMetrics, Certification, CollaborationMode, ContentMeta, Course, CvLink,
+  ExperienceRecord, OpenWebinarsCourse, Profile, Project, Skill, TeachingEntry,
+  ValueProp, ChannelEntry, Writing,
+} from '../types/content';
+
+export const contentMeta: ContentMeta = {
   lastReviewed: '2026-10-06',
   careerStartYear: 2016,
   continuousLearningSince: '2017-12',
 };
 
-export const profile = {
+export const profile: Profile = {
   name: 'Jerson Martínez',
   location: 'Latinoamérica · GMT-6',
   email: 'jersonmartinezsm@gmail.com',
@@ -28,9 +39,8 @@ export const profile = {
 };
 
 profile.facts[0][0] = `+${profile.yearsExperience}`;
-export const experienceLede = `Más de ${profile.yearsExperience} años conectando proyectos tecnológicos, formación, ingeniería, automatización y estrategia cloud.`;
 
-export const audienceMetrics = {
+export const audienceMetrics: AudienceMetrics = {
   udemy: { label: '+77K estudiantes', longLabel: 'Más de 77 mil estudiantes', lastVerifiedAt: '2026-09-30', source: 'Confirmado por Jerson' },
   devopsea: { label: '+14K suscriptores', lastVerifiedAt: '2026-09-30', source: 'Confirmado por Jerson' },
   sideMaster: { label: '+5K suscriptores', lastVerifiedAt: '2026-09-30', source: 'Confirmado por Jerson' },
@@ -38,7 +48,7 @@ export const audienceMetrics = {
   openWebinarsCourses: { label: '7 cursos impartidos', lastVerifiedAt: '2026-09-30', source: 'Perfil público de OpenWebinars' },
 };
 
-export const skills = [
+export const skills: Skill[] = [
   {
     name: 'Infraestructura', icon: 'fa-server',
     summary: 'Operación híbrida con foco en continuidad, capacidad y administración de sistemas.',
@@ -132,13 +142,13 @@ export const skills = [
   },
 ];
 
-export const stackGroups = skills
-  .filter((skill) => ['Cloud', 'Contenedores', 'IaC', 'DevOps & CI/CD', 'Observabilidad', 'Desarrollo', 'Bases de datos'].includes(skill.name))
-  .map(({ name, items }) => ({ name, items }));
+// El agrupado del stack vive en `getStackGroups` (src/i18n/content.ts), que
+// selecciona por clave neutra y muestra el nombre traducido. Un `stackGroups`
+// aquí quedaría fijado al español y, desde la i18n, sin un solo consumidor.
 
-export const projectSlug = (name) => `proyecto-${name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`;
+export const projectSlug = (name: string): string => `proyecto-${name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`;
 
-export const projects = [
+export const projects: Project[] = [
   {
     name: 'Factib', kind: 'Producto personal', categories: ['personal'], theme: 'Producto · IA aplicada · Plataforma',
     description: 'Producto personal orientado a convertir decisiones financieras en una experiencia operable y clara.',
@@ -219,7 +229,7 @@ export const projects = [
   },
 ];
 
-export const experience = [
+export const experience: ExperienceRecord[] = [
   { id: 'mindtech-nubity', start: '2025-10', end: null, period: 'Octubre 2025 — actualidad', role: 'DevOps Tech Lead', company: 'MindTech — Nubity', description: 'Liderazgo de proyectos DevOps para clientes de Latinoamérica con GitOps, FinOps, DevSecOps, gobierno AWS/Azure, migraciones ETL, asistentes GenAI, AWS MAP y Landing Zones.', context: 'Rol actual de liderazgo técnico.', related: [{ label: 'Ver proyectos de automatización', href: '/projects.html' }] },
   { id: 'pliret-prb', start: '2025-08', end: null, period: 'Agosto 2025 — actualidad', role: 'Sr. DevOps Engineer · Consultor', company: 'Pliret — PRB', description: 'Gobierno interno, GitHub Actions, Terraform y Ansible sobre GCP; mejora reportada del 60% en trazabilidad, seguridad y eficiencia operativa.', context: 'Consultoría concurrente con el rol principal.', related: [{ label: 'Ver habilidades de gobierno', href: '/#skills' }] },
   { id: 'coderslab', start: '2025-02', end: '2025-07', period: 'Febrero — julio 2025', role: 'DevOps Specialist', company: 'CodersLab · Coca-Cola Andina', description: 'GitOps y CI/CD con AWS Lambda, API Gateway, Step Functions, DynamoDB, Terraform, GitHub Actions, Python y Node.js.', related: [{ label: 'Ver experiencia cloud', href: '/#skills' }] },
@@ -230,7 +240,7 @@ export const experience = [
   { id: 'independent-projects', start: '2016', end: '2018', period: '2016 — 2018', role: 'Proyectos tecnológicos independientes', company: 'Desarrollo y formación continua', description: 'Desarrollo de proyectos tecnológicos no detallados públicamente y aprendizaje continuo; desde diciembre de 2017, formación en plataformas como Udemy y OpenWebinars, además de contenido técnico en YouTube.', context: 'Este periodo sustenta el inicio de una trayectoria de más de 10 años sin atribuir proyectos o clientes no publicados.', related: [{ label: 'Ver aprendizaje y certificaciones', href: '/certifications.html' }] },
 ];
 
-export const certifications = [
+export const certifications: Certification[] = [
   {
     provider: 'AWS', logo: '/brands/aws.svg', issuerUrl: 'https://aws.amazon.com/certification/',
     items: [
@@ -258,12 +268,12 @@ export const certifications = [
   },
 ];
 
-export const youtubeChannels = [
+export const youtubeChannels: ChannelEntry[] = [
   { name: 'DevOpsea', logo: '/brands/youtube.svg', metric: audienceMetrics.devopsea.label, description: 'Cursos de Go con Gin, Revel, Echo, Gorilla y Fiber.', href: 'https://www.youtube.com/@DevOpsea?sub_confirmation=1', cta: 'Ir al canal' },
   { name: 'Side Master', logo: '/brands/youtube.svg', metric: audienceMetrics.sideMaster.label, description: 'Sesiones prácticas de aprendizaje autodidacta y programación.', href: 'https://www.youtube.com/@SideMaster?sub_confirmation=1', cta: 'Ir al canal' },
 ];
 
-export const courses = [
+export const courses: Course[] = [
   { name: 'Fundamentos de los Frameworks Web en Go', framework: 'Fundamentos', visual: 'GO+', pathStep: 1, summary: 'Introducción comparativa a Revel, Gin, Echo, Gorilla y Fiber para entender cuándo elegir cada enfoque.', outcome: 'Comprender el mapa de frameworks antes de profundizar en uno.', access: 'Gratis', free: true, href: 'https://www.udemy.com/course/frameworks-web-en-go/' },
   { name: 'Desarrollo Web Go: Usando Gin, Revel, Echo, Gorilla y Fiber', framework: 'Comparativa', visual: 'GO', pathStep: 2, summary: 'Recorrido comparativo por cinco frameworks web de Go, desde la configuración del entorno hasta servidores web ejecutables localmente.', outcome: 'Comparar patrones y construir una base web funcional.', access: 'Acceso en Udemy', href: 'https://www.udemy.com/course/desarrollo-web-go-usando-gin-revel-echo-gorilla-y-fiber/' },
   { name: 'Desarrollo Web en Go con Gin Framework', framework: 'Gin', visual: 'GIN', pathStep: 3, summary: 'APIs web rápidas y eficientes con Gin, desde un entorno sencillo hasta una base preparada para crecer.', outcome: 'Construir APIs y rutas con un framework ligero.', access: 'Acceso en Udemy', href: 'https://www.udemy.com/course/desarrollo-web-en-go-con-gin-framework/' },
@@ -273,7 +283,7 @@ export const courses = [
   { name: 'Desarrollo Web en Go con Revel Framework', framework: 'Revel', visual: 'REVEL', pathStep: 7, summary: 'Aplicaciones web robustas en Go con Revel, incluyendo la puesta en marcha de un proyecto completo.', outcome: 'Levantar una aplicación web estructurada de extremo a extremo.', access: 'Acceso en Udemy', href: 'https://www.udemy.com/course/desarrollo-web-en-go-con-revel-framework/' },
 ];
 
-export const openWebinarsCourses = [
+export const openWebinarsCourses: OpenWebinarsCourse[] = [
   { name: 'Introducción a los Frameworks Web en Go', duration: '1 h 28 min', href: 'https://openwebinars.net/cursos/introduccion-frameworks-web-go/' },
   { name: 'Mi primera página web en Go', duration: '4 h 9 min', rating: '4.8', href: 'https://openwebinars.net/cursos/primera-pagina-web-go/' },
   { name: 'Desarrollo web con el Framework Gin en Go', duration: '2 h', rating: '5', href: 'https://openwebinars.net/cursos/desarrollo-web-framework-gin-go/' },
@@ -283,19 +293,19 @@ export const openWebinarsCourses = [
   { name: 'Desarrollo web con el Framework Revel en Go', duration: '1 h 12 min', rating: '5', href: 'https://openwebinars.net/cursos/desarrollo-web-framework-revel-go/' },
 ];
 
-export const teaching = [
+export const teaching: TeachingEntry[] = [
   { name: 'Udemy', logo: '/brands/udemy.svg', metrics: [audienceMetrics.udemy.label], description: 'Catálogo de cursos de desarrollo web con Go para una comunidad internacional.', cta: 'Ver cursos', href: 'https://www.udemy.com/user/side-master/' },
   { name: 'DevOpsea', logo: '/brands/youtube.svg', metrics: [audienceMetrics.devopsea.label], description: 'Cursos de Go con Gin, Revel, Echo, Gorilla y Fiber.', cta: 'Ir al canal', href: 'https://www.youtube.com/@DevOpsea?sub_confirmation=1' },
   { name: 'Side Master', logo: '/brands/youtube.svg', metrics: [audienceMetrics.sideMaster.label], description: 'Sesiones prácticas de aprendizaje autodidacta y programación.', cta: 'Ir al canal', href: 'https://www.youtube.com/@SideMaster?sub_confirmation=1' },
   { name: 'OpenWebinars', logo: '/brands/openwebinars.svg', metrics: [audienceMetrics.openWebinarsArticles.label, audienceMetrics.openWebinarsCourses.label], description: 'Trabajo como escritor e instructor en cloud, observabilidad, Git, Go y DevOps.', cta: 'Ver perfil de instructor', href: 'https://openwebinars.net/profesores/antoniomorenosm/' },
 ];
 
-export const cvLinks = [
+export const cvLinks: CvLink[] = [
   { label: 'CV en español', href: 'https://docs.google.com/document/d/1r-Hpl-3WV1qDlLiUWJZkZ_7XFxrU1WgezGiaQnSrSkw/edit?usp=sharing', downloadHref: '/cv/jerson-martinez-cv-es.pdf', lang: 'es' },
   { label: 'CV in English', href: 'https://docs.google.com/document/d/18q3xhTd7bmymk-ZeMM_BHhJT6Qp4rLcxu05DozMQRYo/edit?usp=drive_link', downloadHref: '/cv/jerson-martinez-cv-en.pdf', lang: 'en' },
 ];
 
-export const collaborationModes = [
+export const collaborationModes: CollaborationMode[] = [
   { title: 'Oportunidades profesionales', description: 'Roles DevOps, SRE, DevSecOps, plataforma y arquitectura cloud.', href: '/experience.html', cta: 'Revisar trayectoria', icon: 'fa-briefcase' },
   { title: 'Consultoría técnica', description: 'Gobierno cloud, automatización, CI/CD, IaC, observabilidad y mejora operativa.', href: '/projects.html', cta: 'Ver soluciones', icon: 'fa-project-diagram' },
   { title: 'Formación y contenido', description: 'Cursos, materiales y acompañamiento técnico sobre DevOps, Python y Go.', href: '/courses.html', cta: 'Explorar formación', icon: 'fa-graduation-cap' },
@@ -304,7 +314,7 @@ export const collaborationModes = [
 // Faceta de ESCRITOR y creador de contenido. Solo fuentes reales y verificables:
 // el perfil público de autor en OpenWebinars (+60 artículos confirmados), los temas
 // sobre los que escribe y los espacios propios. No se inventan títulos de artículos.
-export const writing = {
+export const writing: Writing = {
   kicker: 'Escritura y divulgación',
   title: 'Escribo para que otros operen con criterio.',
   lede: 'Más de 60 artículos técnicos publicados y contenido propio sobre cloud, observabilidad, Git, Go y DevOps, convirtiendo experiencia de operación en material reutilizable.',
@@ -317,7 +327,7 @@ export const writing = {
 
 // Valor hacia las empresas: resultados REPORTADOS ya documentados en la trayectoria,
 // traducidos a lenguaje de negocio. Cada uno enlaza a su contexto verificable.
-export const valueProps = [
+export const valueProps: ValueProp[] = [
   { metric: '−60%', label: 'costes de infraestructura', detail: 'Rediseño arquitectónico y uso eficiente de recursos.', href: '/experience.html#hotaka-ikhodi' },
   { metric: '+80%', label: 'calidad de backend', detail: 'Automatización, seguridad avanzada y mejora de procesos.', href: '/experience.html#elite-online-media' },
   { metric: '+60%', label: 'trazabilidad y seguridad', detail: 'Gobierno interno con GitHub Actions, Terraform y Ansible.', href: '/experience.html#pliret-prb' },
@@ -326,4 +336,4 @@ export const valueProps = [
 
 // Metodologías y marcos de gobierno aplicados (faceta de defensor de metodologías).
 // Derivado de skills ya declarados; no añade nodos nuevos, solo los nombra juntos.
-export const methodologies = ['GitOps', 'FinOps', 'DevSecOps', 'IaC', 'ITIL', 'ISO 27001', 'CI/CD', 'SRE'];
+export const methodologies: string[] = ['GitOps', 'FinOps', 'DevSecOps', 'IaC', 'ITIL', 'ISO 27001', 'CI/CD', 'SRE'];

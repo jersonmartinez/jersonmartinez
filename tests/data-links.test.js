@@ -4,7 +4,7 @@ const path = require('node:path');
 const test = require('node:test');
 
 // validador de enlaces de datos. Comprueba que todos los href
-// declarados en src/data/portfolio.js (repos GitHub, Udemy, YouTube,
+// declarados en src/data/portfolio.ts (repos GitHub, Udemy, YouTube,
 // credenciales, CV) tienen un formato válido y que no queda ningún enlace
 // vacío o apuntando a '#'. No hace peticiones de red: valida sólo el formato.
 //
@@ -14,7 +14,7 @@ const test = require('node:test');
 
 const root = path.resolve(__dirname, '..');
 const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
-const data = read('src/data/portfolio.js');
+const data = read('src/data/portfolio.ts');
 
 // Extrae todos los valores href: pares de tuplas ['label', 'https://...'] y
 // campos href:/logo:/website:/github:/linkedin: con string literal.

@@ -53,7 +53,7 @@ no puede ocurrir.
 
 ### Los datos no se duplican
 
-`src/data/portfolio.js` sigue siendo la única fuente de verdad. El inglés es un
+`src/data/portfolio.ts` sigue siendo la única fuente de verdad. El inglés es un
 **solapamiento** (`src/i18n/content.en.ts`) indexado por claves que ya existen en
 el dato y que no son texto visible (`experience.id`, `project.name`, el nombre de
 dominio de un skill), así que reordenar los arrays no desalinea nada. Una clave
@@ -196,7 +196,7 @@ El gate de la marca pasó a comparar contra el valor **intencionado en cada tram
 `npm run validate:i18n` (`tools/check-i18n.js`) hace dos cosas:
 
 1. **Cobertura del solapamiento**: cada proyecto, skill, experiencia y curso de
-   `portfolio.js` tiene su entrada en inglés. Como el resolutor cae al español
+   `portfolio.ts` tiene su entrada en inglés. Como el resolutor cae al español
    cuando falta una clave, un registro nuevo sin traducir se publicaría en
    español dentro de `/en` sin que nada avisara. Este check es ese aviso.
 2. **Fugas de español en el `dist` de `/en`**: no depende de recordar todos los
