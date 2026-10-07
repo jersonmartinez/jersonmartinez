@@ -18,20 +18,29 @@ const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
 const EN_CV_URL = 'https://docs.google.com/document/d/18q3xhTd7bmymk-ZeMM_BHhJT6Qp4rLcxu05DozMQRYo/edit?usp=drive_link';
 
 test('el home reutiliza CredentialCard en modo summary (no la variante cert-card antigua)', () => {
-  const index = read('src/pages/index.astro');
-  assert.match(index, /import CredentialCard from '\.\.\/components\/CredentialCard\.astro'/);
-  assert.match(index, /<CredentialCard\s+certification=\{cert\}\s+summary/);
-  assert.doesNotMatch(index, /class="card cert-card"/);
-  assert.doesNotMatch(index, /class="cert-list"/);
+  // El marcado del home vive en el componente compartido por los dos idiomas;
+  // `src/pages/index.astro` es ya sólo el envoltorio que fija `lang`.
+  const home = read('src/components/pages/HomePage.astro');
+  assert.match(home, /import CredentialCard from '\.\.\/CredentialCard\.astro'/);
+  assert.match(home, /<CredentialCard\s+certification=\{cert\}\s+summary/);
+  assert.doesNotMatch(home, /class="card cert-card"/);
+  assert.doesNotMatch(home, /class="cert-list"/);
 });
 
 test('CredentialCard expone código, verificación accesible y modo summary', () => {
   const card = read('src/components/CredentialCard.astro');
+  const ui = read('src/i18n/ui.ts');
   assert.match(card, /summary = false/);
   assert.match(card, /credential-code/);
   assert.match(card, /credential-verify/);
-  assert.match(card, /Verificar/);
-  assert.match(card, /Emisor oficial/);
+  // Los textos visibles pasaron al diccionario, que es ahora su fuente única:
+  // se comprueba que el componente los consume Y que el español sigue diciendo
+  // exactamente lo aprobado.
+  assert.match(card, /c\.credentialVerify/);
+  assert.match(card, /c\.credentialIssuer/);
+  assert.match(ui, /credentialVerify: 'Verificar'/);
+  assert.match(ui, /credentialIssuer: 'Emisor oficial'/);
+  assert.match(ui, /credentialVerify: 'Verify'/);
   // El indicador de verificación es accesible: icono SVG del sprite (aria-hidden) + texto visible.
   assert.match(card, /<Icon name="fas fa-check-circle"/);
 });

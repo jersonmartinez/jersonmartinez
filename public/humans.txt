@@ -6,6 +6,6 @@
   Sitio: https://www.jersonmartinez.com
 
 /* SITE */
-  Lenguaje: Español (es)
+  Lenguaje: Español (es, por defecto) · English (en, /en)
   Stack: Astro
-  Estándares: HTML5, CSS3, JSON-LD (schema.org)
+  Estándares: HTML5, CSS3, JSON-LD (schema.org), hreflang

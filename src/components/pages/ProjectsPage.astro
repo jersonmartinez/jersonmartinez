@@ -1,0 +1,41 @@
+---
+/**
+ * Página de proyectos, en cualquiera de los dos idiomas.
+ *
+ * El marcado vive aquí UNA sola vez y las rutas `/projects.html` y
+ * `/en/projects.html` son envoltorios de tres líneas que sólo fijan `lang`.
+ * Duplicar el marcado por idioma era la alternativa, y es justo la que produce
+ * deriva: un arreglo aplicado a una versión y olvidado en la otra.
+ */
+import Icon from '../Icon.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../ProjectCard.astro';
+import { getProfile, getProjects } from '../../i18n/content';
+import { DEFAULT_LOCALE, routePath, type Lang } from '../../i18n/config';
+import { formatFilterStatus, t } from '../../i18n/ui';
+
+interface Props { lang?: Lang }
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const copy = t(lang);
+const page = copy.projects;
+const profile = getProfile(lang);
+const projects = getProjects(lang);
+
+const filterKeys = ['all', 'personal', 'open-source', 'teaching'] as const;
+const counts = Object.fromEntries(
+  filterKeys.map((key) => [key, key === 'all' ? projects.length : projects.filter((project) => project.categories.includes(key)).length]),
+) as Record<(typeof filterKeys)[number], number>;
+
+const projectSchema = {
+  '@context': 'https://schema.org', '@type': 'ItemList', name: page.schemaName,
+  itemListElement: projects.map((project, index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': project.name === 'Factib' ? 'WebApplication' : 'SoftwareSourceCode', name: project.name, description: project.description, ...(project.href ? { url: project.href } : {}), ...(project.language ? { programmingLanguage: project.language } : {}), ...(project.license ? { license: project.license } : {}) } })),
+};
+
+const homeHref = routePath('home', lang);
+const selfHref = routePath('projects', lang);
+---
+<BaseLayout title={page.title} description={page.description} lang={lang} routeKey="projects" breadcrumb={[[copy.nav.home, homeHref], [copy.nav.projects, selfHref]]} structuredData={[projectSchema]}>
+  <section class="page-hero"><div class="container"><nav class="breadcrumb" aria-label={copy.breadcrumbAria}><ol><li><a href={homeHref}>{copy.nav.home}</a></li><li><span aria-current="page">{copy.nav.projects}</span></li></ol></nav><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> {page.eyebrow}</p><h1>{page.h1}</h1><p class="lede">{page.lede}</p><ul class="page-hero-meta" aria-label={page.metaAria}><li>{page.metaCount(projects.length)}</li>{page.meta.map((item) => <li>{item}</li>)}</ul></div></section>
+  <section class="section" aria-labelledby="projects-list-title"><div class="container"><div class="section-heading"><p class="section-kicker">{page.listKicker}</p><h2 id="projects-list-title">{page.listTitle}</h2><p class="lede">{page.listLede}</p></div><div class="filter-bar" role="group" aria-label={page.filterAria}>{filterKeys.map((value, index) => <button class={`filter-button ${index === 0 ? 'is-active' : ''}`} type="button" data-filter={value} aria-pressed={index === 0 ? 'true' : 'false'}>{page.filters[value]} <span class="filter-count" aria-hidden="true">({counts[value]})</span></button>)}</div><p class="filter-status" data-filter-status data-template={page.filterStatusTemplate} role="status" aria-live="polite">{formatFilterStatus(page.filterStatusTemplate, projects.length, projects.length)}</p><noscript><p class="data-note">{page.noscript}</p></noscript><div class="repo-grid">{projects.map((project) => <ProjectCard project={project} />)}</div><p class="repo-empty" data-repo-empty hidden>{page.empty}</p></div></section>
+  <section class="section section--line" aria-labelledby="projects-next-title"><div class="container"><div class="contact-panel"><div><p class="section-kicker">{page.nextKicker}</p><h2 id="projects-next-title">{page.nextTitle}</h2></div><div class="contact-actions"><a class="button button--ghost" href={routePath('experience', lang)}>{page.nextCtaExperience}</a><a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="fab fa-whatsapp" /> {page.nextCtaWhatsapp}</a></div></div></div></section>
+</BaseLayout>

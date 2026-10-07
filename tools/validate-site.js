@@ -1,8 +1,13 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const ROOT = path.resolve(__dirname, '..');
-const SOURCE_PAGES = ['src/pages/index.astro', 'src/pages/projects.html.astro', 'src/pages/experience.html.astro', 'src/pages/certifications.html.astro', 'src/pages/courses.html.astro', 'src/pages/about.html.astro', 'src/pages/404.astro'];
-const BUILD_ROUTES = ['index.html', 'projects.html/index.html', 'experience.html/index.html', 'certifications.html/index.html', 'courses.html/index.html', 'about.html/index.html', '404.html'];
+// El marcado de cada página vive en src/components/pages/ (compartido por los dos
+// idiomas); src/pages/** son envoltorios que sólo fijan `lang`. El gate mira donde
+// está el marcado real: comprobarlo sobre el envoltorio pasaría sin verificar nada.
+const SOURCE_PAGES = ['src/components/pages/HomePage.astro', 'src/components/pages/ProjectsPage.astro', 'src/components/pages/ExperiencePage.astro', 'src/components/pages/CertificationsPage.astro', 'src/components/pages/CoursesPage.astro', 'src/components/pages/AboutPage.astro', 'src/pages/404.astro'];
+// Las rutas construidas incluyen el idioma inglés: así los checks de SEO por página
+// (title, description, canonical) cubren también /en, no sólo el español.
+const BUILD_ROUTES = ['index.html', 'projects.html/index.html', 'experience.html/index.html', 'certifications.html/index.html', 'courses.html/index.html', 'about.html/index.html', 'en/index.html', 'en/projects.html/index.html', 'en/experience.html/index.html', 'en/certifications.html/index.html', 'en/courses.html/index.html', 'en/about.html/index.html', '404.html'];
 const ASSETS = ['public/brand/logo.svg', 'public/brand/favicon.svg', 'public/brand/favicon-192.png', 'public/brand/favicon-512.png', 'public/images/profile-v2-320.avif', 'public/images/profile-v2-640.webp', 'public/images/profile-v2-960.jpg', 'public/brands/aws.svg', 'public/brands/azure.svg', 'public/brands/github.svg', 'public/brands/openwebinars.svg', 'public/brands/googlecloud.svg', 'public/brands/docker.svg', 'public/brands/python.svg', 'public/brands/go.svg', 'public/cv/jerson-martinez-cv-es.pdf', 'public/cv/jerson-martinez-cv-en.pdf'];
 const read = (file) => fs.readFileSync(path.join(ROOT, file), 'utf8');
 const exists = (file) => fs.existsSync(path.join(ROOT, file));
@@ -15,7 +20,13 @@ function validateSources() {
   }
   for (const file of ASSETS) if (!exists(file)) fail(`Falta asset ${file}`);
   // Sin assets huérfanos en public/brands: cada logo debe estar referenciado en el sitio.
-  const brandRefs = fs.readdirSync(path.join(ROOT, 'src/components')).map((f) => read(`src/components/${f}`)).join('\n')
+  // El recorrido es RECURSIVO: src/components/pages/ es un directorio, y leerlo como
+  // fichero rompía el gate con EISDIR además de dejar fuera justo los componentes
+  // de página, que son los que declaran los logos del ecosistema.
+  const componentFiles = fs.readdirSync(path.join(ROOT, 'src/components'), { recursive: true })
+    .map((entry) => `src/components/${entry}`)
+    .filter((file) => fs.statSync(path.join(ROOT, file)).isFile());
+  const brandRefs = componentFiles.map(read).join('\n')
     + read('src/data/portfolio.js') + SOURCE_PAGES.map(read).join('\n');
   for (const file of fs.readdirSync(path.join(ROOT, 'public/brands'))) {
     if (!brandRefs.includes(`brands/${file}`)) fail(`Asset huérfano: public/brands/${file} no se referencia en el sitio.`);

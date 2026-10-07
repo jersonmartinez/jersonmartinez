@@ -10,7 +10,11 @@
  */
 const { chromium } = require('@playwright/test');
 
-const ROUTES = ['/', '/projects.html', '/courses.html', '/certifications.html', '/experience.html', '/about.html'];
+// Las rutas se miden en los DOS idiomas: el texto de la navegación y de los
+// controles tiene longitudes distintas, y el header es justo donde un texto más
+// largo desborda. Medir sólo el español dejaría /en sin cubrir.
+const ES_ROUTES = ['/', '/projects.html', '/courses.html', '/certifications.html', '/experience.html', '/about.html'];
+const ROUTES = [...ES_ROUTES, ...ES_ROUTES.map((route) => (route === '/' ? '/en' : `/en${route}`))];
 // Anchos elegidos para cubrir las franjas donde aparecieron defectos reales: el suelo de
 // 320 px, el colapso del menú, y los anchos por encima de --max donde la fila del header
 // desbordaba porque el contenedor ya no crece con el viewport.
@@ -55,8 +59,14 @@ const run = async () => {
       if (m.headerOverflow > 0) fails.push(`${route} @${width}px: el header desborda ${m.headerOverflow}px`);
       if (m.navOverflow > 0) fails.push(`${route} @${width}px: la navegación desborda su caja ${m.navOverflow}px`);
       if (m.overlap > 0) fails.push(`${route} @${width}px: el CTA de navegación se solapa ${m.overlap}px con los controles`);
-      // La marca no debe comprimirse: la fila del header tiene cuatro ítems flex.
-      if (m.brand < 130) fails.push(`${route} @${width}px: la marca se comprimió a ${m.brand}px`);
+      // La marca no debe comprimirse: la fila del header tiene cinco ítems flex.
+      // El umbral depende del ancho porque el ancho INTENCIONADO depende del ancho:
+      // por debajo de 421 px la hoja de estilos la fija en 8rem (128 px) para que
+      // la fila quepa en el suelo de diseño de 320 px. Lo que este check persigue
+      // es la compresión por flex (se midió una caída de 158 a 67 px), no un valor
+      // de diseño declarado, así que compara contra el esperado en cada tramo.
+      const brandExpected = width <= 420 ? 128 : 150;
+      if (m.brand < brandExpected) fails.push(`${route} @${width}px: la marca se comprimió a ${m.brand}px (esperado >= ${brandExpected}px)`);
       // Los controles no son navegación: deben seguir alcanzables con el menú colapsado.
       if (!m.themeVisible) fails.push(`${route} @${width}px: el conmutador de tema no está visible`);
     }

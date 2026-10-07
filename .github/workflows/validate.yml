@@ -75,6 +75,11 @@ jobs:
         run: npm run sync:static:check
       - name: Ensure sitemap matches the real routes and review date
         run: npm run sitemap:check
+      # Cobertura de traduccion y ausencia de espanol en /en, medidas sobre el dist
+      # construido: es lo unico que demuestra que la version inglesa esta completa,
+      # porque no depende de recordar cada sitio donde hay texto.
+      - name: Validate i18n coverage and language leaks
+        run: npm run validate:i18n
       - run: npm run youtube:dry-run
       # markdownlint fijado (sin npx --yes): se instala la versión exacta sin
       # tocar el lockfile y se invoca el binario local, cubriendo README y docs/**.

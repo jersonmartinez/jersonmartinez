@@ -34,6 +34,18 @@
     { "source": "/experience", "destination": "/experience.html", "permanent": true },
     { "source": "/certifications", "destination": "/certifications.html", "permanent": true },
     { "source": "/courses", "destination": "/courses.html", "permanent": true },
-    { "source": "/about", "destination": "/about.html", "permanent": true }
+    { "source": "/about", "destination": "/about.html", "permanent": true },
+    { "source": "/en/index.html", "destination": "/en", "permanent": true },
+    { "source": "/en/", "destination": "/en", "permanent": true },
+    { "source": "/en/projects.html/", "destination": "/en/projects.html", "permanent": true },
+    { "source": "/en/experience.html/", "destination": "/en/experience.html", "permanent": true },
+    { "source": "/en/certifications.html/", "destination": "/en/certifications.html", "permanent": true },
+    { "source": "/en/courses.html/", "destination": "/en/courses.html", "permanent": true },
+    { "source": "/en/about.html/", "destination": "/en/about.html", "permanent": true },
+    { "source": "/en/projects", "destination": "/en/projects.html", "permanent": true },
+    { "source": "/en/experience", "destination": "/en/experience.html", "permanent": true },
+    { "source": "/en/certifications", "destination": "/en/certifications.html", "permanent": true },
+    { "source": "/en/courses", "destination": "/en/courses.html", "permanent": true },
+    { "source": "/en/about", "destination": "/en/about.html", "permanent": true }
   ]
 }

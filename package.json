@@ -38,6 +38,7 @@
     "validate": "node tools/validate-site.js",
     "validate:sprite": "node tools/check-sprite-geometry.js",
     "validate:design": "node tools/check-design-metrics.cjs",
+    "validate:i18n": "node tools/check-i18n.js",
     "links": "node tools/check-links.js",
     "links:external": "node tools/check-links.js --external",
     "sitemap": "node tools/gen-sitemap.js",
