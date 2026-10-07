@@ -149,10 +149,10 @@ dejarlas abiertas sería peor que no haberlas visto.
 | --- | --- | --- | --- |
 | `js/double-escaping` | alta | `src/js/update-youtube-sections.js` | `decodeXml` resolvía `&amp;` ANTES de `&lt;`, así que `&amp;lt;` acababa en `<`: un título que traía marcado escapado a propósito lo recuperaba. Pasa a una sola pasada con una expresión que cubre nombre, decimal y hexadecimal |
 | `js/file-access-to-http` | media | `src/js/update-youtube-sections.js` | Los identificadores y handles de canal llegan de un fichero y forman la URL, así que una entrada manipulada apuntaba la petición a otro destino. Lista blanca de hosts + exigencia de `https`, comprobada en el único punto de salida (`fetchWithRetry`) para que ninguna ruta de obtención la esquive |
-| `js/disabling-certificate-validation` | alta | `tools/check-certificates.js` | `rejectUnauthorized: false` es deliberado: un monitor de caducidad debe poder leer un certificado ya inválido, que es justo el caso a informar. La validación deja de descartarse y pasa a ser **explícita**: se lee `socket.authorized` y, en un host propio, una cadena no confiable es ahora un fallo duro en vez de un silencio |
+| `js/disabling-certificate-validation` | alta | `tools/check-certificates.js` | Se deja de pasar `rejectUnauthorized: false`: la conexión valida y la ruta de error nombra el motivo, con lo que la herramienta queda más estricta (ver abajo) |
 | `js/http-to-file-access` | media | `tools/update-github-stats.js` | Los valores de la API se escribían al cache que lee el build sin comprobar. Se coercionan a entero finito y no negativo, de modo que una respuesta malformada no puede meter `null`, `NaN` ni una cadena en el estado |
 | `js/bad-tag-filter` | alta | `tests/update-youtube-sections.test.js` | La aserción «el HTML no contiene una etiqueta `<script>` cruda» usaba `/<script>/`, que un `<SCRIPT>` atravesaba: la autoprueba quedaba hueca |
-| `js/regex/missing-regexp-anchor` ×2 | alta | `tests/data-links.test.js`, `tests/portfolio.test.js` | Clasificar un enlace por una subcadena de host deja que `https://evil.example/credly.com/badges` cuente como credencial. El emisor y el repositorio se deciden ahora por el `hostname` parseado; la aserción que sólo comprobaba presencia de una URL literal pasa a `includes` |
+| `js/regex/missing-regexp-anchor` ×2 | alta | `tests/data-links.test.js`, `tests/portfolio.test.js` | Clasificar un enlace por una subcadena de host deja que `https://evil.example/credly.com/badges` cuente como credencial. El emisor y el repositorio se deciden ahora por el `hostname` parseado; la aserción de la URL de Factib pasa a comparación exacta (ver abajo) |
 | `js/unused-local-variable` ×2 | nota | `public/scripts/command-palette.js`, `tests/e2e/accessibility.e2e.spec.js` | Declaraciones sin uso, eliminadas |
 
 Tres de estos arreglos cambian comportamiento, así que llevan test propio: la
@@ -173,6 +173,48 @@ eliminar. Los cierres usan ahora `[^>]*`. Comprobado con dos controles directos:
 | `<body><p lang='ES'>que los una para</p>hi</body>` | `hi` |
 
 Antes, ambas filtraban su español al texto contado.
+
+### Dos arreglos no bastaron al primer intento
+
+El escaneo de rama tras la segunda ronda dejó **2 de 11** alertas abiertas, y
+ninguna se cerraba con la vía que había elegido primero.
+
+**`js/disabling-certificate-validation`.** El comentario de supresión
+`lgtm[js/disabling-certificate-validation]` **no funciona**: code scanning no lo
+honra, así que la alerta seguía abierta. Y peor: al editar el fichero lo metí en
+el diff del PR, donde la alerta pasa de preexistente a **bloqueante**.
+
+Así que se arregló el diseño. Desactivar la validación nunca fue necesario:
+cuando la cadena no verifica, el handshake falla y **ese fallo es el hallazgo** —
+un monitor de caducidad no necesita la fecha de un certificado ya roto, necesita
+decir que lo está. La conexión valida, y la ruta de error clasifica el motivo
+(`CERT_HAS_EXPIRED`, `UNABLE_TO_VERIFY_LEAF_SIGNATURE`,
+`ERR_TLS_CERT_ALTNAME_INVALID`) en vez de propagar un error de red
+indistinguible de un host caído.
+
+La herramienta queda **más estricta** que antes: una cadena no confiable en un
+host propio pasaba inadvertida mientras quedaran días. Comprobado contra red
+real: `www.crashell.com` informa ahora `ERR_TLS_CERT_ALTNAME_INVALID` (host de
+proveedor externo, informativo y no bloqueante), algo que la versión anterior
+nunca sacaba a la luz.
+
+**`js/incomplete-url-substring-sanitization`.** Sustituir el regex sin ancla por
+`data.includes('https://factib.com')` cambió una consulta por otra: afirmar que
+un texto «contiene» una URL es justo la forma de comprobación incompleta. El
+`href` se extrae ahora de la entrada de Factib y se compara con `===`, que CodeQL
+reconoce como comprobación completa y que además es una aserción más fuerte:
+ata la URL a su proyecto en vez de al fichero entero.
+
+## Resultado verificado
+
+El análisis se disparó sobre la rama con `workflow_dispatch` en cada ronda, que
+es la única forma de comprobar el arreglo antes de integrarlo:
+
+| Ronda | Abiertas | Corregidas |
+| --- | --- | --- |
+| Base (rama de #29) | 18 en el diff · 10 en el inventario de rama | — |
+| Tras tipar el dato y el filtro de etiquetas | 2 | 9 |
+| Tras rediseñar el checker TLS y la aserción | **0** | **11** |
 
 ## Validación
 
