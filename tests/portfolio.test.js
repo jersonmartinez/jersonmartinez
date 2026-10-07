@@ -90,7 +90,12 @@ test('proyectos usan categorías declaradas y casos de estudio', () => {
   const ui = read('src/i18n/ui.ts');
   const page = read('src/components/pages/ProjectsPage.astro');
   assert.match(data, /categories: \['personal', 'teaching'\]/);
-  assert.ok(data.includes('https://factib.com'), 'Falta la URL de Factib en el dato.');
+  // Se extrae el `href` de la entrada de Factib y se compara EXACTO. Comprobar
+  // con `includes`/regex que el texto «contiene» una URL es la forma que CodeQL
+  // marca como comprobación incompleta (js/incomplete-url-substring-sanitization),
+  // y además era más débil: no ataba la URL a su proyecto.
+  const factibHref = (data.match(/name: 'Factib'[\s\S]*?href: '([^']+)'/) || [])[1];
+  assert.equal(factibHref, 'https://factib.com', 'El href de Factib cambió o desapareció del dato.');
   for (const value of ['problem:', 'contribution:', 'outcome:', 'language:', 'license:']) assert.match(data, new RegExp(value));
   assert.match(card, /c\.projectProblem/);
   assert.match(ui, /projectProblem: 'Problema'/);

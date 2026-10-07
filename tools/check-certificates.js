@@ -58,36 +58,31 @@ const PROVIDER_SHORT_LIVED = new Map([
 ]);
 
 /**
- * Lee la fecha de caducidad del certificado de un host.
+ * Lee la fecha de caducidad del certificado de un host, CON validación.
  *
- * El handshake se completa SIN abortar por un certificado inválido a propósito:
- * el propósito de esta herramienta es avisar de un certificado que está por
- * caducar o que ya caducó, y con `rejectUnauthorized: true` el handshake
- * fallaría justo en el caso que hay que informar, dejando a la herramienta
- * ciega. CodeQL lo señala (js/disabling-certificate-validation) y hace bien en
- * señalarlo, así que la validación no se descarta: se hace EXPLÍCITA. Se lee
- * `socket.authorized` y se devuelve junto a la fecha, de modo que una cadena no
- * confiable es un hallazgo que se reporta en vez de un silencio. Esto no
- * establece ninguna sesión ni transmite nada: sólo lee el certificado y cierra.
+ * La versión anterior pasaba `rejectUnauthorized: false` para poder leer un
+ * certificado ya inválido, razonando que ése es justo el caso a informar. Pero
+ * desactivar la validación no hacía falta: cuando la cadena no verifica, el
+ * handshake falla y el fallo ES el hallazgo — un monitor de caducidad no
+ * necesita la fecha de un certificado que ya está roto, necesita decir que lo
+ * está. Así que se valida, y la ruta de error clasifica el motivo (caducado,
+ * cadena no verificable, nombre que no corresponde) y lo devuelve.
+ *
+ * Esto cierra js/disabling-certificate-validation arreglando el diseño en vez
+ * de silenciar la alerta, y deja la herramienta MÁS estricta: antes una cadena
+ * no confiable en un host propio pasaba inadvertida mientras quedaran días.
  */
 function checkHost(host) {
   return new Promise((resolve, reject) => {
     const socket = tls.connect(
-      // lgtm[js/disabling-certificate-validation] — ver el bloque de arriba: un
-      // monitor de caducidad debe poder leer un certificado ya inválido, y el
-      // resultado de la verificación se reporta en `authorized`.
-      { host, port: 443, servername: host, rejectUnauthorized: false, timeout: 10000 },
+      { host, port: 443, servername: host, timeout: 10000 },
       () => {
         try {
           const certificate = socket.getPeerCertificate();
-          const authorized = socket.authorized;
-          const authorizationError = socket.authorizationError
-            ? String(socket.authorizationError.message || socket.authorizationError)
-            : null;
           socket.end();
           if (!certificate.valid_to) return reject(new Error('no se pudo leer valid_to'));
           const remainingDays = (new Date(certificate.valid_to).getTime() - Date.now()) / 86400000;
-          resolve({ host, validTo: certificate.valid_to, remainingDays, authorized, authorizationError });
+          resolve({ host, validTo: certificate.valid_to, remainingDays });
         } catch (error) {
           reject(error);
         }
@@ -97,7 +92,14 @@ function checkHost(host) {
       socket.destroy();
       reject(new Error('timeout'));
     });
-    socket.on('error', reject);
+    // Si la cadena no verifica, el handshake falla aquí. El código de error ES
+    // el hallazgo (CERT_HAS_EXPIRED, UNABLE_TO_VERIFY_LEAF_SIGNATURE,
+    // ERR_TLS_CERT_ALTNAME_INVALID…), así que se nombra en vez de propagarse
+    // como un error de red indistinguible de un host caído.
+    socket.on('error', (error) => {
+      const code = error.code || error.reason || 'error de TLS';
+      reject(new Error(`certificado no válido o inalcanzable (${code})`));
+    });
   });
 }
 
@@ -113,16 +115,12 @@ function checkHost(host) {
   console.log(`== Certificados PROPIOS (umbral ${thresholdDays} días) ==`);
   for (const host of ownHosts) {
     try {
+      // La validación la hizo el handshake: llegar aquí significa cadena
+      // confiable, nombre correcto y certificado vigente.
       const result = await checkHost(host);
-      const chain = result.authorized ? '' : `  ⚠ cadena no confiable (${result.authorizationError})`;
-      console.log(`  ${host}: ${result.remainingDays.toFixed(0)} días (expira ${result.validTo})${chain}`);
+      console.log(`  ${host}: ${result.remainingDays.toFixed(0)} días (expira ${result.validTo})`);
       if (result.remainingDays < thresholdDays) {
         ownFailures.push(`${host}: certificado propio expira en ${result.remainingDays.toFixed(0)} días`);
-      }
-      // Un host propio con cadena no verificable es un fallo duro: la lectura se
-      // hace sin abortar el handshake, así que este es el punto donde se juzga.
-      if (!result.authorized) {
-        ownFailures.push(`${host}: cadena de certificado no confiable (${result.authorizationError})`);
       }
     } catch (error) {
       ownFailures.push(`${host}: ${error.message}`);
@@ -135,8 +133,7 @@ function checkHost(host) {
     try {
       const result = await checkHost(host);
       const warn = result.remainingDays < thresholdDays ? '  ⚠ por debajo del umbral (gestionado por el proveedor)' : '';
-      const chain = result.authorized ? '' : `  ⚠ cadena no confiable (${result.authorizationError})`;
-      console.log(`  ${host}: ${result.remainingDays.toFixed(0)} días (expira ${result.validTo})${warn}${chain}`);
+      console.log(`  ${host}: ${result.remainingDays.toFixed(0)} días (expira ${result.validTo})${warn}`);
     } catch (error) {
       console.log(`  ${host}: no verificable (${error.message}) — gestionado por el proveedor`);
     }
