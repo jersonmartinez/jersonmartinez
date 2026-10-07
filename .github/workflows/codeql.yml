@@ -7,6 +7,10 @@ on:
     branches: [main]
   schedule:
     - cron: '27 6 * * 1'
+  # Permite re-escanear una rama a demanda. Sin esto, un PR apilado sobre otra
+  # rama de feature no dispara el análisis (el filtro `branches: [main]`), así
+  # que un arreglo de hallazgos no se puede verificar hasta integrarlo.
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}

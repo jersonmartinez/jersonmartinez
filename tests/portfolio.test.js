@@ -46,7 +46,7 @@ test('identidad, tipografías e iconos se sirven localmente', () => {
 });
 
 test('antigüedad y cronología tienen una sola fuente', () => {
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   // El marcado de «sobre mí» vive en el componente compartido: asertar sobre el
   // envoltorio pasaría trivialmente y dejaría de cubrir nada.
   const about = read('src/components/pages/AboutPage.astro');
@@ -72,7 +72,7 @@ test('header tiene un único estado de página y el menú gestiona foco', () => 
 });
 
 test('skills incluyen evidencia, navegación por teclado y WSL Container', () => {
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   const component = read('src/components/SkillsExplorer.astro');
   const ui = read('src/i18n/ui.ts');
   const script = read('public/scripts/site.js');
@@ -85,12 +85,17 @@ test('skills incluyen evidencia, navegación por teclado y WSL Container', () =>
 });
 
 test('proyectos usan categorías declaradas y casos de estudio', () => {
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   const card = read('src/components/ProjectCard.astro');
   const ui = read('src/i18n/ui.ts');
   const page = read('src/components/pages/ProjectsPage.astro');
   assert.match(data, /categories: \['personal', 'teaching'\]/);
-  assert.match(data, /https:\/\/factib\.com/);
+  // Se extrae el `href` de la entrada de Factib y se compara EXACTO. Comprobar
+  // con `includes`/regex que el texto «contiene» una URL es la forma que CodeQL
+  // marca como comprobación incompleta (js/incomplete-url-substring-sanitization),
+  // y además era más débil: no ataba la URL a su proyecto.
+  const factibHref = (data.match(/name: 'Factib'[\s\S]*?href: '([^']+)'/) || [])[1];
+  assert.equal(factibHref, 'https://factib.com', 'El href de Factib cambió o desapareció del dato.');
   for (const value of ['problem:', 'contribution:', 'outcome:', 'language:', 'license:']) assert.match(data, new RegExp(value));
   assert.match(card, /c\.projectProblem/);
   assert.match(ui, /projectProblem: 'Problema'/);
@@ -98,13 +103,13 @@ test('proyectos usan categorías declaradas y casos de estudio', () => {
 });
 
 test('métricas confirmadas incluyen fecha y OpenWebinars separado', () => {
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   for (const value of ['Más de 77 mil estudiantes', '+14K suscriptores', '+5K suscriptores', '+60 artículos', '7 cursos impartidos', 'lastVerifiedAt']) assert.ok(data.includes(value), `Falta ${value}`);
   assert.doesNotMatch(data, /\+60 artículos y cursos/);
 });
 
 test('solo se publican diez certificaciones oficiales', () => {
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   const page = read('src/components/pages/CertificationsPage.astro');
   const ui = read('src/i18n/ui.ts');
   const credentialLinks = (data.match(/credentialId:/g) || []).length;
@@ -118,7 +123,7 @@ test('solo se publican diez certificaciones oficiales', () => {
 });
 
 test('cursos y OpenWebinars exponen rutas verificables', () => {
-  const data = read('src/data/portfolio.js');
+  const data = read('src/data/portfolio.ts');
   assert.equal((data.match(/openwebinars\.net\/cursos\//g) || []).length, 7);
   assert.equal((data.match(/www\.udemy\.com\/course\//g) || []).length, 7);
   assert.match(read('src/i18n/ui.ts'), /courseOutcomeLabel: 'Al completar esta etapa'/);
@@ -157,7 +162,7 @@ test('SEO y sitemap cubren rutas reales con lastmod', () => {
   assert.equal((sitemap.match(/<loc>/g) || []).length, routes.length * 2);
   assert.match(sitemap, /hreflang="x-default" href="https:\/\/www\.jersonmartinez\.com\/"/);
   assert.match(sitemap, /xmlns:xhtml="http:\/\/www\.w3\.org\/1999\/xhtml"/);
-  const lastReviewed = (read('src/data/portfolio.js').match(/lastReviewed:\s*'(\d{4}-\d{2}-\d{2})'/) || [])[1];
+  const lastReviewed = (read('src/data/portfolio.ts').match(/lastReviewed:\s*'(\d{4}-\d{2}-\d{2})'/) || [])[1];
   assert.ok(lastReviewed, 'contentMeta.lastReviewed presente');
   assert.match(sitemap, new RegExp(`<lastmod>${lastReviewed}</lastmod>`));
   assert.match(read('src/layouts/BaseLayout.astro'), /application\/ld\+json/);

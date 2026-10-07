@@ -74,7 +74,7 @@ function validateSitemap() {
       if (!sitemap.includes(`<loc>${loc}</loc>`)) fail(`Sitemap no incluye ${loc}.`);
     }
   }
-  const lastReviewed = (read('src/data/portfolio.js').match(/lastReviewed:\s*'(\d{4}-\d{2}-\d{2})'/) || [])[1];
+  const lastReviewed = (read('src/data/portfolio.ts').match(/lastReviewed:\s*'(\d{4}-\d{2}-\d{2})'/) || [])[1];
   if (!lastReviewed) fail('No se pudo leer contentMeta.lastReviewed.');
   // El número esperado se DERIVA de rutas x idiomas. Estaba fijado a 6, que es
   // justo la clase de valor que se queda obsoleto al añadir un idioma.

@@ -296,7 +296,7 @@ canal de YouTube mediante un pull request revisable; ningún job escribe directa
 
 Este repositorio es dos cosas a la vez: el README que ves en el perfil de GitHub y el
 código fuente de [jersonmartinez.com](https://www.jersonmartinez.com). Ambos se alimentan
-de la misma fuente de datos, `src/data/portfolio.js`, de modo que las cifras,
+de la misma fuente de datos, `src/data/portfolio.ts`, de modo que las cifras,
 certificaciones y proyectos de esta página son los mismos que publica el sitio.
 
 [![validate](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/validate.yml/badge.svg)](https://github.com/jersonmartinez/jersonmartinez/actions/workflows/validate.yml)
@@ -306,7 +306,7 @@ certificaciones y proyectos de esta página son los mismos que publica el sitio.
 
 El sitio se construye con [Astro](https://astro.build/) como build estático: las páginas
 viven en `src/pages/`, la UI compartida en `src/components/` y los datos verificados de
-perfil y proyectos en `src/data/portfolio.js`.
+perfil y proyectos en `src/data/portfolio.ts`.
 
 Cada pull request pasa por tests sobre el HTML compilado, comprobación de tipos,
 accesibilidad con pa11y y axe, presupuestos de Lighthouse, validación de enlaces internos y

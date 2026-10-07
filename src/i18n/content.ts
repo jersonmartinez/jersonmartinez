@@ -1,7 +1,7 @@
 /**
  * Resolutor de contenido localizado.
  *
- * Toma los datos en español de `src/data/portfolio.js`, les superpone el inglés
+ * Toma los datos en español de `src/data/portfolio.ts`, les superpone el inglés
  * de `content.en.ts` y devuelve las mismas formas que ya consumen los
  * componentes, de modo que ninguno necesita saber en qué idioma se renderiza.
  *
@@ -19,8 +19,12 @@ import {
   audienceMetrics, certifications, collaborationModes, contentMeta, courses, cvLinks,
   experience, methodologies, openWebinarsCourses, profile, projects, skills, teaching,
   valueProps, writing, youtubeChannels,
-} from '../data/portfolio.js';
-import type { Certification, Course, Project, Skill, ValueProp, WritingOutlet } from '../types/content';
+} from '../data/portfolio';
+import type {
+  AudienceMetricKey, AudienceMetrics, Certification, ChannelEntry, CollaborationMode, Course,
+  CvLink, ExperienceEntry, LocalizedProfileFact, Project, Skill, StackGroup, TeachingEntry,
+  ValueProp, Writing, WritingOutlet,
+} from '../types/content';
 import { DEFAULT_LOCALE, localizePath, type Lang } from './config';
 import {
   audienceMetricsEn, collaborationEn, coursesEn, cvLabelsEn, experienceEn, experienceLedeEn,
@@ -30,64 +34,19 @@ import {
 /** Metadatos de contenido (fechas de revisión); no dependen del idioma. */
 export { contentMeta, certifications, methodologies, openWebinarsCourses };
 
-export interface LocalizedProfileFact {
-  value: string;
-  label: string;
-  href?: string;
-  linkLabel?: string;
-  external?: boolean;
-}
-
-export interface CollaborationMode {
-  title: string;
-  description: string;
-  href: string;
-  cta: string;
-  icon: string;
-}
-
-export interface ExperienceEntry {
-  id: string;
-  start: string;
-  period: string;
-  role: string;
-  company: string;
-  description: string;
-  context?: string;
-  related: { label: string; href: string }[];
-}
-
-export interface TeachingEntry {
-  name: string;
-  logo: string;
-  metrics: string[];
-  description: string;
-  cta: string;
-  href: string;
-}
-
-export interface ChannelEntry {
-  name: string;
-  logo: string;
-  metric: string;
-  description: string;
-  href: string;
-  cta: string;
-}
-
-export interface CvLink {
-  label: string;
-  href: string;
-  downloadHref: string;
-  lang: string;
-}
-
-type FactMeta = { source?: string; href?: string; label?: string; external?: boolean };
+/**
+ * Las formas del contenido viven en `src/types/content.ts` y el dato las declara
+ * al exportar, así que aquí sólo se consumen. Se re-exportan para que un
+ * consumidor que ya importa este módulo no necesite una segunda ruta.
+ */
+export type {
+  ChannelEntry, CollaborationMode, CvLink, ExperienceEntry, LocalizedProfileFact, TeachingEntry,
+};
 
 /** Perfil con el texto y los enlaces del idioma pedido. */
 export function getProfile(lang: Lang) {
   const en = lang !== DEFAULT_LOCALE;
-  const facts: LocalizedProfileFact[] = (profile.facts as [string, string, FactMeta?][]).map(
+  const facts: LocalizedProfileFact[] = profile.facts.map(
     ([value, label, meta], index) => {
       const href = meta?.href ? localizePath(meta.href, lang) : undefined;
       const linkLabel = meta?.href
@@ -113,17 +72,21 @@ export function getProfile(lang: Lang) {
 
 /** Entradilla de la trayectoria, que interpola los años de experiencia. */
 export function getExperienceLede(lang: Lang): string {
-  const years = profile.yearsExperience as number;
+  const years = profile.yearsExperience;
   return lang === DEFAULT_LOCALE
     ? `Más de ${years} años conectando proyectos tecnológicos, formación, ingeniería, automatización y estrategia cloud.`
     : experienceLedeEn(years);
 }
 
+/** Claves de audiencia, tipadas para poder indexar el registro sin `as`. */
+const AUDIENCE_KEYS = Object.keys(audienceMetrics) as AudienceMetricKey[];
+
 /** Métricas de audiencia con su etiqueta traducida. */
-export function getAudienceMetrics(lang: Lang) {
+export function getAudienceMetrics(lang: Lang): AudienceMetrics {
   if (lang === DEFAULT_LOCALE) return audienceMetrics;
-  const out: Record<string, { label: string; longLabel?: string }> = {};
-  for (const [key, value] of Object.entries(audienceMetrics as Record<string, { label: string; longLabel?: string }>)) {
+  const out = {} as AudienceMetrics;
+  for (const key of AUDIENCE_KEYS) {
+    const value = audienceMetrics[key];
     const override = audienceMetricsEn[key];
     out[key] = {
       ...value,
@@ -131,7 +94,17 @@ export function getAudienceMetrics(lang: Lang) {
       ...(value.longLabel ? { longLabel: override?.longLabel ?? value.longLabel } : {}),
     };
   }
-  return out as typeof audienceMetrics;
+  return out;
+}
+
+/**
+ * Correspondencia entre la etiqueta española de cada métrica y la del idioma
+ * pedido. La construyen `getTeaching` y `getChannels`, que traen las métricas
+ * ya escritas en el dato en español.
+ */
+function metricTranslator(lang: Lang): Map<string, string> {
+  const metrics = getAudienceMetrics(lang);
+  return new Map(AUDIENCE_KEYS.map((key) => [audienceMetrics[key].label, metrics[key].label]));
 }
 
 /**
@@ -140,7 +113,7 @@ export function getAudienceMetrics(lang: Lang) {
  * selección al idioma y dejaría la versión inglesa sin grupos.
  */
 export function getSkills(lang: Lang): (Skill & { key: string })[] {
-  return (skills as Skill[]).map((skill) => {
+  return skills.map((skill) => {
     const base = { ...skill, key: skill.name, relatedHref: localizePath(skill.relatedHref, lang) };
     if (lang === DEFAULT_LOCALE) return base;
     const override = skillsEn[skill.name];
@@ -159,7 +132,7 @@ export function getSkills(lang: Lang): (Skill & { key: string })[] {
 const STACK_GROUP_KEYS = ['Cloud', 'Contenedores', 'IaC', 'DevOps & CI/CD', 'Observabilidad', 'Desarrollo', 'Bases de datos'];
 
 /** Grupos del stack, seleccionados por clave neutra y mostrados traducidos. */
-export function getStackGroups(lang: Lang): { name: string; items: string[] }[] {
+export function getStackGroups(lang: Lang): StackGroup[] {
   return getSkills(lang)
     .filter((skill) => STACK_GROUP_KEYS.includes(skill.key))
     .map(({ name, items }) => ({ name, items }));
@@ -167,8 +140,8 @@ export function getStackGroups(lang: Lang): { name: string; items: string[] }[] 
 
 /** Proyectos localizados (los nombres propios no se traducen). */
 export function getProjects(lang: Lang): Project[] {
-  if (lang === DEFAULT_LOCALE) return projects as Project[];
-  return (projects as Project[]).map((project) => {
+  if (lang === DEFAULT_LOCALE) return projects;
+  return projects.map((project) => {
     const override = projectsEn[project.name];
     return override ? { ...project, ...override } : project;
   });
@@ -176,8 +149,7 @@ export function getProjects(lang: Lang): Project[] {
 
 /** Trayectoria localizada, con las etiquetas de sus enlaces relacionados. */
 export function getExperience(lang: Lang): ExperienceEntry[] {
-  type RawExperience = Omit<ExperienceEntry, 'related'> & { related?: { label: string; href: string }[] };
-  return (experience as RawExperience[]).map((item) => {
+  return experience.map((item) => {
     const override = lang === DEFAULT_LOCALE ? undefined : experienceEn[item.id];
     const related = (item.related ?? []).map((link, index) => ({
       label: override?.relatedLabels?.[index] ?? link.label,
@@ -197,8 +169,8 @@ export function getExperience(lang: Lang): ExperienceEntry[] {
 
 /** Cursos localizados; el título se conserva porque el curso es en español. */
 export function getCourses(lang: Lang): Course[] {
-  if (lang === DEFAULT_LOCALE) return courses as Course[];
-  return (courses as Course[]).map((course) => {
+  if (lang === DEFAULT_LOCALE) return courses;
+  return courses.map((course) => {
     const override = coursesEn[course.name];
     return override
       ? { ...course, ...override, framework: override.framework ?? course.framework }
@@ -208,14 +180,8 @@ export function getCourses(lang: Lang): Course[] {
 
 /** Plataformas de enseñanza, con sus métricas ya traducidas. */
 export function getTeaching(lang: Lang): TeachingEntry[] {
-  const metrics = getAudienceMetrics(lang) as Record<string, { label: string }>;
-  const metricByEs = new Map(
-    Object.keys(audienceMetrics).map((key) => [
-      (audienceMetrics as Record<string, { label: string }>)[key].label,
-      metrics[key].label,
-    ]),
-  );
-  return (teaching as TeachingEntry[]).map((item) => {
+  const metricByEs = metricTranslator(lang);
+  return teaching.map((item) => {
     const localizedMetrics = item.metrics.map((metric) => metricByEs.get(metric) ?? metric);
     if (lang === DEFAULT_LOCALE) return { ...item, metrics: localizedMetrics };
     const override = outletsEn[item.name];
@@ -230,14 +196,8 @@ export function getTeaching(lang: Lang): TeachingEntry[] {
 
 /** Canales de YouTube con su métrica traducida. */
 export function getChannels(lang: Lang): ChannelEntry[] {
-  const metrics = getAudienceMetrics(lang) as Record<string, { label: string }>;
-  const metricByEs = new Map(
-    Object.keys(audienceMetrics).map((key) => [
-      (audienceMetrics as Record<string, { label: string }>)[key].label,
-      metrics[key].label,
-    ]),
-  );
-  return (youtubeChannels as ChannelEntry[]).map((channel) => {
+  const metricByEs = metricTranslator(lang);
+  return youtubeChannels.map((channel) => {
     const metric = metricByEs.get(channel.metric) ?? channel.metric;
     if (lang === DEFAULT_LOCALE) return { ...channel, metric };
     const override = outletsEn[channel.name];
@@ -251,10 +211,9 @@ export function getChannels(lang: Lang): ChannelEntry[] {
 }
 
 /** Faceta de escritura: encabezados, temas y medios. */
-export function getWriting(lang: Lang) {
-  const metrics = getAudienceMetrics(lang) as Record<string, { label: string }>;
-  const raw = writing as { kicker: string; title: string; lede: string; topics: string[]; outlets: WritingOutlet[] };
-  const outlets: WritingOutlet[] = raw.outlets.map((outlet) => {
+export function getWriting(lang: Lang): Writing {
+  const metrics = getAudienceMetrics(lang);
+  const outlets: WritingOutlet[] = writing.outlets.map((outlet) => {
     const metric = outlet.metric ? metrics.openWebinarsArticles.label : undefined;
     if (lang === DEFAULT_LOCALE) return { ...outlet, ...(metric ? { metric } : {}) };
     const override = outletsEn[outlet.name];
@@ -266,13 +225,13 @@ export function getWriting(lang: Lang) {
       cta: override?.cta ?? outlet.cta,
     };
   });
-  if (lang === DEFAULT_LOCALE) return { ...raw, outlets };
+  if (lang === DEFAULT_LOCALE) return { ...writing, outlets };
   return { ...writingEn, outlets };
 }
 
 /** Proof points de valor, con su enlace al contexto ya localizado. */
 export function getValueProps(lang: Lang): ValueProp[] {
-  return (valueProps as ValueProp[]).map((prop) => {
+  return valueProps.map((prop) => {
     const href = localizePath(prop.href, lang);
     if (lang === DEFAULT_LOCALE) return { ...prop, href };
     const override = valuePropsEn[prop.metric];
@@ -282,7 +241,7 @@ export function getValueProps(lang: Lang): ValueProp[] {
 
 /** Modos de colaboración con título, descripción, CTA y enlace localizados. */
 export function getCollaborationModes(lang: Lang): CollaborationMode[] {
-  return (collaborationModes as CollaborationMode[]).map((mode) => {
+  return collaborationModes.map((mode) => {
     const href = localizePath(mode.href, lang);
     if (lang === DEFAULT_LOCALE) return { ...mode, href };
     const override = collaborationEn[mode.icon];
@@ -292,12 +251,12 @@ export function getCollaborationModes(lang: Lang): CollaborationMode[] {
 
 /** Enlaces al CV; los documentos son los mismos, sólo cambia su etiqueta. */
 export function getCvLinks(lang: Lang): CvLink[] {
-  return (cvLinks as CvLink[]).map((cv) =>
+  return cvLinks.map((cv) =>
     lang === DEFAULT_LOCALE ? cv : { ...cv, label: cvLabelsEn[cv.lang] ?? cv.label },
   );
 }
 
 /** Certificaciones: nombres y niveles oficiales, idénticos en los dos idiomas. */
 export function getCertifications(): Certification[] {
-  return certifications as Certification[];
+  return certifications;
 }

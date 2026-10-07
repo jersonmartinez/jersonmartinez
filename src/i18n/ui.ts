@@ -2,7 +2,7 @@
  * Cadenas de INTERFAZ del sitio (cromo, encabezados de página y llamadas a la acción).
  *
  * El contenido con datos (proyectos, trayectoria, cursos…) NO vive aquí: vive en
- * `content.ts`, superpuesto sobre `src/data/portfolio.js`. La separación es
+ * `content.ts`, superpuesto sobre `src/data/portfolio.ts`. La separación es
  * deliberada: el cromo se traduce una vez, los datos se traducen por registro.
  *
  * COBERTURA GARANTIZADA EN TIEMPO DE COMPILACIÓN: el diccionario español es el
