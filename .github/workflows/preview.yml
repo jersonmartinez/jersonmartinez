@@ -2,7 +2,6 @@ name: Build pull request preview
 
 on:
   pull_request:
-    branches: [main]
     paths:
       - 'src/**'
       - 'public/**'
@@ -13,6 +12,8 @@ on:
       - 'robots.txt'
       - 'sitemap.xml'
       - '.github/workflows/preview.yml'
+  # Permite construir el preview de una rama a demanda.
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}

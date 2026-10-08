@@ -31,12 +31,32 @@ function validateSources() {
   for (const file of fs.readdirSync(path.join(ROOT, 'public/brands'))) {
     if (!brandRefs.includes(`brands/${file}`)) fail(`Asset huérfano: public/brands/${file} no se referencia en el sitio.`);
   }
-  // security.txt presente y no caducado (RFC 9116).
+  // security.txt: presente, con los campos que RFC 9116 exige y con MARGEN.
+  //
+  // El check anterior sólo fallaba cuando ya estaba caducado, que es demasiado
+  // tarde por dos motivos: un security.txt expirado es INVÁLIDO para los
+  // escáneres que lo consumen (lo ignoran, así que el canal de divulgación
+  // desaparece en silencio), y CI se pone rojo el mismo día sin margen para
+  // rotar la fecha. Con ventana de preaviso el aviso llega con un mes de sobra.
   const securityTxt = 'public/.well-known/security.txt';
   if (!exists(securityTxt)) fail(`Falta ${securityTxt}`);
-  const expires = read(securityTxt).match(/^Expires:\s*(.+)$/m);
-  if (!expires) fail('security.txt: falta el campo Expires (RFC 9116).');
-  if (!(new Date(expires[1]).getTime() > Date.now())) fail('security.txt: el campo Expires está caducado o es inválido.');
+  else {
+    const body = read(securityTxt);
+    for (const field of ['Contact:', 'Expires:', 'Canonical:']) {
+      if (!new RegExp(`^${field}`, 'm').test(body)) fail(`security.txt: falta el campo ${field.slice(0, -1)} (RFC 9116).`);
+    }
+    const expires = body.match(/^Expires:\s*(.+)$/m);
+    const when = expires ? new Date(expires[1].trim()).getTime() : NaN;
+    const LEAD_DAYS = 30;
+    const leadMs = LEAD_DAYS * 24 * 60 * 60 * 1000;
+    if (!expires) fail('security.txt: falta el campo Expires (RFC 9116).');
+    else if (Number.isNaN(when)) fail(`security.txt: Expires no es una fecha válida (${expires[1].trim()}).`);
+    else if (when <= Date.now()) fail(`security.txt: Expires CADUCADO (${expires[1].trim()}); el fichero es inválido para los escáneres.`);
+    else if (when - Date.now() < leadMs) {
+      const days = Math.ceil((when - Date.now()) / (24 * 60 * 60 * 1000));
+      fail(`security.txt: Expires vence en ${days} día(s); renueva la fecha antes de que el fichero deje de ser válido.`);
+    }
+  }
   // Cada página indexable declara title y description en BaseLayout.
   for (const page of SOURCE_PAGES) {
     const text = read(page);

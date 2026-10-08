@@ -2,7 +2,6 @@ name: Validate Astro portfolio
 
 on:
   pull_request:
-    branches: [main]
     paths:
       - 'src/**'
       - 'public/**'
@@ -34,6 +33,10 @@ on:
       - 'sitemap.xml'
       - 'vercel.json'
       - '.github/workflows/**'
+  # Permite validar una rama a demanda, sin esperar a que un PR la toque: los
+  # filtros `paths` de arriba hacen que un cambio fuera de esas rutas no
+  # dispare nada, y entonces no había forma de verificar la rama.
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -69,6 +72,12 @@ jobs:
         run: VALIDATE_BUILD=1 npm test
       - run: VALIDATE_BUILD=1 npm run validate
       - run: npm run links
+      # Fragmentos (#ancla) resueltos contra los id reales de la pagina destino:
+      # el gate de enlaces descarta el hash, asi que ningun ancla estaba
+      # comprobada. Son identificadores derivados del dato y compartidos por los
+      # dos idiomas, de modo que uno roto rompe ES y EN a la vez.
+      - name: Validate anchor fragments against real ids
+        run: npm run anchors
       - name: Validate security headers, social metadata, schema.org and sitemap
         run: npm run headers
       - name: Ensure root robots/sitemap stay in sync with public/
