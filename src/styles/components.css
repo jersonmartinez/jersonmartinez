@@ -435,6 +435,11 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .stack-groups li { border: 1px solid var(--line); border-radius: var(--radius-xs); color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .62rem; padding: .3rem .45rem; }
 .contact-panel--spaced { margin-top: 1rem; }
 .error-hero { align-items: center; display: grid; min-height: 65vh; }
+/* Bloque inglés de la 404 bilingüe: una sola página de error sirve los dos
+   árboles de idioma, así que el segundo se separa con una regla en vez de
+   duplicar la ruta. Sin fondo propio para no competir con el mensaje principal. */
+.error-alt { border-top: 1px solid var(--line); margin-top: var(--space-xl); padding-top: var(--space-lg); }
+.error-alt h2 { font-size: clamp(1.15rem, 2.4vw, 1.5rem); margin-bottom: var(--space-xs); }
 
 /* Navegación progresiva: sin JS el menú móvil permanece visible y usable.
    Mismo punto de corte que el colapso del header (1000 px); si no, en la franja colapsada

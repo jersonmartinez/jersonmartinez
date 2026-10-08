@@ -3,9 +3,12 @@
   "short_name": "Jerson Martínez",
   "description": "Portfolio de Jerson Martínez: plataformas cloud, DevOps, DevSecOps y automatización.",
   "lang": "es",
+  "dir": "ltr",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "categories": ["business", "education", "productivity"],
   "background_color": "#07111f",
   "theme_color": "#07111f",
   "icons": [

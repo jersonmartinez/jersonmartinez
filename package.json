@@ -41,6 +41,7 @@
     "validate:i18n": "node tools/check-i18n.js",
     "links": "node tools/check-links.js",
     "links:external": "node tools/check-links.js --external",
+    "anchors": "node tools/check-anchors.js",
     "sitemap": "node tools/gen-sitemap.js",
     "sitemap:check": "node tools/gen-sitemap.js --check",
     "assets:generate": "python3 tools/generate-visual-assets.py",

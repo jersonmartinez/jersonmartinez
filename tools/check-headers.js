@@ -32,9 +32,14 @@ function validateHeaders() {
   }
 }
 
+// Las doce páginas públicas más la 404. La lista cubría sólo las seis españolas,
+// así que og:*, twitter:*, canonical y el JSON-LD de /en no estaban validados por
+// este gate: una regresión que afectara sólo al inglés pasaba entera.
+const ROUTE_FILES = ['index.html', 'projects.html/index.html', 'experience.html/index.html',
+  'certifications.html/index.html', 'courses.html/index.html', 'about.html/index.html'];
 const BUILD_PAGES = [
-  ['dist/index.html', true], ['dist/projects.html/index.html', true], ['dist/experience.html/index.html', true],
-  ['dist/certifications.html/index.html', true], ['dist/courses.html/index.html', true], ['dist/about.html/index.html', true],
+  ...ROUTE_FILES.map((file) => [`dist/${file}`, true]),
+  ...ROUTE_FILES.map((file) => [`dist/en/${file}`, true]),
   ['dist/404.html', false],
 ];
 function validateMetadata() {

@@ -157,6 +157,62 @@ const run = async () => {
   }
   await tctx.close();
 
+  // 8. Contraste DETERMINISTA de los pares texto/superficie en ambos temas.
+  //
+  // Por qué existe este check y no basta con los otros dos: `.pa11yci.json`
+  // excluye `color-contrast` por un falso positivo de su axe 4.11 (la razón y
+  // la medición están documentadas en ese fichero), y el gate axe de Playwright
+  // sólo ve los colores que ALGÚN elemento usa hoy en las doce rutas. Ninguno
+  // de los dos caza un token que se vuelva ilegible en una combinación todavía
+  // no usada, que es exactamente cómo entraría la regresión. Esto se calcula
+  // desde los tokens resueltos en el DOM, así que refleja la cascada real y no
+  // puede dar falsos positivos por herencia de fondo.
+  const PAIRS = [
+    ['--text', '--ink'], ['--text', '--surface'], ['--text', '--surface-raised'],
+    ['--muted', '--ink'], ['--muted', '--surface'], ['--muted', '--surface-raised'],
+    ['--accent-contrast', '--cyan'], ['--accent-contrast', '--lime'], ['--accent-contrast', '--orange'],
+  ];
+  const cctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  const cpage = await cctx.newPage();
+  for (const theme of ['dark', 'light']) {
+    await cpage.goto(`${base}/`, { waitUntil: 'load' });
+    await cpage.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+    await cpage.waitForTimeout(150);
+    const ratios = await cpage.evaluate((pairs) => {
+      const probe = document.createElement('span');
+      probe.style.display = 'none';
+      document.body.appendChild(probe);
+      // Resolver un token a rgb REAL: el navegador normaliza el valor cuando se
+      // asigna a `color`, así que no hay que parsear hex a mano.
+      const resolve = (token) => {
+        probe.style.color = `var(${token})`;
+        const value = getComputedStyle(probe).color;
+        const parts = (value.match(/[\d.]+/g) || []).map(Number);
+        return parts.length >= 3 ? parts.slice(0, 3) : null;
+      };
+      const lum = ([r, g, b]) => {
+        const f = (v) => { const s = v / 255; return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; };
+        return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+      };
+      const out = pairs.map(([fg, bg]) => {
+        const a = resolve(fg); const b = resolve(bg);
+        if (!a || !b) return { fg, bg, missing: true };
+        const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
+        return { fg, bg, ratio: Number(((hi + 0.05) / (lo + 0.05)).toFixed(2)) };
+      });
+      probe.remove();
+      return out;
+    }, PAIRS);
+    let worst = Infinity;
+    for (const r of ratios) {
+      if (r.missing) { fails.push(`tema ${theme}: el token ${r.fg} o ${r.bg} no resuelve a un color`); continue; }
+      if (r.ratio < 4.5) fails.push(`tema ${theme}: ${r.fg} sobre ${r.bg} contrasta ${r.ratio}:1 (WCAG AA exige 4.5:1)`);
+      worst = Math.min(worst, r.ratio);
+    }
+    if (Number.isFinite(worst) && worst >= 4.5) ok(`contraste de tokens en tema ${theme}: ${ratios.length} pares, peor caso ${worst}:1`);
+  }
+  await cctx.close();
+
   await browser.close();
 
   for (const c of checks) console.log(`  ok  ${c}`);

@@ -21,7 +21,12 @@
     { "source": "/images/profile-v2-(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
     { "source": "/social/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
     { "source": "/fonts/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
-    { "source": "/brands/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] }
+    { "source": "/brands/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/brand/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/cv/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }] },
+    { "source": "/humans.txt", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }] },
+    { "source": "/.well-known/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }] },
+    { "source": "/(robots.txt|sitemap.xml|site.webmanifest)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }] }
   ],
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": true },

@@ -4,12 +4,11 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
   schedule:
     - cron: '27 6 * * 1'
-  # Permite re-escanear una rama a demanda. Sin esto, un PR apilado sobre otra
-  # rama de feature no dispara el análisis (el filtro `branches: [main]`), así
-  # que un arreglo de hallazgos no se puede verificar hasta integrarlo.
+  # Permite re-escanear una rama a demanda, p. ej. para inventariar la rama
+  # COMPLETA: el check de un PR sólo anota las alertas que caen en su diff, así
+  # que un hallazgo preexistente fuera del diff no aparece en ningún PR.
   workflow_dispatch:
 
 concurrency:
@@ -23,6 +22,10 @@ jobs:
   analyze:
     name: Analyze JavaScript/TypeScript
     runs-on: ubuntu-latest
+    # Único job del repositorio que no declaraba techo: sin él hereda las 6 h
+    # por defecto de GitHub, así que un análisis colgado consume el presupuesto
+    # entero antes de fallar. El escaneo real de este repo tarda ~1 min.
+    timeout-minutes: 20
     permissions:
       actions: read
       contents: read

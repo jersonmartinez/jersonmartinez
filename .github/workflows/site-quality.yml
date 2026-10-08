@@ -2,7 +2,6 @@ name: Site quality gate
 
 on:
   pull_request:
-    branches: [main]
     paths:
       - 'src/**'
       - 'public/**'

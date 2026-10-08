@@ -117,6 +117,21 @@ const jsonLdBlocks = [personJsonLd, websiteJsonLd, breadcrumbJsonLd, ...structur
 const footerKeys = ROUTE_KEYS.filter((routeName) => routeName !== 'home');
 const normalize = (value: string | null | undefined) => (value || '/').replace(/\/$/, '').replace(/\.html$/, '') || '/';
 const here = normalize(Astro.url.pathname);
+
+/**
+ * Tipo MIME del preload de imagen, DERIVADO de la extensión.
+ *
+ * Estaba fijado a `image/webp`, lo que ataba el preload a un formato concreto:
+ * al servir AVIF (más pequeño y por tanto mejor candidato de LCP) el `type`
+ * habría anunciado un formato distinto del real y el navegador puede descartar
+ * la precarga, dejando el recurso sin precargar justo donde más importa.
+ */
+const PRELOAD_TYPES: Record<string, string> = {
+  avif: 'image/avif', webp: 'image/webp', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png',
+};
+const preloadImageType = preloadImage
+  ? PRELOAD_TYPES[(preloadImage.split('.').pop() || '').toLowerCase()]
+  : undefined;
 ---
 <!doctype html>
 <html lang={lang}>
@@ -144,7 +159,7 @@ const here = normalize(Astro.url.pathname);
     <link rel="canonical" href={canonicalUrl} />
     {alternates.map((alternate) => <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />)}
     {key && <link rel="alternate" hreflang="x-default" href={`${profile.website}${routePath(key, DEFAULT_LOCALE)}`} />}
-    {preloadImage && <link rel="preload" as="image" href={preloadImage} imagesrcset={preloadImageSrcset} imagesizes={preloadImageSizes} type="image/webp" fetchpriority="high" />}
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} imagesrcset={preloadImageSrcset} imagesizes={preloadImageSizes} type={preloadImageType} fetchpriority="high" />}
     <meta property="og:type" content={isProfilePage ? 'profile' : 'website'} />
     <meta property="og:site_name" content="Jerson Martínez" />
     <meta property="og:url" content={canonicalUrl} />
