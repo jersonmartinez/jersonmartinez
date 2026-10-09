@@ -2,6 +2,7 @@
 import Icon from '../components/Icon.astro';
 import IconSprite from '../components/IconSprite.astro';
 import '../styles/global.css';
+import '../styles/palette.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import { contentMeta, profile } from '../data/portfolio.js';
 import type { BreadcrumbEntry } from '../types/content';
@@ -74,8 +75,8 @@ const here = normalize(Astro.url.pathname);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#07111f" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#10212b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f0e8" media="(prefers-color-scheme: light)" />
     <meta name="color-scheme" content="light dark" />
     <meta name="author" content="Jerson Martínez" />
     <meta name="robots" content={robots} />
