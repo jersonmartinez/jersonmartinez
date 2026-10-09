@@ -32,9 +32,14 @@ function validateHeaders() {
   }
 }
 
+// Las doce páginas públicas más la 404. La lista cubría sólo las seis españolas,
+// así que og:*, twitter:*, canonical y el JSON-LD de /en no estaban validados por
+// este gate: una regresión que afectara sólo al inglés pasaba entera.
+const ROUTE_FILES = ['index.html', 'projects.html/index.html', 'experience.html/index.html',
+  'certifications.html/index.html', 'courses.html/index.html', 'about.html/index.html'];
 const BUILD_PAGES = [
-  ['dist/index.html', true], ['dist/projects.html/index.html', true], ['dist/experience.html/index.html', true],
-  ['dist/certifications.html/index.html', true], ['dist/courses.html/index.html', true], ['dist/about.html/index.html', true],
+  ...ROUTE_FILES.map((file) => [`dist/${file}`, true]),
+  ...ROUTE_FILES.map((file) => [`dist/en/${file}`, true]),
   ['dist/404.html', false],
 ];
 function validateMetadata() {
@@ -63,11 +68,28 @@ function validateMetadata() {
 function validateSitemap() {
   if (!exists('sitemap.xml')) return fail('Falta sitemap.xml.');
   const sitemap = read('sitemap.xml');
-  for (const route of ['/', '/projects.html', '/courses.html', '/certifications.html', '/about.html', '/experience.html']) {
-    const loc = `https://www.jersonmartinez.com${route}`;
-    if (!sitemap.includes(`<loc>${loc}</loc>`)) fail(`Sitemap no incluye ${loc}.`);
+  const routes = ['/', '/projects.html', '/courses.html', '/certifications.html', '/about.html', '/experience.html'];
+  // Prefijos por idioma: el español no lleva ninguno, el inglés vive bajo /en.
+  const prefixes = ['', '/en'];
+  for (const route of routes) {
+    for (const prefix of prefixes) {
+      const loc = prefix && route === '/'
+        ? `https://www.jersonmartinez.com${prefix}`
+        : `https://www.jersonmartinez.com${prefix}${route}`;
+      if (!sitemap.includes(`<loc>${loc}</loc>`)) fail(`Sitemap no incluye ${loc}.`);
+    }
   }
-  if ((sitemap.match(/<lastmod>2026-09-30<\/lastmod>/g) || []).length !== 6) fail('Cada URL indexable debe declarar lastmod.');
+  const lastReviewed = (read('src/data/portfolio.ts').match(/lastReviewed:\s*'(\d{4}-\d{2}-\d{2})'/) || [])[1];
+  if (!lastReviewed) fail('No se pudo leer contentMeta.lastReviewed.');
+  // El número esperado se DERIVA de rutas x idiomas. Estaba fijado a 6, que es
+  // justo la clase de valor que se queda obsoleto al añadir un idioma.
+  const expected = routes.length * prefixes.length;
+  const dated = (sitemap.match(new RegExp(`<lastmod>${lastReviewed}</lastmod>`, 'g')) || []).length;
+  if (dated !== expected) fail(`Cada URL indexable debe declarar lastmod con la fecha de revisión (${dated}/${expected}).`);
+  // Alternancia de idioma declarada: sin ella, los buscadores tratan las dos
+  // versiones como contenido duplicado en vez de traducciones.
+  if (!sitemap.includes('xmlns:xhtml="http://www.w3.org/1999/xhtml"')) fail('El sitemap multilingüe debe declarar el namespace xhtml.');
+  if ((sitemap.match(/hreflang="x-default"/g) || []).length !== expected) fail('Cada URL debe declarar x-default.');
   if (sitemap.includes('/404')) fail('La 404 no debe incluirse en sitemap.');
   if (!read('robots.txt').includes('Sitemap: https://www.jersonmartinez.com/sitemap.xml')) fail('robots no referencia sitemap.');
 }

@@ -40,13 +40,21 @@ async function refresh() {
       if (repos.length < 100) break;
       page += 1;
     }
+    // Los valores llegan de la API y se escriben en el cache que lee el build,
+    // así que se COERCIONAN a entero finito y no negativo antes de persistirlos
+    // (CodeQL js/http-to-file-access). Una respuesta malformada deja de poder
+    // meter `null`, `NaN` o una cadena en el fichero de estado.
+    const count = (value) => {
+      const n = Number(value);
+      return Number.isFinite(n) && n >= 0 ? Math.trunc(n) : 0;
+    };
     const state = {
       version: 1,
       lastValidAt: new Date().toISOString(),
       user: USER,
-      followers: user.followers,
-      publicRepos,
-      stars,
+      followers: count(user.followers),
+      publicRepos: count(publicRepos),
+      stars: count(stars),
     };
     fs.writeFileSync(STATE, `${JSON.stringify(state, null, 2)}\n`);
     console.log(`GitHub stats actualizadas: ${publicRepos} repos, ${stars} estrellas, ${user.followers} seguidores.`);

@@ -27,7 +27,7 @@ const buildSources = [
 ];
 const sourceFallback = [
   'README.md',
-  'src/data/portfolio.js',
+  'src/data/portfolio.ts',
   'src/layouts/BaseLayout.astro',
   'src/pages/index.astro',
   'src/pages/projects.html.astro',
@@ -57,10 +57,25 @@ const PROVIDER_SHORT_LIVED = new Map([
   ['wa.me', 'Redirector corto de WhatsApp; certificado gestionado por el proveedor.'],
 ]);
 
+/**
+ * Lee la fecha de caducidad del certificado de un host, CON validación.
+ *
+ * La versión anterior pasaba `rejectUnauthorized: false` para poder leer un
+ * certificado ya inválido, razonando que ése es justo el caso a informar. Pero
+ * desactivar la validación no hacía falta: cuando la cadena no verifica, el
+ * handshake falla y el fallo ES el hallazgo — un monitor de caducidad no
+ * necesita la fecha de un certificado que ya está roto, necesita decir que lo
+ * está. Así que se valida, y la ruta de error clasifica el motivo (caducado,
+ * cadena no verificable, nombre que no corresponde) y lo devuelve.
+ *
+ * Esto cierra js/disabling-certificate-validation arreglando el diseño en vez
+ * de silenciar la alerta, y deja la herramienta MÁS estricta: antes una cadena
+ * no confiable en un host propio pasaba inadvertida mientras quedaran días.
+ */
 function checkHost(host) {
   return new Promise((resolve, reject) => {
     const socket = tls.connect(
-      { host, port: 443, servername: host, rejectUnauthorized: false, timeout: 10000 },
+      { host, port: 443, servername: host, timeout: 10000 },
       () => {
         try {
           const certificate = socket.getPeerCertificate();
@@ -77,7 +92,14 @@ function checkHost(host) {
       socket.destroy();
       reject(new Error('timeout'));
     });
-    socket.on('error', reject);
+    // Si la cadena no verifica, el handshake falla aquí. El código de error ES
+    // el hallazgo (CERT_HAS_EXPIRED, UNABLE_TO_VERIFY_LEAF_SIGNATURE,
+    // ERR_TLS_CERT_ALTNAME_INVALID…), así que se nombra en vez de propagarse
+    // como un error de red indistinguible de un host caído.
+    socket.on('error', (error) => {
+      const code = error.code || error.reason || 'error de TLS';
+      reject(new Error(`certificado no válido o inalcanzable (${code})`));
+    });
   });
 }
 
@@ -93,6 +115,8 @@ function checkHost(host) {
   console.log(`== Certificados PROPIOS (umbral ${thresholdDays} días) ==`);
   for (const host of ownHosts) {
     try {
+      // La validación la hizo el handshake: llegar aquí significa cadena
+      // confiable, nombre correcto y certificado vigente.
       const result = await checkHost(host);
       console.log(`  ${host}: ${result.remainingDays.toFixed(0)} días (expira ${result.validTo})`);
       if (result.remainingDays < thresholdDays) {

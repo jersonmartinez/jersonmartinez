@@ -4,7 +4,7 @@ const path = require('node:path');
 const test = require('node:test');
 
 // validador de enlaces de datos. Comprueba que todos los href
-// declarados en src/data/portfolio.js (repos GitHub, Udemy, YouTube,
+// declarados en src/data/portfolio.ts (repos GitHub, Udemy, YouTube,
 // credenciales, CV) tienen un formato válido y que no queda ningún enlace
 // vacío o apuntando a '#'. No hace peticiones de red: valida sólo el formato.
 //
@@ -14,7 +14,7 @@ const test = require('node:test');
 
 const root = path.resolve(__dirname, '..');
 const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
-const data = read('src/data/portfolio.js');
+const data = read('src/data/portfolio.ts');
 
 // Extrae todos los valores href: pares de tuplas ['label', 'https://...'] y
 // campos href:/logo:/website:/github:/linkedin: con string literal.
@@ -56,9 +56,19 @@ test('portfolio.js no contiene enlaces vacíos, a "#" ni placeholders', () => {
 
 test('los repositorios enlazados y las credenciales usan https', () => {
   const hrefs = collectHrefs(data);
-  const repos = hrefs.filter((h) => h.includes('github.com/jersonmartinez/'));
+  const repos = hrefs.filter((h) => {
+    try {
+      const u = new URL(h);
+      return u.hostname === 'github.com' && u.pathname.startsWith('/jersonmartinez/');
+    } catch { return false; }
+  });
   assert.ok(repos.length >= 5, 'Se esperaban al menos 5 repositorios GitHub enlazados.');
   for (const r of repos) assert.match(r, /^https:\/\//, `El repo ${r} debe ser https://`);
-  const creds = hrefs.filter((h) => /certmetrics\.com|learn\.microsoft\.com\/api\/credentials|credly\.com\/badges/.test(h));
+  // El emisor se decide por el HOSTNAME parseado, no por una subcadena: sin
+  // anclar, `https://evil.com/credly.com/badges` contaría como credencial.
+  const CREDENTIAL_HOSTS = new Set(['cp.certmetrics.com', 'learn.microsoft.com', 'www.credly.com']);
+  const creds = hrefs.filter((h) => {
+    try { return CREDENTIAL_HOSTS.has(new URL(h).hostname); } catch { return false; }
+  });
   for (const c of creds) assert.match(c, /^https:\/\//, `La credencial ${c} debe ser https://`);
 });

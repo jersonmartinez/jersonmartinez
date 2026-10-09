@@ -1,4 +1,18 @@
 {
+  "//": "Gate de accesibilidad WCAG2AA sobre el dist construido, las doce rutas.",
+  "//color-contrast": [
+    "`color-contrast` está excluido AQUÍ, y sólo aquí, por un falso positivo del axe que",
+    "empaqueta pa11y-ci 4.1.1 (axe 4.11), que resuelve mal el fondo heredado y atribuye a",
+    "los textos sobre `body` un relleno de acento. Medido sobre el dist real:",
+    "axe-core 4.13 (el que usa el gate e2e de Playwright) reporta 0 violaciones de",
+    "contraste en las doce rutas, y el par que pa11y marcaba — texto `--muted` #a8bbcc",
+    "sobre fondo #07111f — contrasta 9.60:1, muy por encima del 4.5:1 exigido.",
+    "La regla NO queda sin cubrir: la cubren dos gates que sí son fiables —",
+    "`tests/e2e/accessibility.e2e.spec.js` (axe 4.13, doce rutas, sin exclusiones) y",
+    "`npm run validate:design`, que calcula el ratio de cada par de tokens texto/superficie",
+    "en ambos temas de forma determinista. Esta exclusión se retira en cuanto pa11y-ci",
+    "publique una versión con axe >= 4.12."
+  ],
   "defaults": {
     "standard": "WCAG2AA",
     "runners": ["axe"],

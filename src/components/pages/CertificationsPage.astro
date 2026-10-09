@@ -1,0 +1,32 @@
+---
+/** Página de certificaciones en los dos idiomas. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CredentialCard from '../CredentialCard.astro';
+import { getAudienceMetrics, getCertifications, getCvLinks } from '../../i18n/content';
+import { DEFAULT_LOCALE, routePath, type Lang } from '../../i18n/config';
+import { t } from '../../i18n/ui';
+
+interface Props { lang?: Lang }
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const copy = t(lang);
+const page = copy.certifications;
+const audienceMetrics = getAudienceMetrics(lang);
+const certifications = getCertifications();
+const cvLinks = getCvLinks(lang);
+const officialCount = certifications.reduce((total, provider) => total + provider.items.length, 0);
+
+const credentialSchema = {
+  '@context': 'https://schema.org', '@type': 'ItemList', name: page.schemaName,
+  itemListElement: certifications.flatMap((provider) => provider.items.map((item) => ({ '@type': 'ListItem', position: 0, item: { '@type': 'EducationalOccupationalCredential', name: item.name, credentialCategory: item.level, recognizedBy: { '@type': 'Organization', name: provider.provider, ...(provider.issuerUrl ? { url: provider.issuerUrl } : {}) }, url: item.href, identifier: item.credentialId } }))).map((item, index) => ({ ...item, position: index + 1 })),
+};
+
+const homeHref = routePath('home', lang);
+const selfHref = routePath('certifications', lang);
+const l = page.learningCards;
+---
+<BaseLayout title={page.title} description={page.description} lang={lang} routeKey="certifications" breadcrumb={[[copy.nav.home, homeHref], [copy.nav.certifications, selfHref]]} structuredData={[credentialSchema]}>
+  <section class="page-hero"><div class="container"><nav class="breadcrumb" aria-label={copy.breadcrumbAria}><ol><li><a href={homeHref}>{copy.nav.home}</a></li><li><span aria-current="page">{copy.nav.certifications}</span></li></ol></nav><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> {page.eyebrow}</p><h1>{page.h1}</h1><p class="lede">{page.lede}</p><ul class="page-hero-meta" aria-label={page.metaAria}><li>{page.metaOfficial(officialCount)}</li><li>3 AWS</li><li>6 Microsoft Azure</li><li>1 GitHub Foundations</li></ul></div></section>
+  <section class="section" aria-labelledby="certs-list-title"><div class="container"><div class="section-heading"><p class="section-kicker">{page.listKicker}</p><h2 id="certs-list-title">{page.listTitle}</h2><p class="lede">{page.listLede}</p></div><div class="cert-grid cert-grid--badges">{certifications.map((certification) => <CredentialCard certification={certification} lang={lang} />)}</div></div></section>
+  <section class="section section--line" aria-labelledby="learning-title"><div class="container"><div class="section-heading"><p class="section-kicker">{page.learningKicker}</p><h2 id="learning-title">{page.learningTitle}</h2><p class="lede">{page.learningLede}</p></div><div class="learning-summary"><article class="card"><span class="card-label">{l.obtainedLabel}</span><strong>100+</strong><h3>{l.obtainedTitle}</h3><p>{l.obtainedBody}</p></article><article class="card"><span class="card-label">{l.authorLabel}</span><strong>{audienceMetrics.openWebinarsArticles.label}</strong><h3>{l.authorTitle}</h3><p>{l.authorBody}</p></article><article class="card"><span class="card-label">{l.instructorLabel}</span><strong>{audienceMetrics.openWebinarsCourses.label}</strong><h3>{l.instructorTitle}</h3><p>{l.instructorBody}</p></article></div></div></section>
+  <section class="section" aria-labelledby="education-title"><div class="container"><div class="section-heading"><p class="section-kicker">{page.educationKicker}</p><h2 id="education-title">{page.educationTitle}</h2></div><div class="cards"><article class="card"><span class="card-label">{page.educationLabel}</span><h3>{page.educationDegree}</h3><p>{page.educationBody}</p><a class="card-link" href="https://github.com/jersonmartinez/GNet" target="_blank" rel="noopener noreferrer">{page.educationCta}<span class="sr-only">{copy.newTabSuffix}</span></a></article>{cvLinks.map((cv) => <article class="card"><span class="card-label">{page.cvLabel} / {cv.lang.toUpperCase()}</span><h3>{cv.label}</h3><p>{page.cvBody}</p><div class="card-actions"><a class="card-link" href={cv.href} target="_blank" rel="noopener noreferrer" hreflang={cv.lang}>{page.cvOpenDrive}<span class="sr-only">{copy.newTabSuffix}</span></a><a class="card-link" href={cv.downloadHref} download type="application/pdf" hreflang={cv.lang}>{page.cvDownload}<span class="sr-only">{cv.lang === 'es' ? page.cvDownloadEs : page.cvDownloadEn}</span></a></div></article>)}</div></div></section>
+</BaseLayout>

@@ -1,6 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+/**
+ * 404 BILINGÜE, a propósito.
+ *
+ * El hosting sirve UNA sola página de error para todo el dominio, así que esta
+ * misma responde también a `/en/ruta-inexistente`. Estaba sólo en español: un
+ * visitante que llegaba desde la versión inglesa con un enlace roto recibía un
+ * mensaje que no entiende y sin ninguna salida hacia `/en`.
+ *
+ * No se duplica la ruta (no existe `/en/404`) porque el servidor no la
+ * consultaría: la salida correcta es una página que hable los dos idiomas y
+ * ofrezca los destinos de ambos. El bloque inglés lleva su propio `lang` para
+ * que un lector de pantalla cambie de voz en vez de leer inglés con fonética
+ * española.
+ */
 ---
-<BaseLayout title="Página no encontrada | Jerson Martínez" description="La página solicitada no existe. Continúa hacia proyectos, trayectoria o formación." canonical="https://www.jersonmartinez.com/404.html" robots="noindex, follow">
-  <section class="page-hero error-hero"><div class="container"><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Error 404</p><h1>Esta ruta no existe, pero el recorrido continúa.</h1><p class="lede">Vuelve al inicio o entra directamente a los proyectos, la trayectoria profesional y los cursos.</p><div class="hero-actions" role="group" aria-label="Rutas sugeridas"><a class="button" href="/">Volver al inicio</a><a class="button button--ghost" href="/projects.html">Ver proyectos</a><a class="button button--ghost" href="/experience.html">Ver trayectoria</a><a class="button button--ghost" href="/certifications.html">Ver certificaciones</a></div></div></section>
+<BaseLayout title="Página no encontrada · Page not found | Jerson Martínez" description="La página solicitada no existe. Continúa hacia proyectos, trayectoria o formación. — The page does not exist. Continue to projects, experience or courses." canonical="https://www.jersonmartinez.com/404.html" robots="noindex, follow">
+  <section class="page-hero error-hero">
+    <div class="container">
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Error 404</p>
+      <h1>Esta ruta no existe, pero el recorrido continúa.</h1>
+      <p class="lede">Vuelve al inicio o entra directamente a los proyectos, la trayectoria profesional y los cursos.</p>
+      <div class="hero-actions" role="group" aria-label="Rutas sugeridas"><a class="button" href="/">Volver al inicio</a><a class="button button--ghost" href="/projects.html">Ver proyectos</a><a class="button button--ghost" href="/experience.html">Ver trayectoria</a><a class="button button--ghost" href="/certifications.html">Ver certificaciones</a></div>
+      <div class="error-alt" lang="en">
+        <h2>This route does not exist, but the journey continues.</h2>
+        <p class="lede">Head back to the English home page, or go straight to the projects, the experience timeline or the courses.</p>
+        <div class="hero-actions" role="group" aria-label="Suggested routes"><a class="button" href="/en">Back to home</a><a class="button button--ghost" href="/en/projects.html">View projects</a><a class="button button--ghost" href="/en/experience.html">View experience</a><a class="button button--ghost" href="/en/certifications.html">View certifications</a></div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

@@ -130,15 +130,32 @@
    Por encima de 1320 px reaparecían las etiquetas y la fila desbordaba 51 px (medido a
    1340, 1440 y 1920 px). Su nombre accesible lo aporta aria-label, no un texto visible. */
 .theme-toggle-label, .command-open-label { display: none; }
-@media (max-width: 1320px) {
-  .header-inner { gap: 1.25rem; }
-  .site-nav a { padding-inline: .62rem; }
-}
+/* La MISMA razón se aplica al hueco de la fila y al relleno de los enlaces, que
+   estaban dentro de `@media (max-width: 1320px)`: por encima de ese ancho volvían
+   a sus valores holgados (gap 16px, padding 0.76rem) y, al sumarse el cuarto
+   control (el conmutador de idioma), la fila desbordaba 24 px a 1340, 1440 y
+   1920 px. Medido: el contenedor mide 1180 px a TODOS esos anchos, porque está
+   topado en --max, así que el espacio holgado nunca existió; el punto de corte
+   por viewport era la premisa equivocada. Ahora son incondicionales.
+   El reparto resultante a 1180 px es marca 158 + nav 802 + controles 180 + 2
+   huecos de 20 px = 1180 exactos, así que se recorta además el relleno del
+   conmutador para no quedarse sin margen. */
+.header-inner { gap: 1.25rem; }
+.site-nav a { padding-inline: .62rem; }
 /* El colapso del header sube de 820 a 1000 px. Al sacar los controles de tema y paleta del
    <nav> para que sigan alcanzables en móvil, la fila pasó a tener cuatro ítems flex que no
    se comprimen, y entre 821 y 999 px desbordaba (medido: 75 px a 840 px, 15 px a 900 px).
    A partir de 1000 px la navegación completa cabe sin desbordar. */
-@media (max-width: 1199px) {
+/* Colapso del header. El punto de corte se fija por el ancho que la fila NECESITA,
+   medido, no por un número redondo: con los seis enlaces, el CTA de WhatsApp y los
+   cuatro controles, la navegación española pide 1175 px (marca 158 + nav 802 +
+   controles 175 + 2 huecos de 20). El contenedor sólo alcanza esos 1175 px cuando
+   llega a su tope de 1180 px, lo que ocurre a partir de 1216 px de viewport
+   (1216 - 36 de relleno). A 1200 px el contenedor medía 1164 y la fila desbordaba
+   11 px: el corte anterior (1199 px) desplegaba el menú un paso antes de que
+   cupiera. Se colapsa hasta 1219 px y se despliega desde 1220 px, con 5 px de
+   margen sobre el tope del contenedor. */
+@media (max-width: 1219px) {
   .nav-toggle { display: block; }
   .site-nav { align-items: stretch; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--elevation-3); display: none; flex-direction: column; left: .75rem; padding: .65rem; position: absolute; right: .75rem; top: calc(100% + 1px); }
   .site-nav.is-open { display: flex; }
@@ -195,8 +212,19 @@
   .command-open-kbd { display: none; }
 }
 @media (max-width: 420px) {
-  .brand { width: 8.75rem; }
+  .brand { width: 8rem; }
   .header-controls { gap: .3rem; }
+  /* A 320 px (el suelo de diseño) el contenedor mide 296 px y la fila pedía 351:
+     marca 140 + controles 191 + hueco 20. Con el cuarto control ya no cabe, así que
+     se retira lo que NO es accionable en un viewport táctil, extendiendo el mismo
+     criterio por el que ya se oculta la pista ⌘K por debajo de 560 px: la paleta de
+     comandos se abre con un atajo de teclado que ahí no existe, y la navegación
+     completa sigue disponible en el menú. Del conmutador de idioma se retira el
+     icono, no la etiqueta: «EN»/«ES» ES la información (el icono no dice a qué
+     idioma se cambia). Resultado medido: 278 px, con 18 px de margen. */
+  .command-open { display: none !important; }
+  .lang-switch .icon { display: none; }
+  .lang-switch { padding-inline: .45rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   /* La transicion de navegacion entre documentos tambien es movimiento: se desactiva. */
@@ -407,11 +435,16 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 .stack-groups li { border: 1px solid var(--line); border-radius: var(--radius-xs); color: var(--muted); font-family: 'DM Mono', 'DM Mono Fallback', monospace; font-size: .62rem; padding: .3rem .45rem; }
 .contact-panel--spaced { margin-top: 1rem; }
 .error-hero { align-items: center; display: grid; min-height: 65vh; }
+/* Bloque inglés de la 404 bilingüe: una sola página de error sirve los dos
+   árboles de idioma, así que el segundo se separa con una regla en vez de
+   duplicar la ruta. Sin fondo propio para no competir con el mensaje principal. */
+.error-alt { border-top: 1px solid var(--line); margin-top: var(--space-xl); padding-top: var(--space-lg); }
+.error-alt h2 { font-size: clamp(1.15rem, 2.4vw, 1.5rem); margin-bottom: var(--space-xs); }
 
 /* Navegación progresiva: sin JS el menú móvil permanece visible y usable.
    Mismo punto de corte que el colapso del header (1000 px); si no, en la franja colapsada
    el desplegable quedaría display:none y la navegación sería inalcanzable sin JS. */
-@media (max-width: 1199px) {
+@media (max-width: 1219px) {
   html:not(.js) .header-inner { align-items: flex-start; flex-direction: column; padding-block: .8rem; }
   html:not(.js) .nav-toggle { display: none; }
   html:not(.js) .site-nav { box-shadow: none; display: flex; position: static; width: 100%; }
@@ -505,6 +538,7 @@ section[id], article[id], :target { scroll-margin-top: var(--anchor-offset); }
 :root[data-theme='light'] .site-header { background: #ffffff; }
 :root[data-theme='light'] .site-nav a:not(.nav-contact),
 :root[data-theme='light'] .theme-toggle,
+:root[data-theme='light'] .lang-switch,
 :root[data-theme='light'] .theme-toggle-label { color: #1f2d3d; }
 :root[data-theme='light'] .site-nav a.is-current { background: var(--surface-tint-cyan-strong); color: #0b1b2d; }
 

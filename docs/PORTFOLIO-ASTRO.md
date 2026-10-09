@@ -17,22 +17,31 @@ The `.html` suffix is intentionally preserved for existing links and bookmarks w
 
 ## Mapa de rutas desplegadas y datos que las alimentan (mantenimiento)
 
-Cada página se compila desde un archivo en `src/pages/` y consume exports concretos
-de `src/data/portfolio.js` (fuente única de verdad). Para cambiar contenido, edita
-`portfolio.js`; para cambiar estructura/marcado, edita el `.astro` correspondiente.
+Cada ruta de `src/pages/` (y su gemela de `src/pages/en/`) es un envoltorio de tres
+líneas que sólo fija `lang`: el marcado vive una sola vez en
+`src/components/pages/`. El contenido procede de `src/data/portfolio.ts` (fuente
+única de verdad) a través de los resolutores de `src/i18n/content.ts`, que
+superponen el inglés y trasladan los enlaces internos. Para cambiar contenido,
+edita `portfolio.ts` (y su entrada en `src/i18n/content.en.ts`); para cambiar
+estructura/marcado, edita el componente de página.
 
-| Ruta desplegada        | Archivo fuente                            | Exports de `portfolio.js` que consume |
-| ---------------------- | ----------------------------------------- | ------------------------------------- |
-| `/`                    | `src/pages/index.astro`                   | `profile`, `projects` (destacados: `featured`), `teaching`, `certifications`, `skills`, `projectSlug` |
-| `/projects.html`       | `src/pages/projects.html.astro`           | `projects`, `profile`, `projectSlug` |
-| `/courses.html`        | `src/pages/courses.html.astro`            | `courses`, `profile`, `youtubeChannels` |
-| `/certifications.html` | `src/pages/certifications.html.astro`     | `certifications`, `cvLinks`, `profile` |
-| `/about.html`          | `src/pages/about.html.astro`       | `cvLinks`, `profile` |
-| `/experience.html`     | `src/pages/experience.html.astro`         | `experience`, `profile`, `experienceLede` |
+| Ruta desplegada                      | Componente de página                          | Resolutores / exports que consume |
+| ------------------------------------ | --------------------------------------------- | --------------------------------- |
+| `/` · `/en/`                         | `src/components/pages/HomePage.astro`         | `getProfile`, `getProjects` (destacados: `featured`), `getTeaching`, `getSkills`, `getWriting`, `getValueProps`, `getAudienceMetrics`, `methodologies`, `projectSlug` |
+| `/projects.html` · `/en/projects.html` | `src/components/pages/ProjectsPage.astro`   | `getProfile`, `getProjects`, `projectSlug` |
+| `/courses.html` · `/en/courses.html` | `src/components/pages/CoursesPage.astro`      | `getCourses`, `getChannels`, `getAudienceMetrics`, `openWebinarsCourses` |
+| `/certifications.html` · `/en/...`   | `src/components/pages/CertificationsPage.astro` | `getCertifications`, `getCvLinks`, `getAudienceMetrics` |
+| `/about.html` · `/en/about.html`     | `src/components/pages/AboutPage.astro`        | `getProfile`, `getStackGroups`, `getCvLinks`, `getCollaborationModes` |
+| `/experience.html` · `/en/...`       | `src/components/pages/ExperiencePage.astro`   | `getProfile`, `getExperience`, `getExperienceLede`, `getCvLinks` |
 
 Componentes compartidos: `src/layouts/BaseLayout.astro` (envoltura común, usa
-`profile`), `src/components/SiteHeader.astro` (navegación), `SkillsExplorer.astro`
-(render de `skills` en el home) y `LogoCloud.astro` (nube de logos del home).
+`getProfile` y `contentMeta`), `src/components/SiteHeader.astro` (navegación y
+conmutador de idioma), `SkillsExplorer.astro` (render de skills en el home) y
+`LogoCloud.astro` (nube de logos del home).
+
+Cada export de `portfolio.ts` lleva su tipo de `src/types/content.ts`, así que el
+compilador valida el dato contra su contrato: un campo que falte, sobre o cambie
+de tipo rompe `astro check`.
 
 Notas de derivación (evitan cifras divergentes):
 
@@ -72,7 +81,7 @@ final, de modo que el estado activo del menú funciona en ambas formas.
 
 ## CV-driven content
 
-Content in `src/data/portfolio.js` is restricted to information confirmed in the supplied updated Spanish/English CVs, the public GitHub profile and the existing README:
+Content in `src/data/portfolio.ts` is restricted to information confirmed in the supplied updated Spanish/English CVs, the public GitHub profile and the existing README:
 
 - Hero facts show `+10` years of experience, `3` Cloud Providers, `100+` certifications obtained through continuous learning, and `60+` published articles. OpenWebinars separately presents seven courses taught.
 - `skills` contains the updated CV taxonomy: infrastructure, cloud, virtualization, containers, IaC, DevOps/CI/CD, observability, storage/backup, security/governance, generative AI, development, databases and languages.

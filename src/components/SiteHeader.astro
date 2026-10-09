@@ -1,25 +1,48 @@
 ---
 import Icon from './Icon.astro';
 import BrandMark from './BrandMark.astro';
-import { profile } from '../data/portfolio.js';
-const navItems = [
-  ['Inicio', '/', 'fa-home'],
-  ['Proyectos', '/projects.html', 'fa-project-diagram'],
-  ['Cursos', '/courses.html', 'fa-graduation-cap'],
-  ['Certificaciones', '/certifications.html', 'fa-certificate'],
-  ['Trayectoria', '/experience.html', 'fa-route'],
-  ['Sobre mí', '/about.html', 'fa-user'],
-];
+import { getProfile } from '../i18n/content';
+import { DEFAULT_LOCALE, ROUTE_KEYS, otherLang, routePath, type Lang, type RouteKey } from '../i18n/config';
+import { t } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+  /** Ruta actual, para marcar el enlace activo y apuntar el conmutador de idioma. */
+  routeKey?: RouteKey | null;
+}
+
+const { lang = DEFAULT_LOCALE, routeKey = null } = Astro.props;
+const copy = t(lang);
+const profile = getProfile(lang);
+
+const navIcons: Record<RouteKey, string> = {
+  home: 'fa-home',
+  projects: 'fa-project-diagram',
+  courses: 'fa-graduation-cap',
+  certifications: 'fa-certificate',
+  experience: 'fa-route',
+  about: 'fa-user',
+};
+
+/**
+ * Destino del conmutador: la MISMA página en el otro idioma. Cuando la página no
+ * existe en el otro idioma (404, guía visual) se cae al inicio de ese idioma,
+ * que es una página real, en vez de construir una URL que daría 404.
+ */
+const alternate = otherLang(lang);
+const alternateHref = routePath(routeKey ?? 'home', alternate);
+
 const normalize = (value: string | null | undefined) => (value || '/').replace(/index\.html$/, '').replace(/\/$/, '').replace(/\.html$/, '') || '/';
 const here = normalize(Astro.url.pathname);
 ---
 <header class="site-header" data-site-header>
   <div class="header-inner container">
-    <a class="brand" href="/" aria-label="Jerson Martínez, inicio">
+    <a class="brand" href={routePath('home', lang)} aria-label={copy.brandAria}>
       <BrandMark />
     </a>
-    <nav class="site-nav" id="site-nav" data-site-nav aria-label="Navegación principal">
-      {navItems.map(([label, href, icon]) => {
+    <nav class="site-nav" id="site-nav" data-site-nav aria-label={copy.mainNavAria}>
+      {ROUTE_KEYS.map((key) => {
+        const href = routePath(key, lang);
         const current = here === normalize(href);
         return (
           <a
@@ -27,8 +50,8 @@ const here = normalize(Astro.url.pathname);
             class={current ? 'is-current' : ''}
             aria-current={current ? 'page' : undefined}
           >
-            <Icon name={icon} />
-            <span class="nav-label">{label}</span>
+            <Icon name={navIcons[key]} />
+            <span class="nav-label">{copy.nav[key]}</span>
           </a>
         );
       })}
@@ -37,7 +60,7 @@ const here = normalize(Astro.url.pathname);
         href={profile.whatsapp}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Escribir a Jerson por WhatsApp, abre en nueva pestaña"
+        aria-label={copy.whatsappNavAria}
       >
         <Icon name="fab fa-whatsapp" />
         <span>WhatsApp</span>
@@ -45,32 +68,49 @@ const here = normalize(Astro.url.pathname);
     </nav>
     {/* El conmutador de tema y la paleta son CONTROLES, no enlaces de navegación: vivían
         dentro de <nav>, de modo que al colapsar el menú en móvil quedaban inalcanzables
-        (medido: rect 0x0 con el menú cerrado). Ahora son un grupo propio, siempre visible. */}
+        (medido: rect 0x0 con el menú cerrado). Ahora son un grupo propio, siempre visible.
+        El conmutador de IDIOMA vive aquí por el mismo motivo: debe alcanzarse en móvil. */}
     <div class="header-controls">
+      {/* `lang` y `hreflang` describen el DESTINO, así que el lector de pantalla
+          anuncia el cambio de idioma; el texto del enlace está en ese idioma. */}
+      <a
+        class="lang-switch"
+        href={alternateHref}
+        lang={alternate}
+        hreflang={alternate}
+        aria-label={copy.langSwitchAria}
+      >
+        <Icon name="fas fa-language" />
+        <span class="lang-switch-label">{copy.langSwitchLabel}</span>
+      </a>
       <button
         class="theme-toggle"
         type="button"
         data-theme-toggle
-        aria-label="Cambiar entre tema claro y oscuro"
+        aria-label={copy.themeToggleAria}
         aria-pressed="false"
+        data-label-dark={copy.themeActivateDark}
+        data-label-light={copy.themeActivateLight}
+        data-status-light={copy.themeStatusLight}
+        data-status-dark={copy.themeStatusDark}
         hidden
       >
         <Icon name="fas fa-adjust" />
-        <span class="theme-toggle-label">Tema</span>
+        <span class="theme-toggle-label">{copy.themeToggleLabel}</span>
       </button>
       <button
         class="command-open"
         type="button"
         data-command-open
-        aria-label="Abrir paleta de comandos (Ctrl o Cmd + K)"
+        aria-label={copy.commandOpenAria}
         aria-keyshortcuts="Control+K Meta+K"
         hidden
       >
         <Icon name="fas fa-terminal" />
-        <span class="command-open-label">Buscar</span>
-        <kbd class="command-open-kbd">⌘K</kbd>
+        <span class="command-open-label">{copy.commandOpenLabel}</span>
+        <kbd class="command-open-kbd" aria-hidden="true">⌘K</kbd>
       </button>
-      <button class="nav-toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Abrir menú">
+      <button class="nav-toggle" type="button" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label={copy.navToggleAria} data-label-open={copy.navToggleAria} data-label-close={copy.navToggleAriaClose}>
         <span></span><span></span><span></span>
       </button>
     </div>

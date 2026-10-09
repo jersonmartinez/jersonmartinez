@@ -55,11 +55,11 @@ const IMPROVEMENTS = [
   [9, 'Accesibilidad', 'src/pages/index.astro', 'Un único h1 por página verificado; las secciones empiezan en h2.', 'c26fa5e'],
   [81, 'Accesibilidad', 'src/styles/global.css', 'Selectores de heading de .timeline-card/.cert-card/.repo-card/.course-card extendidos a h3 para preservar el estilo.', 'c26fa5e'],
   // --- fd0c9ce Content ---
-  [1, 'Contenido', 'src/data/portfolio.js', 'profile.yearsExperience como fuente única; el hero de experiencia y los facts derivan de él (sin cifras divergentes).', 'fd0c9ce'],
-  [3, 'Contenido', 'src/data/portfolio.js', "Eliminada la cifra estática '122 estrellas' del kind de docker-lamp (dato no verificable en tiempo de build).", 'fd0c9ce'],
+  [1, 'Contenido', 'src/data/portfolio.ts', 'profile.yearsExperience como fuente única; el hero de experiencia y los facts derivan de él (sin cifras divergentes).', 'fd0c9ce'],
+  [3, 'Contenido', 'src/data/portfolio.ts', "Eliminada la cifra estática '122 estrellas' del kind de docker-lamp (dato no verificable en tiempo de build).", 'fd0c9ce'],
   [18, 'Contenido', 'src/pages/index.astro', 'hero-facts verificables enlazan a su fuente (100+ -> /certifications.html; 60+ -> OpenWebinars).', 'fd0c9ce'],
   [33, 'Contenido', 'src/pages/courses.html.astro', 'Descripción de cada course-card derivada del framework real del nombre del curso.', 'fd0c9ce'],
-  [36, 'Contenido', 'src/data/portfolio.js', 'Métrica de YouTube derivada de un único campo subscribers (copy confirmado intacto).', 'fd0c9ce'],
+  [36, 'Contenido', 'src/data/portfolio.ts', 'Métrica de YouTube derivada de un único campo subscribers (copy confirmado intacto).', 'fd0c9ce'],
   [37, 'Contenido', 'src/pages/index.astro', 'Métricas de suscriptores en teaching derivadas de youtubeChannels (fuente única).', 'fd0c9ce'],
   // --- c0dbd20 Nav ---
   [2, 'Navegación', 'src/pages/certifications.html.astro', "'Ver GNet' apunta al repositorio directo (github.com/jersonmartinez/GNet).", 'c0dbd20'],
@@ -68,7 +68,7 @@ const IMPROVEMENTS = [
   [38, 'Navegación', 'src/components/SiteHeader.astro', 'Lógica de estado activo del nav para anclas del home (SSR normalizado + sync por sección visible).', 'c0dbd20'],
   [39, 'Navegación', 'src/pages/index.astro', "Nav 'Contacto' (#contacto) diferenciado del CTA de email ('Escríbeme').", 'c0dbd20'],
   [51, 'Navegación', 'src/layouts/BaseLayout.astro', 'Menú de rutas internas agrupado en el footer (Proyectos/Cursos/Credenciales/Trayectoria).', 'c0dbd20'],
-  [61, 'Navegación', 'src/data/portfolio.js', 'Verificado: CTA de Crashell idéntico en ambos sitios (fuente única en portfolio.js).', 'c0dbd20'],
+  [61, 'Navegación', 'src/data/portfolio.ts', 'Verificado: CTA de Crashell idéntico en ambos sitios (fuente única en portfolio.js).', 'c0dbd20'],
   // --- f2cacb9 Interactive states ---
   [13, 'Accesibilidad', 'src/pages/projects.html.astro', "Estado vacío 'No hay proyectos en esta categoría todavía'.", 'f2cacb9'],
   [14, 'Accesibilidad', 'src/pages/projects.html.astro', "Contador aria-live 'Mostrando N de M' al filtrar proyectos.", 'f2cacb9'],
@@ -100,7 +100,7 @@ const IMPROVEMENTS = [
   [92, 'SEO', 'src/pages/certifications.html.astro', 'hreflang coherente en descargas de CV (ES/EN) para señalar idioma al buscador.', '83401a4'],
   // --- 07bca7e docs/tests ---
   [41, 'Documentación', 'docs/PORTFOLIO-ASTRO.md', 'Tabla ruta desplegada -> archivo fuente -> exports de portfolio.js que consume cada página, más notas de derivación.', '07bca7e'],
-  [42, 'Contenido', 'src/data/portfolio.js', 'Comentario de cabecera declarando los VALORES PROTEGIDOS confirmados (Udemy "Más de 77 mil estudiantes", DevOpsea "+14K suscriptores", Side Master "+5K suscriptores", OpenWebinars "+60 artículos y cursos").', '07bca7e'],
+  [42, 'Contenido', 'src/data/portfolio.ts', 'Comentario de cabecera declarando los VALORES PROTEGIDOS confirmados (Udemy "Más de 77 mil estudiantes", DevOpsea "+14K suscriptores", Side Master "+5K suscriptores", OpenWebinars "+60 artículos y cursos").', '07bca7e'],
   [43, 'Testing', 'tests/portfolio.test.js', 'Test que asserta que los valores protegidos existen textualmente en portfolio.js; corrige aserción obsoleta "15K+".', '07bca7e'],
   [44, 'Testing', 'tests/data-links.test.js', 'Validador de formato de todos los href de portfolio.js (https/mailto/ruta interna; sin vacíos, "#" ni placeholders).', '07bca7e'],
   [45, 'Testing', 'tests/compiled-html.test.js', 'Validador del HTML compilado: un único <h1> por página y jerarquía de headings sin saltos (VALIDATE_BUILD=1).', '07bca7e'],

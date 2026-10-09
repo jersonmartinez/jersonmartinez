@@ -10,7 +10,11 @@
  */
 const { chromium } = require('@playwright/test');
 
-const ROUTES = ['/', '/projects.html', '/courses.html', '/certifications.html', '/experience.html', '/about.html'];
+// Las rutas se miden en los DOS idiomas: el texto de la navegación y de los
+// controles tiene longitudes distintas, y el header es justo donde un texto más
+// largo desborda. Medir sólo el español dejaría /en sin cubrir.
+const ES_ROUTES = ['/', '/projects.html', '/courses.html', '/certifications.html', '/experience.html', '/about.html'];
+const ROUTES = [...ES_ROUTES, ...ES_ROUTES.map((route) => (route === '/' ? '/en' : `/en${route}`))];
 // Anchos elegidos para cubrir las franjas donde aparecieron defectos reales: el suelo de
 // 320 px, el colapso del menú, y los anchos por encima de --max donde la fila del header
 // desbordaba porque el contenedor ya no crece con el viewport.
@@ -55,8 +59,14 @@ const run = async () => {
       if (m.headerOverflow > 0) fails.push(`${route} @${width}px: el header desborda ${m.headerOverflow}px`);
       if (m.navOverflow > 0) fails.push(`${route} @${width}px: la navegación desborda su caja ${m.navOverflow}px`);
       if (m.overlap > 0) fails.push(`${route} @${width}px: el CTA de navegación se solapa ${m.overlap}px con los controles`);
-      // La marca no debe comprimirse: la fila del header tiene cuatro ítems flex.
-      if (m.brand < 130) fails.push(`${route} @${width}px: la marca se comprimió a ${m.brand}px`);
+      // La marca no debe comprimirse: la fila del header tiene cinco ítems flex.
+      // El umbral depende del ancho porque el ancho INTENCIONADO depende del ancho:
+      // por debajo de 421 px la hoja de estilos la fija en 8rem (128 px) para que
+      // la fila quepa en el suelo de diseño de 320 px. Lo que este check persigue
+      // es la compresión por flex (se midió una caída de 158 a 67 px), no un valor
+      // de diseño declarado, así que compara contra el esperado en cada tramo.
+      const brandExpected = width <= 420 ? 128 : 150;
+      if (m.brand < brandExpected) fails.push(`${route} @${width}px: la marca se comprimió a ${m.brand}px (esperado >= ${brandExpected}px)`);
       // Los controles no son navegación: deben seguir alcanzables con el menú colapsado.
       if (!m.themeVisible) fails.push(`${route} @${width}px: el conmutador de tema no está visible`);
     }
@@ -146,6 +156,62 @@ const run = async () => {
     else ok(`contraste de la marca en tema ${theme}: ${brand.ratio}:1`);
   }
   await tctx.close();
+
+  // 8. Contraste DETERMINISTA de los pares texto/superficie en ambos temas.
+  //
+  // Por qué existe este check y no basta con los otros dos: `.pa11yci.json`
+  // excluye `color-contrast` por un falso positivo de su axe 4.11 (la razón y
+  // la medición están documentadas en ese fichero), y el gate axe de Playwright
+  // sólo ve los colores que ALGÚN elemento usa hoy en las doce rutas. Ninguno
+  // de los dos caza un token que se vuelva ilegible en una combinación todavía
+  // no usada, que es exactamente cómo entraría la regresión. Esto se calcula
+  // desde los tokens resueltos en el DOM, así que refleja la cascada real y no
+  // puede dar falsos positivos por herencia de fondo.
+  const PAIRS = [
+    ['--text', '--ink'], ['--text', '--surface'], ['--text', '--surface-raised'],
+    ['--muted', '--ink'], ['--muted', '--surface'], ['--muted', '--surface-raised'],
+    ['--accent-contrast', '--cyan'], ['--accent-contrast', '--lime'], ['--accent-contrast', '--orange'],
+  ];
+  const cctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  const cpage = await cctx.newPage();
+  for (const theme of ['dark', 'light']) {
+    await cpage.goto(`${base}/`, { waitUntil: 'load' });
+    await cpage.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+    await cpage.waitForTimeout(150);
+    const ratios = await cpage.evaluate((pairs) => {
+      const probe = document.createElement('span');
+      probe.style.display = 'none';
+      document.body.appendChild(probe);
+      // Resolver un token a rgb REAL: el navegador normaliza el valor cuando se
+      // asigna a `color`, así que no hay que parsear hex a mano.
+      const resolve = (token) => {
+        probe.style.color = `var(${token})`;
+        const value = getComputedStyle(probe).color;
+        const parts = (value.match(/[\d.]+/g) || []).map(Number);
+        return parts.length >= 3 ? parts.slice(0, 3) : null;
+      };
+      const lum = ([r, g, b]) => {
+        const f = (v) => { const s = v / 255; return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; };
+        return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+      };
+      const out = pairs.map(([fg, bg]) => {
+        const a = resolve(fg); const b = resolve(bg);
+        if (!a || !b) return { fg, bg, missing: true };
+        const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
+        return { fg, bg, ratio: Number(((hi + 0.05) / (lo + 0.05)).toFixed(2)) };
+      });
+      probe.remove();
+      return out;
+    }, PAIRS);
+    let worst = Infinity;
+    for (const r of ratios) {
+      if (r.missing) { fails.push(`tema ${theme}: el token ${r.fg} o ${r.bg} no resuelve a un color`); continue; }
+      if (r.ratio < 4.5) fails.push(`tema ${theme}: ${r.fg} sobre ${r.bg} contrasta ${r.ratio}:1 (WCAG AA exige 4.5:1)`);
+      worst = Math.min(worst, r.ratio);
+    }
+    if (Number.isFinite(worst) && worst >= 4.5) ok(`contraste de tokens en tema ${theme}: ${ratios.length} pares, peor caso ${worst}:1`);
+  }
+  await cctx.close();
 
   await browser.close();
 
