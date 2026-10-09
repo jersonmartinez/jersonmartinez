@@ -1,0 +1,158 @@
+/* Copperline: paleta y gramática de interacción centralizadas. */
+:root {
+  --primary: #f79b72;
+  --primary-hover: #ffb18d;
+  --secondary: #2a4759;
+  --accent: #bfe5d7;
+  --accent-strong: #2f6d63;
+  --button-text: #10212b;
+  --secondary-text: #f7f2ec;
+  --ink: #10212b;
+  --ink-deep: #09151c;
+  --surface: #172f3b;
+  --surface-raised: #234554;
+  --surface-soft: rgba(35, 69, 84, .78);
+  --surface-overlay: rgba(9, 21, 28, .92);
+  --surface-sunken: rgba(9, 21, 28, .34);
+  --surface-tint-primary: rgba(247, 155, 114, .1);
+  --surface-tint-primary-strong: rgba(247, 155, 114, .18);
+  --surface-tint-accent: rgba(191, 229, 215, .1);
+  --line: rgba(238, 238, 238, .2);
+  --line-strong: rgba(247, 155, 114, .82);
+  --border-primary-soft: rgba(247, 155, 114, .5);
+  --text: #f7f2ec;
+  --muted: #c6d2d2;
+  --radius-control: .35rem .9rem .35rem .9rem;
+  --radius-control-small: .25rem .65rem .25rem .65rem;
+  --control-shadow: 3px 3px 0 var(--secondary);
+  --control-shadow-hover: 5px 5px 0 var(--secondary);
+  --control-shadow-pressed: 1px 1px 0 var(--secondary);
+  --focus-ring-color: var(--primary);
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 3px;
+
+  /* Compatibilidad: los nombres históricos apuntan a los tokens nuevos. */
+  --cyan: var(--primary);
+  --lime: var(--accent);
+  --orange: #ffc0a2;
+  --accent-contrast: var(--button-text);
+}
+
+:root[data-theme='light'] {
+  --ink: #f6f0e8;
+  --ink-deep: #e9ddd1;
+  --surface: #fffdf9;
+  --surface-raised: #ffffff;
+  --surface-soft: rgba(255, 255, 255, .92);
+  --surface-overlay: rgba(255, 253, 249, .96);
+  --surface-sunken: rgba(42, 71, 89, .06);
+  --surface-tint-primary: rgba(169, 78, 49, .08);
+  --surface-tint-primary-strong: rgba(169, 78, 49, .14);
+  --surface-tint-accent: rgba(47, 109, 99, .08);
+  --line: rgba(42, 71, 89, .2);
+  --line-strong: #2a4759;
+  --border-primary-soft: rgba(169, 78, 49, .48);
+  --text: #18303d;
+  --muted: #465d68;
+  --primary: #a94e31;
+  --primary-hover: #873b25;
+  --secondary: #2a4759;
+  --accent: #2f6d63;
+  --accent-strong: #24564f;
+  --button-text: #fffdf9;
+  --secondary-text: #fffdf9;
+  --cyan: var(--primary);
+  --lime: var(--accent);
+  --orange: #9b422b;
+  --accent-contrast: #fffdf9;
+}
+
+body::before { background: radial-gradient(circle at 82% 3%, var(--surface-tint-primary-strong), transparent 31rem), radial-gradient(circle at 7% 36%, var(--surface-tint-accent), transparent 28rem); }
+body::after { background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); opacity: .22; }
+::selection { background: var(--primary); color: var(--button-text); }
+:where(a, button, input, select, textarea, summary):focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+.skip-link { background: var(--primary); color: var(--button-text); }
+.site-header { background: var(--surface-overlay); }
+
+.site-nav a, .nav-toggle, .profile-social, .button, .filter-button, .skill-tab, .credential-badge {
+  border-radius: var(--radius-control-small);
+  transition: background .18s cubic-bezier(.2, .8, .2, 1), border-color .18s cubic-bezier(.2, .8, .2, 1), color .18s cubic-bezier(.2, .8, .2, 1), box-shadow .18s cubic-bezier(.2, .8, .2, 1), transform .18s cubic-bezier(.2, .8, .2, 1);
+}
+.site-nav a:hover, .site-nav a.is-current { background: var(--surface-tint-primary); border-color: var(--border-primary-soft); color: var(--text); transform: translateY(-1px); }
+.site-nav a i { color: var(--primary); }
+.site-nav .nav-contact { background: var(--primary); border-color: var(--primary); box-shadow: 2px 2px 0 var(--secondary); color: var(--button-text); }
+.site-nav .nav-contact i, .site-nav .nav-contact:hover i { color: var(--button-text); }
+.site-nav .nav-contact:hover { background: var(--primary-hover); border-color: var(--primary-hover); box-shadow: 3px 3px 0 var(--secondary); color: var(--button-text); transform: translate(-1px, -1px); }
+.site-nav .nav-contact:active { box-shadow: 1px 1px 0 var(--secondary); transform: translate(1px, 1px); }
+.nav-toggle { background: var(--surface); border-color: var(--line-strong); box-shadow: 2px 2px 0 var(--secondary); }
+.nav-toggle:hover { background: var(--surface-tint-primary); transform: translate(-1px, -1px); }
+.nav-toggle:active { box-shadow: 1px 1px 0 var(--secondary); transform: translate(1px, 1px); }
+
+.button { background: var(--primary); border-color: var(--primary); box-shadow: var(--control-shadow); color: var(--button-text); min-height: 3.2rem; }
+.button:hover { background: var(--primary-hover); border-color: var(--primary-hover); box-shadow: var(--control-shadow-hover); color: var(--button-text); transform: translate(-1px, -1px); }
+.button:active { box-shadow: var(--control-shadow-pressed); transform: translate(2px, 2px); }
+.button--ghost { background: var(--surface); border-color: var(--secondary); box-shadow: 3px 3px 0 var(--primary); color: var(--text); }
+.button--ghost:hover { background: var(--surface-tint-primary); border-color: var(--primary); box-shadow: 5px 5px 0 var(--primary); color: var(--text); }
+.button--ghost:active { box-shadow: 1px 1px 0 var(--primary); }
+
+.profile-social { background: var(--surface); box-shadow: 2px 2px 0 var(--secondary); }
+.profile-social:hover, .profile-social:focus-visible { background: var(--primary); border-color: var(--primary); box-shadow: 3px 3px 0 var(--secondary); color: var(--button-text); transform: translate(-1px, -1px); }
+.profile-social:active { box-shadow: 1px 1px 0 var(--secondary); transform: translate(1px, 1px); }
+.filter-button { background: var(--surface); border-color: var(--line-strong); box-shadow: 2px 2px 0 var(--secondary); color: var(--text); }
+.filter-button:hover { background: var(--surface-tint-primary); border-color: var(--primary); box-shadow: 3px 3px 0 var(--secondary); color: var(--text); transform: translate(-1px, -1px); }
+.filter-button.is-active, .filter-button.is-active:hover { background: var(--secondary); border-color: var(--secondary); box-shadow: 3px 3px 0 var(--primary); color: var(--secondary-text); transform: translate(-1px, -1px); }
+.filter-button:active { box-shadow: 1px 1px 0 var(--secondary); transform: translate(1px, 1px); }
+.filter-button.is-active:active { box-shadow: 1px 1px 0 var(--primary); }
+
+.skill-tab { border-color: transparent; box-shadow: none; }
+.skill-tab:hover { background: var(--surface-tint-primary); border-color: var(--border-primary-soft); color: var(--text); transform: translateX(3px); }
+.skill-tab.is-active { background: var(--surface-tint-primary-strong); border-color: var(--primary); box-shadow: 3px 0 0 var(--primary); color: var(--text); transform: translateX(3px); }
+.skill-tab.is-active > i:first-child, .skill-tab-arrow { color: var(--primary) !important; }
+.skill-tab.is-active .skill-tab-arrow { color: var(--accent) !important; }
+.card--interactive:hover, .card--interactive:focus-within { border-color: var(--primary); box-shadow: 6px 6px 0 var(--surface-tint-primary-strong); transform: translate(-2px, -2px); }
+.card--interactive:active { box-shadow: 2px 2px 0 var(--surface-tint-primary-strong); transform: translate(1px, 1px); }
+.card-link, .credential-more, .teaching-card a { color: var(--primary); text-underline-offset: .22em; }
+.card-link:hover, .card-link:focus-visible, .credential-more:hover, .credential-more:focus-visible, .teaching-card a:hover, .teaching-card a:focus-visible { color: var(--primary-hover); }
+
+.credential-badge { background: var(--surface-sunken); box-shadow: 2px 2px 0 var(--secondary); }
+.credential-badge:hover, .credential-badge:focus-visible { background: var(--surface-tint-primary); border-color: var(--primary); box-shadow: 4px 4px 0 var(--secondary); transform: translate(-1px, -1px); }
+.credential-badge:active { box-shadow: 1px 1px 0 var(--secondary); transform: translate(1px, 1px); }
+.credential-code { background: var(--primary); color: var(--button-text); }
+.course-access { background: var(--accent); border-color: var(--accent-strong); color: var(--button-text); }
+.status, .repo-kind, .company, .profile-tag, .credential-verify { color: var(--accent); }
+.status-dot { background: var(--accent); }
+.card-label, .section-kicker, .eyebrow, .mono, .project-theme { color: var(--primary); }
+.footer-links a:hover, .footer-top:hover, .footer-top:focus-visible { color: var(--primary); }
+.footer-social a:hover, .footer-social a:focus-visible { background: var(--surface-tint-primary); border-color: var(--primary); }
+
+@media (prefers-reduced-motion: reduce) {
+  .button:hover, .button--ghost:hover, .filter-button:hover, .filter-button.is-active, .site-nav a:hover, .site-nav a.is-current, .site-nav .nav-contact:hover, .nav-toggle:hover, .profile-social:hover, .skill-tab:hover, .skill-tab.is-active, .card--interactive:hover, .credential-badge:hover { transform: none; }
+}
+
+/* Superficies e ilustraciones: ningún dominio visual conserva los tonos anteriores. */
+.skills-explorer, .skills-panel, .profile-panel, .contact-panel, .project-card--accent { background: var(--surface-raised); }
+.impact-item, .about-results li, .course-outcome, .intent-icon { background: var(--surface-tint-primary); border-color: var(--border-primary-soft); }
+.course-visual { background: linear-gradient(135deg, var(--surface-tint-primary-strong), var(--surface-tint-accent)); }
+.course-visual-base { fill: var(--ink-deep); }
+.course-grid-line { stroke: var(--line); }
+.course-gradient-start { stop-color: var(--primary); }
+.course-gradient-end { stop-color: var(--accent); }
+.course-orbit { stroke: var(--primary); }
+.course-orbit--inner { stroke: var(--accent); }
+.course-code-lines { stroke: var(--muted); }
+.course-visual-title { fill: var(--text); }
+.course-visual-subtitle { fill: var(--muted); }
+.course-access-label.is-free { background: var(--surface-tint-accent); border-color: var(--border-primary-soft); color: var(--accent); }
+
+:root[data-theme='light'] .site-header { background: var(--surface-overlay); }
+:root[data-theme='light'] .site-nav a:not(.nav-contact),
+:root[data-theme='light'] .nav-toggle { color: var(--text); }
+:root[data-theme='light'] .filter-button.is-active,
+:root[data-theme='light'] .filter-button.is-active:hover { color: var(--secondary-text); }
+
+@media (prefers-reduced-motion: reduce) {
+  .button:hover, .button--ghost:hover, .filter-button:hover, .filter-button.is-active,
+  .site-nav a:hover, .site-nav a.is-current, .site-nav .nav-contact:hover,
+  .nav-toggle:hover, .profile-social:hover, .skill-tab:hover, .skill-tab.is-active,
+  .card--interactive:hover, .credential-badge:hover { transform: none; }
+}
