@@ -60,9 +60,9 @@
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@types/node": "22.20.5",
-    "astro": "7.3.5",
+    "astro": "7.3.8",
     "stylelint": "17.16.0",
-    "stylelint-order": "8.1.1",
+    "stylelint-order": "8.1.2",
     "typescript": "6.0.3"
   }
 }
