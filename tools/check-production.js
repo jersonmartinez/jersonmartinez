@@ -5,8 +5,22 @@ const routes = [
   ['/', 'Plataformas cloud confiables'], ['/projects.html', 'Sistemas que muestran cómo convierto problemas'],
   ['/courses.html', 'Una ruta práctica para aprender desarrollo web con Go'], ['/certifications.html', 'Diez credenciales verificables'],
   ['/experience.html', 'Experiencia construyendo sistemas y equipos que escalan'], ['/about.html', 'Ingeniería que conecta personas, plataformas y resultados'],
+  // Las seis rutas inglesas. El smoke medía sólo el español, así que `/en` podía
+  // estar caída en producción —o servir el canonical equivocado, que es peor:
+  // un canonical español en una página inglesa la desindexa— sin que nada avisara.
+  ['/en', 'Reliable cloud platforms'], ['/en/projects.html', 'Systems that show how I turn problems'],
+  ['/en/courses.html', 'A practical path to learn web development with Go'], ['/en/certifications.html', 'Ten verifiable credentials'],
+  ['/en/experience.html', 'Experience building systems and teams that scale'], ['/en/about.html', 'Engineering that connects people, platforms and results'],
 ];
-const redirects = ['/projects', '/courses', '/certifications', '/experience', '/about'];
+const redirects = [
+  '/projects', '/courses', '/certifications', '/experience', '/about',
+  '/en/projects', '/en/courses', '/en/certifications', '/en/experience', '/en/about', '/en/',
+];
+// Las dos versiones deben declararse mutuamente, más x-default. Si un idioma
+// anuncia un alternate hacia una URL caída, el buscador lo trata como
+// duplicado en vez de traducción: comprobarlo en producción es el único punto
+// donde se ve el resultado real, no el build.
+const HREFLANGS = ['es', 'en', 'x-default'];
 async function fetchPage(url, options = {}) { return fetch(url, { redirect: 'follow', headers: { 'user-agent': 'jersonmartinez-portfolio-production-smoke/2.0', accept: 'text/html' }, ...options }); }
 function expectedCanonical(route) { return new URL(route, BASE_URL).href; }
 async function main() {
@@ -22,6 +36,7 @@ async function main() {
     if (!html.includes(marker)) failures.push(`${route}: falta contenido principal`);
     if (!html.includes(`<link rel="canonical" href="${expectedCanonical(route)}"`)) failures.push(`${route}: canonical inesperado`);
     for (const meta of ['property="og:image"', 'name="twitter:card"', 'application/ld+json']) if (!html.includes(meta)) failures.push(`${route}: falta ${meta}`);
+    for (const hreflang of HREFLANGS) if (!html.includes(`hreflang="${hreflang}"`)) failures.push(`${route}: falta hreflang="${hreflang}"`);
   }
   for (const route of redirects) {
     const response = await fetchPage(new URL(route, BASE_URL), { redirect: 'manual' });
@@ -32,7 +47,7 @@ async function main() {
   const missing = await fetchPage(new URL('/ruta-inexistente-smoke', BASE_URL));
   if (missing.status !== 404) failures.push(`404: status inesperado ${missing.status}`);
   if (failures.length) { console.error(failures.map((failure) => `- ${failure}`).join('\n')); process.exitCode = 1; return; }
-  console.log(`Production smoke OK: ${routes.length} rutas, ${redirects.length} redirects, metadata, 404 y cabeceras.`);
+  console.log(`Production smoke OK: ${routes.length} rutas, ${redirects.length} redirects, metadata, hreflang (${HREFLANGS.join('/')}), 404 y cabeceras.`);
 }
 main().catch((error) => { console.error(`Production smoke error: ${error.message}`); process.exitCode = 1; });
-module.exports = { expectedCanonical, routes, redirects };
+module.exports = { expectedCanonical, routes, redirects, HREFLANGS };

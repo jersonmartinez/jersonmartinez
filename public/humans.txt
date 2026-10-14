@@ -1,11 +1,12 @@
 /* TEAM */
-  Nombre: Jerson Martínez
-  Rol: DevOps Tech Lead · Cloud · Automatización
+  Nombre / Name: Jerson Martínez
+  Rol / Role: DevOps Tech Lead · Cloud · Automatización / Automation
   GitHub: https://github.com/jersonmartinez
   LinkedIn: https://www.linkedin.com/in/jersonmartinezsm/
-  Sitio: https://www.jersonmartinez.com
+  Sitio / Site: https://www.jersonmartinez.com
 
 /* SITE */
-  Lenguaje: Español (es)
+  Idiomas / Languages: Español (es, por defecto / default) · English (en, /en)
   Stack: Astro
-  Estándares: HTML5, CSS3, JSON-LD (schema.org)
+  Estándares / Standards: HTML5, CSS3, JSON-LD (schema.org), hreflang
+  Seguridad / Security: /.well-known/security.txt (RFC 9116)

@@ -2,7 +2,6 @@ name: E2E (Playwright)
 
 on:
   pull_request:
-    branches: [main]
     paths:
       - 'src/**'
       - 'public/**'

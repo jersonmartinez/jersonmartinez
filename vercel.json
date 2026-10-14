@@ -17,10 +17,16 @@
       ]
     },
     { "source": "/_astro/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/scripts/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }] },
     { "source": "/images/profile-v2-(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
     { "source": "/social/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
     { "source": "/fonts/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
-    { "source": "/brands/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] }
+    { "source": "/brands/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/brand/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }] },
+    { "source": "/cv/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }] },
+    { "source": "/humans.txt", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }] },
+    { "source": "/.well-known/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }] },
+    { "source": "/(robots.txt|sitemap.xml|site.webmanifest)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }] }
   ],
   "redirects": [
     { "source": "/index.html", "destination": "/", "permanent": true },
@@ -33,6 +39,18 @@
     { "source": "/experience", "destination": "/experience.html", "permanent": true },
     { "source": "/certifications", "destination": "/certifications.html", "permanent": true },
     { "source": "/courses", "destination": "/courses.html", "permanent": true },
-    { "source": "/about", "destination": "/about.html", "permanent": true }
+    { "source": "/about", "destination": "/about.html", "permanent": true },
+    { "source": "/en/index.html", "destination": "/en", "permanent": true },
+    { "source": "/en/", "destination": "/en", "permanent": true },
+    { "source": "/en/projects.html/", "destination": "/en/projects.html", "permanent": true },
+    { "source": "/en/experience.html/", "destination": "/en/experience.html", "permanent": true },
+    { "source": "/en/certifications.html/", "destination": "/en/certifications.html", "permanent": true },
+    { "source": "/en/courses.html/", "destination": "/en/courses.html", "permanent": true },
+    { "source": "/en/about.html/", "destination": "/en/about.html", "permanent": true },
+    { "source": "/en/projects", "destination": "/en/projects.html", "permanent": true },
+    { "source": "/en/experience", "destination": "/en/experience.html", "permanent": true },
+    { "source": "/en/certifications", "destination": "/en/certifications.html", "permanent": true },
+    { "source": "/en/courses", "destination": "/en/courses.html", "permanent": true },
+    { "source": "/en/about", "destination": "/en/about.html", "permanent": true }
   ]
 }

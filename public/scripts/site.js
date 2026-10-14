@@ -15,11 +15,16 @@
       if (value) element.setAttribute('aria-hidden', 'true'); else element.removeAttribute('aria-hidden');
     });
   };
+  // Etiquetas servidas por la cabecera en el idioma de la página (data-label-*).
+  // El fallback conserva el texto español anterior, así que un atributo ausente
+  // degrada al comportamiento previo en vez de dejar el botón sin nombre.
+  const navLabelOpen = toggle?.getAttribute('data-label-open') || 'Abrir menú';
+  const navLabelClose = toggle?.getAttribute('data-label-close') || 'Cerrar menú';
   const closeNav = ({ restoreFocus = false } = {}) => {
     nav?.classList.remove('is-open');
     document.body.classList.remove('nav-locked');
     toggle?.setAttribute('aria-expanded', 'false');
-    toggle?.setAttribute('aria-label', 'Abrir menú');
+    toggle?.setAttribute('aria-label', navLabelOpen);
     setDocumentInert(false);
     if (restoreFocus) (lastFocus || toggle)?.focus();
   };
@@ -28,7 +33,7 @@
     nav?.classList.add('is-open');
     document.body.classList.add('nav-locked');
     toggle?.setAttribute('aria-expanded', 'true');
-    toggle?.setAttribute('aria-label', 'Cerrar menú');
+    toggle?.setAttribute('aria-label', navLabelClose);
     setDocumentInert(true);
     navFocusable()[0]?.focus();
   };
@@ -128,7 +133,13 @@
       button.classList.toggle('is-active', active);
       button.setAttribute('aria-pressed', String(active));
     });
-    if (filterStatus) filterStatus.textContent = `Mostrando ${visible} de ${projectCards.length} proyectos`;
+    if (filterStatus) {
+      // Plantilla servida en el idioma de la página; mismo texto que el build.
+      const template = filterStatus.getAttribute('data-template') || 'Mostrando {shown} de {total} proyectos';
+      filterStatus.textContent = template
+        .replace('{shown}', String(visible))
+        .replace('{total}', String(projectCards.length));
+    }
     if (emptyState) emptyState.hidden = visible !== 0;
     if (updateUrl) {
       const url = new URL(location.href);
@@ -185,10 +196,14 @@
     const reflect = (announce) => {
       const theme = effectiveTheme();
       const isLight = theme === 'light';
+      const labelDark = themeToggle.getAttribute('data-label-dark') || 'Activar tema oscuro';
+      const labelLight = themeToggle.getAttribute('data-label-light') || 'Activar tema claro';
+      const statusLight = themeToggle.getAttribute('data-status-light') || 'Tema claro activado.';
+      const statusDark = themeToggle.getAttribute('data-status-dark') || 'Tema oscuro activado.';
       themeToggle.setAttribute('aria-pressed', String(isLight));
-      themeToggle.setAttribute('aria-label', isLight ? 'Activar tema oscuro' : 'Activar tema claro');
+      themeToggle.setAttribute('aria-label', isLight ? labelDark : labelLight);
       syncChrome(theme);
-      if (announce && status) status.textContent = isLight ? 'Tema claro activado.' : 'Tema oscuro activado.';
+      if (announce && status) status.textContent = isLight ? statusLight : statusDark;
     };
     themeToggle.hidden = false;
     reflect(false);

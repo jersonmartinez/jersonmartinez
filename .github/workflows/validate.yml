@@ -2,7 +2,6 @@ name: Validate Astro portfolio
 
 on:
   pull_request:
-    branches: [main]
     paths:
       - 'src/**'
       - 'public/**'
@@ -34,6 +33,10 @@ on:
       - 'sitemap.xml'
       - 'vercel.json'
       - '.github/workflows/**'
+  # Permite validar una rama a demanda, sin esperar a que un PR la toque: los
+  # filtros `paths` de arriba hacen que un cambio fuera de esas rutas no
+  # dispare nada, y entonces no había forma de verificar la rama.
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -69,17 +72,30 @@ jobs:
         run: VALIDATE_BUILD=1 npm test
       - run: VALIDATE_BUILD=1 npm run validate
       - run: npm run links
+      # Fragmentos (#ancla) resueltos contra los id reales de la pagina destino:
+      # el gate de enlaces descarta el hash, asi que ningun ancla estaba
+      # comprobada. Son identificadores derivados del dato y compartidos por los
+      # dos idiomas, de modo que uno roto rompe ES y EN a la vez.
+      - name: Validate anchor fragments against real ids
+        run: npm run anchors
       - name: Validate security headers, social metadata, schema.org and sitemap
         run: npm run headers
       - name: Ensure root robots/sitemap stay in sync with public/
         run: npm run sync:static:check
+      - name: Ensure sitemap matches the real routes and review date
+        run: npm run sitemap:check
+      # Cobertura de traduccion y ausencia de espanol en /en, medidas sobre el dist
+      # construido: es lo unico que demuestra que la version inglesa esta completa,
+      # porque no depende de recordar cada sitio donde hay texto.
+      - name: Validate i18n coverage and language leaks
+        run: npm run validate:i18n
       - run: npm run youtube:dry-run
       # markdownlint fijado (sin npx --yes): se instala la versión exacta sin
       # tocar el lockfile y se invoca el binario local, cubriendo README y docs/**.
       - name: Install pinned markdownlint
         run: npm install --no-save --no-package-lock markdownlint-cli2@0.23.3
       - name: Lint markdown (README + docs)
-        run: npx --no-install markdownlint-cli2 "README.md" "SECURITY-HEADERS.md" "docs/**/*.md"
+        run: npx --no-install markdownlint-cli2 "README.md" "SECURITY.md" "SECURITY-HEADERS.md" "CONTRIBUTING.md" "docs/**/*.md"
       # stylelint con orden de propiedades y prohibicion de color literal en las capas que
       # SI declaran color (base.css y components.css). El alcance anterior apuntaba a
       # global.css, fonts.css y un icons.css inexistente, ninguno con colores: la guarda

@@ -11,7 +11,6 @@
   const list = dialog.querySelector('[data-command-list]');
   const openButton = document.querySelector('[data-command-open]');
   const items = [...list.querySelectorAll('[data-command-item]')];
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let lastFocus = null;
 
   if (openButton) openButton.hidden = false;

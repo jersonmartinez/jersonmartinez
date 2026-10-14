@@ -1,6 +1,8 @@
 ---
 import Icon from './Icon.astro';
 import { createHash } from 'node:crypto';
+import { DEFAULT_LOCALE, type Lang } from '../i18n/config';
+import { t } from '../i18n/ui';
 // bloque de código real con resaltado por CLASES (no estilos inline, que violarían la
 // CSP estricta y el test de HTML compilado). El resaltado de Shiki emite style="color:…" en cada
 // span, incompatible con el gate; por eso se usa un resaltador ligero basado en clases sobre tokens.
@@ -10,8 +12,12 @@ interface Props {
   lang?: string;
   label?: string;
   href?: string;
+  /** Idioma de la INTERFAZ del bloque (no del código, que es `lang`). */
+  uiLang?: Lang;
 }
-const { code, lang = 'yaml', label, href } = Astro.props;
+const { code, lang = 'yaml', label, href, uiLang = DEFAULT_LOCALE } = Astro.props;
+const copy = t(uiLang);
+const c = copy.components;
 
 const escapeHtml = (value: string) => value
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -48,9 +54,9 @@ const highlighted = highlight(code);
 const codeId = `code-${createHash('sha256').update(`${lang}\u0000${label ?? ''}\u0000${code}`).digest('hex').slice(0, 8)}`;
 ---
 <figure class="codeblock">
-  {label && <figcaption class="codeblock-caption"><span class="codeblock-lang">{lang}</span> {label}{href && <a class="codeblock-source" href={href} target="_blank" rel="noopener noreferrer">Ver fuente<span class="sr-only"> (abre en nueva pestaña)</span></a>}</figcaption>}
+  {label && <figcaption class="codeblock-caption"><span class="codeblock-lang">{lang}</span> {label}{href && <a class="codeblock-source" href={href} target="_blank" rel="noopener noreferrer">{c.codeViewSource}<span class="sr-only">{copy.newTabSuffix}</span></a>}</figcaption>}
   <div class="codeblock-body">
-    <button class="codeblock-copy" type="button" data-copy-target={codeId} aria-label="Copiar bloque de código" hidden><Icon name="fas fa-copy" /><span class="codeblock-copy-label">Copiar</span></button>
+    <button class="codeblock-copy" type="button" data-copy-target={codeId} data-copied-label={c.codeCopied} aria-label={c.codeCopyAria} hidden><Icon name="fas fa-copy" /><span class="codeblock-copy-label">{c.codeCopy}</span></button>
     <pre class="codeblock-pre" tabindex="0"><code id={codeId} class={`language-${lang}`} set:html={highlighted}></code></pre>
   </div>
 </figure>

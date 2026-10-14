@@ -4,15 +4,34 @@ import IconSprite from '../components/IconSprite.astro';
 import '../styles/global.css';
 import '../styles/palette.css';
 import SiteHeader from '../components/SiteHeader.astro';
-import { contentMeta, profile } from '../data/portfolio.js';
+import { contentMeta } from '../data/portfolio';
+import { getProfile } from '../i18n/content';
+import {
+  DEFAULT_LOCALE, LOCALES, OG_LOCALE, ROUTE_KEYS, parsePathname, routePath,
+  type Lang, type RouteKey,
+} from '../i18n/config';
+import { t } from '../i18n/ui';
 import type { BreadcrumbEntry } from '../types/content';
 
 interface Props {
   title: string;
   description: string;
+  /** Idioma de la página. El español es el defecto y no lleva prefijo de ruta. */
+  lang?: Lang;
+  /**
+   * Clave de ruta de la página, cuando es una de las seis públicas. Permite
+   * derivar el canonical y los `hreflang` sin que la página los repita; las
+   * páginas sin equivalente en el otro idioma (404, guía visual) la omiten y
+   * entonces no se emite ningún alternate.
+   */
+  routeKey?: RouteKey;
   canonical?: string;
   breadcrumb?: BreadcrumbEntry[];
   preloadImage?: string;
+  /** srcset del preload de imagen, para que el candidato precargado coincida con el <source> elegido. */
+  preloadImageSrcset?: string;
+  /** sizes del preload de imagen; debe reflejar el `sizes` del <source>/<img> del héroe. */
+  preloadImageSizes?: string;
   /** Bloques JSON-LD extra de la página, serializados tal cual. */
   structuredData?: unknown[];
   socialImage?: string;
@@ -22,18 +41,45 @@ interface Props {
 const {
   title,
   description,
-  canonical = `${profile.website}/`,
+  lang = DEFAULT_LOCALE,
+  routeKey,
+  canonical,
   breadcrumb,
   preloadImage,
+  preloadImageSrcset,
+  preloadImageSizes,
   structuredData = [],
   socialImage,
   robots = 'index, follow, max-image-preview:large',
 } = Astro.props;
-const pathKey = Astro.url.pathname.replace(/^\//, '').replace(/\.html\/?$/, '').replace(/\/$/, '') || 'home';
+
+const copy = t(lang);
+const profile = getProfile(lang);
+
+// La clave de ruta llega por props cuando la página la conoce; si no, se deduce
+// del pathname del build, que es la única fuente disponible para 404 y guía.
+const parsed = parsePathname(Astro.url.pathname);
+const key: RouteKey | null = routeKey ?? parsed.key;
+
+const canonicalUrl = canonical
+  ?? (key ? `${profile.website}${routePath(key, lang)}` : `${profile.website}${Astro.url.pathname}`);
+
+/**
+ * Alternates de idioma. Sólo se emiten cuando la página EXISTE en los dos
+ * idiomas: anunciar un alternate hacia una URL que devuelve 404 es peor que no
+ * anunciar ninguno. `x-default` apunta al español, que es la versión sin prefijo.
+ */
+const alternates = key
+  ? LOCALES.map((locale) => ({ hreflang: locale, href: `${profile.website}${routePath(key, locale)}` }))
+  : [];
+
+// La tarjeta social es COMPARTIDA por los dos idiomas: la imagen no lleva texto
+// de página, así que duplicarla por idioma sería peso sin información nueva.
+const pathKey = (key ?? 'home') === 'home' ? 'home' : (key as string);
 const socialImagePath = socialImage || `/social/${pathKey}.jpg`;
 const absoluteImage = `${profile.website}${socialImagePath}`;
 const portrait = `${profile.website}/images/profile-v2-960.jpg`;
-const isProfilePage = ['/', '/about.html', '/about.html/'].includes(Astro.url.pathname);
+const isProfilePage = key === 'home' || key === 'about';
 
 const personJsonLd = isProfilePage && {
   '@context': 'https://schema.org',
@@ -43,15 +89,21 @@ const personJsonLd = isProfilePage && {
   image: portrait,
   jobTitle: 'DevOps Tech Lead',
   description: profile.intro,
+  email: `mailto:${profile.email}`,
+  knowsLanguage: ['es', 'en'],
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Universidad Nacional Autónoma de Nicaragua, León (UNAN-León)',
+  },
   sameAs: [profile.github, profile.linkedin, 'https://www.youtube.com/@DevOpsea', 'https://www.udemy.com/user/side-master/', 'https://openwebinars.net/profesores/antoniomorenosm/', 'https://www.crashell.com/estudio'],
   knowsAbout: ['DevOps', 'SRE', 'DevSecOps', 'AWS', 'Microsoft Azure', 'Google Cloud Platform', 'Infrastructure as Code', 'GitOps', 'FinOps'],
 };
-const websiteJsonLd = Astro.url.pathname === '/' && {
+const websiteJsonLd = key === 'home' && {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Jerson Martínez',
-  url: profile.website,
-  inLanguage: 'es',
+  url: `${profile.website}${routePath('home', lang)}`,
+  inLanguage: lang,
   dateModified: contentMeta.lastReviewed,
 };
 const breadcrumbJsonLd = breadcrumb && {
@@ -62,15 +114,28 @@ const breadcrumbJsonLd = breadcrumb && {
   })),
 };
 const jsonLdBlocks = [personJsonLd, websiteJsonLd, breadcrumbJsonLd, ...structuredData].filter(Boolean);
-const footerLinks = [
-  ['/projects.html', 'Proyectos'], ['/courses.html', 'Cursos'], ['/certifications.html', 'Certificaciones'],
-  ['/experience.html', 'Trayectoria'], ['/about.html', 'Sobre mí'],
-];
+
+const footerKeys = ROUTE_KEYS.filter((routeName) => routeName !== 'home');
 const normalize = (value: string | null | undefined) => (value || '/').replace(/\/$/, '').replace(/\.html$/, '') || '/';
 const here = normalize(Astro.url.pathname);
+
+/**
+ * Tipo MIME del preload de imagen, DERIVADO de la extensión.
+ *
+ * Estaba fijado a `image/webp`, lo que ataba el preload a un formato concreto:
+ * al servir AVIF (más pequeño y por tanto mejor candidato de LCP) el `type`
+ * habría anunciado un formato distinto del real y el navegador puede descartar
+ * la precarga, dejando el recurso sin precargar justo donde más importa.
+ */
+const PRELOAD_TYPES: Record<string, string> = {
+  avif: 'image/avif', webp: 'image/webp', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png',
+};
+const preloadImageType = preloadImage
+  ? PRELOAD_TYPES[(preloadImage.split('.').pop() || '').toLowerCase()]
+  : undefined;
 ---
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -92,66 +157,63 @@ const here = normalize(Astro.url.pathname);
     <link rel="author" href="/humans.txt" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/manrope-latin.woff2" crossorigin="anonymous" />
-    <link rel="canonical" href={canonical} />
-    {preloadImage && <link rel="preload" as="image" href={preloadImage} type="image/webp" fetchpriority="high" />}
+    <link rel="canonical" href={canonicalUrl} />
+    {alternates.map((alternate) => <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />)}
+    {key && <link rel="alternate" hreflang="x-default" href={`${profile.website}${routePath(key, DEFAULT_LOCALE)}`} />}
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} imagesrcset={preloadImageSrcset} imagesizes={preloadImageSizes} type={preloadImageType} fetchpriority="high" />}
     <meta property="og:type" content={isProfilePage ? 'profile' : 'website'} />
     <meta property="og:site_name" content="Jerson Martínez" />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={absoluteImage} />
     <meta property="og:image:secure_url" content={absoluteImage} />
     <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:alt" content={`Vista previa de ${title}`} />
+    <meta property="og:image:alt" content={copy.socialPreviewAlt(title)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:locale" content="es_ES" />
-    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale" content={OG_LOCALE[lang]} />
+    {key && LOCALES.filter((locale) => locale !== lang).map((locale) => <meta property="og:locale:alternate" content={OG_LOCALE[locale]} />)}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteImage} />
-    <meta name="twitter:image:alt" content={`Vista previa de ${title}`} />
+    <meta name="twitter:image:alt" content={copy.socialPreviewAlt(title)} />
     <title>{title}</title>
     {jsonLdBlocks.map((block) => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}
     <script is:inline src="/scripts/init.js"></script>
   </head>
   <body>
     <IconSprite />
-    <a class="skip-link" href="#contenido">Saltar al contenido</a>
-    <div class="scroll-progress" role="progressbar" aria-label="Progreso de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="scroll-progress-bar" data-scroll-progress></span></div>
-    <SiteHeader />
+    <a class="skip-link" href="#contenido">{copy.skipLink}</a>
+    <div class="scroll-progress" role="progressbar" aria-label={copy.readingProgress} aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span class="scroll-progress-bar" data-scroll-progress></span></div>
+    <SiteHeader lang={lang} routeKey={key} />
     <main id="contenido" tabindex="-1"><slot /></main>
     <footer class="site-footer">
       <div class="container footer-inner">
         <div><strong>Jerson Martínez</strong><span>DevOps · SRE · DevSecOps · Cloud</span></div>
-        <nav class="footer-links" aria-label="Secciones del sitio">
-          {footerLinks.map(([href, label]) => { const current = here === normalize(href); return <a href={href} class={current ? 'is-current' : ''} aria-current={current ? 'page' : undefined}>{label}</a>; })}
+        <nav class="footer-links" aria-label={copy.footerNavAria}>
+          {footerKeys.map((routeName) => { const href = routePath(routeName, lang); const current = here === normalize(href); return <a href={href} class={current ? 'is-current' : ''} aria-current={current ? 'page' : undefined}>{copy.nav[routeName]}</a>; })}
         </nav>
-        <nav class="footer-social" aria-label="Perfiles sociales">
-          <a href={profile.github} target="_blank" rel="me noopener noreferrer"><Icon name="fab fa-github" /><span class="sr-only">GitHub</span></a>
-          <a href={profile.linkedin} target="_blank" rel="me noopener noreferrer"><Icon name="fab fa-linkedin-in" /><span class="sr-only">LinkedIn</span></a>
-          <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="fab fa-whatsapp" /><span class="sr-only">WhatsApp</span></a>
+        <nav class="footer-social" aria-label={copy.footerSocialAria}>
+          <a href={profile.github} target="_blank" rel="me noopener noreferrer"><Icon name="fab fa-github" /><span class="sr-only">GitHub {copy.newTab}</span></a>
+          <a href={profile.linkedin} target="_blank" rel="me noopener noreferrer"><Icon name="fab fa-linkedin-in" /><span class="sr-only">LinkedIn {copy.newTab}</span></a>
+          <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="fab fa-whatsapp" /><span class="sr-only">WhatsApp {copy.newTab}</span></a>
         </nav>
       </div>
-      <div class="container footer-legal"><p class="footer-copy">© {new Date().getFullYear()} Jerson Martínez. Todos los derechos reservados.</p><a class="footer-top" href="#contenido"><Icon name="fas fa-arrow-up" /> Volver arriba</a></div>
+      <div class="container footer-legal"><p class="footer-copy">© {new Date().getFullYear()} Jerson Martínez. {copy.footerRights}</p><a class="footer-top" href="#contenido"><Icon name="fas fa-arrow-up" /> {copy.footerBackToTop}</a></div>
     </footer>
     <!-- paleta de comandos accesible. Oculta sin JS (degradación: la navegación normal
          sigue disponible). El script externo la activa con Cmd/Ctrl+K o el botón del header. -->
-    <div class="command-palette" data-command-palette role="dialog" aria-modal="true" aria-label="Paleta de comandos: ir a una sección" hidden>
+    <div class="command-palette" data-command-palette role="dialog" aria-modal="true" aria-label={copy.commandDialogAria} hidden>
       <div class="command-panel">
-        <label class="sr-only" for="command-input">Buscar sección o página</label>
-        <input class="command-input" id="command-input" type="text" data-command-input placeholder="Ir a… (proyectos, cursos, certificaciones)" autocomplete="off" />
+        <label class="sr-only" for="command-input">{copy.commandInputLabel}</label>
+        <input class="command-input" id="command-input" type="text" data-command-input placeholder={copy.commandPlaceholder} autocomplete="off" />
         <ul class="command-list" data-command-list role="list">
-          <li><a class="command-item" data-command-item data-command-text="inicio home" href="/">Inicio</a></li>
-          <li><a class="command-item" data-command-item data-command-text="proyectos soluciones" href="/projects.html">Proyectos</a></li>
-          <li><a class="command-item" data-command-item data-command-text="cursos formacion" href="/courses.html">Cursos</a></li>
-          <li><a class="command-item" data-command-item data-command-text="certificaciones credenciales" href="/certifications.html">Certificaciones</a></li>
-          <li><a class="command-item" data-command-item data-command-text="trayectoria experiencia" href="/experience.html">Trayectoria</a></li>
-          <li><a class="command-item" data-command-item data-command-text="sobre mi about" href="/about.html">Sobre mí</a></li>
-          <li><a class="command-item" data-command-item data-command-text="contacto whatsapp" href={profile.whatsapp} target="_blank" rel="noopener noreferrer">Contacto (WhatsApp)</a></li>
+          {ROUTE_KEYS.map((routeName) => <li><a class="command-item" data-command-item data-command-text={copy.commandTerms[routeName]} href={routePath(routeName, lang)}>{copy.nav[routeName]}</a></li>)}
+          <li><a class="command-item" data-command-item data-command-text={copy.commandContactTerms} href={profile.whatsapp} target="_blank" rel="noopener noreferrer">{copy.commandContact}</a></li>
         </ul>
-        <p class="command-empty" data-command-empty hidden>Sin coincidencias.</p>
+        <p class="command-empty" data-command-empty hidden>{copy.commandEmpty}</p>
       </div>
     </div>
     <script is:inline src="/scripts/site.js" defer></script>

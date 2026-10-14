@@ -2,7 +2,6 @@ name: Site quality gate
 
 on:
   pull_request:
-    branches: [main]
     paths:
       - 'src/**'
       - 'public/**'
@@ -56,6 +55,12 @@ jobs:
           echo $! > server.pid
           npx --no-install wait-on http://127.0.0.1:4321/ -t 20000 || sleep 3
       - name: Lighthouse CI (explicit budgets)
+        # Las seis rutas espanolas mas DOS inglesas representativas (inicio y una
+        # pagina interior). Las doce comparten componentes, CSS, imagenes y scripts,
+        # asi que el peso y el rendimiento son los mismos; lo unico que cambia es la
+        # longitud del texto. Medir las doce duplicaria a 36 corridas dentro de un
+        # job con 25 minutos de techo sin medir nada nuevo. La accesibilidad de las
+        # seis inglesas SI se cubre entera, en el gate de pa11y de abajo.
         run: |
           npx --no-install lhci autorun \
             --collect.url=http://127.0.0.1:4321/ \
@@ -64,10 +69,16 @@ jobs:
             --collect.url=http://127.0.0.1:4321/certifications.html/ \
             --collect.url=http://127.0.0.1:4321/experience.html/ \
             --collect.url=http://127.0.0.1:4321/about.html/ \
+            --collect.url=http://127.0.0.1:4321/en/ \
+            --collect.url=http://127.0.0.1:4321/en/projects.html/ \
             --collect.settings.chromeFlags="--no-sandbox --headless=new" \
             --upload.target=filesystem \
             --upload.outputDir=./.lighthouseci
       - name: Accessibility gate (pa11y-ci, WCAG2AA)
+        # Las doce rutas: la version inglesa tiene su propio `lang`, sus propios
+        # nombres accesibles y su conmutador de idioma, asi que una regresion de
+        # accesibilidad puede existir solo ahi. pa11y es rapido y cubrirlas todas
+        # no pone en riesgo el timeout del job.
         run: |
           npx --no-install pa11y-ci --config .pa11yci.json \
             http://127.0.0.1:4321/ \
@@ -75,7 +86,13 @@ jobs:
             http://127.0.0.1:4321/courses.html/ \
             http://127.0.0.1:4321/certifications.html/ \
             http://127.0.0.1:4321/experience.html/ \
-            http://127.0.0.1:4321/about.html/
+            http://127.0.0.1:4321/about.html/ \
+            http://127.0.0.1:4321/en/ \
+            http://127.0.0.1:4321/en/projects.html/ \
+            http://127.0.0.1:4321/en/courses.html/ \
+            http://127.0.0.1:4321/en/certifications.html/ \
+            http://127.0.0.1:4321/en/experience.html/ \
+            http://127.0.0.1:4321/en/about.html/
       - name: Upload quality reports
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

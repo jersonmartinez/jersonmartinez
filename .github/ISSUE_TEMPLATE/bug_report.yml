@@ -1,0 +1,43 @@
+name: Reporte de fallo
+description: Algo no funciona o se ve mal en el sitio.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Gracias por reportar. Para vulnerabilidades de seguridad usa la política de seguridad, no un issue público.
+  - type: textarea
+    id: what
+    attributes:
+      label: Qué ocurre
+      description: Describe el problema y qué esperabas en su lugar.
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL o ruta afectada
+      placeholder: https://www.jersonmartinez.com/projects.html
+  - type: textarea
+    id: steps
+    attributes:
+      label: Pasos para reproducir
+      placeholder: |
+        1. Ir a …
+        2. Hacer …
+        3. Ver …
+  - type: dropdown
+    id: context
+    attributes:
+      label: Dispositivo / navegador
+      options:
+        - Escritorio - Chromium
+        - Escritorio - Firefox
+        - Escritorio - Safari
+        - Móvil - Android
+        - Móvil - iOS
+        - Otro
+  - type: input
+    id: theme
+    attributes:
+      label: Tema
+      placeholder: claro / oscuro / automático

@@ -1,22 +1,28 @@
 ---
 import Icon from './Icon.astro';
 import type { Skill } from '../types/content';
+import { DEFAULT_LOCALE, type Lang } from '../i18n/config';
+import { t } from '../i18n/ui';
 interface Props {
   skills: Skill[];
+  lang?: Lang;
 }
-const { skills } = Astro.props;
+const { skills, lang = DEFAULT_LOCALE } = Astro.props;
+const c = t(lang).components;
 const slugify = (value: string) => String(value).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 ---
 <div class="skills-explorer" data-skills-explorer>
-  <div class="skills-tabs" role="tablist" aria-label="Categorías de habilidades" aria-orientation="vertical">
+  <div class="skills-tabs" role="tablist" aria-label={c.skillsTablistAria} aria-orientation="vertical">
     {skills.map((skill, index) => <button class={`skill-tab ${index === 0 ? 'is-active' : ''}`} type="button" role="tab" id={`skill-tab-${index}`} aria-selected={index === 0 ? 'true' : 'false'} aria-controls={`skill-panel-${index}`} data-skill-tab={index} data-skill-slug={slugify(skill.name)} tabindex={index === 0 ? '0' : '-1'}><Icon name={skill.icon} /><span>{skill.name}</span><Icon name="fas fa-chevron-right skill-tab-arrow" /></button>)}
   </div>
   <div class="skills-panels">
     {skills.map((skill, index) => <section class={`skills-panel ${index === 0 ? 'is-active' : ''}`} id={`skill-panel-${index}`} role="tabpanel" aria-labelledby={`skill-tab-${index}`} data-skill-panel={index} tabindex="0" hidden={index !== 0}>
-      <div class="skills-panel-heading"><span class="skill-panel-icon" aria-hidden="true"><Icon name={skill.icon} /></span><div><p class="section-kicker">Capacidad aplicada</p><h3>{skill.name}</h3></div></div>
+      <div class="skills-panel-heading"><span class="skill-panel-icon" aria-hidden="true"><Icon name={skill.icon} /></span><div><p class="section-kicker">{c.skillApplied}</p><h3>{skill.name}</h3></div></div>
       <p class="skill-summary">{skill.summary}</p>
-      <div class="skill-evidence"><span><Icon name="fas fa-check-circle" /> Evidencia</span><p>{skill.evidence}</p></div>
-      <ul class="skill-list">{skill.items.map((item) => <li lang={/English|Professional Working Proficiency/.test(item) ? 'en' : undefined}>{item}</li>)}</ul>
+      <div class="skill-evidence"><span><Icon name="fas fa-check-circle" /> {c.skillEvidence}</span><p>{skill.evidence}</p></div>
+      {/* El ítem del idioma declara su propio `lang` para que el lector de pantalla
+          pronuncie correctamente la etiqueta en la lengua que nombra. */}
+      <ul class="skill-list">{skill.items.map((item) => <li lang={/English|Professional Working Proficiency/.test(item) ? 'en' : (/^Español/.test(item) ? 'es' : undefined)}>{item}</li>)}</ul>
       <a class="card-link" href={skill.relatedHref}>{skill.relatedLabel}</a>
     </section>)}
   </div>

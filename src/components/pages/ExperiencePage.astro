@@ -1,0 +1,29 @@
+---
+/** Página de trayectoria en los dos idiomas. */
+import Icon from '../Icon.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCvLinks, getExperience, getExperienceLede, getProfile } from '../../i18n/content';
+import { DEFAULT_LOCALE, routePath, type Lang } from '../../i18n/config';
+import { t } from '../../i18n/ui';
+
+interface Props { lang?: Lang }
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const copy = t(lang);
+const page = copy.experience;
+const profile = getProfile(lang);
+const experience = getExperience(lang);
+const cvLinks = getCvLinks(lang);
+const lede = getExperienceLede(lang);
+
+const experienceSchema = {
+  '@context': 'https://schema.org', '@type': 'ProfilePage', name: page.schemaName, url: `${profile.website}${routePath('experience', lang)}`, dateModified: '2026-09-30', mainEntity: { '@type': 'Person', name: profile.name, hasOccupation: experience.filter((item) => item.start >= '2019').map((item) => ({ '@type': 'Occupation', name: item.role, occupationLocation: { '@type': 'Country', name: page.schemaCountry } })) },
+};
+
+const homeHref = routePath('home', lang);
+const selfHref = routePath('experience', lang);
+---
+<BaseLayout title={page.title} description={page.description} lang={lang} routeKey="experience" breadcrumb={[[copy.nav.home, homeHref], [copy.nav.experience, selfHref]]} structuredData={[experienceSchema]}>
+  <section class="page-hero"><div class="container"><nav class="breadcrumb" aria-label={copy.breadcrumbAria}><ol><li><a href={homeHref}>{copy.nav.home}</a></li><li><span aria-current="page">{copy.nav.experience}</span></li></ol></nav><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> {page.eyebrow}</p><h1>{page.h1}</h1><p class="lede">{lede}</p><ul class="page-hero-meta" aria-label={page.metaAria}>{page.meta.map((item) => <li>{item}</li>)}</ul></div></section>
+  <section class="section" aria-labelledby="exp-list-title"><div class="container"><div class="section-heading"><p class="section-kicker">{page.listKicker}</p><h2 id="exp-list-title">{page.listTitle}</h2><p class="lede">{page.listLede}</p></div><ol class="timeline" aria-label={page.timelineAria}>{experience.map((item) => <li class="timeline-item" id={item.id}><span class="timeline-dot" aria-hidden="true"></span><article class="card timeline-card"><header><div><h3>{item.role}</h3><span class="company">{item.company}</span></div><time datetime={item.start}>{item.period}</time></header><p>{item.description}</p>{item.context && <p class="timeline-context"><Icon name="fas fa-info-circle" />{item.context}</p>}<div class="timeline-links">{item.related.map((link) => <a class="card-link" href={link.href}>{link.label}</a>)}</div></article></li>)}</ol></div></section>
+  <section class="section section--line" aria-labelledby="cv-title"><div class="container"><div class="contact-panel"><div><p class="section-kicker">{page.cvKicker}</p><h2 id="cv-title">{page.cvTitle}</h2></div><div class="contact-actions">{cvLinks.map((cv) => <a class="button button--ghost" href={cv.href} target="_blank" rel="noopener noreferrer" hreflang={cv.lang}>{cv.label}<span class="sr-only">{copy.newTabSuffix}</span></a>)}<a class="button" href={profile.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="fab fa-whatsapp" /> {page.cvCtaTalk}</a></div></div></div></section>
+</BaseLayout>

@@ -1,0 +1,32 @@
+---
+/** Página de cursos en los dos idiomas. Marcado único; sólo cambia `lang`. */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CourseCard from '../CourseCard.astro';
+import { getAudienceMetrics, getChannels, getCourses, openWebinarsCourses } from '../../i18n/content';
+import { DEFAULT_LOCALE, routePath, type Lang } from '../../i18n/config';
+import { t } from '../../i18n/ui';
+
+interface Props { lang?: Lang }
+const { lang = DEFAULT_LOCALE } = Astro.props;
+const copy = t(lang);
+const page = copy.courses;
+const audienceMetrics = getAudienceMetrics(lang);
+const courses = getCourses(lang);
+const channels = getChannels(lang);
+
+const courseSchema = {
+  '@context': 'https://schema.org', '@type': 'ItemList', name: page.schemaName,
+  // `inLanguage: 'es'` es un HECHO del curso, no de la página: los cursos se
+  // imparten en español en las dos versiones del sitio.
+  itemListElement: courses.map((course, index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Course', name: course.name, description: course.summary, url: course.href, inLanguage: 'es', provider: { '@type': 'Organization', name: 'Udemy', sameAs: 'https://www.udemy.com/' }, ...(course.free ? { isAccessibleForFree: true } : {}) } })),
+};
+
+const homeHref = routePath('home', lang);
+const selfHref = routePath('courses', lang);
+---
+<BaseLayout title={page.title} description={page.description} lang={lang} routeKey="courses" breadcrumb={[[copy.nav.home, homeHref], [copy.nav.courses, selfHref]]} structuredData={[courseSchema]}>
+  <section class="page-hero"><div class="container"><nav class="breadcrumb" aria-label={copy.breadcrumbAria}><ol><li><a href={homeHref}>{copy.nav.home}</a></li><li><span aria-current="page">{copy.nav.courses}</span></li></ol></nav><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> {page.eyebrow}</p><h1>{page.h1}</h1><p class="lede">{page.lede}</p><ul class="page-hero-meta" aria-label={page.metaAria}><li>{page.metaUdemy}</li><li>{audienceMetrics.udemy.label}</li><li>{page.metaOpenWebinars}</li><li>{page.metaStack}</li></ul>{page.languageNotice && <p class="data-note course-language-notice">{page.languageNotice}</p>}</div></section>
+  <section class="section" aria-labelledby="courses-list-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">{page.udemyKicker}</p><h2 id="courses-list-title">{page.udemyTitle}</h2><p class="lede">{page.udemyLede}</p></div><a class="button" href="https://www.udemy.com/user/side-master/" target="_blank" rel="noopener noreferrer">{page.udemyProfileCta}<span class="sr-only">{copy.newTabSuffix}</span></a></div><div class="course-summary"><strong>{audienceMetrics.udemy.longLabel}</strong><span>{page.summarySuffix}</span></div><div class="course-grid">{courses.map((course, index) => <CourseCard course={course} index={index} lang={lang} />)}</div></div></section>
+  <section class="section section--line" aria-labelledby="openwebinars-title"><div class="container"><div class="section-head-row"><div class="section-heading"><p class="section-kicker">{page.owKicker}</p><h2 id="openwebinars-title">{page.owTitle}</h2><p class="lede">{page.owLede}</p></div><a class="button button--ghost" href="https://openwebinars.net/profesores/antoniomorenosm/" target="_blank" rel="noopener noreferrer">{page.owProfileCta}<span class="sr-only">{copy.newTabSuffix}</span></a></div><div class="openwebinars-grid">{openWebinarsCourses.map((course) => <article class="card card--interactive compact-course"><img src="/brands/openwebinars.svg" width="44" height="44" alt="" loading="lazy"/><div><h3 lang="es">{course.name}</h3><p>{course.duration}{course.rating ? page.owRating(course.rating) : ''}</p><a class="card-link" href={course.href} target="_blank" rel="noopener noreferrer">{page.owCourseCta}<span class="sr-only">{copy.newTabSuffix}</span></a></div></article>)}</div></div></section>
+  <section class="section" id="canales" aria-labelledby="channels-title"><div class="container"><div class="section-heading"><p class="section-kicker">{page.channelsKicker}</p><h2 id="channels-title">{page.channelsTitle}</h2><p class="lede">{page.channelsLede}</p></div><div class="teaching-grid">{channels.map((channel) => <article class="card teaching-card card--interactive"><img src={channel.logo} width="40" height="40" alt="" loading="lazy" /><div><h3>{channel.name}</h3><strong class="teaching-metric">{channel.metric}</strong><p>{channel.description}</p></div><a href={channel.href} target="_blank" rel="noopener noreferrer">{channel.cta}<span class="sr-only">{copy.newTabSuffix}</span></a></article>)}</div></div></section>
+</BaseLayout>

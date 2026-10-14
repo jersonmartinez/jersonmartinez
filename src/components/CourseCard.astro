@@ -1,10 +1,15 @@
 ---
 import type { Course } from '../types/content';
+import { DEFAULT_LOCALE, type Lang } from '../i18n/config';
+import { t } from '../i18n/ui';
 interface Props {
   course: Course;
   index: number;
+  lang?: Lang;
 }
-const { course, index } = Astro.props;
+const { course, index, lang = DEFAULT_LOCALE } = Astro.props;
+const copy = t(lang);
+const c = copy.components;
 const visualClass = course.framework.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 /**
  * Las siete ilustraciones eran la MISMA composición (cresta + rejilla + dos órbitas +
@@ -89,15 +94,18 @@ const variant = VARIANTS[(Number(course.pathStep) - 1) % VARIANTS.length];
       <path d={variant.lines} class="course-code-lines" />
     </svg>
     <div class="course-visual-copy"><strong>{course.visual}</strong><span>GO / {course.framework.toUpperCase()}</span></div>
-    <span class="course-path-step">PASO {String(course.pathStep).padStart(2, '0')}</span>
-    {course.free && <span class="course-access course-access--free">Gratis</span>}
+    <span class="course-path-step">{c.coursePathStep} {String(course.pathStep).padStart(2, '0')}</span>
+    {course.free && <span class="course-access course-access--free">{c.courseFree}</span>}
   </div>
   <div class="course-card-body">
-    <span class="card-label">RUTA DE APRENDIZAJE / {String(course.pathStep).padStart(2, '0')}</span>
-    <h3>{course.name}</h3>
+    <span class="card-label">{c.coursePathLabel} / {String(course.pathStep).padStart(2, '0')}</span>
+    {/* El TÍTULO sigue en español porque el curso se imparte en español: traducirlo
+        anunciaría un producto inexistente. `lang` lo declara, de modo que un lector
+        de pantalla en la versión inglesa lo pronuncia con la fonética correcta. */}
+    <h3 lang="es">{course.name}</h3>
     <p>{course.summary}</p>
-    <div class="course-outcome"><strong>Al completar esta etapa</strong><span>{course.outcome}</span></div>
+    <div class="course-outcome"><strong>{c.courseOutcomeLabel}</strong><span>{course.outcome}</span></div>
     <span class={`course-access-label ${course.free ? 'is-free' : ''}`}>{course.access}</span>
-    <a class="card-link" href={course.href} target="_blank" rel="noopener noreferrer">Ver ficha del curso<span class="sr-only"> (abre en nueva pestaña)</span></a>
+    <a class="card-link" href={course.href} target="_blank" rel="noopener noreferrer">{c.courseCta}<span class="sr-only">{copy.newTabSuffix}</span></a>
   </div>
 </article>

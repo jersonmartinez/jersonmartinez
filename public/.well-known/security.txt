@@ -1,0 +1,8 @@
+# https://www.jersonmartinez.com/.well-known/security.txt
+# Política de divulgación responsable (RFC 9116).
+Contact: mailto:jersonmartinezsm@gmail.com
+Contact: https://github.com/jersonmartinez/jersonmartinez/security/advisories/new
+Expires: 2027-10-06T00:00:00.000Z
+Preferred-Languages: es, en
+Canonical: https://www.jersonmartinez.com/.well-known/security.txt
+Policy: https://github.com/jersonmartinez/jersonmartinez/blob/main/SECURITY.md

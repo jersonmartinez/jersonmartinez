@@ -73,4 +73,34 @@ test.describe('Portfolio E2E', () => {
     expect(active).not.toBeNull();
     expect(active.tag).not.toBe('BODY');
   });
+
+  test('el conmutador de idioma lleva a la MISMA página en el otro idioma y vuelve', async ({ page }) => {
+    // Ida y vuelta sobre una página interior, no sobre el inicio: un conmutador
+    // que apuntara siempre a la portada pasaría una prueba hecha en el inicio y
+    // perdería al visitante en cualquier otra página.
+    await page.goto(`${BASE}/certifications.html/`);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+    await page.locator('.lang-switch').click();
+    await expect(page).toHaveURL(/\/en\/certifications\.html/);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    // La vuelta deja al visitante donde estaba, no en la portada.
+    await page.locator('.lang-switch').click();
+    await expect(page).toHaveURL(/\/certifications\.html/);
+    await expect(page).not.toHaveURL(/\/en\//);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+  });
+
+  test('la versión inglesa navega y filtra con las rutas prefijadas', async ({ page }) => {
+    await page.goto(`${BASE}/en/projects.html/`);
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    // El estado del filtro lo escribe site.js desde la plantilla servida: debe
+    // estar en inglés, que es lo que el script no podía saber por sí mismo.
+    const status = page.locator('[data-filter-status]');
+    await expect(status).toContainText(/Showing \d+ of \d+ projects/);
+    await page.locator('.filter-button[data-filter="open-source"]').click();
+    await expect(status).toContainText(/Showing \d+ of \d+ projects/);
+    // Los enlaces de navegación conservan el prefijo de idioma.
+    const href = await page.locator('.site-nav a').first().getAttribute('href');
+    expect(href).toMatch(/^\/en/);
+  });
 });

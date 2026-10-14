@@ -1,9 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.jersonmartinez.com/</loc><lastmod>2026-09-30</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://www.jersonmartinez.com/projects.html</loc><lastmod>2026-09-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.jersonmartinez.com/courses.html</loc><lastmod>2026-09-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.jersonmartinez.com/certifications.html</loc><lastmod>2026-09-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.jersonmartinez.com/about.html</loc><lastmod>2026-09-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.jersonmartinez.com/experience.html</loc><lastmod>2026-09-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.jersonmartinez.com/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.jersonmartinez.com/en</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.jersonmartinez.com/projects.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/projects.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jersonmartinez.com/en/projects.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en/projects.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/projects.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jersonmartinez.com/courses.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/courses.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en/courses.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/courses.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jersonmartinez.com/en/courses.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/courses.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en/courses.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/courses.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jersonmartinez.com/certifications.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/certifications.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en/certifications.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/certifications.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jersonmartinez.com/en/certifications.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/certifications.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en/certifications.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/certifications.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jersonmartinez.com/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/about.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jersonmartinez.com/en/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/about.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/about.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jersonmartinez.com/experience.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/experience.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en/experience.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/experience.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jersonmartinez.com/en/experience.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.jersonmartinez.com/experience.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.jersonmartinez.com/en/experience.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.jersonmartinez.com/experience.html"/>
+    <lastmod>2026-10-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
