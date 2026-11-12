@@ -257,35 +257,35 @@ canal de YouTube mediante un pull request revisable; ningún job escribe directa
     </a>
   </td>
   <td width="33%" valign="top">
-    <a href="https://www.youtube.com/watch?v=FGm8MgGULxI">
-      <img src="https://i.ytimg.com/vi/FGm8MgGULxI/hqdefault.jpg" alt="Sesión #7 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
-      <br><strong>Sesión #7 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
-    </a>
-  </td>
-  <td width="33%" valign="top">
-    <a href="https://www.youtube.com/watch?v=3XCwCzopYTg">
-      <img src="https://i.ytimg.com/vi/3XCwCzopYTg/hqdefault.jpg" alt="Sesión #6 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
-      <br><strong>Sesión #6 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
-    </a>
-  </td>
-  </tr>
-  <tr>
-  <td width="33%" valign="top">
     <a href="https://www.youtube.com/watch?v=HmPV_xmVqyE">
       <img src="https://i.ytimg.com/vi/HmPV_xmVqyE/hqdefault.jpg" alt="Sesión #5 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
       <br><strong>Sesión #5 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
     </a>
   </td>
   <td width="33%" valign="top">
-    <a href="https://www.youtube.com/watch?v=AKtNfOuvs-0">
-      <img src="https://i.ytimg.com/vi/AKtNfOuvs-0/hqdefault.jpg" alt="Sesión #4 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
-      <br><strong>Sesión #4 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
+    <a href="https://www.youtube.com/watch?v=nPpD1gDzIKM">
+      <img src="https://i.ytimg.com/vi/nPpD1gDzIKM/hqdefault.jpg" alt="Sesión #2 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
+      <br><strong>Sesión #2 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
+    </a>
+  </td>
+  </tr>
+  <tr>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=ZQmVCIOebII">
+      <img src="https://i.ytimg.com/vi/ZQmVCIOebII/hqdefault.jpg" alt="GNet - Demostración" width="100%">
+      <br><strong>GNet - Demostración</strong>
     </a>
   </td>
   <td width="33%" valign="top">
-    <a href="https://www.youtube.com/watch?v=rnGTJKJyhAk">
-      <img src="https://i.ytimg.com/vi/rnGTJKJyhAk/hqdefault.jpg" alt="Sesión #3 - Aprendiendo Python en 1 semana de forma autodidacta" width="100%">
-      <br><strong>Sesión #3 - Aprendiendo Python en 1 semana de forma autodidacta</strong>
+    <a href="https://www.youtube.com/watch?v=XhepuJpxBSQ">
+      <img src="https://i.ytimg.com/vi/XhepuJpxBSQ/hqdefault.jpg" alt="CORTAR y UNIR archivos con PHP" width="100%">
+      <br><strong>CORTAR y UNIR archivos con PHP</strong>
+    </a>
+  </td>
+  <td width="33%" valign="top">
+    <a href="https://www.youtube.com/watch?v=_MU-h14kMyM">
+      <img src="https://i.ytimg.com/vi/_MU-h14kMyM/hqdefault.jpg" alt="Instalar IDE Offline Cloud9 (Localmente)" width="100%">
+      <br><strong>Instalar IDE Offline Cloud9 (Localmente)</strong>
     </a>
   </td>
   </tr>

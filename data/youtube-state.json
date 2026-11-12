@@ -37,21 +37,11 @@
       ]
     },
     "Side Master": {
-      "lastValidAt": "2026-09-28T00:00:00.000Z",
+      "lastValidAt": "2026-11-12T01:32:27.765Z",
       "entries": [
         {
           "id": "bsk2lG5PmRs",
           "title": "Sesión #8 - Aprendiendo Python en 1 semana de forma autodidacta",
-          "published": ""
-        },
-        {
-          "id": "FGm8MgGULxI",
-          "title": "Sesión #7 - Aprendiendo Python en 1 semana de forma autodidacta",
-          "published": ""
-        },
-        {
-          "id": "3XCwCzopYTg",
-          "title": "Sesión #6 - Aprendiendo Python en 1 semana de forma autodidacta",
           "published": ""
         },
         {
@@ -60,13 +50,23 @@
           "published": ""
         },
         {
-          "id": "AKtNfOuvs-0",
-          "title": "Sesión #4 - Aprendiendo Python en 1 semana de forma autodidacta",
+          "id": "nPpD1gDzIKM",
+          "title": "Sesión #2 - Aprendiendo Python en 1 semana de forma autodidacta",
           "published": ""
         },
         {
-          "id": "rnGTJKJyhAk",
-          "title": "Sesión #3 - Aprendiendo Python en 1 semana de forma autodidacta",
+          "id": "ZQmVCIOebII",
+          "title": "GNet - Demostración",
+          "published": ""
+        },
+        {
+          "id": "XhepuJpxBSQ",
+          "title": "CORTAR y UNIR archivos con PHP",
+          "published": ""
+        },
+        {
+          "id": "_MU-h14kMyM",
+          "title": "Instalar IDE Offline Cloud9 (Localmente)",
           "published": ""
         }
       ]
