@@ -2,36 +2,11 @@
   "version": 1,
   "channels": {
     "DevOpsea": {
-      "lastValidAt": "2026-09-28T00:00:00.000Z",
+      "lastValidAt": "2026-11-13T00:26:28.330Z",
       "entries": [
         {
-          "id": "kCrLxAe2rL0",
-          "title": "Curso COMPLETO de Go: Gin, Revel, Echo, Gorilla y Fiber 🛠️",
-          "published": ""
-        },
-        {
-          "id": "2cS5zEIh_zg",
-          "title": "Curso de GO con FIBER Framework",
-          "published": ""
-        },
-        {
-          "id": "O5Fr1S-BvKY",
-          "title": "Curso de GO con GORILLA Framework 🦍",
-          "published": ""
-        },
-        {
-          "id": "7cROq0Npc7U",
-          "title": "Curso de GO con ECHO Framework 🔥💻",
-          "published": ""
-        },
-        {
-          "id": "Wpma2kD-oBM",
-          "title": "Curso de GO con GIN Framework🛠️",
-          "published": ""
-        },
-        {
-          "id": "Bwy-aMjh2iI",
-          "title": "Curso de GO con REVEL Framework 🎯",
+          "id": "E-Axc2_a3vU",
+          "title": "🛠️ Cómo Crear un Servidor HTTP usando Echo Framework 🚀",
           "published": ""
         }
       ]

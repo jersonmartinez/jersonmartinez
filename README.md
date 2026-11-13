@@ -202,41 +202,9 @@ canal de YouTube mediante un pull request revisable; ningún job escribe directa
 <table>
   <tr>
   <td width="33%" valign="top">
-    <a href="https://www.youtube.com/watch?v=kCrLxAe2rL0">
-      <img src="https://i.ytimg.com/vi/kCrLxAe2rL0/hqdefault.jpg" alt="Curso COMPLETO de Go: Gin, Revel, Echo, Gorilla y Fiber 🛠️" width="100%">
-      <br><strong>Curso COMPLETO de Go: Gin, Revel, Echo, Gorilla y Fiber 🛠️</strong>
-    </a>
-  </td>
-  <td width="33%" valign="top">
-    <a href="https://www.youtube.com/watch?v=2cS5zEIh_zg">
-      <img src="https://i.ytimg.com/vi/2cS5zEIh_zg/hqdefault.jpg" alt="Curso de GO con FIBER Framework" width="100%">
-      <br><strong>Curso de GO con FIBER Framework</strong>
-    </a>
-  </td>
-  <td width="33%" valign="top">
-    <a href="https://www.youtube.com/watch?v=O5Fr1S-BvKY">
-      <img src="https://i.ytimg.com/vi/O5Fr1S-BvKY/hqdefault.jpg" alt="Curso de GO con GORILLA Framework 🦍" width="100%">
-      <br><strong>Curso de GO con GORILLA Framework 🦍</strong>
-    </a>
-  </td>
-  </tr>
-  <tr>
-  <td width="33%" valign="top">
-    <a href="https://www.youtube.com/watch?v=7cROq0Npc7U">
-      <img src="https://i.ytimg.com/vi/7cROq0Npc7U/hqdefault.jpg" alt="Curso de GO con ECHO Framework 🔥💻" width="100%">
-      <br><strong>Curso de GO con ECHO Framework 🔥💻</strong>
-    </a>
-  </td>
-  <td width="33%" valign="top">
-    <a href="https://www.youtube.com/watch?v=Wpma2kD-oBM">
-      <img src="https://i.ytimg.com/vi/Wpma2kD-oBM/hqdefault.jpg" alt="Curso de GO con GIN Framework🛠️" width="100%">
-      <br><strong>Curso de GO con GIN Framework🛠️</strong>
-    </a>
-  </td>
-  <td width="33%" valign="top">
-    <a href="https://www.youtube.com/watch?v=Bwy-aMjh2iI">
-      <img src="https://i.ytimg.com/vi/Bwy-aMjh2iI/hqdefault.jpg" alt="Curso de GO con REVEL Framework 🎯" width="100%">
-      <br><strong>Curso de GO con REVEL Framework 🎯</strong>
+    <a href="https://www.youtube.com/watch?v=E-Axc2_a3vU">
+      <img src="https://i.ytimg.com/vi/E-Axc2_a3vU/hqdefault.jpg" alt="🛠️ Cómo Crear un Servidor HTTP usando Echo Framework 🚀" width="100%">
+      <br><strong>🛠️ Cómo Crear un Servidor HTTP usando Echo Framework 🚀</strong>
     </a>
   </td>
   </tr>
